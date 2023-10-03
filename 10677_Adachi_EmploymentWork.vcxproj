@@ -71,12 +71,12 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
-    <IncludePath>C:\VSLibraryList\directxtk2\include;C:\Assimp\5_2\include;C:\VSLibraryList\directxtex\include;$(IncludePath)</IncludePath>
-    <LibraryPath>C:\VSLibraryList\directxtk2\lib\x64\Debug;C:\Assimp\5_2\lib\Debug;C:\VSLibraryList\directxtex\lib\x64\debug;$(LibraryPath)</LibraryPath>
+    <IncludePath>C:\Users\ssrha\Desktop\InternProject\directxtex\include;C:\Users\ssrha\Desktop\InternProject\DirextXTK\include;C:\Users\ssrha\Desktop\InternProject\Assimp\5_2\include</IncludePath>
+    <LibraryPath>C:\Users\ssrha\Desktop\InternProject\directxtex\lib\x64\debug;C:\Users\ssrha\Desktop\InternProject\DirextXTK\lib\x64\Debug;C:\Users\ssrha\Desktop\InternProject\Assimp\5_2\lib\Debug</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
-    <IncludePath>C:\VSLibraryList\directxtk2\include;C:\Assimp\5_2\include;$(IncludePath)</IncludePath>
-    <LibraryPath>C:\VSLibraryList\directxtk2\lib\x64\Release;C:\Assimp\5_2\lib\Release;$(LibraryPath)</LibraryPath>
+    <IncludePath>C:\Users\ssrha\Desktop\InternProject\directxtex\include;C:\Users\ssrha\Desktop\InternProject\DirextXTK\include;C:\Users\ssrha\Desktop\InternProject\Assimp\5_2\include</IncludePath>
+    <LibraryPath>C:\Users\ssrha\Desktop\InternProject\directxtex\lib\x64\release;C:\Users\ssrha\Desktop\InternProject\DirextXTK\lib\x64\Release;C:\Users\ssrha\Desktop\InternProject\Assimp\5_2\lib\Release</LibraryPath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
