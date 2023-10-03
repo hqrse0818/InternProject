@@ -1,0 +1,2 @@
+# InternProject
+// インターン用プロジェクト
