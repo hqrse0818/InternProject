@@ -6,4 +6,5 @@ class Com_AdachiTest
 {
 public:
 	float mValue = 0;
+	float move = 0;
 };
