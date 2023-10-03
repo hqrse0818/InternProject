@@ -7,4 +7,7 @@ class Com_AdachiTest
 public:
 	float mValue = 0;
 	float move = 0;
+
+public:
+	void Update() { mValue += 1; };
 };
