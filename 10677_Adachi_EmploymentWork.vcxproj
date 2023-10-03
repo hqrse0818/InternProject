@@ -71,12 +71,12 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
-    <IncludePath>C:\VSLibraryList\directxtk2\include;C:\Assimp\5_2\include;C:\VSLibraryList\directxtex\include;$(IncludePath)</IncludePath>
-    <LibraryPath>C:\VSLibraryList\directxtk2\lib\x64\Debug;C:\Assimp\5_2\lib\Debug;C:\VSLibraryList\directxtex\lib\x64\debug;$(LibraryPath)</LibraryPath>
+    <IncludePath>$(ProjectDir)Assimp\5_2\include;$(ProjectDir)DirectXTK\include;$(ProjectDir)directxtex\include</IncludePath>
+    <LibraryPath>$(ProjectDir)Assimp\5_2\lib\Debug;$(ProjectDir)DirectXTK\lib\x64\Debug;$(ProjectDir)directxtex\lib\x64\debug;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
-    <IncludePath>C:\VSLibraryList\directxtk2\include;C:\Assimp\5_2\include;$(IncludePath)</IncludePath>
-    <LibraryPath>C:\VSLibraryList\directxtk2\lib\x64\Release;C:\Assimp\5_2\lib\Release;$(LibraryPath)</LibraryPath>
+    <IncludePath>$(ProjectDir)Assimp\5_2\include;$(ProjectDir)DirectXTK\include;$(ProjectDir)directxtex\include</IncludePath>
+    <LibraryPath>$(ProjectDir)Assimp\5_2\lib\Release;$(ProjectDir)DirectXTK\lib\x64\Release;$(ProjectDir)directxtex\lib\x64\release;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
@@ -114,6 +114,7 @@
       <ConformanceMode>true</ConformanceMode>
       <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
       <LanguageStandard>stdcpp17</LanguageStandard>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -130,6 +131,7 @@
       <ConformanceMode>true</ConformanceMode>
       <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
       <Optimization>Disabled</Optimization>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
