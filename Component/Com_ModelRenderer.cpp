@@ -12,10 +12,10 @@ using namespace DirectX::SimpleMath;
 std::unordered_map<std::string, MODEL*> Com_ModelRenderer::map_mModelPool{};
 
 // モデルの作成
-void Com_ModelRenderer::LoadModel(const char* _FileName, MODEL* _Model)
+void Com_ModelRenderer::LoadModel(const char* _FileName, MODEL* _Model, float _LoadScale)
 {
 	MODEL_OBJ _ModelObj;
-	LoadObj(_FileName, &_ModelObj);	// モデルをロードする
+	LoadObj(_FileName, &_ModelObj, _LoadScale);	// モデルをロードする
 
 	// 頂点バッファ生成
 	{
@@ -93,7 +93,7 @@ void Com_ModelRenderer::LoadModel(const char* _FileName, MODEL* _Model)
 
 
 // モデルの読み込み
-void Com_ModelRenderer::LoadObj(const char* _FileName, MODEL_OBJ* _ModelObj)
+void Com_ModelRenderer::LoadObj(const char* _FileName, MODEL_OBJ* _ModelObj, float _LoadScale)
 {
 	char dir[MAX_PATH];
 	strcpy(dir, _FileName);
@@ -234,6 +234,9 @@ void Com_ModelRenderer::LoadObj(const char* _FileName, MODEL_OBJ* _ModelObj)
 			fscanf(file, "%f", &position->x);
 			fscanf(file, "%f", &position->y);
 			fscanf(file, "%f", &position->z);
+			position->x *= _LoadScale;
+			position->y *= _LoadScale;
+			position->z *= _LoadScale;
 			position++;
 		}
 		else if (strcmp(str, "vn") == 0)
@@ -449,7 +452,7 @@ void Com_ModelRenderer::LoadMaterial(const char* _FileName, MODEL_MATERIAL** _Ma
 	*_MaterialNum = materialNum;
 }
 
-void Com_ModelRenderer::PreLoad(const char* _FileName)
+void Com_ModelRenderer::PreLoad(const char* _FileName, float _LoadScale)
 {
 	// _FileNameのモデルが既に登録されていれば処理を終了する
 	if (map_mModelPool.count(_FileName) > 0)
@@ -461,7 +464,7 @@ void Com_ModelRenderer::PreLoad(const char* _FileName)
 	MODEL* model = new MODEL;
 
 	// モデルファイルを読み込み
-	LoadModel(_FileName, model);
+	LoadModel(_FileName, model, _LoadScale);
 
 	// モデルデータをリストに登録
 	map_mModelPool[_FileName] = model;
@@ -490,6 +493,14 @@ void Com_ModelRenderer::UnloadAll()
 	map_mModelPool.clear();
 }
 
+void Com_ModelRenderer::Load(const char* _FileName, float _LoadScale)
+{
+	p_mModel = new MODEL;
+	LoadModel(_FileName, p_mModel, _LoadScale);
+
+	map_mModelPool[_FileName] = p_mModel;
+}
+
 void Com_ModelRenderer::Load(const char* _FileName)
 {
 	if (map_mModelPool.count(_FileName) > 0)
@@ -499,7 +510,7 @@ void Com_ModelRenderer::Load(const char* _FileName)
 	}
 
 	p_mModel = new MODEL;
-	LoadModel(_FileName, p_mModel);
+	LoadModel(_FileName, p_mModel, 1.0);
 
 	map_mModelPool[_FileName] = p_mModel;
 }
@@ -531,6 +542,33 @@ void Com_ModelRenderer::Draw()
 	}
 }
 
+void Com_ModelRenderer::Draw(MODEL* _model)
+{
+	// 頂点バッファ設定
+	UINT stride = sizeof(VERTEX_3D);
+	UINT offset = 0;
+	Renderer::GetDeviceContext()->IASetVertexBuffers(0, 1, &_model->VertexBuffer, &stride, &offset);
+
+	Renderer::GetDeviceContext()->IASetIndexBuffer(_model->IndexBuffer, DXGI_FORMAT_R32_UINT, 0);
+
+	Renderer::SetTopologyTriangleList();
+
+	for (unsigned int i = 0; i < _model->SubsetNum; i++)
+	{
+		// マテリアル設定
+		Renderer::SetMaterial(_model->SubsetArray[i].Material.Material);
+
+		// テクスチャ設定
+		if (_model->SubsetArray[i].Material.Texture)
+		{
+			Renderer::GetDeviceContext()->PSSetShaderResources(0, 1, &_model->SubsetArray[i].Material.Texture);
+		}
+
+		// ポリゴン描画
+		Renderer::GetDeviceContext()->DrawIndexed(_model->SubsetArray[i].IndexNum, _model->SubsetArray[i].StartIndex, 0);
+	}
+}
+
 MODEL* Com_ModelRenderer::GetModelData(const char* _FileName)
 {
 	if (map_mModelPool.count(_FileName) > 0)
@@ -540,4 +578,13 @@ MODEL* Com_ModelRenderer::GetModelData(const char* _FileName)
 	}
 
 	return nullptr;
+}
+
+void Com_ModelRenderer::ScaleModelData(MODEL* _model)
+{
+	
+}
+
+void Com_ModelRenderer::ScaleModelData()
+{
 }

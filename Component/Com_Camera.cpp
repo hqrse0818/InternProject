@@ -13,7 +13,7 @@ void Com_Camera::SetTarget(GameObject* _targetpos)
 
 void Com_Camera::Init()
 {
-	p_mObject->p_mTransform->mPosition.z = -10.0f;
+	//p_mObject->p_mTransform->mPosition.z = -10.0f;
 }
 
 void Com_Camera::Update()

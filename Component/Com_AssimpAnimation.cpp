@@ -141,13 +141,15 @@ ID3D11ShaderResourceView* Com_AssimpAnimation::LoadDiffuseTexture(std::string fi
 	return srv;
 }
 
-void Com_AssimpAnimation::LoadModel(const char* _FileName, float _importScale)
+void Com_AssimpAnimation::LoadModel(const char* _FileName, float _importScale, bool _bLoadMaterial)
 {
 	const std::string modelPath(_FileName);
 
 	Time->CountStart();
 
 	Assimp::Importer importer;
+
+	bUseMaterial = _bLoadMaterial;
 
 	unsigned int flg = 0;
 	//flg |= aiProcess_Triangulate;	// 三角形に変換
@@ -335,140 +337,144 @@ void Com_AssimpAnimation::LoadModel(const char* _FileName, float _importScale)
 	}
 
 	// マテリアル読み込み
-	for (unsigned int i = 0; i < p_mAiScene->mNumMaterials; i++)
+	if (_bLoadMaterial)
 	{
-		aiMaterial* mat = p_mAiScene->mMaterials[i];
-		aiString name = mat->GetName();
-
-		MATERIAL myMat{};
-
-		// 拡散反射
+		for (unsigned int i = 0; i < p_mAiScene->mNumMaterials; i++)
 		{
-			aiColor3D color(0.0f, 0.0f, 0.0f);
-			if (mat->Get(AI_MATKEY_COLOR_DIFFUSE, color) == AI_SUCCESS)
-			{
-				myMat.Diffuse.x = color.r;
-				myMat.Diffuse.y = color.g;
-				myMat.Diffuse.z = color.b;
-				myMat.Diffuse.w = 1.0f;
-			}
-			else
-			{
-				myMat.Diffuse.x = 0.5f;
-				myMat.Diffuse.y = 0.5f;
-				myMat.Diffuse.z = 0.5f;
-				myMat.Diffuse.w = 1.0f;
-			}
-		}
-		
-		// 鏡面反射
-		{
-			aiColor3D color(0.0f, 0.0f, 0.0f);
-			if (mat->Get(AI_MATKEY_COLOR_SPECULAR, color) == AI_SUCCESS)
-			{
-				myMat.Specular.x = color.r;
-				myMat.Specular.y = color.g;
-				myMat.Specular.z = color.b;
-				myMat.Specular.w = 1.0f;
-			}
-			else
-			{
-				myMat.Specular.x = 0.0f;
-				myMat.Specular.y = 0.0f;
-				myMat.Specular.z = 0.0f;
-				myMat.Specular.w = 0.0f;
-			}
-		}
+			aiMaterial* mat = p_mAiScene->mMaterials[i];
+			aiString name = mat->GetName();
 
-		// 鏡面反射強度
-		{
-			float Shinness = 0.0f;
-			if (mat->Get(AI_MATKEY_SHININESS, Shinness) == AI_SUCCESS)
-			{
-				myMat.Shininess = Shinness;
-			}
-			else
-			{
-				myMat.Shininess = 0.0f;
-			}
+			MATERIAL myMat{};
 
-			// 環境反射光成分
+			// 拡散反射
 			{
 				aiColor3D color(0.0f, 0.0f, 0.0f);
-				if (mat->Get(AI_MATKEY_COLOR_AMBIENT, color) == AI_SUCCESS)
+				if (mat->Get(AI_MATKEY_COLOR_DIFFUSE, color) == AI_SUCCESS)
 				{
-					myMat.Ambient.x = color.r;
-					myMat.Ambient.y = color.g;
-					myMat.Ambient.z = color.b;
-					myMat.Ambient.w = 1.0f;
+					myMat.Diffuse.x = color.r;
+					myMat.Diffuse.y = color.g;
+					myMat.Diffuse.z = color.b;
+					myMat.Diffuse.w = 1.0f;
 				}
 				else
 				{
-					myMat.Ambient.x = 0.0f;
-					myMat.Ambient.y = 0.0f;
-					myMat.Ambient.z = 0.0f;
-					myMat.Ambient.w = 0.0f;
+					myMat.Diffuse.x = 0.5f;
+					myMat.Diffuse.y = 0.5f;
+					myMat.Diffuse.z = 0.5f;
+					myMat.Diffuse.w = 1.0f;
 				}
 			}
 
-			// 自家発光成分
+			// 鏡面反射
 			{
 				aiColor3D color(0.0f, 0.0f, 0.0f);
-				if (mat->Get(AI_MATKEY_COLOR_EMISSIVE, color) == AI_SUCCESS)
+				if (mat->Get(AI_MATKEY_COLOR_SPECULAR, color) == AI_SUCCESS)
 				{
-					myMat.Emission.x = color.r;
-					myMat.Emission.x = color.g;
-					myMat.Emission.x = color.b;
-					myMat.Emission.x = 1.0f;
+					myMat.Specular.x = color.r;
+					myMat.Specular.y = color.g;
+					myMat.Specular.z = color.b;
+					myMat.Specular.w = 1.0f;
 				}
 				else
 				{
-					myMat.Emission.x = 0.0f;
-					myMat.Emission.x = 0.0f;
-					myMat.Emission.x = 0.0f;
-					myMat.Emission.x = 0.0f;
+					myMat.Specular.x = 0.0f;
+					myMat.Specular.y = 0.0f;
+					myMat.Specular.z = 0.0f;
+					myMat.Specular.w = 0.0f;
 				}
 			}
 
-			// ディフーズテクスチャ数取得
-			aiTextureType type = aiTextureType_DIFFUSE;
-			int texnum = mat->GetTextureCount(type);
-
-			// 1メッシュに1毎だけ許可
-			assert(texnum <= 1);
-
-			// マテリアル名を取得
-			aiString matName;
-			mat->GetTexture(type, 0, &matName);
-
-			ID3D11ShaderResourceView* srv = nullptr;
-
-			// 存在しているか確認
-			if (map_mTexture.find(matName.data) == map_mTexture.end())
+			// 鏡面反射強度
 			{
-				myMat.TextureEnable = FALSE;
-				srv = nullptr;
+				float Shinness = 0.0f;
+				if (mat->Get(AI_MATKEY_SHININESS, Shinness) == AI_SUCCESS)
+				{
+					myMat.Shininess = Shinness;
+				}
+				else
+				{
+					myMat.Shininess = 0.0f;
+				}
 
-				// ファイル名取得
-				std::string fileName = GetFileName(matName.C_Str());
+				// 環境反射光成分
+				{
+					aiColor3D color(0.0f, 0.0f, 0.0f);
+					if (mat->Get(AI_MATKEY_COLOR_AMBIENT, color) == AI_SUCCESS)
+					{
+						myMat.Ambient.x = color.r;
+						myMat.Ambient.y = color.g;
+						myMat.Ambient.z = color.b;
+						myMat.Ambient.w = 1.0f;
+					}
+					else
+					{
+						myMat.Ambient.x = 0.0f;
+						myMat.Ambient.y = 0.0f;
+						myMat.Ambient.z = 0.0f;
+						myMat.Ambient.w = 0.0f;
+					}
+				}
 
-				// テクスチャの読み込みと取得
-				srv = LoadDiffuseTexture(fileName, _FileName);
+				// 自家発光成分
+				{
+					aiColor3D color(0.0f, 0.0f, 0.0f);
+					if (mat->Get(AI_MATKEY_COLOR_EMISSIVE, color) == AI_SUCCESS)
+					{
+						myMat.Emission.x = color.r;
+						myMat.Emission.x = color.g;
+						myMat.Emission.x = color.b;
+						myMat.Emission.x = 1.0f;
+					}
+					else
+					{
+						myMat.Emission.x = 0.0f;
+						myMat.Emission.x = 0.0f;
+						myMat.Emission.x = 0.0f;
+						myMat.Emission.x = 0.0f;
+					}
+				}
 
-				if (srv == nullptr)
+				// ディフーズテクスチャ数取得
+				aiTextureType type = aiTextureType_DIFFUSE;
+				int texnum = mat->GetTextureCount(type);
+
+				// 1メッシュに1毎だけ許可
+				assert(texnum <= 1);
+
+				// マテリアル名を取得
+				aiString matName;
+				mat->GetTexture(type, 0, &matName);
+
+				ID3D11ShaderResourceView* srv = nullptr;
+
+				// 存在しているか確認
+				if (map_mTexture.find(matName.data) == map_mTexture.end())
 				{
 					myMat.TextureEnable = FALSE;
+					srv = nullptr;
+
+					// ファイル名取得
+					std::string fileName = GetFileName(matName.C_Str());
+
+					// テクスチャの読み込みと取得
+					srv = LoadDiffuseTexture(fileName, _FileName);
+
+					if (srv == nullptr)
+					{
+						myMat.TextureEnable = FALSE;
+					}
+					else
+					{
+						myMat.TextureEnable = TRUE;
+						map_mTexture[matName.data] = srv;
+					}
 				}
-				else
-				{
-					myMat.TextureEnable = TRUE;
-					map_mTexture[matName.data] = srv;
-				}
+				// マテリアルの保存
+				vec_material.emplace_back(myMat);
 			}
-			// マテリアルの保存
-			vec_material.emplace_back(myMat);
 		}
 	}
+	
 	float time = Time->CountStop();
 	cout << "モデル読み込み完了" << endl;
 	cout << "Time : " << time << "sec" << endl;
@@ -511,6 +517,7 @@ void Com_AssimpAnimation::Uninit()
 	{
 		aiReleaseImport(pair.second);
 	}
+
 
 }
 
@@ -710,7 +717,17 @@ void Com_AssimpAnimation::Draw()
 	{
 		aiMesh* mesh = p_mAiScene->mMeshes[m];
 		
-		Renderer::SetMaterial(vec_material[m]);
+		if (bUseMaterial)
+		{
+			Renderer::SetMaterial(vec_material[m]);
+		}
+		else
+		{
+			MATERIAL mat;
+			mat.TextureEnable = false;
+			mat.Diffuse = Color(1.0f, 1.0f, 1.0f, 1.0f);
+			Renderer::SetMaterial(mat);
+		}
 
 		aiMaterial* material = p_mAiScene->mMaterials[mesh->mMaterialIndex];
 

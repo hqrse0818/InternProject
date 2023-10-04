@@ -22,6 +22,14 @@ public:
     void Init()override;
     void Update()override;
     void OnCollisionEnter(GameObject* _obj)override;
+    void OnCollisionStay(GameObject* _obj)override;
+    void OnCollisionExit(GameObject* _obj)override;
+    void SetCenter(float _x, float _y, float _z)
+    {
+        mCenter.x = _x;
+        mCenter.y = _y;
+        mCenter.z = _z;
+    }
 };
 
 class Com_CircleCollider :

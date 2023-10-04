@@ -73,6 +73,8 @@ private:
     int iFrame1;
     int iFrame2;
 
+    bool bUseMaterial = false;
+
     bool bPlayAnim = false;
 
 private:
@@ -83,7 +85,7 @@ private:
     ID3D11ShaderResourceView* LoadDiffuseTexture(std::string filename, std::string m_filename);
 
 public:
-    void LoadModel(const char* _FileName, float _LoadScale);
+    void LoadModel(const char* _FileName, float _LoadScale, bool _bLosdMaterial);
     void LoadAnimation(const char* _FileName, const char* _Name);
     void Uninit();
     void Update();

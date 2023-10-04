@@ -8,38 +8,61 @@ using namespace DirectX::SimpleMath;
 
 void Scene_Test::Init()
 {
-	Player = new GameObject("Test");
+	Com_ModelRenderer::PreLoad("asset\\model\\Collider\\SphereCollider.obj", 10.0f);
+	bCheckCol = true;
 
+	// プレイヤー
+	Player = new GameObject("Test");
 	Com_Shader* Shader_buf = new Com_Shader();
 	Shader_buf->p_mVS->Load(VS_MODEL);
-	Shader_buf->p_mPS->Load(PS_MODEL);
+	//Shader_buf->p_mPS->Load(PS_MODEL);
+	Shader_buf->p_mPS->Load("shader\\PS_NoHitLine.cso");
 	Player->AddComponent(Shader_buf);
 
 	Com_AssimpAnimation* Model_buf = new Com_AssimpAnimation();
-	Model_buf->LoadModel("asset\\model\\testbone.fbx", 0.5f);
-	Model_buf->LoadAnimation("asset\\model\\testanim.fbx", "anim");
+	Model_buf->LoadModel("asset\\model\\PlayerFBX\\ver1\\pengin_ver1.fbx", 1.0f, false);
 	Player->AddComponent(Model_buf);
 
-	Com_BoxCollider* Col_buf = new Com_BoxCollider();
-	Col_buf->mSize = Vector3(1.0f, 1.0f, 1.0f);
+	Com_SphereCollider* Col_buf = new Com_SphereCollider();
+	Col_buf->fRadius = 4.0f;
+	Col_buf->SetCenter(0.0f, 2.0f, 0.0f);
+	Col_buf->bMovable = true;
+	/*Com_BoxCollider* Col_buf = new Com_BoxCollider();
+	Col_buf->SetSize(2.0f, 2.0f, 2.0f);
+	Col_buf->SetCenter(0.0f, 1.0f, 0.0f);
+	Col_buf->bMovable = true;*/
 	Player->AddComponent(Col_buf);
 
 	// レイヤーの指定なしでキーオブジェクトとして追加
 	AddKeyObject(Player);
 
-	// テスト用ボックスコライダーオブジェクト
-	GameObject* testObj = new GameObject("col");
-	Col_buf = new Com_BoxCollider();
-	testObj->AddComponent(Col_buf);
-	testObj->p_mTransform->SetPosition(0.0f, 0.0f, 0.5f);
+	// ステージ
+	GameObject* stage = new GameObject("stage");
+	Shader_buf = new Com_Shader();
+	Shader_buf->p_mVS->Load(VS_MODEL);
+	Shader_buf->p_mPS->Load("shader\\PS_HitLine.cso");
+	stage->AddComponent(Shader_buf);
 
-	AddGameObject(testObj);
+	Model_buf = new Com_AssimpAnimation;
+	Model_buf->LoadModel("asset\\model\\PlayerFBX\\ver1\\stage_ver4.fbx", 1.0f, false);
+	stage->AddComponent(Model_buf);
+
+	Com_BoxCollider* bo_col = new Com_BoxCollider();
+	bo_col->SetSize(6.0f, 1.0f, 6.0f);
+	bo_col->SetCenter(0.0f, 0.5f, 0.0f);
+
+	stage->AddComponent(bo_col);
+
+	stage->p_mTransform->SetPosition(-2.0f, 2.0f, 0.0f);
+
+	AddGameObject(stage);
+
 
 	GameObject* Camera = new GameObject("Camera");
 	Com_Camera* Camera_buf = new Com_Camera();
 	Camera_buf->SetTarget(Player);
 	Camera_buf->SetUseTarget(true);
-	Camera->p_mTransform->SetPosition(0.0f, 3.0f, -5.0f);
+	Camera->p_mTransform->SetPosition(0.0f, 20.0f, -30.0f);
 	Camera->AddComponent(Camera_buf);
 
 	// レイヤーを指定してオブジェクトを追加
@@ -48,30 +71,13 @@ void Scene_Test::Init()
 
 void Scene_Test::Update()
 {
-	Com_AssimpAnimation* anim = GetKeyObject("Test")->GetComponent<Com_AssimpAnimation>();
+	Player->p_mTransform->Translate(
+		Controller_Input::GetLeftStick(0).x * 5.0f * Time->GetDeltaTime(),
+		0.0f,
+		Controller_Input::GetLeftStick(0).y * 5.0f * Time->GetDeltaTime());
 
-	anim->UpdateFrame();
-
-	/*if (Math::Abs(Controller_Input::GetLeftStick(0).x) > 0.5f || Math::Abs(Controller_Input::GetLeftStick(0).y) > 0.5f)
-	{
-		anim->PlayAnimation("Run");
-	}
-	else
-	{
-		anim->PlayAnimation("Idle");
-	}*/
-
-	if (Controller_Input::GetButton(0, GAMEPAD_SHOULDER_L) == KEYSTATE::KEY_WHILE_DOWN)
-	{
-		Player->p_mTransform->Rotate(0.0f, -0.5f * Time->GetDeltaTime(), 0.0f);
-	}
-	if (Controller_Input::GetButton(0, GAMEPAD_SHOULDER_R) == KEYSTATE::KEY_WHILE_DOWN)
-	{
-		Player->p_mTransform->Rotate(0.0f, 0.5f * Time->GetDeltaTime(), 0.0f);
-	}
-
-	if (Controller_Input::GetButton(0, GAMEPAD_B) == KEYSTATE::KEY_WHILE_DOWN || Input::GetKeyState(KEYCODE_RETURN)== KEYSTATE::KEY_DOWN)
-	{
-		anim->PlayAnimation("anim");
-	}
+	Player->p_mTransform->Translate(
+		0.0f,
+		Controller_Input::GetRightStick(0).y * 5.0f * Time->GetDeltaTime(),
+		0.0f);
 }
