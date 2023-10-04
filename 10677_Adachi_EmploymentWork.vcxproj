@@ -160,13 +160,14 @@
     <ClCompile Include="Component\Com_RenderCollisionPoint.cpp" />
     <ClCompile Include="Component\Com_RenderCollider.cpp" />
     <ClCompile Include="Component\Com_AssimpAnimation.cpp" />
-    <ClCompile Include="Component\Com_RenderCollisionLine_Sphere.cpp" />
+    <ClCompile Include="InternCodeAdachi\Com_RenderCollisionLine_Sphere.cpp" />
     <ClCompile Include="DirectX\renderer.cpp" />
     <ClCompile Include="DirectX\Shader.cpp" />
     <ClCompile Include="DirectX\ShaderResourceView.cpp" />
     <ClCompile Include="GameObject\GameObject.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="GameObject\OBJ_Transition.cpp" />
+    <ClCompile Include="InternCodeAdachi\OBJ_Penguin.cpp" />
     <ClCompile Include="Scene\Scene.cpp" />
     <ClCompile Include="Scene\Scene_Title.cpp" />
     <ClCompile Include="Scene\Scene_Test.cpp" />
@@ -203,14 +204,16 @@
     <ClInclude Include="Component\Com_RenderCollisionPoint.h" />
     <ClInclude Include="Component\Com_RenderCollider.h" />
     <ClInclude Include="Component\Com_AssimpAnimation.h" />
-    <ClInclude Include="Component\Com_RenderCollisionLine_Sphere.h" />
+    <ClInclude Include="InternCodeAdachi\Com_RenderCollisionLine_Sphere.h" />
     <ClInclude Include="DirectX\renderer.h" />
     <ClInclude Include="DirectX\Shader.h" />
     <ClInclude Include="DirectX\ShaderResourceView.h" />
     <ClInclude Include="Format.h" />
     <ClInclude Include="GameObject\GameObject.h" />
     <ClInclude Include="GameObject\OBJ_Transition.h" />
+    <ClInclude Include="InternCodeAdachi\InternCollision.h" />
     <ClInclude Include="main.h" />
+    <ClInclude Include="InternCodeAdachi\OBJ_Penguin.h" />
     <ClInclude Include="Scene\Scene.h" />
     <ClInclude Include="Scene\Scene_Title.h" />
     <ClInclude Include="Scene\Scene_Test.h" />
@@ -253,6 +256,9 @@
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Vertex</ShaderType>
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Vertex</ShaderType>
     </FxCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="ClassDiagram.cd" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

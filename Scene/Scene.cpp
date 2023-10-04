@@ -1,5 +1,6 @@
 #include "Scene.h"
 #include "../System/Collision.h"
+#include "../InternCodeAdachi/InternCollision.h"
 
 
 void Scene::CollisionUpdate()
@@ -419,7 +420,7 @@ bool Scene::CollisionCheck(GameObject* objA, GameObject* objB)
 		{
 			Sphere Sphere1 = objB->GetComponent<Com_SphereCollider>()->GetSphere();
 			// Õ“Ë”»’è
-			return Collision::AABB2Sphere(Box1, Sphere1);
+			return CollisionBox2Sphere(Box1, Sphere1);
 		}
 	}
 	// objA‚ªCylinder
@@ -450,7 +451,7 @@ bool Scene::CollisionCheck(GameObject* objA, GameObject* objB)
 			AABB Box1 = objB->GetComponent<Com_BoxCollider>()->GetAABB();
 
 			// Õ“Ë”»’è
-			return Collision::AABB2Sphere(Box1, sphere1);
+			return CollisionBox2Sphere(Box1, sphere1);
 		}
 	}
 	// objA‚ªBox2D

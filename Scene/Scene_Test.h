@@ -8,6 +8,7 @@ private:
 
 public:
     void Init();
+    void Start();
     void Update();
 };
 

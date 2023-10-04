@@ -1,7 +1,7 @@
 #include "Com_SphereCollider.h"
 #include "../GameObject/GameObject.h"
 #include "../Scene/Scene.h"
-#include "Com_RenderCollisionLine_Sphere.h"
+#include "../InternCodeAdachi/Com_RenderCollisionLine_Sphere.h"
 
 using namespace std;
 

@@ -4,37 +4,49 @@
 #include "../System/CustomMath.h"
 #include "../System/Time.h"
 
+#include "../InternCodeAdachi/OBJ_Penguin.h"
+
 using namespace DirectX::SimpleMath;
 
 void Scene_Test::Init()
 {
-	Com_ModelRenderer::PreLoad("asset\\model\\Collider\\SphereCollider.obj", 10.0f);
+	// 当たり判定アクティブ化
 	bCheckCol = true;
 
-	// プレイヤー
-	Player = new GameObject("Test");
+	// ペンギン
+	Player = new OBJ_Penguin("Test");
 	Com_Shader* Shader_buf = new Com_Shader();
 	Shader_buf->p_mVS->Load(VS_MODEL);
-	//Shader_buf->p_mPS->Load(PS_MODEL);
-	Shader_buf->p_mPS->Load("shader\\PS_NoHitLine.cso");
+	Shader_buf->p_mPS->Load(PS_MODEL);
 	Player->AddComponent(Shader_buf);
 
 	Com_AssimpAnimation* Model_buf = new Com_AssimpAnimation();
-	Model_buf->LoadModel("asset\\model\\PlayerFBX\\ver1\\pengin_ver1.fbx", 1.0f, false);
+	Model_buf->LoadModel("asset\\model\\pengin_v2.fbx", 1.0f, true);
 	Player->AddComponent(Model_buf);
-
-	Com_SphereCollider* Col_buf = new Com_SphereCollider();
-	Col_buf->fRadius = 4.0f;
-	Col_buf->SetCenter(0.0f, 2.0f, 0.0f);
-	Col_buf->bMovable = true;
-	/*Com_BoxCollider* Col_buf = new Com_BoxCollider();
-	Col_buf->SetSize(2.0f, 2.0f, 2.0f);
-	Col_buf->SetCenter(0.0f, 1.0f, 0.0f);
-	Col_buf->bMovable = true;*/
-	Player->AddComponent(Col_buf);
 
 	// レイヤーの指定なしでキーオブジェクトとして追加
 	AddKeyObject(Player);
+
+	// アザラシ
+	GameObject* Azarashi = new GameObject("Azarashi");
+	Shader_buf = new Com_Shader();
+	Shader_buf->p_mVS->Load(VS_MODEL);
+	Shader_buf->p_mPS->Load(PS_MODEL);
+
+	Azarashi->AddComponent(Shader_buf);
+
+	Model_buf = new Com_AssimpAnimation();
+	Model_buf->LoadModel("asset\\model\\azarasi_v1.fbx", 1.0f, true);
+	Azarashi->AddComponent(Model_buf);
+
+	Com_SphereCollider* Col_buf = new Com_SphereCollider();
+	Col_buf->fRadius = 2.0f;
+	Col_buf->SetCenter(0.0f, 1.0f, 0.0f);
+	Col_buf->bMovable = true;
+	Azarashi->AddComponent(Col_buf);
+
+	AddGameObject(Azarashi);
+
 
 	// ステージ
 	GameObject* stage = new GameObject("stage");
@@ -44,7 +56,7 @@ void Scene_Test::Init()
 	stage->AddComponent(Shader_buf);
 
 	Model_buf = new Com_AssimpAnimation;
-	Model_buf->LoadModel("asset\\model\\PlayerFBX\\ver1\\stage_ver4.fbx", 1.0f, false);
+	Model_buf->LoadModel("asset\\model\\stage_v2.fbx", 1.0f, false);
 	stage->AddComponent(Model_buf);
 
 	Com_BoxCollider* bo_col = new Com_BoxCollider();
@@ -67,6 +79,11 @@ void Scene_Test::Init()
 
 	// レイヤーを指定してオブジェクトを追加
 	AddGameObject(Camera, 0);
+}
+
+void Scene_Test::Start()
+{
+	GetGameObject("Azarashi")->p_mTransform->SetPosition(2.0f, 8.0f, -2.0f);
 }
 
 void Scene_Test::Update()

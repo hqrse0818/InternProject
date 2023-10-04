@@ -1,3 +1,4 @@
+#if defined(DEBUG) | (_DEBUG)
 #include "Com_RenderCollider.h"
 #include "../GameObject/GameObject.h"
 
@@ -36,3 +37,5 @@ void Com_RenderCollider::SetPixelShaderHit()
 {
 	Renderer::CreatePixelShader(&p_mPixelShader, "shader\\PS_HitLine.cso");
 }
+
+#endif

@@ -1,4 +1,6 @@
 #pragma once
+
+#if defined(DEBUG) || defined(_DEBUG)
 #include "Component.h"
 #include "../Utility.h"
 #include "../DirectX/renderer.h"
@@ -20,4 +22,6 @@ public:
     void SetPixelShaderNoHit();
     void SetPixelShaderHit();
 };
+
+#endif // 
 

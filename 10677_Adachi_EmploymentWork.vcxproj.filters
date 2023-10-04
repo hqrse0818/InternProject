@@ -165,7 +165,10 @@
     <ClCompile Include="Utility.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
-    <ClCompile Include="Component\Com_RenderCollisionLine_Sphere.cpp">
+    <ClCompile Include="InternCodeAdachi\Com_RenderCollisionLine_Sphere.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="InternCodeAdachi\OBJ_Penguin.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
   </ItemGroup>
@@ -302,7 +305,13 @@
     <ClInclude Include="Scene\Scene_Test.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
-    <ClInclude Include="Component\Com_RenderCollisionLine_Sphere.h">
+    <ClInclude Include="InternCodeAdachi\Com_RenderCollisionLine_Sphere.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="InternCodeAdachi\InternCollision.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="InternCodeAdachi\OBJ_Penguin.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
   </ItemGroup>
@@ -319,5 +328,8 @@
     <FxCompile Include="shader\vertexLightingVS.hlsl">
       <Filter>VertexShader</Filter>
     </FxCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="ClassDiagram.cd" />
   </ItemGroup>
 </Project>
