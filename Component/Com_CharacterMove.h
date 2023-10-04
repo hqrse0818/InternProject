@@ -1,10 +1,10 @@
 #pragma once
-#include "Component/Component.h"
+#include "Component.h"
+#include "../GameObject/GameObject.h"
 
 class Com_CharacterMove :public Component
 {
-protected:
-	
+private:
 
 public:
 	Com_CharacterMove();

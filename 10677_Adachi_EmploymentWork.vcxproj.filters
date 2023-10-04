@@ -165,8 +165,17 @@
     <ClCompile Include="Utility.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
-    <ClCompile Include="Com_CharacterMove.cpp">
+    <ClCompile Include="Component\Com_CharacterMove.cpp">
       <Filter>ソース ファイル\Component</Filter>
+    </ClCompile>
+    <ClCompile Include="Component\Com_CharacterJump.cpp">
+      <Filter>ソース ファイル\Component</Filter>
+    </ClCompile>
+    <ClCompile Include="GameObject\OBJ_PlayerCharacter.cpp">
+      <Filter>ソース ファイル\GameObject</Filter>
+    </ClCompile>
+    <ClCompile Include="Scene\Scene_Test2.cpp">
+      <Filter>ソース ファイル\Scene</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -302,14 +311,17 @@
     <ClInclude Include="Scene\Scene_Test.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
-    <ClInclude Include="Obj_PlayerCharacter.h">
+    <ClInclude Include="Component\Com_CharacterMove.h">
+      <Filter>ヘッダー ファイル\Component</Filter>
+    </ClInclude>
+    <ClInclude Include="GameObject\OBJ_PlayerCharacter.h">
       <Filter>ヘッダー ファイル\GameObject</Filter>
     </ClInclude>
-    <ClInclude Include="Com_CharacterMove.h">
+    <ClInclude Include="Component\Com_CharacterJump.h">
       <Filter>ヘッダー ファイル\Component</Filter>
     </ClInclude>
-    <ClInclude Include="Com_CharacterJump.h">
-      <Filter>ヘッダー ファイル\Component</Filter>
+    <ClInclude Include="Scene\Scene_Test2.h">
+      <Filter>ヘッダー ファイル\Scene</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

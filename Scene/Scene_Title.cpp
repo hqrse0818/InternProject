@@ -9,6 +9,7 @@
 #include "../System/Input.h"
 #include "../TextureFilePath.h"
 #include "Scene_Test.h"
+#include "Scene_Test2.h"
 
 using namespace DirectX::SimpleMath;
 using namespace std;
@@ -60,6 +61,10 @@ void Scene_Title::Update()
 	if (Controller_Input::GetButton(0, GAMEPAD_A) == KEYSTATE::KEY_DOWN || Input::GetKeyState(KEYCODE_0) == KEYSTATE::KEY_DOWN)
 	{
 		Manager::SetScene<Scene_Test>();
+	}
+	if (Controller_Input::GetButton(0, GAMEPAD_A) == KEYSTATE::KEY_DOWN || Input::GetKeyState(KEYCODE_RETURN) == KEYSTATE::KEY_DOWN)
+	{
+		Manager::SetScene<Scene_Test2>();
 	}
 }
 
