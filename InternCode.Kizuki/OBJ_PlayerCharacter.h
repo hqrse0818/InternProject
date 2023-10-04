@@ -1,7 +1,7 @@
 #pragma once
-#include "GameObject.h"
-#include "../Component/Com_CharacterMove.h"
-#include "../Component/Com_CharacterJump.h"
+#include "../GameObject/GameObject.h"
+#include "Com_CharacterMove.h"
+#include "Com_CharacterJump.h"
 
 class OBJ_PlayerCharacter :public GameObject
 {

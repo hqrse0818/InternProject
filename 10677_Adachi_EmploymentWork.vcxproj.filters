@@ -49,6 +49,9 @@
     <Filter Include="PixelShader">
       <UniqueIdentifier>{dd6b0c13-918c-4da6-bb7c-c3692650b735}</UniqueIdentifier>
     </Filter>
+    <Filter Include="InternCodeKizuki">
+      <UniqueIdentifier>{d226746f-f922-488a-b247-c99bdc0bef5f}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Component\Com_Audio.cpp">
@@ -165,17 +168,17 @@
     <ClCompile Include="Utility.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
-    <ClCompile Include="Component\Com_CharacterMove.cpp">
-      <Filter>ソース ファイル\Component</Filter>
+    <ClCompile Include="InternCode.Kizuki\OBJ_PlayerCharacter.cpp">
+      <Filter>InternCodeKizuki</Filter>
     </ClCompile>
-    <ClCompile Include="Component\Com_CharacterJump.cpp">
-      <Filter>ソース ファイル\Component</Filter>
+    <ClCompile Include="InternCode.Kizuki\Com_CharacterJump.cpp">
+      <Filter>InternCodeKizuki</Filter>
     </ClCompile>
-    <ClCompile Include="GameObject\OBJ_PlayerCharacter.cpp">
-      <Filter>ソース ファイル\GameObject</Filter>
+    <ClCompile Include="InternCode.Kizuki\Com_CharacterMove.cpp">
+      <Filter>InternCodeKizuki</Filter>
     </ClCompile>
-    <ClCompile Include="Scene\Scene_Test2.cpp">
-      <Filter>ソース ファイル\Scene</Filter>
+    <ClCompile Include="InternCode.Kizuki\Scene_Test2.cpp">
+      <Filter>InternCodeKizuki</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -311,17 +314,17 @@
     <ClInclude Include="Scene\Scene_Test.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
-    <ClInclude Include="Component\Com_CharacterMove.h">
-      <Filter>ヘッダー ファイル\Component</Filter>
+    <ClInclude Include="InternCode.Kizuki\OBJ_PlayerCharacter.h">
+      <Filter>InternCodeKizuki</Filter>
     </ClInclude>
-    <ClInclude Include="GameObject\OBJ_PlayerCharacter.h">
-      <Filter>ヘッダー ファイル\GameObject</Filter>
+    <ClInclude Include="InternCode.Kizuki\Com_CharacterJump.h">
+      <Filter>InternCodeKizuki</Filter>
     </ClInclude>
-    <ClInclude Include="Component\Com_CharacterJump.h">
-      <Filter>ヘッダー ファイル\Component</Filter>
+    <ClInclude Include="InternCode.Kizuki\Com_CharacterMove.h">
+      <Filter>InternCodeKizuki</Filter>
     </ClInclude>
-    <ClInclude Include="Scene\Scene_Test2.h">
-      <Filter>ヘッダー ファイル\Scene</Filter>
+    <ClInclude Include="InternCode.Kizuki\Scene_Test2.h">
+      <Filter>InternCodeKizuki</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

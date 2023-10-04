@@ -27,4 +27,5 @@ void Com_CharacterMove::Update()
 	}
 }
 
+//Controller‚ÍƒNƒ‰ƒX‚Åì‚é
 //GetViews—ñ

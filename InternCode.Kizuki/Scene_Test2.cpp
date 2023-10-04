@@ -8,6 +8,8 @@ using namespace DirectX::SimpleMath;
 
 void Scene_Test2::Init()
 {
+	bCheckCol = true; //当たり判定をアクティブ化
+
 	Player = new OBJ_PlayerCharacter("Test");
 
 	Com_Shader* Shader_buf = new Com_Shader();
@@ -26,6 +28,12 @@ void Scene_Test2::Init()
 
 	// レイヤーの指定なしでキーオブジェクトとして追加
 	AddKeyObject(Player);
+
+	//ステージ
+	Com_BoxCollider* bo_col = new Com_BoxCollider();
+	bo_col->SetSize(6.0f, 1.0f, 6.0f); //大きさ設定
+	bo_col->SetCenter(0.0f, 0.5f, 0.0f); //中心点設定
+	bo_col->bMovable = true; //動くコライダーとして設定
 
 	// テスト用ボックスコライダーオブジェクト
 	GameObject* testObj = new GameObject("col");
