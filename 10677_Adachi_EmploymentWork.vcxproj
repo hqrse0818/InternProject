@@ -160,6 +160,7 @@
     <ClCompile Include="Component\Com_RenderCollisionPoint.cpp" />
     <ClCompile Include="Component\Com_RenderCollider.cpp" />
     <ClCompile Include="Component\Com_AssimpAnimation.cpp" />
+    <ClCompile Include="Com_CharacterMove.cpp" />
     <ClCompile Include="DirectX\renderer.cpp" />
     <ClCompile Include="DirectX\Shader.cpp" />
     <ClCompile Include="DirectX\ShaderResourceView.cpp" />
@@ -202,6 +203,8 @@
     <ClInclude Include="Component\Com_RenderCollisionPoint.h" />
     <ClInclude Include="Component\Com_RenderCollider.h" />
     <ClInclude Include="Component\Com_AssimpAnimation.h" />
+    <ClInclude Include="Com_CharacterJump.h" />
+    <ClInclude Include="Com_CharacterMove.h" />
     <ClInclude Include="DirectX\renderer.h" />
     <ClInclude Include="DirectX\Shader.h" />
     <ClInclude Include="DirectX\ShaderResourceView.h" />
@@ -209,6 +212,7 @@
     <ClInclude Include="GameObject\GameObject.h" />
     <ClInclude Include="GameObject\OBJ_Transition.h" />
     <ClInclude Include="main.h" />
+    <ClInclude Include="Obj_PlayerCharacter.h" />
     <ClInclude Include="Scene\Scene.h" />
     <ClInclude Include="Scene\Scene_Title.h" />
     <ClInclude Include="Scene\Scene_Test.h" />
