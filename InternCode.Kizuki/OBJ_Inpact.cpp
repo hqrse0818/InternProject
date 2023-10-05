@@ -13,4 +13,5 @@ OBJ_Inpact::OBJ_Inpact()
 
 void OBJ_Inpact::Update()
 {
+
 }
