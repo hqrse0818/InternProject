@@ -18,7 +18,7 @@ void Scene_Test2::Init()
 	Player->AddComponent(Shader_buf);
 
 	Com_AssimpAnimation* Model_buf = new Com_AssimpAnimation();
-	Model_buf->LoadModel("asset\\model\\pengin_v3.fbx", 0.5f);
+	Model_buf->LoadModel("asset\\model\\pengin_v3.fbx", 0.5f, false);
 	Model_buf->LoadAnimation("asset\\model\\pengin_v3.fbx", "anim");
 	Player->AddComponent(Model_buf);
 

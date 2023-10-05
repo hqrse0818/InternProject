@@ -57,7 +57,5 @@ OBJ_Penguin::OBJ_Penguin(const char* _name)
 
 void OBJ_Penguin::Update()
 {
-	//p_mFoot->p_mTransform->mPosition = p_mTransform->mPosition;
-
 	GameObject::Update();
 }
