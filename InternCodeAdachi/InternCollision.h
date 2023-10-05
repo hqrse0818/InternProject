@@ -2,6 +2,8 @@
 #include "../Format.h"
 #include "../System/CustomMath.h"
 
+// 球とボックスの当たり判定
+
 bool CollisionBox2Sphere(AABB& _box,  Sphere& _sphere)
 {
 	// 球体の中心点とボックスの中心点の距離を計算

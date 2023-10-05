@@ -3,7 +3,9 @@
 #include "Com_Gravity.h"
 #include "../Component/Com_SphereCollider.h"
 #include "../Component/Com_BoxCollider.h"
-#include "Com_TestJump.h"
+#include "../System/Input.h"
+
+using namespace DirectX::SimpleMath;
 
 OBJ_Penguin::OBJ_Penguin()
 {
@@ -16,7 +18,9 @@ OBJ_Penguin::OBJ_Penguin()
 
 	// モデル
 	p_mModel = new Com_AssimpAnimation();
-	p_mModel->LoadModel("asset\\model\\Penguin\\pengin_v4.fbx", 1.0f, true);
+	p_mModel->LoadModel("asset\\model\\Penguin\\pengin_rig_v1.fbx", 1.0f, true);
+	p_mModel->LoadAnimation("asset\\model\\Penguin\\pengin_anime_v1.fbx", "hand");
+	p_mModel->PlayAnimation("hand");
 	p_mModel->SetUseMaterial(false);
 
 	AddComponent(p_mModel);
@@ -29,23 +33,29 @@ OBJ_Penguin::OBJ_Penguin()
 
 	AddComponent(p_mCollider);
 
-	// ジャンプコンポーネント
-	Com_TestJump* Jump_buf = new Com_TestJump();
-	Jump_buf->SetJumpPower(20.0f);
+	// 移動コンポーネント
+	p_mMoveCom = new Com_CharacterMove();
+	p_mMoveCom->SetMoveSpeed(15.0f);
 
-	AddComponent(Jump_buf);
+	AddComponent(p_mMoveCom);
+
+	// ジャンプコンポーネント
+	p_mJumpCom = new Com_TestJump();
+	p_mJumpCom->SetJumpPower(12.0f);
+
+	AddComponent(p_mJumpCom);
 
 	// 重力コンポーネント
 	Com_Gravity* Gravity_buf = new Com_Gravity();
-	Jump_buf->SetGravityCom(Gravity_buf);
+	p_mJumpCom->SetGravityCom(Gravity_buf);
 
 	AddComponent(Gravity_buf);
 
 	// 足場コンポーネント
 	Com_Foot* Foot_buf = new Com_Foot();
 	Foot_buf->SetGravityCom(Gravity_buf);
-	Foot_buf->SetFootHeight(1.0f);
-	Foot_buf->SetJumpCom(Jump_buf);
+	Foot_buf->SetFootHeight(1.5f);
+	Foot_buf->SetJumpCom(p_mJumpCom);
 	AddComponent(Foot_buf);
 }
 
@@ -57,5 +67,15 @@ OBJ_Penguin::OBJ_Penguin(const char* _name)
 
 void OBJ_Penguin::Update()
 {
+	// ジャンプ
+	if (Controller_Input::GetButton(0, GAMEPAD_B) == KEYSTATE::KEY_DOWN && p_mJumpCom->GetIsJump() == false)
+	{
+		p_mJumpCom->SetJumpFlg(true);
+	}
+	// 移動
+	p_mMoveCom->Move(Vector3(Controller_Input::GetLeftStick(0).x, 0.0f, Controller_Input::GetLeftStick(0).y));
+	// アニメーションの更新
+	p_mModel->UpdateFrame();
+
 	GameObject::Update();
 }

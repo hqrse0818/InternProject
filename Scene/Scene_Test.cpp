@@ -73,6 +73,8 @@ void Scene_Test::Init()
 
 	// レイヤーを指定してオブジェクトを追加
 	AddGameObject(Camera, 0);
+
+	Player->GetMoveCom()->SetCameraCom(Camera_buf);
 }
 
 void Scene_Test::Start()
@@ -83,7 +85,7 @@ void Scene_Test::Start()
 
 void Scene_Test::Update()
 {
-	Player->p_mTransform->Translate(
+	/*Player->p_mTransform->Translate(
 		Controller_Input::GetLeftStick(0).x * 5.0f * Time->GetDeltaTime(),
 		0.0f,
 		Controller_Input::GetLeftStick(0).y * 5.0f * Time->GetDeltaTime());
@@ -91,5 +93,5 @@ void Scene_Test::Update()
 	Player->p_mTransform->Translate(
 		0.0f,
 		Controller_Input::GetRightStick(0).y * 5.0f * Time->GetDeltaTime(),
-		0.0f);
+		0.0f);*/
 }

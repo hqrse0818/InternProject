@@ -9,6 +9,7 @@ using namespace DirectX::SimpleMath;
 void Com_Camera::SetTarget(GameObject* _targetpos)
 {
 	p_mTarget = _targetpos;
+	SetUseTarget(true);
 }
 
 void Com_Camera::Init()

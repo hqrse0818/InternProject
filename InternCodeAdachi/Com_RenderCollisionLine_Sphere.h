@@ -3,6 +3,8 @@
 #include "../DirectX//Shader.h"
 #include "../Format.h"
 
+// 球状コライダーの簡易描画用コンポーネント八面体を描画する
+
 class Com_RenderCollisionLine_Sphere
 	: public Com_RenderCollider
 {

@@ -1,10 +1,11 @@
 #pragma once
 #include "Scene.h"
+class OBJ_Penguin;
 class Scene_Test :
     public Scene
 {
 private:
-    GameObject* Player;
+    OBJ_Penguin* Player;
 
 public:
     void Init();

@@ -4,6 +4,9 @@
 class Com_Gravity;
 class Com_TestJump;
 
+// キャラクターの足元用コンポーネント
+// 重量フラグとジャンプフラグの変更も行う
+
 class Com_Foot :
     public Component
 {

@@ -2,29 +2,36 @@
 #include "../System/Input.h"
 #include "../System/Time.h"
 #include "../GameObject/GameObject.h"
+#include "../Component/Com_Camera.h"
+
+using namespace DirectX::SimpleMath;
 
 Com_CharacterMove::Com_CharacterMove()
 {
 }
 
-void Com_CharacterMove::Update()
+void Com_CharacterMove::Move(DirectX::SimpleMath::Vector3 _value)
 {
-	if ((Controller_Input::GetLeftStick(0).x >= 0.5))
+	// カメラのビュー行列を取得
+	Matrix View = p_mCameraCom->GetViewMatrix();
+	Vector3 forward = -View.Forward();
+	// ビュー行列に0の値が入っていた場合
+	if (abs(forward.x) <= 0.1f)
 	{
-		p_mObject->p_mTransform->Translate(5.0f * Time->GetDeltaTime(), 0.0f, 0.0f);
+		forward.x = 1;
 	}
-	if ((Controller_Input::GetLeftStick(0).y >= 0.5))
+	if (abs(forward.z) <= 0.1f)
 	{
-		p_mObject->p_mTransform->Translate(0.0f, 0.0f, 5.0f * Time->GetDeltaTime());
+		forward.z = 1;
 	}
-	if ((Controller_Input::GetLeftStick(0).x <= -0.5))
-	{
-		p_mObject->p_mTransform->Translate(-5.0f * Time->GetDeltaTime(), 0.0f, 0.0f);
-	}
-	if ((Controller_Input::GetLeftStick(0).y <= -0.5))
-	{
-		p_mObject->p_mTransform->Translate(0.0f, 0.0f, -5.0f * Time->GetDeltaTime());
-	}
+	// 入力された値と正面ベクトルを計算
+	_value = _value * forward ;
+	// 元の移動速度を掛ける
+	_value = _value * fMoveSpeed;
+	// 最終的な移動量を割り出す
+	_value = _value * Time->GetDeltaTime();
+
+	p_mObject->p_mTransform->Translate(_value);
 }
 
 //Controllerはクラスで作る
