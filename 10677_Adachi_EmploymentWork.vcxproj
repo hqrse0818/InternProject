@@ -167,6 +167,10 @@
     <ClCompile Include="DirectX\Shader.cpp" />
     <ClCompile Include="DirectX\ShaderResourceView.cpp" />
     <ClCompile Include="GameObject\GameObject.cpp" />
+    <ClCompile Include="InternCode.Kizuki\Com_CharacterJump.cpp" />
+    <ClCompile Include="InternCode.Kizuki\Com_CharacterMove.cpp" />
+    <ClCompile Include="InternCode.Kizuki\OBJ_PlayerCharacter.cpp" />
+    <ClCompile Include="InternCode.Kizuki\Scene_Test2.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="GameObject\OBJ_Transition.cpp" />
     <ClCompile Include="InternCodeAdachi\OBJ_Penguin.cpp" />
@@ -215,6 +219,10 @@
     <ClInclude Include="Format.h" />
     <ClInclude Include="GameObject\GameObject.h" />
     <ClInclude Include="GameObject\OBJ_Transition.h" />
+    <ClInclude Include="InternCode.Kizuki\Com_CharacterJump.h" />
+    <ClInclude Include="InternCode.Kizuki\Com_CharacterMove.h" />
+    <ClInclude Include="InternCode.Kizuki\OBJ_PlayerCharacter.h" />
+    <ClInclude Include="InternCode.Kizuki\Scene_Test2.h" />
     <ClInclude Include="InternCodeAdachi\InternCollision.h" />
     <ClInclude Include="main.h" />
     <ClInclude Include="InternCodeAdachi\OBJ_Penguin.h" />

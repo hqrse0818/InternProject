@@ -49,6 +49,9 @@
     <Filter Include="PixelShader">
       <UniqueIdentifier>{dd6b0c13-918c-4da6-bb7c-c3692650b735}</UniqueIdentifier>
     </Filter>
+    <Filter Include="InternCodeKizuki">
+      <UniqueIdentifier>{d226746f-f922-488a-b247-c99bdc0bef5f}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Component\Com_Audio.cpp">
@@ -176,6 +179,18 @@
     </ClCompile>
     <ClCompile Include="InternCodeAdachi\Com_Gravity.cpp">
       <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="InternCode.Kizuki\OBJ_PlayerCharacter.cpp">
+      <Filter>InternCodeKizuki</Filter>
+    </ClCompile>
+    <ClCompile Include="InternCode.Kizuki\Com_CharacterJump.cpp">
+      <Filter>InternCodeKizuki</Filter>
+    </ClCompile>
+    <ClCompile Include="InternCode.Kizuki\Com_CharacterMove.cpp">
+      <Filter>InternCodeKizuki</Filter>
+    </ClCompile>
+    <ClCompile Include="InternCode.Kizuki\Scene_Test2.cpp">
+      <Filter>InternCodeKizuki</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -325,6 +340,18 @@
     </ClInclude>
     <ClInclude Include="InternCodeAdachi\Com_Gravity.h">
       <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="InternCode.Kizuki\OBJ_PlayerCharacter.h">
+      <Filter>InternCodeKizuki</Filter>
+    </ClInclude>
+    <ClInclude Include="InternCode.Kizuki\Com_CharacterJump.h">
+      <Filter>InternCodeKizuki</Filter>
+    </ClInclude>
+    <ClInclude Include="InternCode.Kizuki\Com_CharacterMove.h">
+      <Filter>InternCodeKizuki</Filter>
+    </ClInclude>
+    <ClInclude Include="InternCode.Kizuki\Scene_Test2.h">
+      <Filter>InternCodeKizuki</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
