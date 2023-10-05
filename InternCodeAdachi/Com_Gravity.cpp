@@ -11,11 +11,10 @@ void Com_Gravity::Update()
 		fFallCnt = 0.0f;
 		return;
 	}
-
+	// d—ÍŒvŽZ
 	float Velocity = -fGravity * fFallCnt;
-	fFallCnt += 0.1f;
 	Velocity *= Time->GetDeltaTime();
-
+	
 	p_mObject->p_mTransform->Translate(0.0f, Velocity, 0.0f);
-
+	fFallCnt += 0.1f;
 }

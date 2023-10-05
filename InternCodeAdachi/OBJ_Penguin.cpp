@@ -3,6 +3,7 @@
 #include "Com_Gravity.h"
 #include "../Component/Com_SphereCollider.h"
 #include "../Component/Com_BoxCollider.h"
+#include "Com_TestJump.h"
 
 OBJ_Penguin::OBJ_Penguin()
 {
@@ -28,28 +29,24 @@ OBJ_Penguin::OBJ_Penguin()
 
 	AddComponent(p_mCollider);
 
+	// ジャンプコンポーネント
+	Com_TestJump* Jump_buf = new Com_TestJump();
+	Jump_buf->SetJumpPower(20.0f);
+
+	AddComponent(Jump_buf);
+
 	// 重力コンポーネント
 	Com_Gravity* Gravity_buf = new Com_Gravity();
+	Jump_buf->SetGravityCom(Gravity_buf);
 
 	AddComponent(Gravity_buf);
 
-
-	//// ペンギンの足元用オブジェクト
-	//p_mFoot = new GameObject("PenguinFoot");
-	//// 足元用コライダー
-	//Com_BoxCollider* p_mFootCollider = new Com_BoxCollider();
-	//p_mFootCollider->SetCenter(0.0f, -0.2f, 0.0f);
-	//p_mFootCollider->SetSize(3.0f, 0.2f, 3.0f);
-	//p_mFootCollider->bMovable = true;
-
-	//p_mFoot->AddComponent(p_mFootCollider);
-
+	// 足場コンポーネント
 	Com_Foot* Foot_buf = new Com_Foot();
 	Foot_buf->SetGravityCom(Gravity_buf);
-	Foot_buf->SetFootHeight(0.5f);
+	Foot_buf->SetFootHeight(1.0f);
+	Foot_buf->SetJumpCom(Jump_buf);
 	AddComponent(Foot_buf);
-
-	//AddChild(p_mFoot);
 }
 
 OBJ_Penguin::OBJ_Penguin(const char* _name)

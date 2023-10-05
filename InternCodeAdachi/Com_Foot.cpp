@@ -2,6 +2,7 @@
 #include "../GameObject/GameObject.h"
 #include "../Component/Com_Collider.h"
 #include "../Component/Com_BoxCollider.h"
+#include "Com_TestJump.h"
 #include "Com_Gravity.h"
 
 void Com_Foot::Update()
@@ -17,10 +18,10 @@ void Com_Foot::OnCollisionEnter(GameObject* _obj)
 		// ボックスならボックスコライダーを取得
 		Com_BoxCollider* col = _obj->GetComponent<Com_BoxCollider>();
 		// 乗ることができるなら
-		if (col->bCanStepOn && p_mGravityTarget)
+		if (col->bCanStepOn && p_mGravityCom)
 		{
 			// 且つ現在落下中
-			if (p_mGravityTarget->GetGround() == false)
+			if (p_mGravityCom->GetGround() == false)
 			{
 				// ボックスのy座標の最大値を取得。
 				float heightY = col->Getmax().y;
@@ -28,7 +29,12 @@ void Com_Foot::OnCollisionEnter(GameObject* _obj)
 				if (fFootPos > heightY)
 				{
 					p_mObject->p_mTransform->mPosition.y = heightY;
-					p_mGravityTarget->SetGround(true);
+					p_mGravityCom->SetGround(true);
+
+					if (p_mJumpCom)
+					{
+						p_mJumpCom->SetJumpFlg(false);
+					}
 				}
 			}
 		}
@@ -43,10 +49,10 @@ void Com_Foot::OnCollisionStay(GameObject* _obj)
 		// ボックスならボックスコライダーを取得
 		Com_BoxCollider* col = _obj->GetComponent<Com_BoxCollider>();
 		// 乗ることができるなら
-		if (col->bCanStepOn && p_mGravityTarget)
+		if (col->bCanStepOn && p_mGravityCom)
 		{
 			// 且つ現在落下中
-			if (p_mGravityTarget->GetGround() == false)
+			if (p_mGravityCom->GetGround() == false)
 			{
 				// ボックスのy座標の最大値を取得。
 				float heightY = col->Getmax().y;
@@ -54,7 +60,7 @@ void Com_Foot::OnCollisionStay(GameObject* _obj)
 				if (fFootPos > heightY)
 				{
 					p_mObject->p_mTransform->mPosition.y = heightY;
-					p_mGravityTarget->SetGround(true);
+					p_mGravityCom->SetGround(true);
 				}
 			}
 		}
@@ -63,8 +69,8 @@ void Com_Foot::OnCollisionStay(GameObject* _obj)
 
 void Com_Foot::OnCollisionExit(GameObject* _obj)
 {
-	if (p_mGravityTarget)
+	if (p_mGravityCom)
 	{
-		p_mGravityTarget->SetGround(false);
+		p_mGravityCom->SetGround(false);
 	}
 }
