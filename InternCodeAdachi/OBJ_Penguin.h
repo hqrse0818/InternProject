@@ -7,8 +7,6 @@ class OBJ_Penguin :
     public GameObject
 {
 private:
-    // 足元用コライダー
-    GameObject* p_mFoot = nullptr;
     // モデル描画コンポーネント
     Com_AssimpAnimation* p_mModel = nullptr;
     // シェーダーコンポーネント
