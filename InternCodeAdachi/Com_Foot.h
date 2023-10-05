@@ -2,7 +2,7 @@
 #include "../Component/Component.h"
 
 class Com_Gravity;
-class Com_TestJump;
+class Com_Jump;
 
 class Com_Foot :
     public Component
@@ -11,7 +11,7 @@ private:
     // 重力コンポーネント
     Com_Gravity* p_mGravityCom = nullptr;
     // ジャンプコンポーネント
-    Com_TestJump* p_mJumpCom = nullptr;
+    Com_Jump* p_mJumpCom = nullptr;
 
     // 脚の高さ
     float fFootHeight = 0.0f;
@@ -28,7 +28,7 @@ public:
     {
         p_mGravityCom = _com;
     }
-    void SetJumpCom(Com_TestJump* _com)
+    void SetJumpCom(Com_Jump* _com)
     {
         p_mJumpCom = _com;
     }

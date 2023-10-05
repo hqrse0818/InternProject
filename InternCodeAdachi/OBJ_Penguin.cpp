@@ -3,7 +3,7 @@
 #include "Com_Gravity.h"
 #include "../Component/Com_SphereCollider.h"
 #include "../Component/Com_BoxCollider.h"
-#include "Com_TestJump.h"
+#include "Com_Jump.h"
 
 OBJ_Penguin::OBJ_Penguin()
 {
@@ -30,8 +30,8 @@ OBJ_Penguin::OBJ_Penguin()
 	AddComponent(p_mCollider);
 
 	// ジャンプコンポーネント
-	Com_TestJump* Jump_buf = new Com_TestJump();
-	Jump_buf->SetJumpPower(20.0f);
+	Com_Jump* Jump_buf = new Com_Jump();
+	Jump_buf->SetJumpPower(15.0f);
 
 	AddComponent(Jump_buf);
 
@@ -44,7 +44,7 @@ OBJ_Penguin::OBJ_Penguin()
 	// 足場コンポーネント
 	Com_Foot* Foot_buf = new Com_Foot();
 	Foot_buf->SetGravityCom(Gravity_buf);
-	Foot_buf->SetFootHeight(1.0f);
+	Foot_buf->SetFootHeight(2.0f);
 	Foot_buf->SetJumpCom(Jump_buf);
 	AddComponent(Foot_buf);
 }

@@ -2,7 +2,7 @@
 #include "../GameObject/GameObject.h"
 #include "../Component/Com_Collider.h"
 #include "../Component/Com_BoxCollider.h"
-#include "Com_TestJump.h"
+#include "Com_Jump.h"
 #include "Com_Gravity.h"
 
 void Com_Foot::Update()
@@ -34,6 +34,7 @@ void Com_Foot::OnCollisionEnter(GameObject* _obj)
 					if (p_mJumpCom)
 					{
 						p_mJumpCom->SetJumpFlg(false);
+						p_mJumpCom->SetDropFlg(false);
 					}
 				}
 			}

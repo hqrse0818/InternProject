@@ -2,17 +2,20 @@
 #include "../Component/Component.h"
 #include "Com_Gravity.h"
 
-class Com_TestJump :
+class Com_Jump :
     public Component
 {
 private:
-    float fJumpPower = 10.0f;
+    float fJumpPower = 10.0f; //ジャンプ力
+    float fDropPower = -8.0f; //落下速度
 
-    bool bJump = false;
+    bool bJump = false; //ジャンプフラグ
+    bool bDrop = false; //ヒップドロップフラグ
     Com_Gravity* p_mGravityCom = nullptr;
 
 public:
     void Jump();
+    void HipDrop();
     void Update();
 
     void SetGravityCom(Com_Gravity* _com)
@@ -27,6 +30,11 @@ public:
     void SetJumpFlg(bool _val)
     {
         bJump = _val;
+    }
+
+    void SetDropFlg(bool _val)
+    {
+        bDrop = _val;
     }
 };
 
