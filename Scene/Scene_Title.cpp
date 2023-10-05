@@ -9,7 +9,7 @@
 #include "../System/Input.h"
 #include "../TextureFilePath.h"
 #include "Scene_Test.h"
-#include "Scene_Test2.h"
+#include "../InternCode.Kizuki/Scene_Test2.h"
 
 using namespace DirectX::SimpleMath;
 using namespace std;

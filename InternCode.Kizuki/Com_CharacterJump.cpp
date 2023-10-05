@@ -32,6 +32,7 @@ void Com_CharacterJump::Update()
 	if (p_mObject->p_mTransform->mPosition.y <= 0.0f)
 	{
 		m_Velocity.y = 0.0f;
+		jumpFlg = false;
 	}
 }
 
@@ -44,7 +45,7 @@ void Com_CharacterJump::Jump()
 
 	if (jumpFlg == true)
 	{
-		m_Velocity.y = 0.55f;
+		m_Velocity.y = jumpPow;
 		jumpFlg = false;
 	}
 }
@@ -52,9 +53,11 @@ void Com_CharacterJump::Jump()
 void Com_CharacterJump::HipDrop()
 {
 	if (Controller_Input::GetButton(0, GAMEPAD_B) == KEYSTATE::KEY_DOWN
+		&& hipDropFlg == false
 		&& m_Velocity.y <=0.55)
 	{
 		m_Velocity.y = 0.0f;
+		hipDropFlg = true;
 	}
 }
 
