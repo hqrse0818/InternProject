@@ -3,6 +3,8 @@
 #include "../System/Time.h"
 #include "../System/Input.h"
 #include "../Component/Com_BoxCollider.h"
+#include "../InternCode.Kizuki/OBJ_Inpact.h"
+#include "../Scene/Scene.h"
 
 using namespace DirectX::SimpleMath;
 
@@ -60,5 +62,17 @@ void Com_Jump::Update()
 	if (bDrop)
 	{
 		HipDrop();
+	}
+}
+
+void Com_Jump::OnCollisionEnter(GameObject* _obj)
+{
+	if (bDrop)
+	{
+		OBJ_Inpact* Inpact = new OBJ_Inpact("Inpact");
+
+		Inpact->p_mTransform->mPosition = p_mObject->p_mTransform->mPosition;
+
+		GameObject::GetScene()->AddGameObject(Inpact);
 	}
 }

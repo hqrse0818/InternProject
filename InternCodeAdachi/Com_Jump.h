@@ -22,6 +22,8 @@ public:
     void HipDrop();
     void Update();
 
+    void OnCollisionEnter(GameObject* _obj);
+
     void SetGravityCom(Com_Gravity* _com)
     {
         p_mGravityCom = _com;

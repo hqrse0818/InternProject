@@ -1,17 +1,27 @@
 #include "OBJ_Inpact.h"
+#include "../System/Time.h"
 
 OBJ_Inpact::OBJ_Inpact()
 {
-	//衝撃のコライダー
-	Com_SphereCollider* p_mCollider = new Com_SphereCollider;
-	p_mCollider->SetCenter(0.0f, 0.0f, 0.0f);
-	p_mCollider->fRadius = 2.0f;
-	p_mCollider->bMovable = true;
+	p_mColliderCom = new Com_SphereCollider();
+	p_mColliderCom->fRadius = 1.0f; //範囲
 
-	AddComponent(p_mCollider);
+	AddComponent(p_mColliderCom);
+}
+
+OBJ_Inpact::OBJ_Inpact(const char* _name) :OBJ_Inpact()
+{
+	sObjectName = _name;
 }
 
 void OBJ_Inpact::Update()
 {
+	fCnt += Time->GetDeltaTime();
+	if (fCnt > fLifeTime)
+	{
+		bDestroy = true;
+		return;
+	}
 
+	p_mColliderCom->fRadius += p_mColliderCom->fRadius + fCnt;
 }

@@ -13,10 +13,20 @@
 
 class OBJ_Inpact :public GameObject
 {
-protected:
-	float fLifeTime = 0.0f; //存在する時間
+private:
+	//コライダーコンポーネント
+	Com_SphereCollider* p_mColliderCom = nullptr;
+	float fLifeTime = 1.0f; //存在する時間
+	float fCnt = 0.0f;
 
 public:
 	OBJ_Inpact();
+	OBJ_Inpact(const char* _name);
+
+	float SetLifeTime(float _val)
+	{
+		fLifeTime = _val;
+	}
+
 	void Update();
 };
