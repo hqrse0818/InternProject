@@ -9,12 +9,13 @@ protected:
 	DirectX::SimpleMath::Vector3 m_Velocity{};
 	float gravity = 4.0f; //重力
 	float fallTime = 0.0; //落下時間
-	float jumpPow = 10.0f; //ジャンプ力
+	float jumpPow = 10.0; //ジャンプ力
 
 public:
 	Com_CharacterJump();
 	void Update();
 	void Jump();
+	void HipDrop();
 };
 
 //ジャンプの高さなどは別で定義

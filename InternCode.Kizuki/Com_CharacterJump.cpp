@@ -10,9 +10,10 @@ Com_CharacterJump::Com_CharacterJump()
 
 void Com_CharacterJump::Update()
 {
-	if (Controller_Input::GetButton(0, GAMEPAD_A) == KEYSTATE::KEY_DOWN)
+	if (Controller_Input::GetButton(0, GAMEPAD_B) == KEYSTATE::KEY_DOWN)
 	{
 		Jump();
+		HipDrop();
 	}
 
 	if (p_mObject->p_mTransform->mPosition.y >= 0.0f)
@@ -47,3 +48,14 @@ void Com_CharacterJump::Jump()
 		jumpFlg = false;
 	}
 }
+
+void Com_CharacterJump::HipDrop()
+{
+	if (Controller_Input::GetButton(0, GAMEPAD_B) == KEYSTATE::KEY_DOWN
+		&& m_Velocity.y <=0.55)
+	{
+		m_Velocity.y = 0.0f;
+	}
+}
+
+//ヒップドロップは押したタイミングで落ちれるようにする（連打ですぐ落とせる）
