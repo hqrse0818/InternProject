@@ -2,4 +2,5 @@
 
 void Com_AngleCamera::Update()
 {
+	
 }
