@@ -15,28 +15,21 @@ void Scene_Test::Init()
 
 	// ペンギン
 	Player = new OBJ_Penguin("Test");
-	Com_Shader* Shader_buf = new Com_Shader();
-	Shader_buf->p_mVS->Load(VS_MODEL);
-	Shader_buf->p_mPS->Load(PS_MODEL);
-	Player->AddComponent(Shader_buf);
-
-	Com_AssimpAnimation* Model_buf = new Com_AssimpAnimation();
-	Model_buf->LoadModel("asset\\model\\pengin_v2.fbx", 1.0f, true);
-	Player->AddComponent(Model_buf);
+	
 
 	// レイヤーの指定なしでキーオブジェクトとして追加
 	AddKeyObject(Player);
 
 	// アザラシ
 	GameObject* Azarashi = new GameObject("Azarashi");
-	Shader_buf = new Com_Shader();
+	Com_Shader* Shader_buf = new Com_Shader();
 	Shader_buf->p_mVS->Load(VS_MODEL);
 	Shader_buf->p_mPS->Load(PS_MODEL);
 
 	Azarashi->AddComponent(Shader_buf);
 
-	Model_buf = new Com_AssimpAnimation();
-	Model_buf->LoadModel("asset\\model\\azarasi_v1.fbx", 1.0f, true);
+	Com_AssimpAnimation* Model_buf = new Com_AssimpAnimation();
+	Model_buf->LoadModel("asset\\model\\Azarashi\\azarasi_v2.fbx", 1.0f, true);
 	Azarashi->AddComponent(Model_buf);
 
 	Com_SphereCollider* Col_buf = new Com_SphereCollider();
@@ -62,6 +55,7 @@ void Scene_Test::Init()
 	Com_BoxCollider* bo_col = new Com_BoxCollider();
 	bo_col->SetSize(6.0f, 1.0f, 6.0f);
 	bo_col->SetCenter(0.0f, 0.5f, 0.0f);
+	bo_col->bCanStepOn = true;
 
 	stage->AddComponent(bo_col);
 
@@ -83,7 +77,8 @@ void Scene_Test::Init()
 
 void Scene_Test::Start()
 {
-	GetGameObject("Azarashi")->p_mTransform->SetPosition(2.0f, 8.0f, -2.0f);
+	Player->p_mTransform->SetPosition(0.0f, 7.0f, 0.0f);
+	GetGameObject("Azarashi")->p_mTransform->SetPosition(10.0f, 8.0f, -2.0f);
 }
 
 void Scene_Test::Update()

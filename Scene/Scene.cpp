@@ -79,6 +79,7 @@ void Scene::CollisionUpdate3D()
 									obj->OnCollisionStay(Objectj);
 									Objectj->OnCollisionStay(obj);
 									check = true;
+									break;
 								}
 							}
 							// ‘O‚ÌƒtƒŒ[ƒ€‚Å“–‚½‚Á‚Ä‚¢‚È‚¢
@@ -101,6 +102,7 @@ void Scene::CollisionUpdate3D()
 								{
 									obj->OnCollisionExit(Objectj);
 									Objectj->OnCollisionExit(obj);
+									break;
 								}
 							}
 						}

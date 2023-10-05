@@ -13,7 +13,7 @@
 #define PS_MODEL ("shader\\vertexLightingPS.cso")
 
 #define BufferMaxSize 9
-#define CBufferStartIndex 5
+#define CBufferStartIndex 2
 
 class Shader
 {

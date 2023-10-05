@@ -10,9 +10,6 @@ void Shader::CreateBuffer(D3D11_BUFFER_DESC _desc)
 	{
 		return;
 	}
-	// vectorのサイズを拡張
-	p_mBuffers.resize(p_mBuffers.size() + 1);
-
 	// バッファの作成
 	ID3D11Buffer* buffer{};
 	Renderer::GetDevice()->CreateBuffer(&_desc, NULL, &buffer);

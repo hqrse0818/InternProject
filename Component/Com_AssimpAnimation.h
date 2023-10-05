@@ -99,5 +99,10 @@ public:
     void StopAnimation();
     // 全てのテクスチャを一律に書き換える
     void SetTexture(const char* _FileName);
+    // オリジナルのマテリアルを使うか
+    void SetUseMaterial(bool _b)
+    {
+        bUseMaterial = _b;
+    }
 };
 

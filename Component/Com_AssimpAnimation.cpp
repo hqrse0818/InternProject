@@ -724,7 +724,7 @@ void Com_AssimpAnimation::Draw()
 		else
 		{
 			MATERIAL mat;
-			mat.TextureEnable = false;
+			mat.TextureEnable = true;
 			mat.Diffuse = Color(1.0f, 1.0f, 1.0f, 1.0f);
 			Renderer::SetMaterial(mat);
 		}

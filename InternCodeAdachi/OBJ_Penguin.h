@@ -1,6 +1,7 @@
 #pragma once
 #include "../GameObject/GameObject.h"
-#include"../Component/Com_SphereCollider.h"
+#include "../Component/Com_AssimpAnimation.h"
+#include "../Component/Com_Shader.h"
 
 class OBJ_Penguin :
     public GameObject
@@ -8,8 +9,10 @@ class OBJ_Penguin :
 private:
     // 足元用コライダー
     GameObject* p_mFoot = nullptr;
-    // コライダーコンポーネント
-    Com_SphereCollider* p_mCollider = nullptr;
+    // モデル描画コンポーネント
+    Com_AssimpAnimation* p_mModel = nullptr;
+    // シェーダーコンポーネント
+    Com_Shader* p_mShader = nullptr;
 
 public:
     OBJ_Penguin();

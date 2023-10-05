@@ -205,10 +205,10 @@ void GameObject::OnCollisionEnter(GameObject* _obj)
 			if (com->bEnable)
 				com->OnCollisionEnter(_obj);
 		}
-		for (auto obj : p_mChildren)
+		/*for (auto obj : p_mChildren)
 		{
 			obj->OnCollisionEnter(_obj);
-		}
+		}*/
 	}
 }
 
@@ -221,10 +221,10 @@ void GameObject::OnCollisionStay(GameObject* _obj)
 			if (com->bEnable)
 				com->OnCollisionStay(_obj);
 		}
-		for (auto obj : p_mChildren)
+		/*for (auto obj : p_mChildren)
 		{
 			obj->OnCollisionStay(_obj);
-		}
+		}*/
 	}
 }
 
@@ -237,10 +237,10 @@ void GameObject::OnCollisionExit(GameObject* _obj)
 			if (com->bEnable)
 				com->OnCollisionExit(_obj);
 		}
-		for (auto obj : p_mChildren)
+		/*for (auto obj : p_mChildren)
 		{
 			obj->OnCollisionExit(_obj);
-		}
+		}*/
 	}
 }
 

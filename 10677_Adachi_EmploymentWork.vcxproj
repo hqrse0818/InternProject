@@ -160,6 +160,8 @@
     <ClCompile Include="Component\Com_RenderCollisionPoint.cpp" />
     <ClCompile Include="Component\Com_RenderCollider.cpp" />
     <ClCompile Include="Component\Com_AssimpAnimation.cpp" />
+    <ClCompile Include="InternCodeAdachi\Com_Gravity.cpp" />
+    <ClCompile Include="InternCodeAdachi\Com_Foot.cpp" />
     <ClCompile Include="InternCodeAdachi\Com_RenderCollisionLine_Sphere.cpp" />
     <ClCompile Include="DirectX\renderer.cpp" />
     <ClCompile Include="DirectX\Shader.cpp" />
@@ -204,6 +206,8 @@
     <ClInclude Include="Component\Com_RenderCollisionPoint.h" />
     <ClInclude Include="Component\Com_RenderCollider.h" />
     <ClInclude Include="Component\Com_AssimpAnimation.h" />
+    <ClInclude Include="InternCodeAdachi\Com_Gravity.h" />
+    <ClInclude Include="InternCodeAdachi\Com_Foot.h" />
     <ClInclude Include="InternCodeAdachi\Com_RenderCollisionLine_Sphere.h" />
     <ClInclude Include="DirectX\renderer.h" />
     <ClInclude Include="DirectX\Shader.h" />
