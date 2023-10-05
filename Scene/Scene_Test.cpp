@@ -4,7 +4,9 @@
 #include "../System/CustomMath.h"
 #include "../System/Time.h"
 
+
 #include "../InternCodeAdachi/OBJ_Penguin.h"
+#include "../InternCodeAdachi/Com_AngleCamera.h"
 
 using namespace DirectX::SimpleMath;
 
@@ -53,7 +55,7 @@ void Scene_Test::Init()
 	stage->AddComponent(Model_buf);
 
 	Com_BoxCollider* bo_col = new Com_BoxCollider();
-	bo_col->SetSize(6.0f, 1.0f, 6.0f);
+	bo_col->SetSize(7.0f, 1.0f, 7.0f);
 	bo_col->SetCenter(0.0f, 0.5f, 0.0f);
 	bo_col->bCanStepOn = true;
 
@@ -65,9 +67,11 @@ void Scene_Test::Init()
 
 
 	GameObject* Camera = new GameObject("Camera");
-	Com_Camera* Camera_buf = new Com_Camera();
+	Com_AngleCamera* Camera_buf = new Com_AngleCamera();
 	Camera_buf->SetTarget(Player);
 	Camera_buf->SetUseTarget(true);
+	Camera_buf->SetAngle(0.0f);
+	Camera_buf->SetDistance(20.0f);
 	Camera->p_mTransform->SetPosition(0.0f, 20.0f, -30.0f);
 	Camera->AddComponent(Camera_buf);
 
@@ -75,6 +79,7 @@ void Scene_Test::Init()
 	AddGameObject(Camera, 0);
 
 	Player->GetMoveCom()->SetCameraCom(Camera_buf);
+	Player->SetCameraCom(Camera_buf);
 }
 
 void Scene_Test::Start()
@@ -85,13 +90,5 @@ void Scene_Test::Start()
 
 void Scene_Test::Update()
 {
-	/*Player->p_mTransform->Translate(
-		Controller_Input::GetLeftStick(0).x * 5.0f * Time->GetDeltaTime(),
-		0.0f,
-		Controller_Input::GetLeftStick(0).y * 5.0f * Time->GetDeltaTime());
-
-	Player->p_mTransform->Translate(
-		0.0f,
-		Controller_Input::GetRightStick(0).y * 5.0f * Time->GetDeltaTime(),
-		0.0f);*/
+	
 }

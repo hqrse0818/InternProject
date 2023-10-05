@@ -7,6 +7,7 @@
 
 void Com_Foot::Update()
 {
+	fLastFootPos = fFootPos;
 	fFootPos = p_mObject->p_mTransform->mPosition.y + fFootHeight;
 }
 
@@ -26,7 +27,7 @@ void Com_Foot::OnCollisionEnter(GameObject* _obj)
 				// ボックスのy座標の最大値を取得。
 				float heightY = col->Getmax().y;
 				// フットポジションが
-				if (fFootPos > heightY)
+				if (fFootPos > heightY || fLastFootPos > heightY)
 				{
 					p_mObject->p_mTransform->mPosition.y = heightY;
 					p_mGravityCom->SetGround(true);
@@ -57,7 +58,7 @@ void Com_Foot::OnCollisionStay(GameObject* _obj)
 				// ボックスのy座標の最大値を取得。
 				float heightY = col->Getmax().y;
 				// フットポジションが
-				if (fFootPos > heightY)
+				if (fFootPos > heightY || fLastFootPos > heightY)
 				{
 					p_mObject->p_mTransform->mPosition.y = heightY;
 					p_mGravityCom->SetGround(true);

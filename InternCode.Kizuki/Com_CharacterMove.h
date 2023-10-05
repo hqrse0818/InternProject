@@ -18,7 +18,9 @@ public:
 		fMoveSpeed = _val;
 	}
 
-	void Move(DirectX::SimpleMath::Vector3 _value);
+	void MoveZ(float _value);
+
+	void MoveX(float _value);
 
 	void SetCameraCom(Com_Camera* _com)
 	{

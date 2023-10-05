@@ -18,9 +18,10 @@ OBJ_Penguin::OBJ_Penguin()
 
 	// モデル
 	p_mModel = new Com_AssimpAnimation();
-	p_mModel->LoadModel("asset\\model\\Penguin\\pengin_rig_v1.fbx", 1.0f, true);
-	p_mModel->LoadAnimation("asset\\model\\Penguin\\pengin_anime_v1.fbx", "hand");
-	p_mModel->PlayAnimation("hand");
+	p_mModel->LoadModel("asset\\model\\Penguin\\pengin_v4.fbx", 1.0f, true);
+	//p_mModel->LoadModel("asset\\model\\Penguin\\pengin_rig_v1.fbx", 1.0f, true);
+	//p_mModel->LoadAnimation("asset\\model\\Penguin\\pengin_anime_v1.fbx", "hand");
+	//p_mModel->PlayAnimation("hand");
 	p_mModel->SetUseMaterial(false);
 
 	AddComponent(p_mModel);
@@ -51,10 +52,10 @@ OBJ_Penguin::OBJ_Penguin()
 
 	AddComponent(Gravity_buf);
 
-	// 足場コンポーネント
+	// 足元コンポーネント
 	Com_Foot* Foot_buf = new Com_Foot();
 	Foot_buf->SetGravityCom(Gravity_buf);
-	Foot_buf->SetFootHeight(1.5f);
+	Foot_buf->SetFootHeight(1.0f);
 	Foot_buf->SetJumpCom(p_mJumpCom);
 	AddComponent(Foot_buf);
 }
@@ -73,7 +74,13 @@ void OBJ_Penguin::Update()
 		p_mJumpCom->SetJumpFlg(true);
 	}
 	// 移動
-	p_mMoveCom->Move(Vector3(Controller_Input::GetLeftStick(0).x, 0.0f, Controller_Input::GetLeftStick(0).y));
+	//p_mMoveCom->Move(Vector3(Controller_Input::GetLeftStick(0).x, 0.0f, Controller_Input::GetLeftStick(0).y));
+
+	p_mMoveCom->MoveX(Controller_Input::GetLeftStick(0).x);
+	p_mMoveCom->MoveZ(Controller_Input::GetLeftStick(0).y);
+
+	p_mCameraCom->SetAngle(p_mCameraCom->GetAngle() + Controller_Input::GetRightStick(0).x);
+
 	// アニメーションの更新
 	p_mModel->UpdateFrame();
 

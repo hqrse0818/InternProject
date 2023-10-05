@@ -20,6 +20,8 @@ private:
     float fFootHeight = 0.0f;
     // ‹r‚ÌÀÛ‚ÌˆÊ’u
     float fFootPos = 0.0f;
+    // ‘O‰ñ‚Ì‘«‚ÌˆÊ’u
+    float fLastFootPos = 0.0f;
 public:
     void Update()override;
 
