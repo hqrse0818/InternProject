@@ -31,7 +31,7 @@ OBJ_Penguin::OBJ_Penguin()
 
 	// ジャンプコンポーネント
 	Com_Jump* Jump_buf = new Com_Jump();
-	Jump_buf->SetJumpPower(15.0f);
+	Jump_buf->SetJumpPower(20.0f);
 
 	AddComponent(Jump_buf);
 

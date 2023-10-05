@@ -160,6 +160,7 @@
     <ClCompile Include="Component\Com_RenderCollisionPoint.cpp" />
     <ClCompile Include="Component\Com_RenderCollider.cpp" />
     <ClCompile Include="Component\Com_AssimpAnimation.cpp" />
+    <ClCompile Include="InternCode.Kizuki\OBJ_Inpact.cpp" />
     <ClCompile Include="InternCodeAdachi\Com_Jump.cpp" />
     <ClCompile Include="InternCodeAdachi\Com_Gravity.cpp" />
     <ClCompile Include="InternCodeAdachi\Com_Foot.cpp" />
@@ -211,6 +212,7 @@
     <ClInclude Include="Component\Com_RenderCollisionPoint.h" />
     <ClInclude Include="Component\Com_RenderCollider.h" />
     <ClInclude Include="Component\Com_AssimpAnimation.h" />
+    <ClInclude Include="InternCode.Kizuki\OBJ_Inpact.h" />
     <ClInclude Include="InternCodeAdachi\Com_Jump.h" />
     <ClInclude Include="InternCodeAdachi\Com_Gravity.h" />
     <ClInclude Include="InternCodeAdachi\Com_Foot.h" />

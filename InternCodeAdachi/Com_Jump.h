@@ -7,7 +7,11 @@ class Com_Jump :
 {
 private:
     float fJumpPower = 10.0f; //ジャンプ力
-    float fDropPower = -8.0f; //落下速度
+    float fDropPower = -20.0f; //落下速度
+    float fInpactPower = 5.0f;
+    float fInpactRange = 5.0f;
+
+    float fFallTime = 1.0f; //ヒップドロップの加速
 
     bool bJump = false; //ジャンプフラグ
     bool bDrop = false; //ヒップドロップフラグ
