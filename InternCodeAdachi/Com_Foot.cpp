@@ -68,9 +68,3 @@ void Com_Foot::OnCollisionExit(GameObject* _obj)
 		p_mGravityTarget->SetGround(false);
 	}
 }
-
-
-// タイトル案
-// ペンギンドロップ
-// ペンギンアイスドロップ
-// ペンギンvsアザラシ~氷上の死闘~
