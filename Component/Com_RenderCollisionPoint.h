@@ -1,4 +1,5 @@
 #pragma once
+#if defined (DEBUG) || defined(_DEBUG)
 #include "Com_RenderCollider.h"
 #include "../Utility.h"
 #include "../DirectX/renderer.h"
@@ -14,3 +15,4 @@ public:
     void Draw();
 };
 
+#endif

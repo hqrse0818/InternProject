@@ -1,4 +1,5 @@
 #pragma once
+#if defined (DEBUG) || defined(_DEBUG)
 #include "Com_RenderCollider.h"
 
 class Com_RenderCollisionLine_Box :
@@ -36,3 +37,5 @@ public:
     void Uninit()override;
     void Draw()override;
 };
+
+#endif

@@ -1,3 +1,5 @@
+
+#if defined (DEBUG) || defined(_DEBUG)
 #include "Com_RenderCollisionPoint.h"
 #include "../GameObject/GameObject.h"
 #include "Com_PointCollider.h"
@@ -46,3 +48,5 @@ void Com_RenderCollisionPoint::Draw()
 
 	Renderer::GetDeviceContext()->Draw(1, 0);
 }
+
+#endif

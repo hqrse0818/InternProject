@@ -1,4 +1,5 @@
 #pragma once
+#if defined (DEBUG) || defined(_DEBUG)
 #include "../Component/Com_RenderCollider.h"
 #include "../DirectX//Shader.h"
 #include "../Format.h"
@@ -19,3 +20,5 @@ public:
 	void Update();
 	void Draw();
 };
+
+#endif

@@ -50,7 +50,13 @@ protected:
 	std::thread mThreadA;
 	std::thread mThreadB;
 public:
-	Scene() {};
+	Scene()
+	{
+		for (auto& List : mList)
+		{
+			List.clear();
+		}
+	};
 	virtual ~Scene() {};
 	virtual void Init() {};
 	// ループ開始前処理(BGMオンなど)

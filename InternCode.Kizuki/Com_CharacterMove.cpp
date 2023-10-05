@@ -13,46 +13,34 @@ Com_CharacterMove::Com_CharacterMove()
 
 void Com_CharacterMove::MoveZ(float _value)
 {
-	// カメラのビュー行列を取得
-	Matrix View = p_mCameraCom->GetViewMatrix();
-	Vector3 forward;
-	forward.x = View._31;
-	forward.y = View._32;
-	forward.z = View._33;
+	// カメラの正面ベクトルを計算
+	Vector3 Target = p_mCameraCom->GetTargetPosition();
+	Vector3 CamPos = p_mCameraCom->p_mObject->p_mTransform->mPosition;
+	Vector3 Forward = Math::GetVector(CamPos, Target);
+	// 正規化する
+	Forward = Math::Normalize(Forward);
 
-	static int fra = 0;
-	fra++;
-	if (fra > 100)
-	{
-		fra = 0;
-	}
-
-	// 入力から移動量を生成
-	Vector3 Velocity = forward * fMoveSpeed * Time->GetDeltaTime() * _value;
-	Velocity.y = 0;
-
-	p_mObject->p_mTransform->Translate(Velocity);
+	Forward *= _value * fMoveSpeed * Time->GetDeltaTime();
+	Forward.y = 0.0f;
+	p_mObject->p_mTransform->Translate(Forward);
 }
 
 void Com_CharacterMove::MoveX(float _value)
 {
-	// カメラのビュー行列を取得
-	Matrix View = p_mCameraCom->GetViewMatrix();
-	// 右向きベクトルを作成
-	Matrix Rot = Matrix::CreateRotationY(Euler_To_Radian(90.0f));
+	// カメラの正面ベクトルを計算
+	Vector3 Target = p_mCameraCom->GetTargetPosition();
+	Vector3 CamPos = p_mCameraCom->p_mObject->p_mTransform->mPosition;
+	Vector3 Forward = Math::GetVector(CamPos, Target);
+	Forward = Math::Normalize(Forward);
 
-	View = View * Rot;
-
-	Vector3 right;
-	right.x = View._31;
-	right.y = View._32;
-	right.z = View._33;
+	// 右向きベクトルを抜き出す
+	Vector3 Right = Math::GetCross(Vector3::Up, Forward);
 
 	// 入力から移動量を生成
-	Vector3 Velocity = right * fMoveSpeed * Time->GetDeltaTime() * _value;
-	Velocity.y = 0;
+	Right *= _value * fMoveSpeed * Time->GetDeltaTime();
+	Right.y = 0.0f;
 
-	p_mObject->p_mTransform->Translate(Velocity);
+	p_mObject->p_mTransform->Translate(Right);
 }
 
 //Controllerはクラスで作る

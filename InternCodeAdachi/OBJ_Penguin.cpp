@@ -69,7 +69,7 @@ OBJ_Penguin::OBJ_Penguin(const char* _name)
 void OBJ_Penguin::Update()
 {
 	// ƒWƒƒƒ“ƒv
-	if (Controller_Input::GetButton(0, GAMEPAD_B) == KEYSTATE::KEY_DOWN && p_mJumpCom->GetIsJump() == false)
+	if (Controller_Input::GetButton(0, GAMEPAD_B) == KEYSTATE::KEY_DOWN && !p_mJumpCom->GetIsJump())
 	{
 		p_mJumpCom->SetJumpFlg(true);
 	}

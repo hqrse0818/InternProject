@@ -212,6 +212,7 @@ void Scene::CollisionUpdate2D()
 {
 	for (auto me = mList[5].begin(); me != mList[5].end(); me++)
 	{
+		assert(*me);
 		GameObject* Objecti = *me;
 		if (Objecti->GetActive())
 		{

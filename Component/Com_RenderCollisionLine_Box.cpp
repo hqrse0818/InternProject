@@ -1,3 +1,4 @@
+#if defined (DEBUG) || defined(_DEBUG)
 #include "Com_RenderCollisionLine_Box.h"
 #include "Com_BoxCollider.h"
 #include "../GameObject/GameObject.h"
@@ -163,3 +164,4 @@ void Com_RenderCollisionLine_Box2D::Draw()
 	// •`‰æ
 	Renderer::GetDeviceContext()->Draw(4, 0);
 }
+#endif

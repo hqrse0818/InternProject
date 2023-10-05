@@ -1,3 +1,5 @@
+#if defined (DEBUG) || defined(_DEBUG)
+
 #include "Com_RenderCollisionLine_Cylinder.h"
 #include "Com_CylinderCollider.h"
 #include "../GameObject/GameObject.h"
@@ -95,3 +97,5 @@ void Com_RenderCollisionLine_Cylinder::Draw()
 	// •`‰æ
 	Renderer::GetDeviceContext()->Draw(48, 0);
 }
+
+#endif

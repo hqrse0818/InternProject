@@ -1,3 +1,5 @@
+#if defined (DEBUG) || defined(_DEBUG)
+
 #include "Com_RenderCollisionLine_Sphere.h"
 #include "../Component/Com_ModelRenderer.h"
 #include "../GameObject/GameObject.h"
@@ -106,3 +108,5 @@ void Com_RenderCollisionLine_Sphere::Draw()
 	// •`‰æ
 	Renderer::GetDeviceContext()->Draw(30, 0);
 }
+
+#endif

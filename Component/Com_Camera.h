@@ -71,6 +71,10 @@ public:
     {
         return mViewMatrix;
     }
+    const DirectX::SimpleMath::Vector3 GetTargetPosition()
+    {
+        return mTargetPosition;
+    }
 
     void Init();
     virtual void Update();
