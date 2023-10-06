@@ -63,12 +63,15 @@ void OBJ_Ice::Update()
 		bDestroy = true; //GameObjectクラスのDestroy()を使うために必要
 		break;
 	case 2:
+		Shake();
 		myColor = Color(1.0f, 0.0f, 1.0f, 1.0f);
 		break;
 	case 3:
+		Shake();
 		myColor = Color(1.0f, 1.0f, 0.0f, 1.0f);
 		break;
 	case 4:
+		Shake();
 		myColor = Color(0.0f, 1.0f, 0.0f, 1.0f);
 		break;
 	case 5:
@@ -94,4 +97,18 @@ void OBJ_Ice::Update()
 void OBJ_Ice::HpCalc()
 {
 
+}
+
+//足場が揺れる処理
+void OBJ_Ice::Shake()
+{
+	// 足場をランダムに揺らす
+	float shakeAmount = 0.1f; // 揺れの範囲
+	float offsetX = RandomRange(-shakeAmount, shakeAmount);
+	float offsetY = RandomRange(-shakeAmount, shakeAmount);
+	float offsetZ = RandomRange(-shakeAmount, shakeAmount);
+
+	// 現在の位置を取得し、揺れた位置に設定します
+	Vector3 currentPosition = p_mTransform->mPosition;
+	p_mTransform->SetPosition(currentPosition.x + offsetX, currentPosition.y + offsetY, currentPosition.z + offsetZ);
 }

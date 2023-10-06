@@ -73,6 +73,8 @@ void OBJ_Penguin::Update()
 	// ヒップインパクト
 	if (Controller_Input::GetButton(0, GAMEPAD_B) == KEYSTATE::KEY_DOWN && p_mJumpCom->GetIsJump())
 	{
+		//ゲッターなどで高さを保存しその値によって最初と最後のScaleの値を変える
+
 		if (!p_mJumpCom->GetIsDrop())
 		{
 			p_mJumpCom->SetJumpFlg(false);

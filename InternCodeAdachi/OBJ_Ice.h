@@ -20,5 +20,11 @@ public:
     void Init();
     void Update();
     void HpCalc(); //HPŒvZˆ—
+    void Shake(); //—h‚ê‚éˆ—
+
+    float RandomRange(float min, float max)
+    {
+        return min + static_cast<float>(rand()) / (static_cast<float>(RAND_MAX / (max - min)));
+    }
 };
 
