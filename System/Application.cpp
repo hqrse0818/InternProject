@@ -8,8 +8,8 @@
 #include "Time.h"
 #include "../Component/Com_Audio.h"
 #include "TextureCreate.h"
-const auto ClassName = TEXT("10677 AT13D306 02 安達陽斗 就職作品ベース");     //!< ウィンドウクラス名.
-const auto WindowName = TEXT("10677 AT13D306 02 安達陽斗 就職作品ベース");    //!< ウィンドウ名.
+const auto ClassName = TEXT("ぺんぺんドロップ");     //!< ウィンドウクラス名.
+const auto WindowName = TEXT("ぺんぺんドロップ");    //!< ウィンドウ名.
 
 Application::Application(uint32_t width, uint32_t height)
 : mhInst   (nullptr)

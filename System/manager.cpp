@@ -5,7 +5,7 @@
 #include	"../Scene/Scene.h"
 #include	"Input.h"
 #include	"Time.h"
-#include	"../Scene/Scene_Title.h"
+#include	"../Scene/Scene_Test.h"
 #include "HighGetRand.h"
 
 Scene* Manager::p_mCurrentScene{};
@@ -33,7 +33,7 @@ void Manager::Init(Application* ap)
 	// ƒ^ƒCƒ€‚Ì‰Šú‰»
 	Time->Init();
 
-	SetScene<Scene_Title>();
+	SetScene<Scene_Test>();
 }
 
 void Manager::Uninit()

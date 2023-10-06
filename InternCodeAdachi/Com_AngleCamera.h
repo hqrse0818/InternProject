@@ -7,7 +7,6 @@ private:
     float fCurrentAngle = 0.0f;
     float fDistance = 10.0f;
     float fHeight = 5.0f;
-
 public:
     float GetAngle()
     {

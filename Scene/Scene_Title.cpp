@@ -58,13 +58,9 @@ void Scene_Title::Start()
 
 void Scene_Title::Update()
 {
-	if (Controller_Input::GetButton(0, GAMEPAD_A) == KEYSTATE::KEY_DOWN || Input::GetKeyState(KEYCODE_0) == KEYSTATE::KEY_DOWN)
-	{
-		Manager::SetScene<Scene_Test>();
-	}
 	if (Controller_Input::GetButton(0, GAMEPAD_A) == KEYSTATE::KEY_DOWN || Input::GetKeyState(KEYCODE_RETURN) == KEYSTATE::KEY_DOWN)
 	{
-		Manager::SetScene<Scene_Test2>();
+		Manager::SetScene<Scene_Test>();
 	}
 }
 

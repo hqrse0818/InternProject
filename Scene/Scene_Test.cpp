@@ -21,7 +21,7 @@ void Scene_Test::Init()
 	bCheckCol = true;
 
 	// ペンギン
-	Player = new OBJ_Penguin("Test");
+	Player = new OBJ_Penguin("Test", "asset/data/csv/PlayerStatus.csv");
 	
 
 	// レイヤーの指定なしでキーオブジェクトとして追加
@@ -79,9 +79,21 @@ void Scene_Test::Start()
 {
 	Player->p_mTransform->SetPosition(0.0f, 7.0f, 0.0f);
 	GetGameObject("Azarashi")->p_mTransform->SetPosition(10.0f, 8.0f, -2.0f);
+	ShowCursor(false);
+	Input::SetCursorCenterEnable();
 }
 
 void Scene_Test::Update()
 {
-	
+	// デバッグ用
+	if (Input::GetKeyState(KEYCODE_END) == KEYSTATE::KEY_DOWN)
+	{
+		ShowCursor(true);
+		Input::SetCursorCenterDisable();
+	}
+}
+
+void Scene_Test::Uninit()
+{
+	ShowCursor(true);
 }

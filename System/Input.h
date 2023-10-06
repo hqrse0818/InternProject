@@ -443,7 +443,7 @@ public:
     static float GetLeftTriggerValue(unsigned int index);
     static DirectX::SimpleMath::Vector2 GetLeftStick(unsigned int index);
     static DirectX::SimpleMath::Vector2 GetRightStick(unsigned int index);
-
+    static bool GetIsGamePadConnect(unsigned int index);
 
     static void ControllerInit();
     static void ControllerUninit();

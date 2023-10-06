@@ -11,5 +11,6 @@ public:
     void Init();
     void Start();
     void Update();
+    void Uninit();
 };
 

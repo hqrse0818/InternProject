@@ -11,10 +11,13 @@ private:
     Com_Shader* p_mShaderCom = nullptr;
     Com_AssimpAnimation* p_mModelCom = nullptr;
     Com_BoxCollider* p_mCollider = nullptr;
-
+    DirectX::SimpleMath::Color myColor = DirectX::SimpleMath::Color{1.0f, 1.0f, 1.0f, 1.0f};
     int iHP = 5;
 public:
     OBJ_Ice();
     OBJ_Ice(const char* _name);
+
+    void Init();
+    void Update();
 };
 

@@ -387,6 +387,19 @@ DirectX::SimpleMath::Vector2 Controller_Input::GetRightStick(unsigned int index)
     return Value;
 }
 
+bool Controller_Input::GetIsGamePadConnect(unsigned int index)
+{
+    XINPUT_STATE gp;
+
+    DWORD dResult = XInputGetState(index, &gp);
+    if (dResult == ERROR_SUCCESS)
+    {
+        return true;
+    }
+
+    return false;
+}
+
 void Controller_Input::ControllerInit()
 {
     //XInputEnable(TRUE);

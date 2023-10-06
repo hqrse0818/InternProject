@@ -22,6 +22,7 @@ protected:
 public:
 	void CreateBuffer(D3D11_BUFFER_DESC _desc);
 	void CreateBuffer(void* _pData);
+	void CreateBuffer(unsigned int _bytewidth);
 	void WriteBuffer(UINT _slot, void* _pData);
 	// 0‚É“ü‚ê‚È‚¢‚±‚Æ
 	virtual void SetTexture(UINT _slot, ShaderResourceView* _pSRV) = 0;
