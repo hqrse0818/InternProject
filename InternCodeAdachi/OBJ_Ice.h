@@ -12,7 +12,7 @@ private:
     Com_AssimpAnimation* p_mModelCom = nullptr;
     Com_BoxCollider* p_mCollider = nullptr;
     DirectX::SimpleMath::Color myColor;
-    int iHP = 5;
+    int iHP = 5; //ë´èÍÇÃHP
 public:
     OBJ_Ice();
     OBJ_Ice(const char* _name);

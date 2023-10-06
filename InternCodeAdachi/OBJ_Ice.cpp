@@ -43,10 +43,11 @@ void OBJ_Ice::Init()
 
 void OBJ_Ice::Update()
 {
+	//HPの量で変更(テクスチャに変更予定)
 	switch (iHP) 
 	{
 	case 1:
-		bDestroy = true;
+		bDestroy = true; //GameObjectクラスのDestroy()を使うために必要
 		break;
 	case 2:
 		myColor = Color(1.0f, 0.0f, 1.0f, 1.0f);
@@ -66,12 +67,15 @@ void OBJ_Ice::Update()
 
 	GameObject Update();
 
+	//テスト（ボタンを押してHPが減る）
 	if (Input::GetKeyState(KEYCODE_1) == KEYSTATE::KEY_DOWN)
 	{
 		iHP--;
 	}
 }
 
+//アザラシの待機時間によってHPが減るようにする
 void OBJ_Ice::HpCalc()
 {
+
 }
