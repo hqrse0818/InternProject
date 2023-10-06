@@ -46,12 +46,21 @@ void Com_Jump::Update()
 
 void Com_Jump::OnCollisionEnter(GameObject* _obj)
 {
-	//if (bDrop)
-	//{
-	//	OBJ_Inpact* Inpact = new OBJ_Inpact("Inpact");
-	//
-	//	Inpact->p_mTransform->mPosition = p_mObject->p_mTransform->mPosition;
-	//
-	//	GameObject::GetScene()->AddGameObject(Inpact);
-	//}
+	//コライダーのタイプを取得
+	if (_obj->mColType == Collider::ColliderForm::Box)
+	{
+		//ボックスならボックスコライダーを取得
+		Com_BoxCollider* col = _obj->GetComponent<Com_BoxCollider>();
+
+		//ドロップフラグがtrue
+		if (bDrop)
+		{
+			//衝撃オブジェクトを呼び出す
+			OBJ_Inpact* Inpact = new OBJ_Inpact("Inpact");
+
+			Inpact->p_mTransform->mPosition = p_mObject->p_mTransform->mPosition;
+
+			GameObject::GetScene()->AddGameObject(Inpact);
+		}
+	}
 }
