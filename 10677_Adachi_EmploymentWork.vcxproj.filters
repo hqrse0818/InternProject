@@ -204,9 +204,6 @@
     <ClCompile Include="InternCodeAdachi\OBJ_Ice.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
-    <ClCompile Include="InternCode.Kizuki\Com_IceGround.cpp">
-      <Filter>InternCodeKizuki</Filter>
-    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="main.h">
@@ -382,9 +379,6 @@
     </ClInclude>
     <ClInclude Include="InternCodeAdachi\OBJ_Ice.h">
       <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="InternCode.Kizuki\Com_IceGround.h">
-      <Filter>InternCodeKizuki</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

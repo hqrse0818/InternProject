@@ -46,7 +46,7 @@ void OBJ_Ice::Update()
 	switch (iHP) 
 	{
 	case 1:
-		myColor = Color(1.0f, 1.0f, 1.0f, 0.0f);
+		bDestroy = true;
 		break;
 	case 2:
 		myColor = Color(1.0f, 0.0f, 1.0f, 1.0f);
@@ -70,4 +70,8 @@ void OBJ_Ice::Update()
 	{
 		iHP--;
 	}
+}
+
+void OBJ_Ice::HpCalc()
+{
 }

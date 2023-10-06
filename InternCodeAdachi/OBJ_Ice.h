@@ -19,9 +19,6 @@ public:
 
     void Init();
     void Update();
-
-    //assimpのコンポーネントを5個持たせて
-    //違うモデルを読み込ませる(coutでどのモデルが出てるか)
-    //
+    void HpCalc(); //HP計算処理
 };
 
