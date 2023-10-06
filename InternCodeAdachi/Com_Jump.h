@@ -11,6 +11,8 @@ private:
     float fDropInitialSpeed = -7.5f;// 落下の初速
     float fDropCnt = 0.0f;// 落下時間
 
+    float fFallTime = 1.0f; //ヒップドロップの加速
+
     bool bJump = false; //ジャンプフラグ
     bool bDrop = false; //ヒップドロップフラグ
     Com_Gravity* p_mGravityCom = nullptr;
@@ -19,6 +21,8 @@ public:
     void Jump();
     void HipDrop();
     void Update();
+
+    void OnCollisionEnter(GameObject* _obj);
 
     void SetGravityCom(Com_Gravity* _com)
     {
