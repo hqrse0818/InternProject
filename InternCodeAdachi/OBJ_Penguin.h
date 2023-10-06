@@ -3,8 +3,9 @@
 #include "../Component/Com_AssimpAnimation.h"
 #include "../Component/Com_Shader.h"
 #include "../InternCode.Kizuki/Com_CharacterMove.h"
-#include "Com_TestJump.h"
+#include "Com_Jump.h"
 #include "Com_AngleCamera.h"
+#include "Com_Gravity.h"
 
 // ペンギンのプレファブ
 
@@ -19,9 +20,11 @@ private:
     // 移動コンポーネント
     Com_CharacterMove* p_mMoveCom = nullptr;
     // ジャンプコンポーネント
-    Com_TestJump* p_mJumpCom = nullptr;
+    Com_Jump* p_mJumpCom = nullptr;
     // ターゲットにされてるカメラコンポーネント
     Com_AngleCamera* p_mCameraCom = nullptr;
+    // 重力コンポーネント
+    Com_Gravity* p_mGravityCom = nullptr;
 public:
     OBJ_Penguin();
     OBJ_Penguin(const char* _name);

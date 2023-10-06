@@ -43,20 +43,20 @@ OBJ_Penguin::OBJ_Penguin()
 	AddComponent(p_mMoveCom);
 
 	// ジャンプコンポーネント
-	Com_Jump* Jump_buf = new Com_Jump();
-	Jump_buf->SetJumpPower(15.0f);
+	p_mJumpCom = new Com_Jump();
+	p_mJumpCom->SetJumpPower(15.0f);
 
 	AddComponent(p_mJumpCom);
 
 	// 重力コンポーネント
-	Com_Gravity* Gravity_buf = new Com_Gravity();
-	p_mJumpCom->SetGravityCom(Gravity_buf);
+	p_mGravityCom = new Com_Gravity();
+	p_mJumpCom->SetGravityCom(p_mGravityCom);
 
-	AddComponent(Gravity_buf);
+	AddComponent(p_mGravityCom);
 
 	// 足元コンポーネント
 	Com_Foot* Foot_buf = new Com_Foot();
-	Foot_buf->SetGravityCom(Gravity_buf);
+	Foot_buf->SetGravityCom(p_mGravityCom);
 	Foot_buf->SetFootHeight(1.0f);
 	Foot_buf->SetJumpCom(p_mJumpCom);
 	AddComponent(Foot_buf);
@@ -70,18 +70,39 @@ OBJ_Penguin::OBJ_Penguin(const char* _name)
 
 void OBJ_Penguin::Update()
 {
+	// ヒップインパクト
+	if (Controller_Input::GetButton(0, GAMEPAD_B) == KEYSTATE::KEY_DOWN && p_mJumpCom->GetIsJump())
+	{
+		if (!p_mJumpCom->GetIsDrop())
+		{
+			p_mJumpCom->SetJumpFlg(false);
+			p_mJumpCom->SetDropFlg(true);
+		}
+	}
 	// ジャンプ
-	if (Controller_Input::GetButton(0, GAMEPAD_B) == KEYSTATE::KEY_DOWN && !p_mJumpCom->GetIsJump())
+	if (Controller_Input::GetButton(0, GAMEPAD_B) == KEYSTATE::KEY_DOWN && p_mGravityCom->GetGround())
 	{
 		p_mJumpCom->SetJumpFlg(true);
 	}
-	// 移動
-	//p_mMoveCom->Move(Vector3(Controller_Input::GetLeftStick(0).x, 0.0f, Controller_Input::GetLeftStick(0).y));
 
-	p_mMoveCom->MoveX(Controller_Input::GetLeftStick(0).x);
-	p_mMoveCom->MoveZ(Controller_Input::GetLeftStick(0).y);
-
+	// 地上にいるときはスティックの値をそのまま反映
+	if (p_mGravityCom->GetGround())
+	{
+		p_mMoveCom->MoveX(Controller_Input::GetLeftStick(0).x);
+		p_mMoveCom->MoveZ(Controller_Input::GetLeftStick(0).y);
+	}
+	else
+	{
+		p_mMoveCom->MoveX(Controller_Input::GetLeftStick(0).x/ 5);
+		p_mMoveCom->MoveZ(Controller_Input::GetLeftStick(0).y / 5);
+	}
+	
+	// アングル調整
+	// 横の角度
 	p_mCameraCom->SetAngle(p_mCameraCom->GetAngle() + Controller_Input::GetRightStick(0).x);
+	// 高さ
+	p_mCameraCom->SetHeight(p_mCameraCom->GetHeight() + Controller_Input::GetRightStick(0).y);
+
 
 	// アニメーションの更新
 	p_mModel->UpdateFrame();

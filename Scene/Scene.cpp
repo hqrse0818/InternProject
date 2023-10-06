@@ -15,7 +15,7 @@ void Scene::CollisionUpdate()
 void Scene::CollisionUpdate3D()
 {
 	// Movableオブジェクト同士の衝突検知
-	if (mList[1].size() > 0)
+	if (mList[1].size() > 1)
 	{
 		for (auto me = mList[1].begin(); me != mList[1].end(); me++)
 		{
@@ -218,7 +218,7 @@ void Scene::CollisionUpdate3D()
 
 void Scene::CollisionUpdate2D()
 {
-	if (mList[5].size() > 0)
+	if (mList[5].size() > 1)
 	{
 		for (auto me = mList[5].begin(); me != mList[5].end(); me++)
 		{

@@ -21,9 +21,23 @@ public:
     {
         fDistance = _val;
     }
+
+    float GetHeight()
+    {
+        return fHeight;
+    }
+
     void SetHeight(float _val)
     {
         fHeight = _val;
+        if (fHeight > 45)
+        {
+            fHeight = 45;
+        }
+        else if (fHeight < 5)
+        {
+            fHeight = 5;
+        }
     }
 
     void Update();

@@ -7,7 +7,9 @@ class Com_Jump :
 {
 private:
     float fJumpPower = 10.0f; //ジャンプ力
-    float fDropPower = -8.0f; //落下速度
+    float fDropSpeed = -10.0f; //落下速度
+    float fDropInitialSpeed = -7.5f;// 落下の初速
+    float fDropCnt = 0.0f;// 落下時間
 
     bool bJump = false; //ジャンプフラグ
     bool bDrop = false; //ヒップドロップフラグ
@@ -39,7 +41,26 @@ public:
 
     void SetDropFlg(bool _val)
     {
+        if (!_val)
+        {
+            fDropCnt = 0.0f;
+        }
         bDrop = _val;
+    }
+
+    void SetDropPower(float _val)
+    {
+        fDropSpeed = _val;
+    }
+
+    void SetDropInitialSpeed(float _val)
+    {
+        fDropInitialSpeed = _val;
+    }
+
+    bool GetIsDrop()
+    {
+        return bDrop;
     }
 };
 

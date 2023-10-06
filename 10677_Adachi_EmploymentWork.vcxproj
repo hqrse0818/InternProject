@@ -177,6 +177,7 @@
     <ClCompile Include="main.cpp" />
     <ClCompile Include="GameObject\OBJ_Transition.cpp" />
     <ClCompile Include="InternCodeAdachi\OBJ_Penguin.cpp" />
+    <ClCompile Include="InternCodeAdachi\OBJ_Ice.cpp" />
     <ClCompile Include="Scene\Scene.cpp" />
     <ClCompile Include="Scene\Scene_Title.cpp" />
     <ClCompile Include="Scene\Scene_Test.cpp" />
@@ -214,6 +215,7 @@
     <ClInclude Include="Component\Com_RenderCollider.h" />
     <ClInclude Include="Component\Com_AssimpAnimation.h" />
     <ClInclude Include="InternCodeAdachi\Com_AngleCamera.h" />
+    <ClInclude Include="InternCodeAdachi\Com_Jump.h" />
     <ClInclude Include="InternCodeAdachi\Com_TestJump.h" />
     <ClInclude Include="InternCodeAdachi\Com_Gravity.h" />
     <ClInclude Include="InternCodeAdachi\Com_Foot.h" />
@@ -231,6 +233,7 @@
     <ClInclude Include="InternCodeAdachi\InternCollision.h" />
     <ClInclude Include="main.h" />
     <ClInclude Include="InternCodeAdachi\OBJ_Penguin.h" />
+    <ClInclude Include="InternCodeAdachi\OBJ_Ice.h" />
     <ClInclude Include="Scene\Scene.h" />
     <ClInclude Include="Scene\Scene_Title.h" />
     <ClInclude Include="Scene\Scene_Test.h" />

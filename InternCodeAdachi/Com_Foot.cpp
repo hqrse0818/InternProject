@@ -22,7 +22,7 @@ void Com_Foot::OnCollisionEnter(GameObject* _obj)
 		if (col->bCanStepOn && p_mGravityCom)
 		{
 			// 且つ現在落下中
-			if (p_mGravityCom->GetGround() == false)
+			if (!p_mGravityCom->GetGround())
 			{
 				// ボックスのy座標の最大値を取得。
 				float heightY = col->Getmax().y;
@@ -54,7 +54,7 @@ void Com_Foot::OnCollisionStay(GameObject* _obj)
 		if (col->bCanStepOn && p_mGravityCom)
 		{
 			// 且つ現在落下中
-			if (p_mGravityCom->GetGround() == false)
+			if (!p_mGravityCom->GetGround())
 			{
 				// ボックスのy座標の最大値を取得。
 				float heightY = col->Getmax().y;

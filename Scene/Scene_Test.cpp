@@ -7,6 +7,11 @@
 
 #include "../InternCodeAdachi/OBJ_Penguin.h"
 #include "../InternCodeAdachi/Com_AngleCamera.h"
+#include "../InternCodeAdachi/OBJ_Ice.h"
+
+#define IceNum (11)
+#define IceScale (8)
+#define InitPos (-40)
 
 using namespace DirectX::SimpleMath;
 
@@ -42,29 +47,17 @@ void Scene_Test::Init()
 
 	AddGameObject(Azarashi);
 
-
-	// ステージ
-	GameObject* stage = new GameObject("stage");
-	Shader_buf = new Com_Shader();
-	Shader_buf->p_mVS->Load(VS_MODEL);
-	Shader_buf->p_mPS->Load("shader\\PS_HitLine.cso");
-	stage->AddComponent(Shader_buf);
-
-	Model_buf = new Com_AssimpAnimation;
-	Model_buf->LoadModel("asset\\model\\stage_v2.fbx", 1.0f, false);
-	stage->AddComponent(Model_buf);
-
-	Com_BoxCollider* bo_col = new Com_BoxCollider();
-	bo_col->SetSize(7.0f, 1.0f, 7.0f);
-	bo_col->SetCenter(0.0f, 0.5f, 0.0f);
-	bo_col->bCanStepOn = true;
-
-	stage->AddComponent(bo_col);
-
-	stage->p_mTransform->SetPosition(-2.0f, 2.0f, 0.0f);
-
-	AddGameObject(stage);
-
+	// ステージ生成
+	for (int i = 0; i < IceNum; i++)
+	{
+		for (int j = 0; j < IceNum; j++)
+		{
+			// 氷の生成
+			OBJ_Ice* Ice = new OBJ_Ice("Ice");
+			Ice->p_mTransform->SetPosition(InitPos + i * IceScale, 0.0f, InitPos + j * IceScale);
+			AddGameObject(Ice);
+		}
+	}
 
 	GameObject* Camera = new GameObject("Camera");
 	Com_AngleCamera* Camera_buf = new Com_AngleCamera();
