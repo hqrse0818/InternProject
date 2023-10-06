@@ -8,7 +8,7 @@ class Com_Gravity :
     public Component
 {
 private:
-    float fGravity = 3.0f;
+    float fGravity = 5.0f;
     float fFallCnt = 0.0f;
     bool bOnGround = false;
 public:

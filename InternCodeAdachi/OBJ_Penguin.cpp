@@ -44,7 +44,7 @@ OBJ_Penguin::OBJ_Penguin()
 
 	// ジャンプコンポーネント
 	p_mJumpCom = new Com_Jump();
-	p_mJumpCom->SetJumpPower(15.0f);
+	p_mJumpCom->SetJumpPower(20.0f);
 
 	AddComponent(p_mJumpCom);
 
@@ -57,7 +57,7 @@ OBJ_Penguin::OBJ_Penguin()
 	// 足元コンポーネント
 	Com_Foot* Foot_buf = new Com_Foot();
 	Foot_buf->SetGravityCom(p_mGravityCom);
-	Foot_buf->SetFootHeight(1.0f);
+	Foot_buf->SetFootHeight(2.0f);
 	Foot_buf->SetJumpCom(p_mJumpCom);
 	AddComponent(Foot_buf);
 }

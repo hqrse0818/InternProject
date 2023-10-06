@@ -10,8 +10,8 @@
 #include "../InternCodeAdachi/OBJ_Ice.h"
 
 #define IceNum (11)
-#define IceScale (8)
-#define InitPos (-40)
+#define IceScale (7)
+#define InitPos (-35)
 
 using namespace DirectX::SimpleMath;
 
