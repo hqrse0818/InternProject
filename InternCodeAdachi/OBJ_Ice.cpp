@@ -1,12 +1,17 @@
 #include "OBJ_Ice.h"
+#include "../System/Input.h"
+
+using namespace DirectX::SimpleMath;
 
 OBJ_Ice::OBJ_Ice()
 {
+	myColor = Color(1.0f, 1.0f, 1.0f, 1.0f);
+
 	// シェーダー
 	p_mShaderCom = new Com_Shader();
 	p_mShaderCom->p_mVS->Load(VS_MODEL);
 	//p_mShaderCom->p_mPS->Load(PS_MODEL);
-	p_mShaderCom->p_mPS->Load("shader\\PS_NoHitLine.cso");
+	p_mShaderCom->p_mPS->Load("shader\\PS_IceState.cso");
 
 	AddComponent(p_mShaderCom);
 
@@ -29,4 +34,40 @@ OBJ_Ice::OBJ_Ice(const char* _name)
 	: OBJ_Ice()
 {
 	sObjectName = _name;
+}
+
+void OBJ_Ice::Init()
+{
+	p_mShaderCom->p_mPS->CreateBuffer(16);
+}
+
+void OBJ_Ice::Update()
+{
+	switch (iHP) 
+	{
+	case 1:
+		myColor = Color(1.0f, 1.0f, 1.0f, 0.0f);
+		break;
+	case 2:
+		myColor = Color(1.0f, 0.0f, 1.0f, 1.0f);
+		break;
+	case 3:
+		myColor = Color(1.0f, 1.0f, 0.0f, 1.0f);
+		break;
+	case 4:
+		myColor = Color(0.0f, 1.0f, 0.0f, 1.0f);
+		break;
+	case 5:
+		myColor = Color(1.0f, 0.0f, 0.0f, 1.0f);
+		break;
+	}
+
+	p_mShaderCom->p_mPS->WriteBuffer(0, &myColor);
+
+	GameObject Update();
+
+	if (Input::GetKeyState(KEYCODE_1) == KEYSTATE::KEY_DOWN)
+	{
+		iHP--;
+	}
 }

@@ -32,6 +32,20 @@ void Shader::CreateBuffer(void* _pData)
 	CreateBuffer(bufferDesc);
 }
 
+void Shader::CreateBuffer(unsigned int _bytewidth)
+{
+	//与えられた構造体からバッファデスクを生成
+	D3D11_BUFFER_DESC bufferDesc{};
+	bufferDesc.ByteWidth = _bytewidth;
+	bufferDesc.Usage = D3D11_USAGE_DEFAULT;
+	bufferDesc.BindFlags = D3D11_BIND_CONSTANT_BUFFER;
+	bufferDesc.CPUAccessFlags = 0;
+	bufferDesc.MiscFlags = 0;
+	bufferDesc.StructureByteStride = sizeof(float);
+
+	CreateBuffer(bufferDesc);
+}
+
 void Shader::WriteBuffer(UINT _slot, void* _pData)
 {
 	if(_slot < p_mBuffers.size())

@@ -11,10 +11,17 @@ private:
     Com_Shader* p_mShaderCom = nullptr;
     Com_AssimpAnimation* p_mModelCom = nullptr;
     Com_BoxCollider* p_mCollider = nullptr;
-
+    DirectX::SimpleMath::Color myColor;
     int iHP = 5;
 public:
     OBJ_Ice();
     OBJ_Ice(const char* _name);
+
+    void Init();
+    void Update();
+
+    //assimpのコンポーネントを5個持たせて
+    //違うモデルを読み込ませる(coutでどのモデルが出てるか)
+    //
 };
 
