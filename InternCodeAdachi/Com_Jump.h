@@ -42,5 +42,15 @@ public:
     {
         bDrop = _val;
     }
+
+    bool GetJumpFlg()
+    {
+        return bJump;
+    }
+
+    bool GetDropFlg()
+    {
+        return bDrop;
+    }
 };
 

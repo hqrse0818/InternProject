@@ -28,7 +28,7 @@ void Com_Jump::HipDrop()
 	//落下時間をかける
 	fDropVelocity.y = fDropPower * fFallTime;
 	//落下時間を加算
-	fFallTime += 1.0f;
+	fFallTime += Time->GetDeltaTime();
 	fDropVelocity.y *= Time->GetDeltaTime();
 
 	p_mObject->p_mTransform->Translate(fDropVelocity);
@@ -42,15 +42,18 @@ void Com_Jump::Update()
 		Jump(); //ジャンプ関数
 
 		//空中でBを押したとき
-		if (Controller_Input::GetButton(0, GAMEPAD_B) == KEYSTATE::KEY_DOWN && bDrop == false)
+		if (Controller_Input::GetButton(0, GAMEPAD_B) == KEYSTATE::KEY_DOWN 
+			&& bDrop == false)
 		{
+			bJump = false; //ジャンプをfalse
 			bDrop = true; //ドロップをtrue
-			bJump = false; //ジャンプをフォルス
 		}
 	}
 
 	//地上でBを押したとき
-	if (Controller_Input::GetButton(0, GAMEPAD_B) == KEYSTATE::KEY_DOWN && bJump == false)
+	if (Controller_Input::GetButton(0, GAMEPAD_B) == KEYSTATE::KEY_DOWN 
+		&& bJump == false 
+		&& p_mObject->p_mTransform->mPosition.y >= 0.0)
 	{
 		//落下時間をリセット
 		fFallTime = 1.0f;
@@ -67,12 +70,12 @@ void Com_Jump::Update()
 
 void Com_Jump::OnCollisionEnter(GameObject* _obj)
 {
-	if (bDrop)
-	{
-		OBJ_Inpact* Inpact = new OBJ_Inpact("Inpact");
-
-		Inpact->p_mTransform->mPosition = p_mObject->p_mTransform->mPosition;
-
-		GameObject::GetScene()->AddGameObject(Inpact);
-	}
+	//if (bDrop)
+	//{
+	//	OBJ_Inpact* Inpact = new OBJ_Inpact("Inpact");
+	//
+	//	Inpact->p_mTransform->mPosition = p_mObject->p_mTransform->mPosition;
+	//
+	//	GameObject::GetScene()->AddGameObject(Inpact);
+	//}
 }
