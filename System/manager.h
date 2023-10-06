@@ -31,6 +31,6 @@ public:
 		}
 		p_mCurrentScene = new T();
 		p_mCurrentScene->InitBase();
-		p_mCurrentScene->Start();
+		p_mCurrentScene->StartBase();
 	}
 };

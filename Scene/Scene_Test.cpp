@@ -71,7 +71,7 @@ void Scene_Test::Init()
 	Camera_buf->SetTarget(Player);
 	Camera_buf->SetUseTarget(true);
 	Camera_buf->SetAngle(0.0f);
-	Camera_buf->SetDistance(20.0f);
+	Camera_buf->SetDistance(50.0f);
 	Camera->p_mTransform->SetPosition(0.0f, 20.0f, -30.0f);
 	Camera->AddComponent(Camera_buf);
 

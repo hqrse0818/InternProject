@@ -4,6 +4,7 @@
 #include "../Component/Com_SphereCollider.h"
 #include "../Component/Com_BoxCollider.h"
 #include "../System/Input.h"
+#include "../Scene/Scene.h"
 
 using namespace DirectX::SimpleMath;
 
@@ -85,4 +86,5 @@ void OBJ_Penguin::Update()
 	p_mModel->UpdateFrame();
 
 	GameObject::Update();
+
 }

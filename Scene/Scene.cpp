@@ -15,59 +15,21 @@ void Scene::CollisionUpdate()
 void Scene::CollisionUpdate3D()
 {
 	// Movableオブジェクト同士の衝突検知
-	for (auto me = mList[1].begin(); me != mList[1].end(); me++)
+	if (mList[1].size() > 0)
 	{
-		GameObject* Objecti = *me;
-		if (Objecti->GetActive())
+		for (auto me = mList[1].begin(); me != mList[1].end(); me++)
 		{
-			for (auto other = std::next(me); other != mList[1].end(); other++)
+			GameObject* Objecti = *me;
+			if (Objecti->GetActive())
 			{
-				GameObject* Objectj = *other;
-				if (Objectj->GetActive())
+				for (auto other = std::next(me); other != mList[1].end(); other++)
 				{
-					bool ret = false;
-					ret = CollisionCheck(Objecti, Objectj);
-					// 当たった
-					if (ret == true)
+					GameObject* Objectj = *other;
+					if (Objectj->GetActive())
 					{
-						bool check = false;
-						for (auto& n : Objecti->mLastCollisionvector)
-						{
-							// 前のフレームでも当たっている
-							if (n == Objectj)
-							{
-								Objecti->OnCollisionStay(Objectj);
-								Objectj->OnCollisionStay(Objecti);
-								check = true;
-							}
-						}
-						// 前のフレームで当たっていない
-						if (!check)
-						{
-							Objecti->OnCollisionEnter(Objectj);
-							Objectj->OnCollisionEnter(Objecti);
-						}
-
-						Objecti->mCollisionvector.emplace_back(Objectj);
-						Objectj->mCollisionvector.emplace_back(Objecti);
-					}
-					// 当たってない
-					else
-					{
-						for (auto& n : Objecti->mLastCollisionvector)
-						{
-							// 前のフレームでは当たっていた
-							if (n == Objectj)
-							{
-								Objecti->OnCollisionExit(Objectj);
-								Objectj->OnCollisionExit(Objecti);
-							}
-						}
-					}
-
-					for (auto obj : Objecti->p_mChildren)
-					{
-						ret = CollisionCheck(obj, Objectj);
+						bool ret = false;
+						ret = CollisionCheck(Objecti, Objectj);
+						// 当たった
 						if (ret == true)
 						{
 							bool check = false;
@@ -76,21 +38,20 @@ void Scene::CollisionUpdate3D()
 								// 前のフレームでも当たっている
 								if (n == Objectj)
 								{
-									obj->OnCollisionStay(Objectj);
-									Objectj->OnCollisionStay(obj);
+									Objecti->OnCollisionStay(Objectj);
+									Objectj->OnCollisionStay(Objecti);
 									check = true;
-									break;
 								}
 							}
 							// 前のフレームで当たっていない
 							if (!check)
 							{
-								obj->OnCollisionEnter(Objectj);
-								Objectj->OnCollisionEnter(obj);
+								Objecti->OnCollisionEnter(Objectj);
+								Objectj->OnCollisionEnter(Objecti);
 							}
 
-							obj->mCollisionvector.emplace_back(Objectj);
-							Objectj->mCollisionvector.emplace_back(obj);
+							Objecti->mCollisionvector.emplace_back(Objectj);
+							Objectj->mCollisionvector.emplace_back(Objecti);
 						}
 						// 当たってない
 						else
@@ -100,9 +61,51 @@ void Scene::CollisionUpdate3D()
 								// 前のフレームでは当たっていた
 								if (n == Objectj)
 								{
-									obj->OnCollisionExit(Objectj);
-									Objectj->OnCollisionExit(obj);
-									break;
+									Objecti->OnCollisionExit(Objectj);
+									Objectj->OnCollisionExit(Objecti);
+								}
+							}
+						}
+
+						for (auto obj : Objecti->p_mChildren)
+						{
+							ret = CollisionCheck(obj, Objectj);
+							if (ret == true)
+							{
+								bool check = false;
+								for (auto& n : Objecti->mLastCollisionvector)
+								{
+									// 前のフレームでも当たっている
+									if (n == Objectj)
+									{
+										obj->OnCollisionStay(Objectj);
+										Objectj->OnCollisionStay(obj);
+										check = true;
+										break;
+									}
+								}
+								// 前のフレームで当たっていない
+								if (!check)
+								{
+									obj->OnCollisionEnter(Objectj);
+									Objectj->OnCollisionEnter(obj);
+								}
+
+								obj->mCollisionvector.emplace_back(Objectj);
+								Objectj->mCollisionvector.emplace_back(obj);
+							}
+							// 当たってない
+							else
+							{
+								for (auto& n : Objecti->mLastCollisionvector)
+								{
+									// 前のフレームでは当たっていた
+									if (n == Objectj)
+									{
+										obj->OnCollisionExit(Objectj);
+										Objectj->OnCollisionExit(obj);
+										break;
+									}
 								}
 							}
 						}
@@ -111,60 +114,24 @@ void Scene::CollisionUpdate3D()
 			}
 		}
 	}
+	
 
 	// MovableオブジェクトとStaticオブジェクトの衝突検知
-	for (auto me = mList[1].begin(); me != mList[1].end(); me++)
+	if (mList[1].size() > 0 && mList[2].size() > 0)
 	{
-		GameObject* Objecti = *me;
-		if (Objecti->GetActive())
+		for (auto me = mList[1].begin(); me != mList[1].end(); me++)
 		{
-			for (auto other = mList[2].begin(); other != mList[2].end(); other++)
+			GameObject* Objecti = *me;
+			if (Objecti->GetActive())
 			{
-				GameObject* Objectj = *other;
-				if (Objectj->GetActive())
+				for (auto other = mList[2].begin(); other != mList[2].end(); other++)
 				{
-					bool ret = false;
-					ret = CollisionCheck(Objecti, Objectj);
-					// 当たった
-					if (ret == true)
+					GameObject* Objectj = *other;
+					if (Objectj->GetActive())
 					{
-						bool check = false;
-						for (auto& n : Objecti->mLastCollisionvector)
-						{
-							// 前のフレームでも当たっている
-							if (n == Objectj)
-							{
-								Objecti->OnCollisionStay(Objectj);
-								Objectj->OnCollisionStay(Objecti);
-								check = true;
-							}
-						}
-						// 前のフレームで当たっていない
-						if (!check)
-						{
-							Objecti->OnCollisionEnter(Objectj);
-							Objectj->OnCollisionEnter(Objecti);
-						}
-
-						Objecti->mCollisionvector.emplace_back(Objectj);
-						Objectj->mCollisionvector.emplace_back(Objecti);
-					}
-					// 当たってない
-					else
-					{
-						for (auto& n : Objecti->mLastCollisionvector)
-						{
-							// 前のフレームでは当たっていた
-							if (n == Objectj)
-							{
-								Objecti->OnCollisionExit(Objectj);
-								Objectj->OnCollisionExit(Objecti);
-							}
-						}
-					}
-					for (auto obj : Objecti->p_mChildren)
-					{
-						ret = CollisionCheck(obj, Objectj);
+						bool ret = false;
+						ret = CollisionCheck(Objecti, Objectj);
+						// 当たった
 						if (ret == true)
 						{
 							bool check = false;
@@ -173,20 +140,20 @@ void Scene::CollisionUpdate3D()
 								// 前のフレームでも当たっている
 								if (n == Objectj)
 								{
-									obj->OnCollisionStay(Objectj);
-									Objectj->OnCollisionStay(obj);
+									Objecti->OnCollisionStay(Objectj);
+									Objectj->OnCollisionStay(Objecti);
 									check = true;
 								}
 							}
 							// 前のフレームで当たっていない
 							if (!check)
 							{
-								obj->OnCollisionEnter(Objectj);
-								Objectj->OnCollisionEnter(obj);
+								Objecti->OnCollisionEnter(Objectj);
+								Objectj->OnCollisionEnter(Objecti);
 							}
 
-							obj->mCollisionvector.emplace_back(Objectj);
-							Objectj->mCollisionvector.emplace_back(obj);
+							Objecti->mCollisionvector.emplace_back(Objectj);
+							Objectj->mCollisionvector.emplace_back(Objecti);
 						}
 						// 当たってない
 						else
@@ -196,8 +163,48 @@ void Scene::CollisionUpdate3D()
 								// 前のフレームでは当たっていた
 								if (n == Objectj)
 								{
-									obj->OnCollisionExit(Objectj);
-									Objectj->OnCollisionExit(obj);
+									Objecti->OnCollisionExit(Objectj);
+									Objectj->OnCollisionExit(Objecti);
+								}
+							}
+						}
+						for (auto obj : Objecti->p_mChildren)
+						{
+							ret = CollisionCheck(obj, Objectj);
+							if (ret == true)
+							{
+								bool check = false;
+								for (auto& n : Objecti->mLastCollisionvector)
+								{
+									// 前のフレームでも当たっている
+									if (n == Objectj)
+									{
+										obj->OnCollisionStay(Objectj);
+										Objectj->OnCollisionStay(obj);
+										check = true;
+									}
+								}
+								// 前のフレームで当たっていない
+								if (!check)
+								{
+									obj->OnCollisionEnter(Objectj);
+									Objectj->OnCollisionEnter(obj);
+								}
+
+								obj->mCollisionvector.emplace_back(Objectj);
+								Objectj->mCollisionvector.emplace_back(obj);
+							}
+							// 当たってない
+							else
+							{
+								for (auto& n : Objecti->mLastCollisionvector)
+								{
+									// 前のフレームでは当たっていた
+									if (n == Objectj)
+									{
+										obj->OnCollisionExit(Objectj);
+										Objectj->OnCollisionExit(obj);
+									}
 								}
 							}
 						}
@@ -206,65 +213,28 @@ void Scene::CollisionUpdate3D()
 			}
 		}
 	}
+	
 }
 
 void Scene::CollisionUpdate2D()
 {
-	for (auto me = mList[5].begin(); me != mList[5].end(); me++)
+	if (mList[5].size() > 0)
 	{
-		assert(*me);
-		GameObject* Objecti = *me;
-		if (Objecti->GetActive())
+		for (auto me = mList[5].begin(); me != mList[5].end(); me++)
 		{
-			for (auto other = std::next(me); other != mList[5].end(); other++)
+			assert(*me);
+			GameObject* Objecti = *me;
+			if (Objecti->GetActive())
 			{
-				GameObject* Objectj = *other;
-				if (Objectj->GetActive())
+				for (auto other = std::next(me); other != mList[5].end(); other++)
 				{
-					bool ret = false;
-					ret = CollisionCheck(Objecti, Objectj);
-
-					// 当たった
-					if (ret == true)
+					GameObject* Objectj = *other;
+					if (Objectj->GetActive())
 					{
-						bool check = false;
-						for (auto& n : Objecti->mLastCollisionvector)
-						{
-							// 前のフレームでも当たっている
-							if (n == Objectj)
-							{
-								Objecti->OnCollisionStay(Objectj);
-								Objectj->OnCollisionStay(Objecti);
-								check = true;
-							}
-						}
-						// 前のフレームで当たっていない
-						if (!check)
-						{
-							Objecti->OnCollisionEnter(Objectj);
-							Objectj->OnCollisionEnter(Objecti);
-						}
+						bool ret = false;
+						ret = CollisionCheck(Objecti, Objectj);
 
-						Objecti->mCollisionvector.emplace_back(Objectj);
-						Objectj->mCollisionvector.emplace_back(Objecti);
-					}
-					// 当たってない
-					else
-					{
-						for (auto& n : Objecti->mLastCollisionvector)
-						{
-							// 前のフレームでは当たっていた
-							if (n == Objectj)
-							{
-								Objecti->OnCollisionExit(Objectj);
-								Objectj->OnCollisionExit(Objecti);
-							}
-						}
-					}
-
-					for (auto obj : Objecti->p_mChildren)
-					{
-						ret = CollisionCheck(obj, Objectj);
+						// 当たった
 						if (ret == true)
 						{
 							bool check = false;
@@ -273,20 +243,20 @@ void Scene::CollisionUpdate2D()
 								// 前のフレームでも当たっている
 								if (n == Objectj)
 								{
-									obj->OnCollisionStay(Objectj);
-									Objectj->OnCollisionStay(obj);
+									Objecti->OnCollisionStay(Objectj);
+									Objectj->OnCollisionStay(Objecti);
 									check = true;
 								}
 							}
 							// 前のフレームで当たっていない
 							if (!check)
 							{
-								obj->OnCollisionEnter(Objectj);
-								Objectj->OnCollisionEnter(obj);
+								Objecti->OnCollisionEnter(Objectj);
+								Objectj->OnCollisionEnter(Objecti);
 							}
 
-							obj->mCollisionvector.emplace_back(Objectj);
-							Objectj->mCollisionvector.emplace_back(obj);
+							Objecti->mCollisionvector.emplace_back(Objectj);
+							Objectj->mCollisionvector.emplace_back(Objecti);
 						}
 						// 当たってない
 						else
@@ -296,8 +266,49 @@ void Scene::CollisionUpdate2D()
 								// 前のフレームでは当たっていた
 								if (n == Objectj)
 								{
-									obj->OnCollisionExit(Objectj);
-									Objectj->OnCollisionExit(obj);
+									Objecti->OnCollisionExit(Objectj);
+									Objectj->OnCollisionExit(Objecti);
+								}
+							}
+						}
+
+						for (auto obj : Objecti->p_mChildren)
+						{
+							ret = CollisionCheck(obj, Objectj);
+							if (ret == true)
+							{
+								bool check = false;
+								for (auto& n : Objecti->mLastCollisionvector)
+								{
+									// 前のフレームでも当たっている
+									if (n == Objectj)
+									{
+										obj->OnCollisionStay(Objectj);
+										Objectj->OnCollisionStay(obj);
+										check = true;
+									}
+								}
+								// 前のフレームで当たっていない
+								if (!check)
+								{
+									obj->OnCollisionEnter(Objectj);
+									Objectj->OnCollisionEnter(obj);
+								}
+
+								obj->mCollisionvector.emplace_back(Objectj);
+								Objectj->mCollisionvector.emplace_back(obj);
+							}
+							// 当たってない
+							else
+							{
+								for (auto& n : Objecti->mLastCollisionvector)
+								{
+									// 前のフレームでは当たっていた
+									if (n == Objectj)
+									{
+										obj->OnCollisionExit(Objectj);
+										Objectj->OnCollisionExit(obj);
+									}
 								}
 							}
 						}
@@ -306,61 +317,23 @@ void Scene::CollisionUpdate2D()
 			}
 		}
 	}
-
-	for (auto me = mList[5].begin(); me != mList[5].end(); me++)
+	
+	if (mList[5].size() > 0 && mList[6].size() > 0)
 	{
-		GameObject* Objecti = *me;
-		if (Objecti->GetActive())
+		for (auto me = mList[5].begin(); me != mList[5].end(); me++)
 		{
-			for (auto other = mList[6].begin(); other != mList[6].end(); other++)
+			GameObject* Objecti = *me;
+			if (Objecti->GetActive())
 			{
-				GameObject* Objectj = *other;
-				if (Objectj->GetActive())
+				for (auto other = mList[6].begin(); other != mList[6].end(); other++)
 				{
-					bool ret = false;
-					ret = CollisionCheck(Objecti, Objectj);
-
-					// 当たった
-					if (ret == true)
+					GameObject* Objectj = *other;
+					if (Objectj->GetActive())
 					{
-						bool check = false;
-						for (auto& n : Objecti->mLastCollisionvector)
-						{
-							// 前のフレームでも当たっている
-							if (n == Objectj)
-							{
-								Objecti->OnCollisionStay(Objectj);
-								Objectj->OnCollisionStay(Objecti);
-								check = true;
-							}
-						}
-						// 前のフレームで当たっていない
-						if (!check)
-						{
-							Objecti->OnCollisionEnter(Objectj);
-							Objectj->OnCollisionEnter(Objecti);
-						}
+						bool ret = false;
+						ret = CollisionCheck(Objecti, Objectj);
 
-						Objecti->mCollisionvector.emplace_back(Objectj);
-						Objectj->mCollisionvector.emplace_back(Objecti);
-					}
-					// 当たってない
-					else
-					{
-						for (auto& n : Objecti->mLastCollisionvector)
-						{
-							// 前のフレームでは当たっていた
-							if (n == Objectj)
-							{
-								Objecti->OnCollisionExit(Objectj);
-								Objectj->OnCollisionExit(Objecti);
-							}
-						}
-					}
-
-					for (auto obj : Objecti->p_mChildren)
-					{
-						ret = CollisionCheck(obj, Objectj);
+						// 当たった
 						if (ret == true)
 						{
 							bool check = false;
@@ -369,20 +342,20 @@ void Scene::CollisionUpdate2D()
 								// 前のフレームでも当たっている
 								if (n == Objectj)
 								{
-									obj->OnCollisionStay(Objectj);
-									Objectj->OnCollisionStay(obj);
+									Objecti->OnCollisionStay(Objectj);
+									Objectj->OnCollisionStay(Objecti);
 									check = true;
 								}
 							}
 							// 前のフレームで当たっていない
 							if (!check)
 							{
-								obj->OnCollisionEnter(Objectj);
-								Objectj->OnCollisionEnter(obj);
+								Objecti->OnCollisionEnter(Objectj);
+								Objectj->OnCollisionEnter(Objecti);
 							}
 
-							obj->mCollisionvector.emplace_back(Objectj);
-							Objectj->mCollisionvector.emplace_back(obj);
+							Objecti->mCollisionvector.emplace_back(Objectj);
+							Objectj->mCollisionvector.emplace_back(Objecti);
 						}
 						// 当たってない
 						else
@@ -392,8 +365,49 @@ void Scene::CollisionUpdate2D()
 								// 前のフレームでは当たっていた
 								if (n == Objectj)
 								{
-									obj->OnCollisionExit(Objectj);
-									Objectj->OnCollisionExit(obj);
+									Objecti->OnCollisionExit(Objectj);
+									Objectj->OnCollisionExit(Objecti);
+								}
+							}
+						}
+
+						for (auto obj : Objecti->p_mChildren)
+						{
+							ret = CollisionCheck(obj, Objectj);
+							if (ret == true)
+							{
+								bool check = false;
+								for (auto& n : Objecti->mLastCollisionvector)
+								{
+									// 前のフレームでも当たっている
+									if (n == Objectj)
+									{
+										obj->OnCollisionStay(Objectj);
+										Objectj->OnCollisionStay(obj);
+										check = true;
+									}
+								}
+								// 前のフレームで当たっていない
+								if (!check)
+								{
+									obj->OnCollisionEnter(Objectj);
+									Objectj->OnCollisionEnter(obj);
+								}
+
+								obj->mCollisionvector.emplace_back(Objectj);
+								Objectj->mCollisionvector.emplace_back(obj);
+							}
+							// 当たってない
+							else
+							{
+								for (auto& n : Objecti->mLastCollisionvector)
+								{
+									// 前のフレームでは当たっていた
+									if (n == Objectj)
+									{
+										obj->OnCollisionExit(Objectj);
+										Objectj->OnCollisionExit(obj);
+									}
 								}
 							}
 						}
@@ -402,6 +416,7 @@ void Scene::CollisionUpdate2D()
 			}
 		}
 	}
+	
 }
 
 // 当たり判定を増やす場合ここを増やす

@@ -26,4 +26,8 @@ public:
 	{
 		p_mCameraCom = _com;
 	}
+	Com_Camera* GetCameraCom()
+	{
+		return p_mCameraCom;
+	}
 };

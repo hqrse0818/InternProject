@@ -192,6 +192,12 @@
     <ClCompile Include="InternCode.Kizuki\Scene_Test2.cpp">
       <Filter>InternCodeKizuki</Filter>
     </ClCompile>
+    <ClCompile Include="InternCodeAdachi\Com_AngleCamera.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="InternCodeAdachi\Com_TestJump.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="main.h">
@@ -352,6 +358,12 @@
     </ClInclude>
     <ClInclude Include="InternCode.Kizuki\Scene_Test2.h">
       <Filter>InternCodeKizuki</Filter>
+    </ClInclude>
+    <ClInclude Include="InternCodeAdachi\Com_AngleCamera.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="InternCodeAdachi\Com_TestJump.h">
+      <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
