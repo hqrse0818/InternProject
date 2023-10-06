@@ -5,6 +5,7 @@
 #include "../Component/Com_BoxCollider.h"
 #include "../System/Input.h"
 #include "../Scene/Scene.h"
+#include "Com_Jump.h"
 
 using namespace DirectX::SimpleMath;
 
@@ -42,8 +43,8 @@ OBJ_Penguin::OBJ_Penguin()
 	AddComponent(p_mMoveCom);
 
 	// ジャンプコンポーネント
-	p_mJumpCom = new Com_TestJump();
-	p_mJumpCom->SetJumpPower(12.0f);
+	Com_Jump* Jump_buf = new Com_Jump();
+	Jump_buf->SetJumpPower(15.0f);
 
 	AddComponent(p_mJumpCom);
 
