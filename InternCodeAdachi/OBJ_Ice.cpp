@@ -43,7 +43,20 @@ void OBJ_Ice::Init()
 
 void OBJ_Ice::Update()
 {
-	//HPの量で変更(テクスチャに変更予定)
+	/*
+	HPの量で変更(テクスチャに変更予定)
+	〇耐久値が2以上の時
+	・ぶるっと一瞬震える
+	・テクスチャ切り替え
+	・ひびが入るSEを再生
+	・耐久値を-1
+
+	〇耐久値が1の時
+	・オブジェクトを消去
+	・割れるSEを再生
+	・割れるエフェクトを再生
+	*/
+
 	switch (iHP) 
 	{
 	case 1:
@@ -66,6 +79,9 @@ void OBJ_Ice::Update()
 	p_mShaderCom->p_mPS->WriteBuffer(0, &myColor);
 
 	GameObject Update();
+
+	//計算処理
+	HpCalc();
 
 	//テスト（ボタンを押してHPが減る）
 	if (Input::GetKeyState(KEYCODE_1) == KEYSTATE::KEY_DOWN)
