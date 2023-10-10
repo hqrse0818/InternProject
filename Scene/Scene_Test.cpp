@@ -36,7 +36,8 @@ void Scene_Test::Init()
 	Azarashi->AddComponent(Shader_buf);
 
 	Com_AssimpAnimation* Model_buf = new Com_AssimpAnimation();
-	Model_buf->LoadModel("asset\\model\\Azarashi\\azarasi_v2.fbx", 1.0f, true);
+	Model_buf->LoadModel("asset\\model\\Azarashi\\riging_azarasi_v1.fbx", 1.0f, true);
+	Model_buf->SetUseMaterial(false);
 	Azarashi->AddComponent(Model_buf);
 
 	Com_SphereCollider* Col_buf = new Com_SphereCollider();

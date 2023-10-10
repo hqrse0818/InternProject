@@ -195,7 +195,13 @@
     <ClCompile Include="InternCodeAdachi\Com_AngleCamera.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
-    <ClCompile Include="InternCodeAdachi\Com_TestJump.cpp">
+    <ClCompile Include="InternCode.Kizuki\OBJ_Inpact.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="InternCodeAdachi\Com_Jump.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="InternCodeAdachi\OBJ_Ice.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
   </ItemGroup>
@@ -365,6 +371,15 @@
     <ClInclude Include="InternCodeAdachi\Com_TestJump.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
+    <ClInclude Include="InternCode.Kizuki\OBJ_Inpact.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="InternCodeAdachi\Com_Jump.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="InternCodeAdachi\OBJ_Ice.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="shader\unlitTexturePS.hlsl">
@@ -378,6 +393,9 @@
     </FxCompile>
     <FxCompile Include="shader\vertexLightingVS.hlsl">
       <Filter>VertexShader</Filter>
+    </FxCompile>
+    <FxCompile Include="shader\PS_IceState.hlsl">
+      <Filter>PixelShader</Filter>
     </FxCompile>
   </ItemGroup>
   <ItemGroup>

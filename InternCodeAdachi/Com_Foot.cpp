@@ -9,6 +9,10 @@ void Com_Foot::Update()
 {
 	fLastFootPos = fFootPos;
 	fFootPos = p_mObject->p_mTransform->mPosition.y + fFootHeight;
+	if (p_mObject->mCollisionvector.size() < 1)
+	{
+		p_mGravityCom->SetGround(false);
+	}
 }
 
 void Com_Foot::OnCollisionEnter(GameObject* _obj)

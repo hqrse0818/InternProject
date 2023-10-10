@@ -37,17 +37,17 @@ void Com_SphereCollider::Update()
 
 void Com_SphereCollider::OnCollisionEnter(GameObject* _obj)
 {
-	cout << "Enter" << p_mObject->sObjectName << endl;
+	//cout << "Enter" << p_mObject->sObjectName << endl;
 }
 
 void Com_SphereCollider::OnCollisionStay(GameObject* _obj)
 {
-	cout << "Stay" << p_mObject->sObjectName << endl;
+	//cout << "Stay" << p_mObject->sObjectName << endl;
 }
 
 void Com_SphereCollider::OnCollisionExit(GameObject* _obj)
 {
-	cout << "Exit" << p_mObject->sObjectName << endl;
+	//cout << "Exit" << p_mObject->sObjectName << endl;
 }
 
 Com_CircleCollider::Com_CircleCollider()

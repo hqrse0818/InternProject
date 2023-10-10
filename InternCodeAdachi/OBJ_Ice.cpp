@@ -5,6 +5,8 @@ using namespace DirectX::SimpleMath;
 
 OBJ_Ice::OBJ_Ice()
 {
+	myColor = Color(1.0f, 1.0f, 1.0f, 1.0f);
+
 	// シェーダー
 	p_mShaderCom = new Com_Shader();
 	p_mShaderCom->p_mVS->Load(VS_MODEL);

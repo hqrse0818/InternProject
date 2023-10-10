@@ -151,6 +151,8 @@ void OBJ_Penguin::Update()
 	if (Controller_Input::GetButton(0, GAMEPAD_B) == KEYSTATE::KEY_DOWN && p_mJumpCom->GetIsJump() ||
 		Input::GetKeyState(KEYCODE_MOUSE_LEFT) == KEYSTATE::KEY_DOWN && p_mJumpCom->GetIsJump())
 	{
+		p_mJumpCom->SetJumpHeight();
+
 		if (!p_mJumpCom->GetIsDrop())
 		{
 			p_mJumpCom->SetJumpFlg(false);
