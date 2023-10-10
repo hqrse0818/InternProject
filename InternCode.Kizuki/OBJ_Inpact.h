@@ -18,6 +18,7 @@ private:
 	Com_SphereCollider* p_mColliderCom = nullptr;
 	float fLifeTime = 1.0f; //ë∂ç›Ç∑ÇÈéûä‘
 	float fCnt = 0.0f;
+	float fInpactPower = 0.0f;
 
 public:
 	OBJ_Inpact();
@@ -29,4 +30,19 @@ public:
 	}
 
 	void Update();
+
+	Com_SphereCollider* GetColliderCom() 
+	{
+		return p_mColliderCom;
+	}
+
+	void SetInpactPower(float _val)
+	{
+		fInpactPower = _val;
+	}
+
+	float GetInpactPower()
+	{
+		return fInpactPower;
+	}
 };

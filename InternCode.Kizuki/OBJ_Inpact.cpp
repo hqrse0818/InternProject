@@ -16,6 +16,8 @@ OBJ_Inpact::OBJ_Inpact(const char* _name) :OBJ_Inpact()
 
 void OBJ_Inpact::Update()
 {
+	GameObject::Update();
+
 	fCnt += Time->GetDeltaTime();
 	if (fCnt > fLifeTime)
 	{

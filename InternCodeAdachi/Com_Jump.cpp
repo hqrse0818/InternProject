@@ -5,8 +5,10 @@
 #include "../Component/Com_BoxCollider.h"
 #include "../InternCode.Kizuki/OBJ_Inpact.h"
 #include "../Scene/Scene.h"
+#include <iostream>
 
 using namespace DirectX::SimpleMath;
+using namespace std;
 
 //ÉWÉÉÉìÉvèàóù
 void Com_Jump::Jump()
@@ -61,6 +63,18 @@ void Com_Jump::OnCollisionEnter(GameObject* _obj)
 			Inpact->p_mTransform->mPosition = p_mObject->p_mTransform->mPosition;
 
 			GameObject::GetScene()->AddGameObject(Inpact);
+
+			//çÇÇ≥Ç©ÇÁîÕàÕÇ∆à–óÕÇê›íË
+			Inpact->GetColliderCom()->fRadius = fJumpHeight; //îÕàÕ
+			Inpact->SetInpactPower(fJumpPower); //à–óÕÇÃê›íË
+			cout << fJumpHeight << endl;
+
+			Inpact->Init();
 		}
 	}
+}
+
+void Com_Jump::SetJumpHeight()
+{
+	fJumpHeight = p_mObject->p_mTransform->mPosition.y;
 }
