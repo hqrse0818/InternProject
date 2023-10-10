@@ -19,5 +19,15 @@ public:
 
     void Init();
     void Update();
+
+    void HpCalc(); //‘«ê‚ÌHPŒvZ
+    void Shake(); //‘«ê‚Ì—h‚ê
+
+    //ƒ‰ƒ“ƒ_ƒ€ŒvZ
+    float RandomRange(float min, float max)
+    {
+        return min + static_cast<float>(rand()) / (static_cast<float>(RAND_MAX / (max - min)));
+    }
+
 };
 
