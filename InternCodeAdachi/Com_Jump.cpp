@@ -60,16 +60,19 @@ void Com_Jump::OnCollisionEnter(GameObject* _obj)
 			//衝撃オブジェクトを呼び出す
 			OBJ_Inpact* Inpact = new OBJ_Inpact("Inpact");
 
-			Inpact->p_mTransform->mPosition = p_mObject->p_mTransform->mPosition;
-
-			GameObject::GetScene()->AddGameObject(Inpact);
-
 			//高さから範囲と威力を設定
 			Inpact->GetColliderCom()->fRadius = fJumpHeight; //範囲
+			Inpact->GetColliderCom()->bMovable = true;
+			Inpact->GetColliderCom()->bIsTrigger = true;
 			Inpact->SetInpactPower(fJumpPower); //威力の設定
+
 			cout << fJumpHeight << endl;
 
 			Inpact->Init();
+
+			Inpact->p_mTransform->mPosition = p_mObject->p_mTransform->mPosition;
+
+			GameObject::GetScene()->AddGameObject(Inpact);
 		}
 	}
 }

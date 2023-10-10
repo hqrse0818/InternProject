@@ -5,6 +5,7 @@ OBJ_Inpact::OBJ_Inpact()
 {
 	p_mColliderCom = new Com_SphereCollider();
 	p_mColliderCom->fRadius = 1.0f; //範囲
+	fCnt = 0.0f;
 
 	AddComponent(p_mColliderCom);
 }
@@ -18,12 +19,20 @@ void OBJ_Inpact::Update()
 {
 	GameObject::Update();
 
-	fCnt += Time->GetDeltaTime();
-	if (fCnt > fLifeTime)
+	// スケールに加算する値
+	fCnt += Time->GetDeltaTime() / 2;
+
+	// ライフタイムを減少
+	fLifeTime -= Time->GetDeltaTime();
+	if (fLifeTime < 0)
 	{
 		bDestroy = true;
 		return;
 	}
-
-	p_mColliderCom->fRadius += p_mColliderCom->fRadius + fCnt;
+	
+	// どこにあっても当たる原因
+	// p_mColliderCom->fRadius += p_mColliderCom->fRadius + fCnt;
+	// 修正後(半径をカウント分大きくしていく)
+	// 衝撃波のような周りに広がる感じができる
+	p_mColliderCom->fRadius += fCnt;
 }
