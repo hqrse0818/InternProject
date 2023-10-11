@@ -27,6 +27,7 @@ OBJ_Ice::OBJ_Ice()
 	p_mCollider->SetSize(7.0f, 1.0f, 7.0f);
 	p_mCollider->SetCenter(0.0f, 0.5f, 0.0f);
 	p_mCollider->bCanStepOn = true;
+	p_mCollider->ColliderTag = "Ice";
 
 	AddComponent(p_mCollider);
 
@@ -34,6 +35,7 @@ OBJ_Ice::OBJ_Ice()
 	p_mAudio = new Com_Audio();
 	//p_mAudio->Load("assets\\audio\\");
 	p_mAudio->SetUseTarget(false);
+	AddComponent(p_mAudio);
 }
 
 OBJ_Ice::OBJ_Ice(const char* _name)
@@ -67,6 +69,8 @@ void OBJ_Ice::Init()
 */
 void OBJ_Ice::Update()
 {
+	GameObject::Update();
+
 	switch (iHP)
 	{
 	case 1:
@@ -90,20 +94,13 @@ void OBJ_Ice::Update()
 	}
 
 	p_mShaderCom->p_mPS->WriteBuffer(0, &myColor);
-
-	GameObject::Update();
-
-	if (Input::GetKeyState(KEYCODE_1) == KEYSTATE::KEY_DOWN)
-	{
-		iHP--;
-		fElapsedTime = 0.0f;
-	}
 }
 
 //アザラシの待機時間によってHPが減るようにする
 void OBJ_Ice::HpCalc()
 {
-
+	iHP--;
+	fElapsedTime = 0.0f;
 }
 
 //足場が揺れる処理

@@ -66,5 +66,6 @@ public:
     void SetTargetPosition(float _x, float _y, float _z);
 
     void OnCollisionEnter(GameObject* _obj);
+    void OnCollisionStay(GameObject* _obj);
 };
 

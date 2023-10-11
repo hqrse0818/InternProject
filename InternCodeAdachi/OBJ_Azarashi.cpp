@@ -3,6 +3,7 @@
 #include "../System/CustomMath.h"
 #include "../System/Time.h"
 #include "../Component/Com_BoxCollider.h"
+#include "OBJ_Ice.h"
 #include <iostream>
 
 using namespace DirectX::SimpleMath;
@@ -118,10 +119,18 @@ void OBJ_Azarashi::Update()
 		if (fCnt > 2)
 		{
 			fCnt = 0;
+			bAttacked = false;
+			p_mModelCom->PlayAnimation("Attack");
+			p_mModelCom->SetCurrentKeyFrame(0);
 			mState = AzrashiState::Attack;
 		}
 		break;
 	case AzrashiState::Damage:
+	{
+		// ダメージVelocityの長さを取得
+		float length = Math::GetLength(mDamageVelocity);
+
+	}
 		break;
 	case AzrashiState::Death:
 		break;
@@ -144,9 +153,57 @@ void OBJ_Azarashi::OnCollisionEnter(GameObject* _obj)
 		if (_obj->mColType == Collider::ColliderForm::Box)
 		{
 			Com_BoxCollider* col = _obj->GetComponent<Com_BoxCollider>();
-			if (col->bCanStepOn)
+			if (col->ColliderTag == "Ice")
 			{
 				mState = AzrashiState::AfterSpawnWait;
+			}
+		}
+	}
+
+	if (_obj->mColType == Collider::ColliderForm::Sphere)
+	{
+		Com_SphereCollider* col = _obj->GetComponent<Com_SphereCollider>();
+		if (col->ColliderTag == "Impact")
+		{
+			// 以下の状態の時はreturn 
+			if (mState == AzrashiState::Fall ||
+				mState == AzrashiState::Spawn ||
+				mState == AzrashiState::BeforeSpawnWait ||
+				mState == AzrashiState::Death)
+				return;
+
+			// 吹き飛ばされる量の計算
+			// 衝突オブジェクトとの方向を取得する
+			Vector3 Direction = Math::GetVector(p_mTransform->mPosition, _obj->p_mTransform->mPosition);
+			// 向きを逆にする
+			Direction = -Direction;
+			Direction = Math::Normalize(Direction);
+			// 衝突オブジェクトとの距離を取得
+			float dis = Math::GetDistance(p_mTransform->mPosition, _obj->p_mTransform->mPosition);
+			Direction *= dis;
+
+			mDamageVelocity.x = Direction.x;
+			mDamageVelocity.z = Direction.z;
+			mDamageVelocity.y = 0.0f;
+
+			// ダメージ状態に移行
+			mState = AzrashiState::Damage;
+		}
+	}
+}
+
+void OBJ_Azarashi::OnCollisionStay(GameObject* _obj)
+{
+	if (_obj->mColType == Collider::ColliderForm::Box)
+	{
+		Com_BoxCollider* col = _obj->GetComponent<Com_BoxCollider>();
+		if (col->ColliderTag == "Ice" && mState == AzrashiState::Attack)
+		{
+			if (!bAttacked)
+			{
+				// 足場の耐久力を1減らす
+				static_cast<OBJ_Ice*>(_obj)->HpCalc();
+				bAttacked = true;
 			}
 		}
 	}

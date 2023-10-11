@@ -40,10 +40,13 @@ void Com_Audio::Init()
 
 void Com_Audio::Uninit()
 {
-	p_mSourceVoice->Stop();
-	p_mSourceVoice->DestroyVoice();
+	if (p_mSourceVoice)
+	{
+		p_mSourceVoice->Stop();
+		p_mSourceVoice->DestroyVoice();
 
-	delete[] p_mSoundData;
+		delete[] p_mSoundData;
+	}
 }
 
 void Com_Audio::Update()
