@@ -183,6 +183,7 @@
     <ClCompile Include="InternCodeAdachi\OBJ_Penguin.cpp" />
     <ClCompile Include="InternCodeAdachi\OBJ_Ice.cpp" />
     <ClCompile Include="InternCodeAdachi\OBJ_Azarashi.cpp" />
+    <ClCompile Include="InternCodeAdachi\OBJ_Sea.cpp" />
     <ClCompile Include="Scene\Scene.cpp" />
     <ClCompile Include="Scene\Scene_Title.cpp" />
     <ClCompile Include="Scene\Scene_Test.cpp" />
@@ -250,6 +251,7 @@
     <ClInclude Include="InternCodeAdachi\OBJ_Azarashi.h" />
     <ClInclude Include="ModelFilePath.h" />
     <ClInclude Include="ModelName.h" />
+    <ClInclude Include="InternCodeAdachi\OBJ_Sea.h" />
     <ClInclude Include="Scene\Scene.h" />
     <ClInclude Include="Scene\Scene_Title.h" />
     <ClInclude Include="Scene\Scene_Test.h" />

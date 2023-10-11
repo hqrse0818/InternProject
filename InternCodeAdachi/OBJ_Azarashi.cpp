@@ -39,7 +39,7 @@ OBJ_Azarashi::OBJ_Azarashi()
 	// 足元コンポーネント
 	p_mFootCom = new Com_Foot();
 	p_mFootCom->SetGravityCom(p_mGravityCom);
-	p_mFootCom->SetFootHeight(1.5f);
+	p_mFootCom->SetFootHeight(2.0f);
 	AddComponent(p_mFootCom);
 }
 
@@ -169,6 +169,11 @@ void OBJ_Azarashi::OnCollisionEnter(GameObject* _obj)
 			{
 				mState = AzrashiState::AfterSpawnWait;
 			}
+			if (col->ColliderTag == "Sea")
+			{
+				// 死亡処理
+				mState = AzrashiState::Death;
+			}
 		}
 	}
 
@@ -192,7 +197,7 @@ void OBJ_Azarashi::OnCollisionEnter(GameObject* _obj)
 			Direction = Math::Normalize(Direction);
 			// 衝突オブジェクトとの距離を取得
 			float dis = Math::GetDistance(p_mTransform->mPosition, _obj->p_mTransform->mPosition);
-			Direction *= dis;
+			Direction *= (dis * fVelocity);
 
 			mDamageVelocity.x = Direction.x;
 			mDamageVelocity.z = Direction.z;
@@ -204,10 +209,14 @@ void OBJ_Azarashi::OnCollisionEnter(GameObject* _obj)
 			mState = AzrashiState::Damage;
 		}
 	}
+
+
 }
 
 void OBJ_Azarashi::OnCollisionStay(GameObject* _obj)
 {
+	GameObject::OnCollisionStay(_obj);
+
 	if (_obj->mColType == Collider::ColliderForm::Box)
 	{
 		Com_BoxCollider* col = _obj->GetComponent<Com_BoxCollider>();

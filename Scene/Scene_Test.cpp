@@ -49,19 +49,19 @@ void Scene_Test::Init()
 	
 	GameObject* BilObj = new GameObject();
 
-	//ビルボード
-	Com_Shader* BilShader = new Com_Shader();
-	BilShader->p_mVS->Load(VS_SPRITE);
-	BilShader->p_mPS->Load(PS_SPRITE);
-	BilObj->AddComponent(BilShader);
+	////ビルボード
+	//Com_Shader* BilShader = new Com_Shader();
+	//BilShader->p_mVS->Load(VS_SPRITE);
+	//BilShader->p_mPS->Load(PS_SPRITE);
+	//BilObj->AddComponent(BilShader);
 
-	Com_Billboard* Bil_buf = new Com_Billboard();
-	Bil_buf->SetTexture("asset/texture/GameTitle.png");
-	BilObj->p_mTransform->mPosition.x = 3.0f;
-	BilObj->p_mTransform->SetScale(10.0f, 10.0f, 1.0f);
-	BilObj->AddComponent(Bil_buf);
+	//Com_Billboard* Bil_buf = new Com_Billboard();
+	//Bil_buf->SetTexture("asset/texture/GameTitle.png");
+	//BilObj->p_mTransform->mPosition.x = 3.0f;
+	//BilObj->p_mTransform->SetScale(10.0f, 10.0f, 1.0f);
+	//BilObj->AddComponent(Bil_buf);
 
-	AddGameObject(BilObj);
+	//AddGameObject(BilObj);
 
 
 	GameObject* Camera = new GameObject("Camera");
@@ -76,8 +76,9 @@ void Scene_Test::Init()
 	// レイヤーを指定してオブジェクトを追加
 	AddGameObject(Camera, 0);
 
-	//ビルボード用のカメラをセット
-	Bil_buf->SetCamera(Camera_buf);
+	////ビルボード用のカメラをセット
+	//Bil_buf->SetCamera(Camera_buf);
+	Com_Billboard::SetCamera(Camera_buf);
 
 	Player->GetMoveCom()->SetCameraCom(Camera_buf);
 	Player->SetCameraCom(Camera_buf);

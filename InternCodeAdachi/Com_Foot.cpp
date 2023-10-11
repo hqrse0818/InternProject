@@ -75,8 +75,16 @@ void Com_Foot::OnCollisionStay(GameObject* _obj)
 
 void Com_Foot::OnCollisionExit(GameObject* _obj)
 {
-	if (p_mGravityCom)
+	// コライダーのタイプを取得
+	if (_obj->mColType == Collider::ColliderForm::Box)
 	{
-		p_mGravityCom->SetGround(false);
+		Com_BoxCollider* col = _obj->GetComponent<Com_BoxCollider>();
+		if (col->bCanStepOn)
+		{
+			if (p_mGravityCom)
+			{
+				p_mGravityCom->SetGround(false);
+			}
+		}
 	}
 }

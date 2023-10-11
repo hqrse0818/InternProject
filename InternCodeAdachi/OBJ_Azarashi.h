@@ -50,6 +50,9 @@ private:
     // 今回攻撃したかどうか
     bool bAttacked = false;
 
+    // ふっ飛び係数
+    float fVelocity = 0.2f;
+
     // コンポーネント
     Com_SphereCollider* p_mColliderCom = nullptr;
     Com_Gravity* p_mGravityCom = nullptr;
