@@ -130,6 +130,18 @@ void OBJ_Azarashi::Update()
 		// ダメージVelocityの長さを取得
 		float length = Math::GetLength(mDamageVelocity);
 
+		cout << length << endl;
+		// テストステート移行
+		if (length < 0.05f)
+		{
+			mState = AzrashiState::AttackWait;
+			break;
+		}
+
+		// テスト減衰
+		mDamageVelocity *= 0.9f;
+
+		p_mTransform->Translate(mDamageVelocity);
 	}
 		break;
 	case AzrashiState::Death:
@@ -163,7 +175,7 @@ void OBJ_Azarashi::OnCollisionEnter(GameObject* _obj)
 	if (_obj->mColType == Collider::ColliderForm::Sphere)
 	{
 		Com_SphereCollider* col = _obj->GetComponent<Com_SphereCollider>();
-		if (col->ColliderTag == "Impact")
+		if (col->ColliderTag == "Attack")
 		{
 			// 以下の状態の時はreturn 
 			if (mState == AzrashiState::Fall ||
@@ -186,6 +198,8 @@ void OBJ_Azarashi::OnCollisionEnter(GameObject* _obj)
 			mDamageVelocity.z = Direction.z;
 			mDamageVelocity.y = 0.0f;
 
+			// 攻撃までのカウントリセット
+			fCnt = 0;
 			// ダメージ状態に移行
 			mState = AzrashiState::Damage;
 		}

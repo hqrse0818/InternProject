@@ -154,7 +154,7 @@ void OBJ_Penguin::Update()
 	p_mModel->PlayAnimation("Walk");
 
 	// ヒップインパクト
-	if (Controller_Input::GetButton(0, GAMEPAD_B) == KEYSTATE::KEY_DOWN && p_mJumpCom->GetIsJump() ||
+	if (Controller_Input::GetRightTriggerSimple(0) == KEYSTATE::KEY_DOWN && p_mJumpCom->GetIsJump() ||
 		Input::GetKeyState(KEYCODE_MOUSE_LEFT) == KEYSTATE::KEY_DOWN && p_mJumpCom->GetIsJump())
 	{
 		p_mJumpCom->SetJumpHeight();
@@ -166,8 +166,8 @@ void OBJ_Penguin::Update()
 		}
 	}
 	// ジャンプ
-	if (Controller_Input::GetButton(0, GAMEPAD_B) == KEYSTATE::KEY_DOWN && p_mGravityCom->GetGround() ||
-		Input::GetKeyState(KEYCODE_MOUSE_LEFT) == KEYSTATE::KEY_DOWN && p_mGravityCom->GetGround())
+	if (Controller_Input::GetButton(0, GAMEPAD_A) == KEYSTATE::KEY_DOWN && p_mGravityCom->GetGround() ||
+		Input::GetKeyState(KEYCODE_SPACE) == KEYSTATE::KEY_DOWN && p_mGravityCom->GetGround())
 	{
 		p_mJumpCom->SetJumpFlg(true);
 	}
