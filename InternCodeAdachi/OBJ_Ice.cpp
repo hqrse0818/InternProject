@@ -29,6 +29,11 @@ OBJ_Ice::OBJ_Ice()
 	p_mCollider->bCanStepOn = true;
 
 	AddComponent(p_mCollider);
+
+	//‰¹
+	p_mAudio = new Com_Audio();
+	//p_mAudio->Load("assets\\audio\\");
+	p_mAudio->SetUseTarget(false);
 }
 
 OBJ_Ice::OBJ_Ice(const char* _name)

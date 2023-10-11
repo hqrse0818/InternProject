@@ -3,6 +3,7 @@
 #include "../InternCodeAdachi/Com_Model.h"
 #include "../Component/Com_Shader.h"
 #include "../Component/Com_BoxCollider.h"
+#include "../Component/Com_Audio.h"
 
 using namespace DirectX::SimpleMath;
 
@@ -13,12 +14,13 @@ private:
     Com_Shader* p_mShaderCom = nullptr;
     Com_Model* p_mModelCom = nullptr;
     Com_BoxCollider* p_mCollider = nullptr;
+    Com_Audio* p_mAudio{};
     DirectX::SimpleMath::Color myColor = DirectX::SimpleMath::Color{1.0f, 1.0f, 1.0f, 1.0f};
     int iHP = 5; //‘«ê‚ÌHP
 
-    float fShakeTime = 1.0f; //—h‚ê‚éŠÔ
+    float fShakeTime = 0.5f; //—h‚ê‚éŠÔ
     float fElapsedTime = 0.0f; //Œo‰ßŠÔ
-    float fShakePower = 0.2f; // —h‚ê‚Ì”ÍˆÍ
+    float fShakePower = 0.1f; // —h‚ê‚Ì”ÍˆÍ
 
     Vector3 originalPosition; // ƒIƒuƒWƒFƒNƒg‚ÌŒ³‚ÌˆÊ’u‚ğŠi”[‚·‚é•Ï”
 

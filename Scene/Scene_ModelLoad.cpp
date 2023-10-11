@@ -1,4 +1,5 @@
 #include "Scene_ModelLoad.h"
+#include "Scene_Title.h"
 #include "Scene_Test.h"
 #include "../System/manager.h"
 
@@ -79,5 +80,5 @@ void Scene_ModelLoad::Update()
 		Manager::SetScene<Scene_Test>();
 	}*/
 
-	Manager::SetScene<Scene_Test>();
+	Manager::SetScene<Scene_Title>();
 }

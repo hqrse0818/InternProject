@@ -216,6 +216,12 @@
     <ClCompile Include="InternCodeAdachi\OBJ_Azarashi.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
+    <ClCompile Include="InternCode.Kizuki\OBJ_TitleStart.cpp">
+      <Filter>InternCodeKizuki</Filter>
+    </ClCompile>
+    <ClCompile Include="InternCode.Kizuki\OBJ_TitleTutorial.cpp">
+      <Filter>InternCodeKizuki</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="main.h">
@@ -409,6 +415,12 @@
     </ClInclude>
     <ClInclude Include="ModelFilePath.h">
       <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="InternCode.Kizuki\OBJ_TitleStart.h">
+      <Filter>InternCodeKizuki</Filter>
+    </ClInclude>
+    <ClInclude Include="InternCode.Kizuki\OBJ_TitleTutorial.h">
+      <Filter>InternCodeKizuki</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
