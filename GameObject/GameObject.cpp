@@ -265,3 +265,38 @@ void GameObject::DrawBase(DirectX::SimpleMath::Matrix ParentMatrix)
 		Draw();
 	}
 }
+
+void GameObject::SetPosition(float _x, float _y, float _z)
+{
+	p_mTransform->SetPosition(_x, _y, _z);
+}
+
+void GameObject::SetScale(float _x, float _y, float _z)
+{
+	p_mTransform->SetScale(_x, _y, _z);
+}
+
+void GameObject::SetRotation(float _x, float _y, float _z)
+{
+	p_mTransform->SetRotation(_x, _y, _z);
+}
+
+void GameObject::Translate(float _x, float _y, float _z)
+{
+	p_mTransform->Translate(_x, _y, _z);
+}
+
+void GameObject::Translate(DirectX::SimpleMath::Vector3 _val)
+{
+	p_mTransform->Translate(_val);
+}
+
+void GameObject::Rotate(float _x, float _y, float _z)
+{
+	p_mTransform->Rotate(_x, _y, _z);
+}
+
+void GameObject::Rotate(DirectX::SimpleMath::Vector3 _val)
+{
+	p_mTransform->Rotate(_val);
+}

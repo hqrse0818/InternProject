@@ -192,7 +192,11 @@ void ModelData::LoadModel(const char* _FileName, bool _bLoadMaterial)
 			ZeroMemory(&sd, sizeof(sd));
 			sd.pSysMem = p_vertex;
 
-			Renderer::GetDevice()->CreateBuffer(&bd, &sd, &mModelData->pp_mVertexBuffer[index]);
+			HRESULT hr = Renderer::GetDevice()->CreateBuffer(&bd, &sd, &mModelData->pp_mVertexBuffer[index]);
+			if (FAILED(hr))
+			{
+				cout << _FileName << "頂点バッファの作成に失敗 : " << index << endl;
+			}
 
 			delete[] p_vertex;
 		}
@@ -272,165 +276,204 @@ void ModelData::LoadModel(const char* _FileName, bool _bLoadMaterial)
 				}
 			}
 		}
+	}
 
-		// テクスチャの読み込み
-		for (int i = 0; i < mModelData->p_mAiScene->mNumTextures; i++)
+		// 頂点バッファにボーンインデックスと重み値をセット
+	for (unsigned int m = 0; m < mModelData->p_mAiScene->mNumMeshes; m++)
+	{
+		aiMesh* p_mesh = mModelData->p_mAiScene->mMeshes[m];
+
+		if (p_mesh != nullptr)
 		{
-			ID3D11ShaderResourceView* p_texture;
-
-			aiTexture* p_aitexture = mModelData->p_mAiScene->mTextures[i];
-
-			const size_t size = p_aitexture->mWidth;
-
-			HRESULT hr = DirectX::CreateWICTextureFromMemory(
-				Renderer::GetDevice(),
-				Renderer::GetDeviceContext(),
-				reinterpret_cast<const unsigned char*>(p_aitexture->pcData),
-				p_aitexture->mWidth,
-				nullptr,
-				&p_texture);
-
-			assert(p_texture);
-
-			mModelData->map_mTexture[p_aitexture->mFilename.data] = p_texture;
-		}
-
-		// マテリアル読み込み
-		if (_bLoadMaterial)
-		{
-			for (unsigned int i = 0; i < mModelData->p_mAiScene->mNumMaterials; i++)
+			// 頂点バッファをロック
+			D3D11_MAPPED_SUBRESOURCE ms;
+			HRESULT hr = Renderer::GetDeviceContext()->Map(mModelData->pp_mVertexBuffer[m], 0, D3D11_MAP_WRITE_DISCARD, 0, &ms);
+			if (SUCCEEDED(hr))
 			{
-				aiMaterial* mat = mModelData->p_mAiScene->mMaterials[i];
-				aiString name = mat->GetName();
+				VERTEX_3D* p_vertex = (VERTEX_3D*)ms.pData;
+				for (unsigned int v = 0; v < p_mesh->mNumVertices; v++)
+				{
+					DEFORM_VERTEX* dvx = &mModelData->vec_mDeformVertex[m][v];
 
-				MATERIAL myMat{};
+					p_vertex->Position = Vector3(p_mesh->mVertices[v].x, p_mesh->mVertices[v].y, p_mesh->mVertices[v].z);
+					p_vertex->Normal = Vector3(p_mesh->mNormals[v].x, p_mesh->mNormals[v].y, p_mesh->mNormals[v].z);
+					p_vertex->TexCoord = Vector2(p_mesh->mTextureCoords[0][v].x, p_mesh->mTextureCoords[0][v].y);
+					p_vertex->Diffuse = Color(1.0f, 1.0f, 1.0f, 1.0f);
 
-				// 拡散反射
+					p_vertex->BoneIndex[0] = dvx->BoneIndex[0];
+					p_vertex->BoneIndex[1] = dvx->BoneIndex[1];
+					p_vertex->BoneIndex[2] = dvx->BoneIndex[2];
+					p_vertex->BoneIndex[3] = dvx->BoneIndex[3];
+
+					p_vertex->BoneWeight[0] = dvx->BoneWeight[0];
+					p_vertex->BoneWeight[1] = dvx->BoneWeight[1];
+					p_vertex->BoneWeight[2] = dvx->BoneWeight[2];
+					p_vertex->BoneWeight[3] = dvx->BoneWeight[3];
+
+					p_vertex++;
+				}
+				Renderer::GetDeviceContext()->Unmap(mModelData->pp_mVertexBuffer[m], 0);
+			}
+		}
+	}
+
+	// テクスチャの読み込み
+	for (int i = 0; i < mModelData->p_mAiScene->mNumTextures; i++)
+	{
+		ID3D11ShaderResourceView* p_texture;
+
+		aiTexture* p_aitexture = mModelData->p_mAiScene->mTextures[i];
+
+		const size_t size = p_aitexture->mWidth;
+
+		HRESULT hr = DirectX::CreateWICTextureFromMemory(
+			Renderer::GetDevice(),
+			Renderer::GetDeviceContext(),
+			reinterpret_cast<const unsigned char*>(p_aitexture->pcData),
+			p_aitexture->mWidth,
+			nullptr,
+			&p_texture);
+
+		assert(p_texture);
+
+		mModelData->map_mTexture[p_aitexture->mFilename.data] = p_texture;
+	}
+
+	// マテリアル読み込み
+	if (_bLoadMaterial)
+	{
+		for (unsigned int i = 0; i < mModelData->p_mAiScene->mNumMaterials; i++)
+		{
+			aiMaterial* mat = mModelData->p_mAiScene->mMaterials[i];
+			aiString name = mat->GetName();
+
+			MATERIAL myMat{};
+
+			// 拡散反射
+			{
+				aiColor3D color(0.0f, 0.0f, 0.0f);
+				if (mat->Get(AI_MATKEY_COLOR_DIFFUSE, color) == AI_SUCCESS)
+				{
+					myMat.Diffuse.x = color.r;
+					myMat.Diffuse.y = color.g;
+					myMat.Diffuse.z = color.b;
+					myMat.Diffuse.w = 1.0f;
+				}
+				else
+				{
+					myMat.Diffuse.x = 0.5f;
+					myMat.Diffuse.y = 0.5f;
+					myMat.Diffuse.z = 0.5f;
+					myMat.Diffuse.w = 1.0f;
+				}
+			}
+
+			// 鏡面反射
+			{
+				aiColor3D color(0.0f, 0.0f, 0.0f);
+				if (mat->Get(AI_MATKEY_COLOR_SPECULAR, color) == AI_SUCCESS)
+				{
+					myMat.Specular.x = color.r;
+					myMat.Specular.y = color.g;
+					myMat.Specular.z = color.b;
+					myMat.Specular.w = 1.0f;
+				}
+				else
+				{
+					myMat.Specular.x = 0.0f;
+					myMat.Specular.y = 0.0f;
+					myMat.Specular.z = 0.0f;
+					myMat.Specular.w = 0.0f;
+				}
+			}
+
+			// 鏡面反射強度
+			{
+				float Shinness = 0.0f;
+				if (mat->Get(AI_MATKEY_SHININESS, Shinness) == AI_SUCCESS)
+				{
+					myMat.Shininess = Shinness;
+				}
+				else
+				{
+					myMat.Shininess = 0.0f;
+				}
+
+				// 環境反射光成分
 				{
 					aiColor3D color(0.0f, 0.0f, 0.0f);
-					if (mat->Get(AI_MATKEY_COLOR_DIFFUSE, color) == AI_SUCCESS)
+					if (mat->Get(AI_MATKEY_COLOR_AMBIENT, color) == AI_SUCCESS)
 					{
-						myMat.Diffuse.x = color.r;
-						myMat.Diffuse.y = color.g;
-						myMat.Diffuse.z = color.b;
-						myMat.Diffuse.w = 1.0f;
+						myMat.Ambient.x = color.r;
+						myMat.Ambient.y = color.g;
+						myMat.Ambient.z = color.b;
+						myMat.Ambient.w = 1.0f;
 					}
 					else
 					{
-						myMat.Diffuse.x = 0.5f;
-						myMat.Diffuse.y = 0.5f;
-						myMat.Diffuse.z = 0.5f;
-						myMat.Diffuse.w = 1.0f;
+						myMat.Ambient.x = 0.0f;
+						myMat.Ambient.y = 0.0f;
+						myMat.Ambient.z = 0.0f;
+						myMat.Ambient.w = 0.0f;
 					}
 				}
 
-				// 鏡面反射
+				// 自家発光成分
 				{
 					aiColor3D color(0.0f, 0.0f, 0.0f);
-					if (mat->Get(AI_MATKEY_COLOR_SPECULAR, color) == AI_SUCCESS)
+					if (mat->Get(AI_MATKEY_COLOR_EMISSIVE, color) == AI_SUCCESS)
 					{
-						myMat.Specular.x = color.r;
-						myMat.Specular.y = color.g;
-						myMat.Specular.z = color.b;
-						myMat.Specular.w = 1.0f;
+						myMat.Emission.x = color.r;
+						myMat.Emission.y = color.g;
+						myMat.Emission.z = color.b;
+						myMat.Emission.w = 1.0f;
 					}
 					else
 					{
-						myMat.Specular.x = 0.0f;
-						myMat.Specular.y = 0.0f;
-						myMat.Specular.z = 0.0f;
-						myMat.Specular.w = 0.0f;
+						myMat.Emission.x = 0.0f;
+						myMat.Emission.y = 0.0f;
+						myMat.Emission.z = 0.0f;
+						myMat.Emission.w = 0.0f;
 					}
 				}
 
-				// 鏡面反射強度
+				// ディフーズテクスチャ数取得
+				aiTextureType type = aiTextureType_DIFFUSE;
+				int texnum = mat->GetTextureCount(type);
+
+				// 1メッシュに1毎だけ許可
+				assert(texnum <= 1);
+
+				// マテリアル名を取得
+				aiString matName;
+				mat->GetTexture(type, 0, &matName);
+
+				ID3D11ShaderResourceView* srv = nullptr;
+
+				// 存在しているか確認
+				if (mModelData->map_mTexture.find(matName.data) == mModelData->map_mTexture.end())
 				{
-					float Shinness = 0.0f;
-					if (mat->Get(AI_MATKEY_SHININESS, Shinness) == AI_SUCCESS)
-					{
-						myMat.Shininess = Shinness;
-					}
-					else
-					{
-						myMat.Shininess = 0.0f;
-					}
+					myMat.TextureEnable = FALSE;
+					srv = nullptr;
 
-					// 環境反射光成分
-					{
-						aiColor3D color(0.0f, 0.0f, 0.0f);
-						if (mat->Get(AI_MATKEY_COLOR_AMBIENT, color) == AI_SUCCESS)
-						{
-							myMat.Ambient.x = color.r;
-							myMat.Ambient.y = color.g;
-							myMat.Ambient.z = color.b;
-							myMat.Ambient.w = 1.0f;
-						}
-						else
-						{
-							myMat.Ambient.x = 0.0f;
-							myMat.Ambient.y = 0.0f;
-							myMat.Ambient.z = 0.0f;
-							myMat.Ambient.w = 0.0f;
-						}
-					}
+					// ファイル名取得
+					std::string fileName = GetFileName(matName.C_Str());
 
-					// 自家発光成分
-					{
-						aiColor3D color(0.0f, 0.0f, 0.0f);
-						if (mat->Get(AI_MATKEY_COLOR_EMISSIVE, color) == AI_SUCCESS)
-						{
-							myMat.Emission.x = color.r;
-							myMat.Emission.y = color.g;
-							myMat.Emission.z = color.b;
-							myMat.Emission.w = 1.0f;
-						}
-						else
-						{
-							myMat.Emission.x = 0.0f;
-							myMat.Emission.y = 0.0f;
-							myMat.Emission.z = 0.0f;
-							myMat.Emission.w = 0.0f;
-						}
-					}
+					// テクスチャの読み込みと取得
+					srv = LoadDiffuseTexture(fileName, _FileName);
 
-					// ディフーズテクスチャ数取得
-					aiTextureType type = aiTextureType_DIFFUSE;
-					int texnum = mat->GetTextureCount(type);
-
-					// 1メッシュに1毎だけ許可
-					assert(texnum <= 1);
-
-					// マテリアル名を取得
-					aiString matName;
-					mat->GetTexture(type, 0, &matName);
-
-					ID3D11ShaderResourceView* srv = nullptr;
-
-					// 存在しているか確認
-					if (mModelData->map_mTexture.find(matName.data) == mModelData->map_mTexture.end())
+					if (srv == nullptr)
 					{
 						myMat.TextureEnable = FALSE;
-						srv = nullptr;
-
-						// ファイル名取得
-						std::string fileName = GetFileName(matName.C_Str());
-
-						// テクスチャの読み込みと取得
-						srv = LoadDiffuseTexture(fileName, _FileName);
-
-						if (srv == nullptr)
-						{
-							myMat.TextureEnable = FALSE;
-						}
-						else
-						{
-							myMat.TextureEnable = TRUE;
-							mModelData->map_mTexture[matName.data] = srv;
-						}
 					}
-					// マテリアルの保存
-					mModelData->vec_material.emplace_back(myMat);
+					else
+					{
+						myMat.TextureEnable = TRUE;
+						mModelData->map_mTexture[matName.data] = srv;
+					}
 				}
+				// マテリアルの保存
+				mModelData->vec_material.emplace_back(myMat);
 			}
 		}
 	}

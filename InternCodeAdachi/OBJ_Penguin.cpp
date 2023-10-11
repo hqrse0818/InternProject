@@ -167,7 +167,7 @@ void OBJ_Penguin::Update()
 	}
 	// ƒWƒƒƒ“ƒv
 	if (Controller_Input::GetButton(0, GAMEPAD_A) == KEYSTATE::KEY_DOWN && p_mGravityCom->GetGround() ||
-		Input::GetKeyState(KEYCODE_SPACE) == KEYSTATE::KEY_DOWN && p_mGravityCom->GetGround())
+		Input::GetKeyState(KEYCODE_MOUSE_LEFT) == KEYSTATE::KEY_DOWN && p_mGravityCom->GetGround())
 	{
 		p_mJumpCom->SetJumpFlg(true);
 	}

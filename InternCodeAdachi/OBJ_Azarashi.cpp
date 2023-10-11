@@ -143,7 +143,7 @@ void OBJ_Azarashi::Update()
 
 		p_mTransform->Translate(mDamageVelocity);
 	}
-		break;
+	break;
 	case AzrashiState::Death:
 		break;
 	}

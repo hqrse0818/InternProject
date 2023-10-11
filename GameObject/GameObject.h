@@ -66,8 +66,6 @@ public:
 	// オブジェクトのタグ
 	std::string sTag;
 
-	std::string sCollisionTag;
-
 	// 親オブジェクト
 	GameObject* p_mParent;
 
@@ -171,4 +169,12 @@ public:
 	{
 		return s_p_mScene;
 	}
+
+	void SetPosition(float _x, float _y, float _z);
+	void SetScale(float _x, float _y, float _z);
+	void SetRotation(float _x, float _y, float _z);
+	void Translate(float _x, float _y, float _z);
+	void Translate(DirectX::SimpleMath::Vector3 _val);
+	void Rotate(float _x, float _y, float _z);
+	void Rotate(DirectX::SimpleMath::Vector3 _val);
 };

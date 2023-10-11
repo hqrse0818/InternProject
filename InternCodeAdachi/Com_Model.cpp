@@ -42,82 +42,11 @@ Com_Model::Com_Model()
 
 bool Com_Model::SetModelData(const char* _ModelName)
 {
-	if (mModelData != nullptr && pp_mVertexBuffer != nullptr)
-	{
-		for (unsigned int m = 0; m < mModelData->p_mAiScene->mNumMeshes; m++)
-		{
-			pp_mVertexBuffer[m]->Release();
-		}
-		delete[] pp_mVertexBuffer;
-	}
-
 	mModelData = ModelPool::GetModelData(_ModelName);
 
 	if (mModelData)
 	{
 		cout << "モデル取得成功" << endl;
-		pp_mVertexBuffer = new ID3D11Buffer * [mModelData->p_mAiScene->mNumMeshes];
-		for (unsigned int index = 0; index < mModelData->p_mAiScene->mNumMeshes; index++)
-		{
-			aiMesh* p_mesh = mModelData->p_mAiScene->mMeshes[index];
-
-			// 頂点バッファ生成
-			if (p_mesh != nullptr)
-			{
-				VERTEX_3D* p_vertex = new VERTEX_3D[p_mesh->mNumVertices];
-
-				for (unsigned int ver = 0; ver < p_mesh->mNumVertices; ver++)
-				{
-					DEFORM_VERTEX* dvx = &mModelData->vec_mDeformVertex[index][ver];
-					p_vertex[ver].Position = Vector3(p_mesh->mVertices[ver].x, p_mesh->mVertices[ver].y, p_mesh->mVertices[ver].z);
-
-					if (p_mesh->mNormals != nullptr)
-					{
-						p_vertex[ver].Normal = Vector3(p_mesh->mNormals[ver].x, p_mesh->mNormals[ver].y, p_mesh->mNormals[ver].z);
-					}
-					else
-					{
-
-					}
-					if (p_mesh->mTextureCoords[index])
-					{
-						p_vertex[ver].TexCoord = Vector2(p_mesh->mTextureCoords[0][ver].x, p_mesh->mTextureCoords[0][ver].y);
-					}
-					else
-					{
-						p_vertex[ver].TexCoord = Vector2(0, 1);
-					}
-					p_vertex[ver].Diffuse = Color(1.0f, 1.0f, 1.0f, 1.0f);
-
-					// ボーンインデックスを格納
-					p_vertex[ver].BoneIndex[0] = dvx->BoneIndex[0];
-					p_vertex[ver].BoneIndex[1] = dvx->BoneIndex[1];
-					p_vertex[ver].BoneIndex[2] = dvx->BoneIndex[2];
-					p_vertex[ver].BoneIndex[3] = dvx->BoneIndex[3];
-
-					// ボーンウェイトを格納
-					p_vertex[ver].BoneWeight[0] = dvx->BoneWeight[0];
-					p_vertex[ver].BoneWeight[1] = dvx->BoneWeight[1];
-					p_vertex[ver].BoneWeight[2] = dvx->BoneWeight[2];
-					p_vertex[ver].BoneWeight[3] = dvx->BoneWeight[3];
-				}
-
-				D3D11_BUFFER_DESC bd;
-				ZeroMemory(&bd, sizeof(bd));
-				bd.Usage = D3D11_USAGE_DYNAMIC;
-				bd.ByteWidth = sizeof(VERTEX_3D) * p_mesh->mNumVertices;
-				bd.BindFlags = D3D11_BIND_VERTEX_BUFFER;
-				bd.CPUAccessFlags = D3D11_CPU_ACCESS_WRITE;
-
-				D3D11_SUBRESOURCE_DATA sd;
-				ZeroMemory(&sd, sizeof(sd));
-				sd.pSysMem = p_vertex;
-
-				Renderer::GetDevice()->CreateBuffer(&bd, &sd, &pp_mVertexBuffer[index]);
-
-				delete[] p_vertex;
-			}
-		}
 		// 定数バッファを作成
 		D3D11_BUFFER_DESC bd{};
 		ZeroMemory(&bd, sizeof(bd));
@@ -485,7 +414,7 @@ void Com_Model::Draw()
 		// 頂点バッファ設定
 		UINT stride = sizeof(VERTEX_3D);
 		UINT offset = 0;
-		Renderer::GetDeviceContext()->IASetVertexBuffers(0, 1, &pp_mVertexBuffer[m], &stride, &offset);
+		Renderer::GetDeviceContext()->IASetVertexBuffers(0, 1, &mModelData->pp_mVertexBuffer[m], &stride, &offset);
 
 		// インデックスバッファ
 		Renderer::GetDeviceContext()->IASetIndexBuffer(mModelData->pp_mIndexBuffer[m], DXGI_FORMAT_R32_UINT, 0);
@@ -499,13 +428,15 @@ void Com_Model::Draw()
 
 void Com_Model::Uninit()
 {
-	if (pp_mVertexBuffer)
+	if (p_mCombBuffer)
 	{
-		for (unsigned int m = 0; m < mModelData->p_mAiScene->mNumMeshes; m++)
-		{
-			pp_mVertexBuffer[m]->Release();
-		}
-		delete[] pp_mVertexBuffer;
+		p_mCombBuffer->Release();
+		p_mCombBuffer = nullptr;
+	}
+	if (p_mScaleBuffer)
+	{
+		p_mScaleBuffer->Release();
+		p_mScaleBuffer = nullptr;
 	}
 }
 

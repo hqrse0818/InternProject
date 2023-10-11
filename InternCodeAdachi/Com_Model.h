@@ -16,8 +16,6 @@ class Com_Model :
 private:
     MODEL_DATA* mModelData = nullptr;
 
-    // 頂点バッファが同じだとほかのアニメーションを同時再生できないので頂点バッファだけはメンバ変数に持っておく
-    ID3D11Buffer** pp_mVertexBuffer{};
     // シェーダーでアニメーションの計算を行うための定数バッファ
     ID3D11Buffer* p_mCombBuffer{};
     // スケール用定数バッファ

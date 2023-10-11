@@ -33,6 +33,12 @@ void Scene_Test::Init()
 	OBJ_Azarashi* Azarashi = new OBJ_Azarashi("Azarashi");
 	Azarashi->SetTargetPosition(0.0f, 9.0f, 0.0f);
 	AddGameObject(Azarashi);
+	Azarashi->p_mTransform->SetScale(3.0f, 3.0f, 3.0f);
+
+	Azarashi = new OBJ_Azarashi("Azarashi2");
+	Azarashi->SetTargetPosition(20.0f, 12.0f, 11.0f);
+	AddGameObject(Azarashi);
+
 
 	// ステージ生成
 	for (int i = 0; i < IceNum; i++)
@@ -47,7 +53,7 @@ void Scene_Test::Init()
 	}
 
 	
-	GameObject* BilObj = new GameObject();
+	//GameObject* BilObj = new GameObject();
 
 	////ビルボード
 	//Com_Shader* BilShader = new Com_Shader();
@@ -78,7 +84,7 @@ void Scene_Test::Init()
 
 	////ビルボード用のカメラをセット
 	//Bil_buf->SetCamera(Camera_buf);
-	Com_Billboard::SetCamera(Camera_buf);
+	//Com_Billboard::SetCamera(Camera_buf);
 
 	Player->GetMoveCom()->SetCameraCom(Camera_buf);
 	Player->SetCameraCom(Camera_buf);
@@ -88,6 +94,7 @@ void Scene_Test::Start()
 {
 	Player->p_mTransform->SetPosition(0.0f, 5.0f, 0.0f);
 	GetGameObject("Azarashi")->p_mTransform->SetPosition(20.0f, 0.0f, -20.0f);
+	GetGameObject("Azarashi2")->p_mTransform->SetPosition(10.0f, 0.0f, -30.0f);
 	ShowCursor(false);
 	Input::SetCursorCenterEnable();
 }
