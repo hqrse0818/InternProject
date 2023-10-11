@@ -43,6 +43,7 @@ public:
     OBJ_Penguin(const char* _name);
     OBJ_Penguin(const char* _name, const char* _FileName);
 
+    void Init();
     void Update();
 
     Com_CharacterMove* GetMoveCom()

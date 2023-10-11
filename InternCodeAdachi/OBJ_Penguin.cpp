@@ -145,6 +145,11 @@ OBJ_Penguin::OBJ_Penguin(const char* _name, const char* _FileName)
 	CreateFromCSV(_FileName);
 }
 
+void OBJ_Penguin::Init()
+{
+	p_mModel->PlayAnimation("Walk");
+}
+
 void OBJ_Penguin::Update()
 {
 	// ヒップインパクト

@@ -7,6 +7,7 @@ void LoadPenguin()
 	// ƒyƒ“ƒMƒ“‚Ì“Ç‚İ‚İ
 	ModelData* CreatePenguin = new ModelData();
 	CreatePenguin->LoadModel("asset\\model\\Penguin\\pengin_rig_v1.fbx", true);
+	CreatePenguin->LoadAnimation("asset\\model\\Penguin\\pengin_walk_v1.fbx", "Walk");
 	CreatePenguin->Push("Penguin");
 }
 
