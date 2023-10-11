@@ -143,6 +143,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Component\Com_Audio.cpp" />
+    <ClCompile Include="Component\Com_Billboard.cpp" />
     <ClCompile Include="Component\Com_BoxCollider.cpp" />
     <ClCompile Include="Component\Com_Camera.cpp" />
     <ClCompile Include="Component\Com_Collider.cpp" />
@@ -203,8 +204,10 @@
     <ClInclude Include="Component\Component.h" />
     <ClInclude Include="ComponentHeader.h" />
     <ClInclude Include="Component\Com_Audio.h" />
+    <ClInclude Include="Component\Com_Billboard.h" />
     <ClInclude Include="Component\Com_BoxCollider.h" />
     <ClInclude Include="Component\Com_Camera.h" />
+    <ClInclude Include="Component\Com_CameraTransform.h" />
     <ClInclude Include="Component\Com_Collider.h" />
     <ClInclude Include="Component\Com_CustomSprite.h" />
     <ClInclude Include="Component\Com_CylinderCollider.h" />

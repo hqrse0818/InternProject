@@ -34,6 +34,8 @@ OBJ_Ice::OBJ_Ice()
 	p_mAudio = new Com_Audio();
 	//p_mAudio->Load("assets\\audio\\");
 	p_mAudio->SetUseTarget(false);
+
+	AddComponent(p_mAudio);
 }
 
 OBJ_Ice::OBJ_Ice(const char* _name)

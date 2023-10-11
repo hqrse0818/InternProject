@@ -9,6 +9,8 @@
 #include "../InternCodeAdachi/OBJ_Azarashi.h"
 #include "../InternCodeAdachi/Com_AngleCamera.h"
 #include "../InternCodeAdachi/OBJ_Ice.h"
+#include "../Component/Com_CameraTransform.h"
+#include "../Component/Com_Billboard.h"
 
 #define IceNum (11)
 #define IceScale (7)
@@ -44,6 +46,24 @@ void Scene_Test::Init()
 		}
 	}
 
+	
+	GameObject* BilObj = new GameObject();
+
+	//ビルボード
+	Com_Shader* BilShader = new Com_Shader();
+	BilShader->p_mVS->Load(VS_SPRITE);
+	BilShader->p_mPS->Load(PS_SPRITE);
+	BilObj->AddComponent(BilShader);
+
+	Com_Billboard* Bil_buf = new Com_Billboard();
+	Bil_buf->SetTexture("asset/texture/GameTitle.png");
+	BilObj->p_mTransform->mPosition.x = 3.0f;
+	BilObj->p_mTransform->SetScale(10.0f, 10.0f, 1.0f);
+	BilObj->AddComponent(Bil_buf);
+
+	AddGameObject(BilObj);
+
+
 	GameObject* Camera = new GameObject("Camera");
 	Com_AngleCamera* Camera_buf = new Com_AngleCamera();
 	Camera_buf->SetTarget(Player);
@@ -55,6 +75,9 @@ void Scene_Test::Init()
 
 	// レイヤーを指定してオブジェクトを追加
 	AddGameObject(Camera, 0);
+
+	//ビルボード用のカメラをセット
+	Bil_buf->SetCamera(Camera_buf);
 
 	Player->GetMoveCom()->SetCameraCom(Camera_buf);
 	Player->SetCameraCom(Camera_buf);
