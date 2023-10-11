@@ -187,26 +187,36 @@ bool Com_Model::SetModelData(const char* _ModelName)
 void Com_Model::Update()
 {
 	bRotLastKey = false;
+	bPosLastKey = false;
 
 	Time->CountStart();
 	// 一回の更新で約0.02秒かかっている(この呼び出しが一つの場合約50FPS)
 
 	if (!bPlayAnim)
+	{
 		// スケールバッファの更新
 		Renderer::GetDeviceContext()->UpdateSubresource(p_mScaleBuffer, 0, nullptr, &mScale, 0, 0);
 		return;
+	}
+		
 
 	// 再生するアニメーション名が登録されているか確認
 	if (mModelData->map_mAnimation.count(p_cPlayAnimationName) == 0)
+	{
 		// スケールバッファの更新
 		Renderer::GetDeviceContext()->UpdateSubresource(p_mScaleBuffer, 0, nullptr, &mScale, 0, 0);
 		return;
+	}
+		
 
 	// 再生するアニメーションがあるか確認
 	if (!mModelData->map_mAnimation[p_cPlayAnimationName]->HasAnimations())
+	{
 		// スケールバッファの更新
 		Renderer::GetDeviceContext()->UpdateSubresource(p_mScaleBuffer, 0, nullptr, &mScale, 0, 0);
 		return;
+	}
+		
 
 	// アニメーションを取得
 	aiAnimation* animation = mModelData->map_mAnimation[p_cPlayAnimationName]->mAnimations[0];
@@ -221,13 +231,13 @@ void Com_Model::Update()
 		int f;
 		// フレームに対するアニメーションの回転を取得
 		f = iFrame1 % nodeAnim->mNumRotationKeys;
-		if (f == nodeAnim->mNumRotationKeys)
+		if (f == nodeAnim->mNumRotationKeys - 1)
 			bRotLastKey = true;
 		aiQuaternion rot = nodeAnim->mRotationKeys[f].mValue;
 
 		// フレームに対するポジションの位置を取得
 		f = iFrame1 % nodeAnim->mNumPositionKeys;
-		if (f == nodeAnim->mNumPositionKeys)
+		if (f == nodeAnim->mNumPositionKeys -1)
 			bPosLastKey = true;
 		aiVector3D pos = nodeAnim->mPositionKeys[f].mValue;
 
@@ -513,7 +523,7 @@ void Com_Model::StopAnimation()
 	bPlayAnim = false;
 }
 
-void Com_Model::UpdateFrame()
+void Com_Model::UpdateFrame(int _val)
 {
-	iFrame1++;
+	iFrame1 += _val;
 }

@@ -91,9 +91,6 @@ OBJ_Penguin::OBJ_Penguin()
 	// モデル
 	p_mModel = new Com_Model();
 	p_mModel->SetModelData("Penguin");
-	//p_mModel->LoadModel("asset\\model\\Penguin\\pengin_rig_v1.fbx", 1.0f, true);
-	//p_mModel->LoadAnimation("asset\\model\\Penguin\\pengin_anime_v1.fbx", "hand");
-	//p_mModel->PlayAnimation("hand");
 	p_mModel->SetUseMaterial(false);
 
 	AddComponent(p_mModel);
@@ -145,13 +142,17 @@ OBJ_Penguin::OBJ_Penguin(const char* _name, const char* _FileName)
 	CreateFromCSV(_FileName);
 }
 
-void OBJ_Penguin::Init()
+void OBJ_Penguin::Start()
 {
-	p_mModel->PlayAnimation("Walk");
+	GameObject::Start();
 }
 
 void OBJ_Penguin::Update()
 {
+	GameObject::Update();
+
+	p_mModel->PlayAnimation("Walk");
+
 	// ヒップインパクト
 	if (Controller_Input::GetButton(0, GAMEPAD_B) == KEYSTATE::KEY_DOWN && p_mJumpCom->GetIsJump() ||
 		Input::GetKeyState(KEYCODE_MOUSE_LEFT) == KEYSTATE::KEY_DOWN && p_mJumpCom->GetIsJump())
@@ -237,8 +238,5 @@ void OBJ_Penguin::Update()
 
 
 	// アニメーションの更新
-	p_mModel->UpdateFrame();
-
-	GameObject::Update();
-
+	p_mModel->UpdateFrame(1);
 }

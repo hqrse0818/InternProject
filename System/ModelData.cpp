@@ -436,6 +436,7 @@ void ModelData::LoadModel(const char* _FileName, bool _bLoadMaterial)
 	}
 
 	float time = Time->CountStop();
+	cout << _FileName << endl;
 	cout << "モデル読み込み完了" << endl;
 	cout << "Time : " << time << "sec" << endl;
 }
@@ -447,12 +448,14 @@ void ModelData::LoadAnimation(const char* _FileName, const char* _AnimName)
 	if (mModelData->map_mAnimation[_AnimName])
 	{
 		float time = Time->CountStop();
+		cout << _FileName << " : " << _AnimName << endl;
 		cout << "アニメーション読み込み成功" << endl;
 		cout << "Time : " << time << "sec" << endl;
 	}
 	else
 	{
 		float time = Time->CountStop();
+		cout << _FileName << " : " << _AnimName << endl;
 		cout << _FileName << " , " << _AnimName << endl;
 		cout << "アニメーション読み込み失敗" << endl;
 		cout << "Time : " << time << "sec" << endl;

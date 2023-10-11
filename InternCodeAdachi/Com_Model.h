@@ -17,17 +17,17 @@ private:
     MODEL_DATA* mModelData = nullptr;
 
     // 頂点バッファが同じだとほかのアニメーションを同時再生できないので頂点バッファだけはメンバ変数に持っておく
-    ID3D11Buffer** pp_mVertexBuffer;
+    ID3D11Buffer** pp_mVertexBuffer{};
     // シェーダーでアニメーションの計算を行うための定数バッファ
-    ID3D11Buffer* p_mCombBuffer;
+    ID3D11Buffer* p_mCombBuffer{};
     // スケール用定数バッファ
-    ID3D11Buffer* p_mScaleBuffer;
+    ID3D11Buffer* p_mScaleBuffer{};
 
     // 再生中のアニメーションの名前
-    const char* p_cPlayAnimationName;
+    const char* p_cPlayAnimationName{};
     // 現在のアニメーションのフレーム
-    int iFrame1;
-    int iFrame2;
+    int iFrame1 = 0;
+    int iFrame2 = 0;
     // アニメーションするかどうか
     bool bPlayAnim = false;
     // マテリアルの使用
@@ -36,7 +36,7 @@ private:
     bool bRotLastKey = false;
     bool bPosLastKey = false;
 
-    DirectX::SimpleMath::Vector4 mScale;
+    DirectX::SimpleMath::Vector4 mScale{};
 
 private:
     void UpdateBoneMatrix(aiNode* _Node, aiMatrix4x4 _Matrix);
@@ -66,7 +66,7 @@ public:
     void PlayAnimation(const char* _name);
     void StopAnimation();
 
-    void UpdateFrame();
+    void UpdateFrame(int _val);
 
     bool GetIsRotLastKey()
     {

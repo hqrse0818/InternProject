@@ -15,8 +15,14 @@ namespace Math
 	float GetDistance(DirectX::SimpleMath::Vector3 _Start, DirectX::SimpleMath::Vector3 _End);
 	// 距離取得(Vector2)
 	float GetDistance(DirectX::SimpleMath::Vector2 _Start, DirectX::SimpleMath::Vector2 _End);
+	// 2乗距離取得
+	float GetDoubleDistance(DirectX::SimpleMath::Vector3 _Start, DirectX::SimpleMath::Vector3 _End);
+	// 2乗距離取得
+	float GetDoubleDistance(DirectX::SimpleMath::Vector2 _Start, DirectX::SimpleMath::Vector2 _End);
 	// ベクトルの長さ取得
 	float GetLength(DirectX::SimpleMath::Vector3 _val);
+	// ベクトルの長さの2上を取得
+	float GetDoubleLength(DirectX::SimpleMath::Vector3 _val);
 	// 正規化
 	DirectX::SimpleMath::Vector3 Normalize(DirectX::SimpleMath::Vector3 _val);
 	// 2点間のベクトル取得

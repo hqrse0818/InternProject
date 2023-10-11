@@ -4,6 +4,7 @@
 #include "../InternCodeAdachi/Com_Gravity.h"
 #include "../Component/Com_Shader.h"
 #include "Com_Model.h"
+#include "Com_Foot.h"
 
 // アザラシ
 
@@ -46,12 +47,15 @@ private:
     // スポーン地点までの移動速度
     float fToSpawnSpeed = 20.0f;
 
+    // 今回攻撃したかどうか
+    bool bAttacked = false;
+
     // コンポーネント
     Com_SphereCollider* p_mColliderCom = nullptr;
     Com_Gravity* p_mGravityCom = nullptr;
     Com_Shader* p_mShaderCom = nullptr;
     Com_Model* p_mModelCom = nullptr;
-
+    Com_Foot* p_mFootCom = nullptr;
 public:
     OBJ_Azarashi();
     OBJ_Azarashi(const char* _name);
@@ -60,5 +64,7 @@ public:
 
     // スポーン位置の設定
     void SetTargetPosition(float _x, float _y, float _z);
+
+    void OnCollisionEnter(GameObject* _obj);
 };
 
