@@ -1,5 +1,6 @@
 #pragma once
 #include "Component.h"
+#include <string>
 
 class Com_Collider : public Component
 {

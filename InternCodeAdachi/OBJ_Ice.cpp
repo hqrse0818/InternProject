@@ -1,5 +1,6 @@
 #include "OBJ_Ice.h"
 #include "../System/Input.h"
+#include "../System/Time.h"
 
 using namespace DirectX::SimpleMath;
 
@@ -40,6 +41,9 @@ void OBJ_Ice::Init()
 {
 	p_mShaderCom->p_mPS->CreateBuffer(16);
 
+	//元の位置を保存
+	originalPosition = p_mTransform->mPosition;
+
 	GameObject::Init();
 }
 
@@ -65,10 +69,12 @@ void OBJ_Ice::Update()
 		break;
 	case 2:
 		myColor = Color(1.0f, 0.0f, 1.0f, 1.0f);
+		fElapsedTime = 0.0f; // 経過時間をリセット
 		Shake();
 		break;
 	case 3:
 		myColor = Color(1.0f, 1.0f, 0.0f, 1.0f);
+		fElapsedTime = 0.0f; // 経過時間をリセット
 		Shake();
 		break;
 	case 4:
@@ -99,10 +105,19 @@ void OBJ_Ice::HpCalc()
 //足場が揺れる処理
 void OBJ_Ice::Shake()
 {
-	float fShakeTime = 0.0f; //
+	//タイマーを更新
+	fElapsedTime += Time->GetDeltaTime();
+
+	//揺れる時間が終了したら揺れを停止
+	if (fElapsedTime >= fShakeTime)
+	{
+		//揺れが終了したら元の位置に戻す
+		p_mTransform->mPosition = originalPosition;
+
+		return;
+	}
 
 	// 足場をランダムに揺らす
-	float fShakePower = 0.1f; // 揺れの範囲
 	float fPowerX = RandomRange(-fShakePower, fShakePower);
 	float fPowerY = RandomRange(-fShakePower, fShakePower);
 	float fPowerZ = RandomRange(-fShakePower, fShakePower);
