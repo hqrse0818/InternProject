@@ -15,15 +15,15 @@ void OBJ_Penguin::CreateFromCSV(const char* _FileName)
 
 	// シェーダー
 	p_mShader = new Com_Shader();
-	p_mShader->p_mVS->Load(VS_MODEL);
+	p_mShader->p_mVS->Load("shader\\VS_OneSkinAnimation.cso");
 	p_mShader->p_mPS->Load(PS_MODEL);
 
 	AddComponent(p_mShader);
 
 	// モデル
-	p_mModel = new Com_AssimpAnimation();
-	p_mModel->LoadModel("asset\\model\\Penguin\\pengin_v4.fbx", 1.0f, true);
-	p_mModel->SetUseMaterial(false);
+	p_mModel = new Com_Model();
+	p_mModel->SetModelData("Penguin");
+	//p_mModel->SetUseMaterial(false);
 
 	AddComponent(p_mModel);
 
@@ -89,8 +89,8 @@ OBJ_Penguin::OBJ_Penguin()
 	AddComponent(p_mShader);
 
 	// モデル
-	p_mModel = new Com_AssimpAnimation();
-	p_mModel->LoadModel("asset\\model\\Penguin\\pengin_v4.fbx", 1.0f, true);
+	p_mModel = new Com_Model();
+	p_mModel->SetModelData("Penguin");
 	//p_mModel->LoadModel("asset\\model\\Penguin\\pengin_rig_v1.fbx", 1.0f, true);
 	//p_mModel->LoadAnimation("asset\\model\\Penguin\\pengin_anime_v1.fbx", "hand");
 	//p_mModel->PlayAnimation("hand");

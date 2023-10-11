@@ -20,6 +20,8 @@ struct VERTEX_3D
 	DirectX::SimpleMath::Vector3 Normal;
 	DirectX::SimpleMath::Color	Diffuse;
 	DirectX::SimpleMath::Vector2 TexCoord;
+	int BoneIndex[4];
+	float BoneWeight[4];
 };
 
 // AABB

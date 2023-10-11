@@ -4,8 +4,12 @@
 #include "utftosjisconv.h"
 #include "../Utility.h"
 
+TextureCreate* TextureCreate::p_mInstance = nullptr;
+CRITICAL_SECTION TextureCreate::myCS{};
+
 void TextureCreate::CreateTexture(const char* _FileName, ID3D11ShaderResourceView** _pTex)
 {
+    EnterCriticalSection(&myCS);
     if (_pTex)
     {
         ID3D11ShaderResourceView* te = *_pTex;
@@ -21,10 +25,12 @@ void TextureCreate::CreateTexture(const char* _FileName, ID3D11ShaderResourceVie
         _pTex);
 
     assert(_pTex);
+    LeaveCriticalSection(&myCS);
 }
 
 void TextureCreate::CreateTexture(const wchar_t* _FileName, ID3D11ShaderResourceView** _pTex)
 {
+    EnterCriticalSection(&myCS);
     if (_pTex)
     {
         ID3D11ShaderResourceView* te = *_pTex;
@@ -38,4 +44,5 @@ void TextureCreate::CreateTexture(const wchar_t* _FileName, ID3D11ShaderResource
         _pTex);
 
     assert(_pTex);
+    LeaveCriticalSection(&myCS);
 }

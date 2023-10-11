@@ -16,8 +16,8 @@ OBJ_Ice::OBJ_Ice()
 	AddComponent(p_mShaderCom);
 
 	// ƒ‚ƒfƒ‹
-	p_mModelCom = new Com_AssimpAnimation();
-	p_mModelCom->LoadModel("asset\\model\\stage_v2.fbx", 1.0f, false);
+	p_mModelCom = new Com_Model();
+	p_mModelCom->SetModelData("Ice_PatA");
 
 	AddComponent(p_mModelCom);
 

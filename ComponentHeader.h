@@ -16,7 +16,7 @@
 // オブジェクトの外観
 #include "Component/Com_3DSprite.h"
 #include "Component/Com_ModelRenderer.h"
-#include "Component/Com_AssimpAnimation.h"
+#include "InternCodeAdachi/Com_Model.h"
 #include "Component/Com_Sprite.h"
 #include "Component/Com_CustomSprite.h"
 #include "Component/Com_Shader.h"

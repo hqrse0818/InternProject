@@ -1,12 +1,12 @@
 #pragma once
 #include "../GameObject/GameObject.h"
-#include "../Component/Com_AssimpAnimation.h"
 #include "../Component/Com_Shader.h"
 #include "../InternCode.Kizuki/Com_CharacterMove.h"
 #include "Com_Jump.h"
 #include "Com_AngleCamera.h"
 #include "Com_Gravity.h"
 #include "Com_Foot.h"
+#include "Com_Model.h"
 
 // ペンギンのプレファブ
 
@@ -15,7 +15,7 @@ class OBJ_Penguin :
 {
 private:
     // モデル描画コンポーネント
-    Com_AssimpAnimation* p_mModel = nullptr;
+    Com_Model* p_mModel = nullptr;
     // シェーダーコンポーネント
     Com_Shader* p_mShader = nullptr;
     // 移動コンポーネント

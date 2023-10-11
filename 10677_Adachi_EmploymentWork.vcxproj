@@ -160,12 +160,12 @@
     <ClCompile Include="Component\Com_PointCollider.cpp" />
     <ClCompile Include="Component\Com_RenderCollisionPoint.cpp" />
     <ClCompile Include="Component\Com_RenderCollider.cpp" />
-    <ClCompile Include="Component\Com_AssimpAnimation.cpp" />
     <ClCompile Include="InternCodeAdachi\Com_AngleCamera.cpp" />
     <ClCompile Include="InternCode.Kizuki\OBJ_Inpact.cpp" />
     <ClCompile Include="InternCodeAdachi\Com_Jump.cpp" />
     <ClCompile Include="InternCodeAdachi\Com_Gravity.cpp" />
     <ClCompile Include="InternCodeAdachi\Com_Foot.cpp" />
+    <ClCompile Include="InternCodeAdachi\Com_Model.cpp" />
     <ClCompile Include="InternCodeAdachi\Com_RenderCollisionLine_Sphere.cpp" />
     <ClCompile Include="DirectX\renderer.cpp" />
     <ClCompile Include="DirectX\Shader.cpp" />
@@ -174,7 +174,6 @@
     <ClCompile Include="InternCode.Kizuki\Com_CharacterJump.cpp" />
     <ClCompile Include="InternCode.Kizuki\Com_CharacterMove.cpp" />
     <ClCompile Include="InternCode.Kizuki\OBJ_PlayerCharacter.cpp" />
-    <ClCompile Include="InternCode.Kizuki\Scene_Test2.cpp" />
     <ClCompile Include="InternCodeAdachi\CSVLoad.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="GameObject\OBJ_Transition.cpp" />
@@ -183,12 +182,15 @@
     <ClCompile Include="Scene\Scene.cpp" />
     <ClCompile Include="Scene\Scene_Title.cpp" />
     <ClCompile Include="Scene\Scene_Test.cpp" />
+    <ClCompile Include="Scene\Scene_ModelLoad.cpp" />
     <ClCompile Include="System\Application.cpp" />
     <ClCompile Include="System\Collision.cpp" />
     <ClCompile Include="System\CustomMath.cpp" />
     <ClCompile Include="System\HighGetRand.cpp" />
     <ClCompile Include="System\Input.cpp" />
     <ClCompile Include="System\manager.cpp" />
+    <ClCompile Include="System\ModelData.cpp" />
+    <ClCompile Include="System\ModelPool.cpp" />
     <ClCompile Include="System\TextureCreate.cpp" />
     <ClCompile Include="System\Time.cpp" />
     <ClCompile Include="System\utftosjisconv.cpp" />
@@ -215,10 +217,10 @@
     <ClInclude Include="Component\Com_PointCollider.h" />
     <ClInclude Include="Component\Com_RenderCollisionPoint.h" />
     <ClInclude Include="Component\Com_RenderCollider.h" />
-    <ClInclude Include="Component\Com_AssimpAnimation.h" />
     <ClInclude Include="InternCodeAdachi\Com_AngleCamera.h" />
     <ClInclude Include="InternCode.Kizuki\OBJ_Inpact.h" />
     <ClInclude Include="InternCodeAdachi\Com_Jump.h" />
+    <ClInclude Include="InternCodeAdachi\Com_Model.h" />
     <ClInclude Include="InternCodeAdachi\Com_TestJump.h" />
     <ClInclude Include="InternCodeAdachi\Com_Gravity.h" />
     <ClInclude Include="InternCodeAdachi\Com_Foot.h" />
@@ -232,7 +234,6 @@
     <ClInclude Include="InternCode.Kizuki\Com_CharacterJump.h" />
     <ClInclude Include="InternCode.Kizuki\Com_CharacterMove.h" />
     <ClInclude Include="InternCode.Kizuki\OBJ_PlayerCharacter.h" />
-    <ClInclude Include="InternCode.Kizuki\Scene_Test2.h" />
     <ClInclude Include="InternCodeAdachi\CSVLoad.h" />
     <ClInclude Include="InternCodeAdachi\InternCollision.h" />
     <ClInclude Include="main.h" />
@@ -241,6 +242,7 @@
     <ClInclude Include="Scene\Scene.h" />
     <ClInclude Include="Scene\Scene_Title.h" />
     <ClInclude Include="Scene\Scene_Test.h" />
+    <ClInclude Include="Scene\Scene_ModelLoad.h" />
     <ClInclude Include="System\Application.h" />
     <ClInclude Include="System\Collision.h" />
     <ClInclude Include="System\CustomMath.h" />
@@ -248,6 +250,8 @@
     <ClInclude Include="System\HighGetRand.h" />
     <ClInclude Include="System\Input.h" />
     <ClInclude Include="System\manager.h" />
+    <ClInclude Include="System\ModelData.h" />
+    <ClInclude Include="System\ModelPool.h" />
     <ClInclude Include="System\ObjectManager.h" />
     <ClInclude Include="System\TextureCreate.h" />
     <ClInclude Include="System\Time.h" />

@@ -6,7 +6,12 @@
 #include	"Input.h"
 #include	"Time.h"
 #include	"../Scene/Scene_Test.h"
+#include	"../Scene/Scene_ModelLoad.h"
 #include "HighGetRand.h"
+#include "ModelPool.h"
+#include <thread>
+
+using namespace std;
 
 Scene* Manager::p_mCurrentScene{};
 
@@ -27,13 +32,19 @@ void Manager::Init(Application* ap)
 	// 高性能乱数初期化
 	HighRandom->HighRandInit();
 
+	// モデルデータの初期化
+	ModelPool::GetInsatance();
+
+	// テクスチャ作成クラスの初期化
+	TextureCreate::GetInstance();
+
 	// Input初期化
 	Input::Init();
 
 	// タイムの初期化
 	Time->Init();
 
-	SetScene<Scene_Test>();
+	SetScene<Scene_ModelLoad>();
 }
 
 void Manager::Uninit()
@@ -46,6 +57,10 @@ void Manager::Uninit()
 	HighRandom->Uninit();
 
 	Com_Audio::UninitMaster();
+
+	TextureCreate::Uninit();
+
+	ModelPool::Uninit();
 
 	Com_ModelRenderer::UnloadAll();
 

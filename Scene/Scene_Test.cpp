@@ -30,14 +30,13 @@ void Scene_Test::Init()
 	// ƒAƒUƒ‰ƒV
 	GameObject* Azarashi = new GameObject("Azarashi");
 	Com_Shader* Shader_buf = new Com_Shader();
-	Shader_buf->p_mVS->Load(VS_MODEL);
+	Shader_buf->p_mVS->Load("shader\\VS_OneSkinAnimation.cso");
 	Shader_buf->p_mPS->Load(PS_MODEL);
 
 	Azarashi->AddComponent(Shader_buf);
 
-	Com_AssimpAnimation* Model_buf = new Com_AssimpAnimation();
-	Model_buf->LoadModel("asset\\model\\Azarashi\\riging_azarasi_v1.fbx", 1.0f, true);
-	Model_buf->SetUseMaterial(false);
+	Com_Model* Model_buf = new Com_Model();
+	Model_buf->SetModelData("Azarashi");
 	Azarashi->AddComponent(Model_buf);
 
 	Com_SphereCollider* Col_buf = new Com_SphereCollider();

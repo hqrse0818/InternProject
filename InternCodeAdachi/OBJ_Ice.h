@@ -1,6 +1,6 @@
 #pragma once
 #include "../GameObject/GameObject.h"
-#include "../Component/Com_AssimpAnimation.h"
+#include "../InternCodeAdachi/Com_Model.h"
 #include "../Component/Com_Shader.h"
 #include "../Component/Com_BoxCollider.h"
 
@@ -9,7 +9,7 @@ class OBJ_Ice :
 {
 private:
     Com_Shader* p_mShaderCom = nullptr;
-    Com_AssimpAnimation* p_mModelCom = nullptr;
+    Com_Model* p_mModelCom = nullptr;
     Com_BoxCollider* p_mCollider = nullptr;
     DirectX::SimpleMath::Color myColor = DirectX::SimpleMath::Color{1.0f, 1.0f, 1.0f, 1.0f};
     int iHP = 5;
