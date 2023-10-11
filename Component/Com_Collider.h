@@ -15,6 +15,8 @@ public :
     // “o‚ê‚é
     bool bCanStepOn = false;
 
+    std::string ColliderTag = "None";
+
     bool GetHit()
     {
         return bHit;

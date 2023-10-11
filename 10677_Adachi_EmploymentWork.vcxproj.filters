@@ -114,9 +114,6 @@
     <ClCompile Include="Component\Com_CustomSprite.cpp">
       <Filter>ソース ファイル\Component</Filter>
     </ClCompile>
-    <ClCompile Include="Component\Com_AssimpAnimation.cpp">
-      <Filter>ソース ファイル\Component</Filter>
-    </ClCompile>
     <ClCompile Include="Component\Com_PointCollider.cpp">
       <Filter>ソース ファイル\Component</Filter>
     </ClCompile>
@@ -189,9 +186,6 @@
     <ClCompile Include="InternCode.Kizuki\Com_CharacterMove.cpp">
       <Filter>InternCodeKizuki</Filter>
     </ClCompile>
-    <ClCompile Include="InternCode.Kizuki\Scene_Test2.cpp">
-      <Filter>InternCodeKizuki</Filter>
-    </ClCompile>
     <ClCompile Include="InternCodeAdachi\Com_AngleCamera.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
@@ -202,6 +196,24 @@
       <Filter>ソース ファイル</Filter>
     </ClCompile>
     <ClCompile Include="InternCodeAdachi\OBJ_Ice.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="InternCodeAdachi\Com_Model.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="InternCodeAdachi\CSVLoad.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="Scene\Scene_ModelLoad.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="System\ModelData.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="System\ModelPool.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="InternCodeAdachi\OBJ_Azarashi.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
   </ItemGroup>
@@ -277,9 +289,6 @@
     </ClInclude>
     <ClInclude Include="System\Collision.h">
       <Filter>ヘッダー ファイル\System</Filter>
-    </ClInclude>
-    <ClInclude Include="Component\Com_AssimpAnimation.h">
-      <Filter>ヘッダー ファイル\Component</Filter>
     </ClInclude>
     <ClInclude Include="Component\Com_PointCollider.h">
       <Filter>ヘッダー ファイル\Component</Filter>
@@ -362,9 +371,6 @@
     <ClInclude Include="InternCode.Kizuki\Com_CharacterMove.h">
       <Filter>InternCodeKizuki</Filter>
     </ClInclude>
-    <ClInclude Include="InternCode.Kizuki\Scene_Test2.h">
-      <Filter>InternCodeKizuki</Filter>
-    </ClInclude>
     <ClInclude Include="InternCodeAdachi\Com_AngleCamera.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
@@ -378,6 +384,24 @@
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
     <ClInclude Include="InternCodeAdachi\OBJ_Ice.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="InternCodeAdachi\Com_Model.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="InternCodeAdachi\CSVLoad.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="Scene\Scene_ModelLoad.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="System\ModelData.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="System\ModelPool.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="InternCodeAdachi\OBJ_Azarashi.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
   </ItemGroup>
