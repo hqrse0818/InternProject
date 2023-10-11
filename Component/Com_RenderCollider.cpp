@@ -4,15 +4,26 @@
 
 using namespace DirectX::SimpleMath;
 
+Com_RenderCollider::Com_RenderCollider()
+{
+	p_mVS = new VertexShader();
+	p_mVS->Load(VS_MODEL);
+	p_mPS = new PixelShader();
+	p_mPS->Load(PS_MODEL);
+}
+
 void Com_RenderCollider::Uninit()
 {
-	p_mVertexBuffer->Release();
-	p_mPixelShader->Release();
+	p_mVS->Uninit();
+	delete p_mVS;
+	p_mPS->Uninit();
+	delete p_mPS;
 }
 
 void Com_RenderCollider::Draw()
 {
-	Renderer::GetDeviceContext()->PSSetShader(p_mPixelShader, nullptr, 0);
+	p_mVS->Bind();
+	p_mPS->Bind();
 
 	// 頂点バッファの設定
 	UINT stride = sizeof(Vector3);
@@ -30,12 +41,12 @@ void Com_RenderCollider::Draw()
 
 void Com_RenderCollider::SetPixelShaderNoHit()
 {
-	Renderer::CreatePixelShader(&p_mPixelShader, "shader\\PS_NoHitLine.cso");
+	p_mPS->Load("shader\\PS_NoHitLine.cso");
 }
 
 void Com_RenderCollider::SetPixelShaderHit()
 {
-	Renderer::CreatePixelShader(&p_mPixelShader, "shader\\PS_HitLine.cso");
+	p_mPS->Load("shader\\PS_HitLine.cso");
 }
 
 #endif

@@ -227,7 +227,7 @@ void OBJ_Penguin::Update()
 	p_mCameraCom->SetAngle(p_mCameraCom->GetAngle() + (Controller_Input::GetRightStick(0).x * fCamSpeed));
 	p_mCameraCom->SetAngle(p_mCameraCom->GetAngle() + (Input::GetCursorMove().x * fCamSpeed));
 	// ‚‚³
-	p_mCameraCom->SetHeight(p_mCameraCom->GetHeight() + Controller_Input::GetRightStick(0).y);
+	p_mCameraCom->SetHeight(p_mCameraCom->GetHeight() - Controller_Input::GetRightStick(0).y);
 	p_mCameraCom->SetHeight(p_mCameraCom->GetHeight() + Input::GetCursorMove().y);
 
 

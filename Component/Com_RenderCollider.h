@@ -4,6 +4,7 @@
 #include "Component.h"
 #include "../Utility.h"
 #include "../DirectX/renderer.h"
+#include "../DirectX/Shader.h"
 
 // コライダーラインの表示コンポーネント
 class Com_RenderCollider :
@@ -14,9 +15,12 @@ protected:
     ID3D11Buffer* p_mVertexBuffer{};
 
     // ピクセルシェーダー
-    ID3D11PixelShader* p_mPixelShader{};
+    PixelShader* p_mPS{};
+    VertexShader* p_mVS{};
 
 public:
+    Com_RenderCollider();
+
     virtual void Uninit();
     virtual void Draw();
     void SetPixelShaderNoHit();

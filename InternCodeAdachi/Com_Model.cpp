@@ -186,6 +186,8 @@ bool Com_Model::SetModelData(const char* _ModelName)
 
 void Com_Model::Update()
 {
+	bRotLastKey = false;
+
 	Time->CountStart();
 	// 一回の更新で約0.02秒かかっている(この呼び出しが一つの場合約50FPS)
 
@@ -219,10 +221,14 @@ void Com_Model::Update()
 		int f;
 		// フレームに対するアニメーションの回転を取得
 		f = iFrame1 % nodeAnim->mNumRotationKeys;
+		if (f == nodeAnim->mNumRotationKeys)
+			bRotLastKey = true;
 		aiQuaternion rot = nodeAnim->mRotationKeys[f].mValue;
 
 		// フレームに対するポジションの位置を取得
 		f = iFrame1 % nodeAnim->mNumPositionKeys;
+		if (f == nodeAnim->mNumPositionKeys)
+			bPosLastKey = true;
 		aiVector3D pos = nodeAnim->mPositionKeys[f].mValue;
 
 		bone->AnimationMatrix =
