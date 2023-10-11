@@ -49,7 +49,7 @@ void OBJ_Azarashi::Init()
 
 	// ƒeƒXƒg
 	mState = AzrashiState::Spawn;
-	p_mModelCom->PlayAnimation("Jump");
+	
 }
 
 void OBJ_Azarashi::Update()
@@ -63,6 +63,7 @@ void OBJ_Azarashi::Update()
 		break;
 	case AzrashiState::Spawn:
 	{
+		p_mModelCom->PlayAnimation("Jump");
 		p_mModelCom->UpdateFrame();
 		// ˆÚ“®•ûŒü‚ðŽæ“¾
 		Vector3 Direction = Math::GetVector(p_mTransform->mPosition, mTargetSpawnPoint);

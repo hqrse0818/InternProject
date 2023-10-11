@@ -69,12 +69,10 @@ void OBJ_Ice::Update()
 		break;
 	case 2:
 		myColor = Color(1.0f, 0.0f, 1.0f, 1.0f);
-		fElapsedTime = 0.0f; // 経過時間をリセット
 		Shake();
 		break;
 	case 3:
 		myColor = Color(1.0f, 1.0f, 0.0f, 1.0f);
-		fElapsedTime = 0.0f; // 経過時間をリセット
 		Shake();
 		break;
 	case 4:
@@ -93,6 +91,7 @@ void OBJ_Ice::Update()
 	if (Input::GetKeyState(KEYCODE_1) == KEYSTATE::KEY_DOWN)
 	{
 		iHP--;
+		fElapsedTime = 0.0f;
 	}
 }
 
@@ -113,7 +112,6 @@ void OBJ_Ice::Shake()
 	{
 		//揺れが終了したら元の位置に戻す
 		p_mTransform->mPosition = originalPosition;
-
 		return;
 	}
 
