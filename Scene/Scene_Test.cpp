@@ -6,6 +6,7 @@
 
 
 #include "../InternCodeAdachi/OBJ_Penguin.h"
+#include "../InternCodeAdachi/OBJ_Azarashi.h"
 #include "../InternCodeAdachi/Com_AngleCamera.h"
 #include "../InternCodeAdachi/OBJ_Ice.h"
 
@@ -22,29 +23,13 @@ void Scene_Test::Init()
 
 	// ペンギン
 	Player = new OBJ_Penguin("Test", "asset/data/csv/PlayerStatus.csv");
-	
 
 	// レイヤーの指定なしでキーオブジェクトとして追加
 	AddKeyObject(Player);
 
 	// アザラシ
-	GameObject* Azarashi = new GameObject("Azarashi");
-	Com_Shader* Shader_buf = new Com_Shader();
-	Shader_buf->p_mVS->Load("shader\\VS_OneSkinAnimation.cso");
-	Shader_buf->p_mPS->Load(PS_MODEL);
-
-	Azarashi->AddComponent(Shader_buf);
-
-	Com_Model* Model_buf = new Com_Model();
-	Model_buf->SetModelData("Azarashi");
-	Azarashi->AddComponent(Model_buf);
-
-	Com_SphereCollider* Col_buf = new Com_SphereCollider();
-	Col_buf->fRadius = 2.0f;
-	Col_buf->SetCenter(0.0f, 1.0f, 0.0f);
-	Col_buf->bMovable = true;
-	Azarashi->AddComponent(Col_buf);
-
+	OBJ_Azarashi* Azarashi = new OBJ_Azarashi("Azarashi");
+	Azarashi->SetTargetPosition(0.0f, 9.0f, 0.0f);
 	AddGameObject(Azarashi);
 
 	// ステージ生成
@@ -77,8 +62,8 @@ void Scene_Test::Init()
 
 void Scene_Test::Start()
 {
-	Player->p_mTransform->SetPosition(0.0f, 7.0f, 0.0f);
-	GetGameObject("Azarashi")->p_mTransform->SetPosition(10.0f, 8.0f, -2.0f);
+	Player->p_mTransform->SetPosition(0.0f, 5.0f, 0.0f);
+	GetGameObject("Azarashi")->p_mTransform->SetPosition(20.0f, 0.0f, -20.0f);
 	ShowCursor(false);
 	Input::SetCursorCenterEnable();
 }

@@ -2,6 +2,8 @@
 #include "../GameObject/GameObject.h"
 #include "../Component/Com_SphereCollider.h"
 #include "../InternCodeAdachi/Com_Gravity.h"
+#include "../Component/Com_Shader.h"
+#include "Com_Model.h"
 
 // アザラシ
 
@@ -11,6 +13,8 @@ enum class AzrashiState
     BeforeSpawnWait, 
     // スポーン開始位置とスポーン場所を指定して生成
     Spawn, 
+    // 氷上まで落下
+    Fall,
     // スポーン場所に到達後攻撃まで待つ(3秒)
     AfterSpawnWait, 
     // 攻撃(モーション終了後待機に入る)
@@ -39,10 +43,22 @@ private:
     // 攻撃までのカウンター
     float fCnt = 0.0f;
 
+    // スポーン地点までの移動速度
+    float fToSpawnSpeed = 20.0f;
+
     // コンポーネント
+    Com_SphereCollider* p_mColliderCom = nullptr;
+    Com_Gravity* p_mGravityCom = nullptr;
+    Com_Shader* p_mShaderCom = nullptr;
+    Com_Model* p_mModelCom = nullptr;
 
 public:
+    OBJ_Azarashi();
+    OBJ_Azarashi(const char* _name);
     void Init()override;
     void Update()override;
+
+    // スポーン位置の設定
+    void SetTargetPosition(float _x, float _y, float _z);
 };
 

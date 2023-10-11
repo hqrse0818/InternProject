@@ -32,11 +32,15 @@ private:
     bool bPlayAnim = false;
     // マテリアルの使用
     bool bUseMaterial = false;
+    // 現在のアニメーションのキーが最後の時trueにする
+    bool bRotLastKey = false;
+    bool bPosLastKey = false;
 
     DirectX::SimpleMath::Vector4 mScale;
 
 private:
     void UpdateBoneMatrix(aiNode* _Node, aiMatrix4x4 _Matrix);
+
 public:
     Com_Model();
 
@@ -63,5 +67,21 @@ public:
     void StopAnimation();
 
     void UpdateFrame();
+
+    bool GetIsRotLastKey()
+    {
+        return bRotLastKey;
+    }
+
+    bool GetIsPosLastKey()
+    {
+        return bPosLastKey;
+    }
+
+    // アニメーションを特定の位置でセット
+    void SetCurrentKeyFrame(int _val)
+    {
+        iFrame1 = _val;
+    }
 };
 

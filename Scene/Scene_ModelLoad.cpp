@@ -15,6 +15,8 @@ void LoadAzarashi()
 	// ƒAƒUƒ‰ƒV“Ç‚Ýž‚Ý
 	ModelData* CreateAzarashi = new ModelData();
 	CreateAzarashi->LoadModel("asset\\model\\Azarashi\\riging_azarasi_v1.fbx", true);
+	CreateAzarashi->LoadAnimation("asset\\model\\Azarashi\\jump_azarasi_v1.fbx", "Jump");
+	CreateAzarashi->LoadAnimation("asset\\model\\Azarashi\\attack_azarasi_v1.fbx", "Attack");
 	CreateAzarashi->Push("Azarashi");
 }
 

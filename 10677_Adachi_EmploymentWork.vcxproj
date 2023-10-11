@@ -241,6 +241,8 @@
     <ClInclude Include="InternCodeAdachi\OBJ_Penguin.h" />
     <ClInclude Include="InternCodeAdachi\OBJ_Ice.h" />
     <ClInclude Include="InternCodeAdachi\OBJ_Azarashi.h" />
+    <ClInclude Include="ModelFilePath.h" />
+    <ClInclude Include="ModelName.h" />
     <ClInclude Include="Scene\Scene.h" />
     <ClInclude Include="Scene\Scene_Title.h" />
     <ClInclude Include="Scene\Scene_Test.h" />
