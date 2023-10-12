@@ -9,6 +9,8 @@
 #include "../InternCodeAdachi/OBJ_Azarashi.h"
 #include "../InternCodeAdachi/Com_AngleCamera.h"
 #include "../InternCodeAdachi/OBJ_Ice.h"
+#include "../InternCodeAdachi/OBJ_Sea.h"
+#include "../InternCodeAdachi/OBJ_AzarashiManager.h"
 #include "../Component/Com_CameraTransform.h"
 #include "../Component/Com_Billboard.h"
 
@@ -87,6 +89,15 @@ void Scene_Test::Init()
 
 	Player->GetMoveCom()->SetCameraCom(Camera_buf);
 	Player->SetCameraCom(Camera_buf);
+
+	// 海オブジェクト
+	OBJ_Sea* Sea = new OBJ_Sea("Sea");
+	Sea->SetPosition(0.0f, -30.0f, 0.0f);
+
+	AddGameObject(Sea);
+
+	OBJ_AzarashiManager* AManager = new OBJ_AzarashiManager("manager", "asset\\data\\csv\\AzarashiManager.csv");
+	AddGameObject(AManager, 0);
 }
 
 void Scene_Test::Start()

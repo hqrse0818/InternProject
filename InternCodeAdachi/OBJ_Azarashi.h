@@ -13,9 +13,9 @@ enum class AzrashiState
     // スポーン前の状態
     BeforeSpawnWait, 
     // スポーン開始位置とスポーン場所を指定して生成
-    Spawn, 
+    SpawnToCenter, 
     // 氷上まで落下
-    Fall,
+    SpawnToTarget,
     // スポーン場所に到達後攻撃まで待つ(3秒)
     AfterSpawnWait, 
     // 攻撃(モーション終了後待機に入る)
@@ -25,6 +25,10 @@ enum class AzrashiState
     // 被弾状態(移動,移動終了で被弾状態終了->攻撃待ち)
     // 被弾状態中に海に触れる->Deathに移行
     Damage, 
+    // 飛び込み
+    Dive,
+    // 飛び込みアニメーション終了後処理
+    DiveTo,
     // 死亡(アニメーション再生後)
     Death
 };
@@ -37,12 +41,15 @@ private:
     AzrashiState mState = AzrashiState::BeforeSpawnWait;
     // 被弾時の移動量
     DirectX::SimpleMath::Vector3 mDamageVelocity = DirectX::SimpleMath::Vector3(0.0f, 0.0f, 0.0f);
-    // スポーン開始地点(最終的にマネージャー側でスポーン開始地点を指定する)
-    DirectX::SimpleMath::Vector3 mInitialSpawnPoint = DirectX::SimpleMath::Vector3(0.0f, 0.0f, 0.0f);
-    // スポーン目的位置(氷上のどこかにスポーンさせる(目的地に着いたら攻撃待ちに移行))
+    // スポーン目的位置
     DirectX::SimpleMath::Vector3 mTargetSpawnPoint = DirectX::SimpleMath::Vector3(0.0f, 0.0f, 0.0f);
+    // スポーン中間地点
+    DirectX::SimpleMath::Vector3 mTargetSpawnCenterPoint = DirectX::SimpleMath::Vector3(0.0f, 0.0f, 0.0f);
+
     // 攻撃までのカウンター
     float fCnt = 0.0f;
+    float fAttackDuration = 0.0f;
+    float fAfterSpawnAttackWait = 0.0f;
 
     // スポーン地点までの移動速度
     float fToSpawnSpeed = 20.0f;
@@ -53,6 +60,12 @@ private:
     // ふっ飛び係数
     float fVelocity = 0.2f;
 
+    // ブレーキ係数
+    float fBlakeVelocity = 0.9f;
+
+    // 被弾中移動距離がこの値以下なら止める
+    float fDamagePermission = 0.05f;
+
     // コンポーネント
     Com_SphereCollider* p_mColliderCom = nullptr;
     Com_Gravity* p_mGravityCom = nullptr;
@@ -62,13 +75,28 @@ private:
 public:
     OBJ_Azarashi();
     OBJ_Azarashi(const char* _name);
+    OBJ_Azarashi(const char* _name, int _ModelKind);
     void Init()override;
     void Update()override;
 
     // スポーン位置の設定
-    void SetTargetPosition(float _x, float _y, float _z);
+    void SetTargetPosition(float _inx, float _iny, float _inz, float _tarx, float _tary, float _tarz, float _heightY);
 
     void OnCollisionEnter(GameObject* _obj);
     void OnCollisionStay(GameObject* _obj);
+
+    Com_Foot* GetFootCom() { return p_mFootCom; };
+    Com_SphereCollider* GetColliderCom() { return p_mColliderCom; };
+    Com_Model* GetModelCom() { return p_mModelCom; };
+
+    void SetAzrashiStatus(float _SpawnAfter, float _Duration, float _MoveSpeed, float _DamageVelocity, float _Blake, float _Permis)
+    {
+        fAfterSpawnAttackWait = _SpawnAfter;
+        fAttackDuration = _Duration;
+        fToSpawnSpeed = _MoveSpeed;
+        fVelocity = _DamageVelocity;
+        fBlakeVelocity = _Blake;
+        fDamagePermission = _Permis;
+    }
 };
 

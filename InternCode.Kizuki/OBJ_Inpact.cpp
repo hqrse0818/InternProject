@@ -5,7 +5,7 @@ OBJ_Inpact::OBJ_Inpact()
 {
 	p_mColliderCom = new Com_SphereCollider();
 	p_mColliderCom->fRadius = 1.0f; //”ÍˆÍ
-	p_mColliderCom->ColliderTag = "Attack";
+	p_mColliderCom->mColliderTag = ColliderKind::ColTag_Attack;
 	fCnt = 0.0f;
 
 	AddComponent(p_mColliderCom);
