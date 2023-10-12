@@ -7,8 +7,24 @@
 #include "Com_Gravity.h"
 #include "Com_Foot.h"
 #include "Com_Model.h"
-
 // ペンギンのプレファブ
+
+// ステートマシン
+enum class PenguinState
+{
+    // 歩行状態
+    Walk, 
+    // ジャンプ中
+    Jump, 
+    // ヒップドロップの遅延
+    HipDropDelay, 
+    // ヒップドロップ中
+    HipDrop, 
+    // 被弾状態
+    Damage,
+    // 停止状態
+    Idle
+};
 
 class OBJ_Penguin :
     public GameObject
