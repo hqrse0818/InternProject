@@ -14,7 +14,8 @@ private:
     Com_Shader* p_mShaderCom = nullptr;
     Com_Model* p_mModelCom = nullptr;
     Com_BoxCollider* p_mCollider = nullptr;
-    Com_Audio* p_mAudio{};
+    Com_Audio* p_mAudio_Damage{};
+    Com_Audio* p_mAudio_Break{};
     DirectX::SimpleMath::Color myColor = DirectX::SimpleMath::Color{1.0f, 1.0f, 1.0f, 1.0f};
     int iHP = 5; //足場のHP
 
@@ -24,9 +25,12 @@ private:
 
     Vector3 originalPosition; // オブジェクトの元の位置を格納する変数
 
+    void CreateFromCSV(const char* _FileName);
+
 public:
     OBJ_Ice();
     OBJ_Ice(const char* _name);
+    OBJ_Ice(const char* _ice, const char* _FileName);
 
     void Init();
     void Update();

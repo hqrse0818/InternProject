@@ -8,7 +8,7 @@
 #define SpawnRateRow (3)
 #define SpawnNumRow (5)
 #define AzarashiStateRow (7)
-#define StateSetNum (13)
+#define StateSetNum (14)
 
 enum class SpawnState {
     Wait, Spawn,End
@@ -50,10 +50,12 @@ private:
     float fBlake = 0.9f;
     // 被弾時許容距離
     float fLength = 0.05f;
-    // スポーン時のy座標
+    // 出現時のy座標
     float fSpawnY = 0.0f;
     // 中間地点の高さ
     float fCenterY = 0.0f;
+    // スポーン位置のy座標
+    float fIceY = 0.0f;
 
     SpawnState mState = SpawnState::Wait;
 

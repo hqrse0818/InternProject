@@ -231,6 +231,15 @@
     <ClCompile Include="InternCodeAdachi\OBJ_AzarashiManager.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
+    <ClCompile Include="InternCodeAdachi\OBJ_IceManager.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="InternCodeAdachi\OBJ_Sea.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="InternCode.Kizuki\Scene_Debug.cpp">
+      <Filter>InternCodeKizuki</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="main.h">
@@ -442,6 +451,15 @@
     </ClInclude>
     <ClInclude Include="InternCodeAdachi\OBJ_AzarashiManager.h">
       <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="InternCodeAdachi\OBJ_IceManager.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="InternCodeAdachi\OBJ_Sea.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="InternCode.Kizuki\Scene_Debug.h">
+      <Filter>InternCodeKizuki</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

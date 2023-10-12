@@ -65,8 +65,8 @@ OBJ_Azarashi::OBJ_Azarashi(const char* _name, int _ModelKind)
 	switch (_ModelKind)
 	{
 	case 1:
-		break;
 		p_mModelCom->SetModelData(AZARASHI);
+		break;
 	case 2:
 		p_mModelCom->SetModelData(AZARASHIWAKAME);
 		break;
@@ -78,6 +78,7 @@ OBJ_Azarashi::OBJ_Azarashi(const char* _name, int _ModelKind)
 	// コライダー(暫定csvで読めるようにする)
 	p_mColliderCom = new Com_SphereCollider();
 	p_mColliderCom->bMovable = true;
+	p_mColliderCom->bEnable = false;
 	AddComponent(p_mColliderCom);
 
 	// 重力
@@ -89,6 +90,7 @@ OBJ_Azarashi::OBJ_Azarashi(const char* _name, int _ModelKind)
 
 	// 足元コンポーネント
 	p_mFootCom = new Com_Foot();
+	p_mFootCom->SetGravityCom(p_mGravityCom);
 	AddComponent(p_mFootCom);
 }
 
@@ -115,8 +117,29 @@ void OBJ_Azarashi::Update()
 		break;
 	case AzrashiState::SpawnToCenter:
 	{
-		// 目的地に向かって移動
+		// 中心地点に向かって移動
 		p_mModelCom->PlayAnimation("Jump");
+		// 移動方向を取得
+		Vector3 Direction = Math::GetVector(p_mTransform->mPosition, mTargetSpawnCenterPoint);
+		Direction = Math::Normalize(Direction);
+		float Distance = Math::GetDoubleDistance(p_mTransform->mPosition, mTargetSpawnCenterPoint);
+		Vector3 Velocity = Direction * Time->GetDeltaTime() * fToSpawnSpeed;
+		float Length = Math::GetDoubleLength(Velocity);
+		if (Distance <= Length)
+		{
+			p_mTransform->mPosition = mTargetSpawnCenterPoint;
+			// スポーン後の攻撃待ちに移行
+			mState = AzrashiState::SpawnToTarget;
+			p_mModelCom->SetPlayAnimation(false);
+			break;
+		}
+		// 移動量が超えない場合移動させる
+		p_mTransform->Translate(Velocity);
+	}
+		break;
+	case AzrashiState::SpawnToTarget:
+	{
+		// 目標地点に向かって移動
 		// 移動方向を取得
 		Vector3 Direction = Math::GetVector(p_mTransform->mPosition, mTargetSpawnPoint);
 		Direction = Math::Normalize(Direction);
@@ -127,8 +150,9 @@ void OBJ_Azarashi::Update()
 		{
 			p_mTransform->mPosition = mTargetSpawnPoint;
 			// スポーン後の攻撃待ちに移行
-			mState = AzrashiState::SpawnToTarget;
+			mState = AzrashiState::AfterSpawnWait;
 			p_mGravityCom->bEnable = true;
+			p_mColliderCom->bEnable = true;
 			p_mGravityCom->SetGround(false);
 			break;
 		}
@@ -136,11 +160,9 @@ void OBJ_Azarashi::Update()
 		p_mTransform->Translate(Velocity);
 	}
 		break;
-	case AzrashiState::SpawnToTarget:
-		break;
 	case AzrashiState::AfterSpawnWait:
 		fCnt += Time->GetDeltaTime();
-		if (fCnt > 3)
+		if (fCnt > fAfterSpawnAttackWait)
 		{
 			fCnt = 0;
 			bAttacked = false;
@@ -165,7 +187,7 @@ void OBJ_Azarashi::Update()
 		break;
 	case AzrashiState::AttackWait:
 		fCnt += Time->GetDeltaTime();
-		if (fCnt > 2)
+		if (fCnt > fAttackDuration)
 		{
 			fCnt = 0;
 			bAttacked = false;
@@ -180,16 +202,16 @@ void OBJ_Azarashi::Update()
 		float length = Math::GetLength(mDamageVelocity);
 
 		cout << length << endl;
-		// テストステート移行
-		if (length < 0.05f)
+		// 一定以下なら止まって攻撃待ちに移行
+		if (length < fDamagePermission)
 		{
 			mState = AzrashiState::AttackWait;
 			p_mModelCom->SetPlayAnimation(false);
 			break;
 		}
 
-		// テスト減衰
-		mDamageVelocity *= 0.9f;
+		// ブレーキを掛ける
+		mDamageVelocity *= fBlakeVelocity;
 
 		p_mTransform->Translate(mDamageVelocity);
 	}
@@ -306,6 +328,7 @@ void OBJ_Azarashi::OnCollisionStay(GameObject* _obj)
 					// 重力の更新を停止
 					p_mGravityCom->bEnable = false;
 					p_mFootCom->bEnable = false;
+					p_mColliderCom->bEnable = true;
 					mState = AzrashiState::Dive;
 					p_mModelCom->PlayAnimation("Dive");
 					p_mModelCom->SetCurrentKeyFrame(0);
@@ -315,12 +338,14 @@ void OBJ_Azarashi::OnCollisionStay(GameObject* _obj)
 		}
 		if (col->mColliderTag == ColliderKind::ColTag_Sea)
 		{
-			if (mState != AzrashiState::BeforeSpawnWait ||
-				mState != AzrashiState::SpawnToCenter)
+			if (mState == AzrashiState::BeforeSpawnWait ||
+				mState == AzrashiState::SpawnToCenter ||
+				mState == AzrashiState::SpawnToTarget)
 			{
+				return;
+			}
 				// 死亡処理
 				mState = AzrashiState::Death;
-			}
 		}
 	}
 }

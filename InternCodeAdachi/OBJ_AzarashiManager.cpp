@@ -88,6 +88,8 @@ OBJ_AzarashiManager::OBJ_AzarashiManager(const char* _name, const char* _FileNam
 		fSpawnY = stof(as[11]);
 		// 中間地点のy座標
 		fCenterY = stof(as[12]);
+		// 氷上での高さ
+		fIceY = stof(as[13]);
 	}
 	gt.clear();
 	sr.clear();
@@ -158,24 +160,35 @@ void OBJ_AzarashiManager::Create()
 	break;
 	}
 	// ターゲット位置設定
-	std::vector<OBJ_Ice*> vec;
-	int r = HighRand::GetRand(0, vec.size());
+	std::vector<OBJ_Ice*> vec = GetScene()->GetGameObjects<OBJ_Ice>();
+	if (vec.size() == 0)
+		return;
+	int r = HighRand::GetRand(0, vec.size() - 1);
 
-	vec = GetScene()->GetGameObjects<OBJ_Ice>();
+	Vector3 target = vec[r]->p_mTransform->mPosition;
 
 	// スタート位置とターゲット位置の設定
-	azarashi->SetTargetPosition(init.x, init.y, init.z,1.0f, 1.0f, 1.0f, fCenterY);
-}
+	azarashi->SetTargetPosition(init.x, init.y, init.z,target.x, fIceY, target.z, fCenterY);
 
+	iSpawnedNum++;
+	if (iSpawnedNum >= iMaxSpawn)
+	{
+		mState = SpawnState::End;
+	}
+	else
+	{
+		mState = SpawnState::Wait;
+	}
+}
 void OBJ_AzarashiManager::Update()
 {
 	GameObject::Update();
 	// ゲームタイムを進める
 	fGameCnt += Time->GetDeltaTime();
 	// 現在のゲームタイムが次のスポーン切り替えのタイム以上ならインデックスを進める
-	if (iCurrentIndex < vec_SpawnRateGameTimer.size())
+	if (iCurrentIndex < vec_SpawnRateGameTimer.size() - 1)
 	{
-		if(static_cast<int>(fGameCnt) > vec_SpawnRate[iCurrentIndex + 1])
+		if(static_cast<int>(fGameCnt) > vec_SpawnRateGameTimer[iCurrentIndex + 1])
 		{
 			iCurrentIndex++;
 		}

@@ -1,6 +1,7 @@
 #include "Scene_ModelLoad.h"
 #include "Scene_Title.h"
 #include "Scene_Test.h"
+#include "../InternCode.Kizuki/Scene_Debug.h"
 #include "../System/manager.h"
 
 void LoadPenguin()

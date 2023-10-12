@@ -31,16 +31,6 @@ void Scene_Test::Init()
 	// レイヤーの指定なしでキーオブジェクトとして追加
 	AddKeyObject(Player);
 
-	// アザラシ
-	OBJ_Azarashi* Azarashi = new OBJ_Azarashi("Azarashi");
-	Azarashi->SetTargetPosition(0.0f, 9.0f, 0.0f, 0.0f, 0.0f,0.0f, 10.0f);
-	AddGameObject(Azarashi);
-
-	Azarashi = new OBJ_Azarashi("Azarashi2");
-	Azarashi->SetTargetPosition(20.0f, 12.0f, 11.0f, 0.0f, 0.0f, 0.0f, 10.0f);
-	AddGameObject(Azarashi);
-
-
 	// ステージ生成
 	for (int i = 0; i < IceNum; i++)
 	{
@@ -53,24 +43,6 @@ void Scene_Test::Init()
 		}
 	}
 
-	
-	//GameObject* BilObj = new GameObject();
-
-	////ビルボード
-	//Com_Shader* BilShader = new Com_Shader();
-	//BilShader->p_mVS->Load(VS_SPRITE);
-	//BilShader->p_mPS->Load(PS_SPRITE);
-	//BilObj->AddComponent(BilShader);
-
-	//Com_Billboard* Bil_buf = new Com_Billboard();
-	//Bil_buf->SetTexture("asset/texture/GameTitle.png");
-	//BilObj->p_mTransform->mPosition.x = 3.0f;
-	//BilObj->p_mTransform->SetScale(10.0f, 10.0f, 1.0f);
-	//BilObj->AddComponent(Bil_buf);
-
-	//AddGameObject(BilObj);
-
-
 	GameObject* Camera = new GameObject("Camera");
 	Com_AngleCamera* Camera_buf = new Com_AngleCamera();
 	Camera_buf->SetTarget(Player);
@@ -82,10 +54,6 @@ void Scene_Test::Init()
 
 	// レイヤーを指定してオブジェクトを追加
 	AddGameObject(Camera, 0);
-
-	////ビルボード用のカメラをセット
-	//Bil_buf->SetCamera(Camera_buf);
-	//Com_Billboard::SetCamera(Camera_buf);
 
 	Player->GetMoveCom()->SetCameraCom(Camera_buf);
 	Player->SetCameraCom(Camera_buf);
@@ -103,8 +71,6 @@ void Scene_Test::Init()
 void Scene_Test::Start()
 {
 	Player->p_mTransform->SetPosition(0.0f, 5.0f, 0.0f);
-	GetGameObject("Azarashi")->p_mTransform->SetPosition(20.0f, 0.0f, -20.0f);
-	GetGameObject("Azarashi2")->p_mTransform->SetPosition(10.0f, 0.0f, -30.0f);
 	ShowCursor(false);
 	Input::SetCursorCenterEnable();
 }
