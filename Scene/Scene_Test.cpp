@@ -3,6 +3,7 @@
 #include "../System/Input.h"
 #include "../System/CustomMath.h"
 #include "../System/Time.h"
+#include "../System/manager.h"
 
 
 #include "../InternCodeAdachi/OBJ_Penguin.h"
@@ -90,6 +91,14 @@ void Scene_Test::Update()
 		ShowCursor(false);
 		Input::SetCursorCenterEnable();
 	}
+
+	// デバッグ用シーン再読み込み
+#if defined (DEBUG) | defined(_DEBUG)
+	if (Controller_Input::GetButton(0, GAMEPAD_START) == KEYSTATE::KEY_DOWN || Input::GetKeyState(KEYCODE_R) == KEYSTATE::KEY_DOWN)
+	{
+		Manager::SetScene<Scene_Test>();
+	}
+#endif
 }
 
 void Scene_Test::Uninit()
