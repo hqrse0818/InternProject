@@ -3,6 +3,7 @@
 #include "../System/Time.h"
 #include "../System/HighGetRand.h"
 #include "../Scene/Scene.h"
+#include "OBJ_Ice.h"
 
 using namespace DirectX::SimpleMath;
 using namespace std;
@@ -157,6 +158,10 @@ void OBJ_AzarashiManager::Create()
 	break;
 	}
 	// ターゲット位置設定
+	std::vector<OBJ_Ice*> vec;
+	int r = HighRand::GetRand(0, vec.size());
+
+	vec = GetScene()->GetGameObjects<OBJ_Ice>();
 
 	// スタート位置とターゲット位置の設定
 	azarashi->SetTargetPosition(init.x, init.y, init.z,1.0f, 1.0f, 1.0f, fCenterY);

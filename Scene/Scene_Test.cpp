@@ -33,11 +33,11 @@ void Scene_Test::Init()
 
 	// ƒAƒUƒ‰ƒV
 	OBJ_Azarashi* Azarashi = new OBJ_Azarashi("Azarashi");
-	Azarashi->SetTargetPosition(0.0f, 9.0f, 0.0f);
+	Azarashi->SetTargetPosition(0.0f, 9.0f, 0.0f, 0.0f, 0.0f,0.0f, 10.0f);
 	AddGameObject(Azarashi);
 
 	Azarashi = new OBJ_Azarashi("Azarashi2");
-	Azarashi->SetTargetPosition(20.0f, 12.0f, 11.0f);
+	Azarashi->SetTargetPosition(20.0f, 12.0f, 11.0f, 0.0f, 0.0f, 0.0f, 10.0f);
 	AddGameObject(Azarashi);
 
 

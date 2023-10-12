@@ -317,4 +317,22 @@ public:
 		}
 		return nullptr;
 	}
+
+	template<typename T>
+	std::vector<T*> GetGameObjects()
+	{
+		std::vector<T*> ret;
+		for (auto& List : mList)
+		{
+			for (auto& obj : List)
+			{
+				if (typeid(*obj) == typeid(T))
+				{
+					ret.push_back(static_cast<T*>(obj));
+				}
+			}
+		}
+
+		return ret;
+	}
 };

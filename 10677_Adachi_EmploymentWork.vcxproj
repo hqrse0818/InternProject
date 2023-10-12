@@ -185,7 +185,6 @@
     <ClCompile Include="InternCodeAdachi\OBJ_Azarashi.cpp" />
     <ClCompile Include="InternCodeAdachi\OBJ_Sea.cpp" />
     <ClCompile Include="InternCodeAdachi\OBJ_AzarashiManager.cpp" />
-    <ClCompile Include="InternCodeAdachi\OBJ_IceManager.cpp" />
     <ClCompile Include="Scene\Scene.cpp" />
     <ClCompile Include="Scene\Scene_Title.cpp" />
     <ClCompile Include="Scene\Scene_Test.cpp" />
@@ -255,7 +254,6 @@
     <ClInclude Include="ModelName.h" />
     <ClInclude Include="InternCodeAdachi\OBJ_Sea.h" />
     <ClInclude Include="InternCodeAdachi\OBJ_AzarashiManager.h" />
-    <ClInclude Include="InternCodeAdachi\OBJ_IceManager.h" />
     <ClInclude Include="Scene\Scene.h" />
     <ClInclude Include="Scene\Scene_Title.h" />
     <ClInclude Include="Scene\Scene_Test.h" />
