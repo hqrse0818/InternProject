@@ -45,7 +45,7 @@ void Scene_Title::Init()
 	Title->p_mTransform->mScale.y = SCREEN_HEIGHT;
 	AddGameObject(Title, 4);
 
-	p_mAudio->Load("asset\\audio\\STORM.wav");
+	p_mAudio->Load("asset\\audio\\BGM\\ƒ^ƒCƒgƒ‹‰æ–Ê BGM.wav");
 	p_mAudio->SetUseTarget(false);
 }
 

@@ -1,8 +1,29 @@
 #include "OBJ_Ice.h"
 #include "../System/Input.h"
 #include "../System/Time.h"
+#include "../InternCodeAdachi/CSVLoad.h"
+
+#define LoadRow (1)
 
 using namespace DirectX::SimpleMath;
+using namespace std;
+
+void OBJ_Ice::CreateFromCSV(const char* _FileName)
+{
+	string Line = ReadDataFromCSV(_FileName, LoadRow);
+
+	// •¶š—ñ‚ğ(,)‚Å•ªŠ„
+	istringstream iss(Line);
+	string word;
+	std::vector<string> sv;
+	while (getline(iss, word, ','))
+	{
+		sv.emplace_back(word);
+	}
+
+	fShakeTime = stof(sv[0]); //—h‚ê‚éŠÔ
+	fShakePower = stof(sv[1]); // —h‚ê‚Ì”ÍˆÍ
+}
 
 OBJ_Ice::OBJ_Ice()
 {
@@ -32,16 +53,30 @@ OBJ_Ice::OBJ_Ice()
 	AddComponent(p_mCollider);
 
 	//‰¹
-	p_mAudio = new Com_Audio();
-	//p_mAudio->Load("assets\\audio\\");
-	p_mAudio->SetUseTarget(false);
-	AddComponent(p_mAudio);
+
+	//ƒqƒr
+	p_mAudio_Damage = new Com_Audio();
+	p_mAudio_Damage->Load("asset\\audio\\SE\\SE ‚»‚Ì‘¼\\•X ƒqƒr.wav");
+	p_mAudio_Damage->SetUseTarget(false);
+	AddComponent(p_mAudio_Damage);
+	//”j‰ó
+	p_mAudio_Break = new Com_Audio();
+	p_mAudio_Break->Load("asset\\audio\\SE\\SE ‚»‚Ì‘¼\\•X ”j‰ó.wav");
+	p_mAudio_Break->SetUseTarget(false);
+	AddComponent(p_mAudio_Break);
 }
 
 OBJ_Ice::OBJ_Ice(const char* _name)
 	: OBJ_Ice()
 {
 	sObjectName = _name;
+}
+
+OBJ_Ice::OBJ_Ice(const char* _ice, const char* _FileName)
+	: OBJ_Ice()
+{
+	sObjectName = _ice;
+	CreateFromCSV(_FileName);
 }
 
 void OBJ_Ice::Init()
@@ -74,6 +109,7 @@ void OBJ_Ice::Update()
 	switch (iHP)
 	{
 	case 1:
+		p_mAudio_Break->Play();
 		bDestroy = true; //GameObjectƒNƒ‰ƒX‚ÌDestroy()‚ğg‚¤‚½‚ß‚É•K—v
 		break;
 	case 2:
@@ -101,6 +137,11 @@ void OBJ_Ice::HpCalc()
 {
 	iHP--;
 	fElapsedTime = 0.0f;
+
+	if (2 <= iHP <= 4)
+	{
+		p_mAudio_Damage->Play();
+	}
 }
 
 //‘«ê‚ª—h‚ê‚éˆ—

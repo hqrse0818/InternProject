@@ -163,6 +163,7 @@
     <ClCompile Include="Component\Com_RenderCollider.cpp" />
     <ClCompile Include="InternCode.Kizuki\OBJ_TitleStart.cpp" />
     <ClCompile Include="InternCode.Kizuki\OBJ_TitleTutorial.cpp" />
+    <ClCompile Include="InternCode.Kizuki\Scene_Debug.cpp" />
     <ClCompile Include="InternCodeAdachi\Com_AngleCamera.cpp" />
     <ClCompile Include="InternCode.Kizuki\OBJ_Inpact.cpp" />
     <ClCompile Include="InternCodeAdachi\Com_Jump.cpp" />
@@ -226,6 +227,7 @@
     <ClInclude Include="Component\Com_RenderCollider.h" />
     <ClInclude Include="InternCode.Kizuki\OBJ_TitleStart.h" />
     <ClInclude Include="InternCode.Kizuki\OBJ_TitleTutorial.h" />
+    <ClInclude Include="InternCode.Kizuki\Scene_Debug.h" />
     <ClInclude Include="InternCodeAdachi\Com_AngleCamera.h" />
     <ClInclude Include="InternCode.Kizuki\OBJ_Inpact.h" />
     <ClInclude Include="InternCodeAdachi\Com_Jump.h" />
