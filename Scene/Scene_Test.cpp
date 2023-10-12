@@ -10,6 +10,7 @@
 #include "../InternCodeAdachi/Com_AngleCamera.h"
 #include "../InternCodeAdachi/OBJ_Ice.h"
 #include "../InternCodeAdachi/OBJ_Sea.h"
+#include "../InternCodeAdachi/OBJ_AzarashiManager.h"
 #include "../Component/Com_CameraTransform.h"
 #include "../Component/Com_Billboard.h"
 
@@ -94,6 +95,9 @@ void Scene_Test::Init()
 	Sea->SetPosition(0.0f, -30.0f, 0.0f);
 
 	AddGameObject(Sea);
+
+	OBJ_AzarashiManager* AManager = new OBJ_AzarashiManager("manager", "asset\\data\\csv\\AzarashiManager.csv");
+	AddGameObject(AManager, 0);
 }
 
 void Scene_Test::Start()

@@ -49,6 +49,53 @@ OBJ_Azarashi::OBJ_Azarashi(const char* _name)
 	sObjectName = _name;
 }
 
+OBJ_Azarashi::OBJ_Azarashi(const char* _name, int _ModelKind)
+{
+	sObjectName = _name;
+
+	// シェーダー
+	p_mShaderCom = new Com_Shader();
+	p_mShaderCom->p_mVS->Load("shader\\VS_OneSkinAnimation.cso");
+	p_mShaderCom->p_mPS->Load(PS_MODEL);
+	AddComponent(p_mShaderCom);
+
+	// モデル
+	// アザラシマネージャーで値を渡して設定する
+	p_mModelCom = new Com_Model();
+	switch (_ModelKind)
+	{
+	case 1:
+		break;
+		p_mModelCom->SetModelData(AZARASHI);
+	case 2:
+		p_mModelCom->SetModelData(AZARASHIWAKAME);
+		break;
+	default :
+		break;
+	}
+	AddComponent(p_mModelCom);
+
+	// コライダー(暫定csvで読めるようにする)
+	p_mColliderCom = new Com_SphereCollider();
+	p_mColliderCom->fRadius = 2.0f;
+	p_mColliderCom->bMovable = true;
+	p_mColliderCom->SetCenter(0.0f, 2.0f, 0.0f);
+	AddComponent(p_mColliderCom);
+
+	// 重力
+	p_mGravityCom = new Com_Gravity();
+	p_mGravityCom->SetGround(true);
+	// スポーン完了まで重力を無効化する
+	p_mGravityCom->bEnable = false;
+	AddComponent(p_mGravityCom);
+
+	// 足元コンポーネント
+	p_mFootCom = new Com_Foot();
+	p_mFootCom->SetGravityCom(p_mGravityCom);
+	p_mFootCom->SetFootHeight(2.0f);
+	AddComponent(p_mFootCom);
+}
+
 
 void OBJ_Azarashi::Init()
 {

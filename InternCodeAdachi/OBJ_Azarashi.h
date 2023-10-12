@@ -47,6 +47,8 @@ private:
     DirectX::SimpleMath::Vector3 mTargetSpawnPoint = DirectX::SimpleMath::Vector3(0.0f, 0.0f, 0.0f);
     // 攻撃までのカウンター
     float fCnt = 0.0f;
+    float fAttackDuration = 0.0f;
+    float fAfterSpawnAttackWait = 0.0f;
 
     // スポーン地点までの移動速度
     float fToSpawnSpeed = 20.0f;
@@ -57,6 +59,12 @@ private:
     // ふっ飛び係数
     float fVelocity = 0.2f;
 
+    // ブレーキ係数
+    float fBlakeVelocity = 0.9f;
+
+    // 被弾中移動距離がこの値以下なら止める
+    float fDamagePermission = 0.05f;
+
     // コンポーネント
     Com_SphereCollider* p_mColliderCom = nullptr;
     Com_Gravity* p_mGravityCom = nullptr;
@@ -66,6 +74,7 @@ private:
 public:
     OBJ_Azarashi();
     OBJ_Azarashi(const char* _name);
+    OBJ_Azarashi(const char* _name, int _ModelKind);
     void Init()override;
     void Update()override;
 
@@ -74,5 +83,19 @@ public:
 
     void OnCollisionEnter(GameObject* _obj);
     void OnCollisionStay(GameObject* _obj);
+
+    Com_Foot* GetFootCom() { return p_mFootCom; };
+    Com_SphereCollider* GetColliderCom() { return p_mColliderCom; };
+    Com_Model* GetModelCom() { return p_mModelCom; };
+
+    void SetAzrashiStatus(float _SpawnAfter, float _Duration, float _MoveSpeed, float _DamageVelocity, float _Blake, float _Permis)
+    {
+        fAfterSpawnAttackWait = _SpawnAfter;
+        fAttackDuration = _Duration;
+        fToSpawnSpeed = _MoveSpeed;
+        fVelocity = _DamageVelocity;
+        fBlakeVelocity = _Blake;
+        fDamagePermission = _Permis;
+    }
 };
 
