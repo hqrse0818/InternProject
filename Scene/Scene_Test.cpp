@@ -33,7 +33,6 @@ void Scene_Test::Init()
 	OBJ_Azarashi* Azarashi = new OBJ_Azarashi("Azarashi");
 	Azarashi->SetTargetPosition(0.0f, 9.0f, 0.0f);
 	AddGameObject(Azarashi);
-	Azarashi->p_mTransform->SetScale(3.0f, 3.0f, 3.0f);
 
 	Azarashi = new OBJ_Azarashi("Azarashi2");
 	Azarashi->SetTargetPosition(20.0f, 12.0f, 11.0f);
@@ -102,14 +101,22 @@ void Scene_Test::Start()
 void Scene_Test::Update()
 {
 	// デバッグ用
-	if (Input::GetKeyState(KEYCODE_END) == KEYSTATE::KEY_DOWN)
+	// カーソルを表示するように切り替えて毎フレーム中心に強制的にセットされることを止める
+	if (Input::GetKeyState(KEYCODE_9) == KEYSTATE::KEY_DOWN)
 	{
 		ShowCursor(true);
 		Input::SetCursorCenterDisable();
+	}
+	// カーソルを非表示に切り替えて毎フレーム中心に強制的にセットされる
+	if (Input::GetKeyState(KEYCODE_0) == KEYSTATE::KEY_DOWN)
+	{
+		ShowCursor(false);
+		Input::SetCursorCenterEnable();
 	}
 }
 
 void Scene_Test::Uninit()
 {
 	ShowCursor(true);
+	Input::SetCursorCenterDisable();
 }

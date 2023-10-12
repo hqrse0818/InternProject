@@ -36,6 +36,13 @@ private:
 
     DirectX::SimpleMath::Vector4 mScale{};
 
+    // アニメーション再生補正値
+    float fAnimSpeed = 0.001;
+    float fAnimCnt = 0.0f;
+
+    // 順再生かどうか
+    bool bPlayOrder = true;
+
 private:
     void UpdateBoneMatrix(aiNode* _Node, aiMatrix4x4 _Matrix);
 
@@ -62,9 +69,22 @@ public:
     }
 
     void PlayAnimation(const char* _name);
-    void StopAnimation();
+    void SetPlayAnimation(bool _val);
 
-    void UpdateFrame(int _val);
+    void UpdateFrame();
+
+    void SetAnimSpeed(float _val)
+    {
+        fAnimSpeed = _val;
+        if (_val < 0.0f)
+        {
+            bPlayOrder = false;
+        }
+        else
+        {
+            bPlayOrder = true;
+        }
+    }
 
     bool GetIsRotLastKey()
     {

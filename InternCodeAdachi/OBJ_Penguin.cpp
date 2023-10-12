@@ -231,12 +231,12 @@ void OBJ_Penguin::Update()
 	// アングル調整
 	// 横の角度
 	p_mCameraCom->SetAngle(p_mCameraCom->GetAngle() + (Controller_Input::GetRightStick(0).x * fCamSpeed));
-	p_mCameraCom->SetAngle(p_mCameraCom->GetAngle() + (Input::GetCursorMove().x * fCamSpeed));
 	// 高さ
 	p_mCameraCom->SetHeight(p_mCameraCom->GetHeight() - Controller_Input::GetRightStick(0).y);
-	p_mCameraCom->SetHeight(p_mCameraCom->GetHeight() + Input::GetCursorMove().y);
 
-
-	// アニメーションの更新
-	p_mModel->UpdateFrame(1);
+	if (Input::GetIsCenter())
+	{
+		p_mCameraCom->SetAngle(p_mCameraCom->GetAngle() + (Input::GetCursorMove().x * fCamSpeed));
+		p_mCameraCom->SetHeight(p_mCameraCom->GetHeight() + Input::GetCursorMove().y);
+	}
 }

@@ -73,7 +73,6 @@ void OBJ_Azarashi::Update()
 	case AzrashiState::Spawn:
 	{
 		p_mModelCom->PlayAnimation("Jump");
-		p_mModelCom->UpdateFrame(1);
 		// 移動方向を取得
 		Vector3 Direction = Math::GetVector(p_mTransform->mPosition, mTargetSpawnPoint);
 		Direction = Math::Normalize(Direction);
@@ -107,11 +106,11 @@ void OBJ_Azarashi::Update()
 		}
 		break;
 	case AzrashiState::Attack:
-		p_mModelCom->UpdateFrame(1);
 		// アニメーションの最後のフレームかチェックする
 		if (p_mModelCom->GetIsRotLastKey())
 		{
 			mState = AzrashiState::AttackWait;
+			p_mModelCom->SetPlayAnimation(false);
 		}
 		break;
 	case AzrashiState::AttackWait:

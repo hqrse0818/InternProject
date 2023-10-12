@@ -2,6 +2,7 @@
 #include "../System/ModelPool.h"
 #include "../DirectX/renderer.h"
 #include "../System/Time.h"
+#include "../GameObject/GameObject.h"
 
 #include <iostream>
 
@@ -118,7 +119,7 @@ void Com_Model::Update()
 	bRotLastKey = false;
 	bPosLastKey = false;
 
-	Time->CountStart();
+	//Time->CountStart();
 	// 一回の更新で約0.02秒かかっている(この呼び出しが一つの場合約50FPS)
 
 	if (!bPlayAnim)
@@ -160,19 +161,30 @@ void Com_Model::Update()
 		int f;
 		// フレームに対するアニメーションの回転を取得
 		f = iFrame1 % nodeAnim->mNumRotationKeys;
-		if (f == nodeAnim->mNumRotationKeys - 1)
+		if (f == nodeAnim->mNumRotationKeys - 1 || iFrame1 >= nodeAnim->mNumRotationKeys - 1)
+		{
 			bRotLastKey = true;
+		}
+			
 		aiQuaternion rot = nodeAnim->mRotationKeys[f].mValue;
 
 		// フレームに対するポジションの位置を取得
 		f = iFrame1 % nodeAnim->mNumPositionKeys;
-		if (f == nodeAnim->mNumPositionKeys -1)
+		if (f == nodeAnim->mNumPositionKeys - 1 || iFrame1 >= nodeAnim->mNumPositionKeys - 1)
+		{
 			bPosLastKey = true;
+		}
+			
 		aiVector3D pos = nodeAnim->mPositionKeys[f].mValue;
 
 		bone->AnimationMatrix =
 			aiMatrix4x4(aiVector3D(1.0f, 1.0f, 1.0f),
 				rot, pos);
+	}
+
+	if (bRotLastKey && bPosLastKey)
+	{
+		iFrame1 = 0;
 	}
 
 	// ボーン行列の更新
@@ -215,7 +227,7 @@ void Com_Model::Update()
 		Renderer::GetDeviceContext()->Unmap(p_mCombBuffer, 0);
 	}
 
-
+	UpdateFrame();
 	//// 頂点の変換
 	//for (unsigned int m = 0; m < mModelData->p_mAiScene->mNumMeshes; m++)
 	//{
@@ -372,8 +384,8 @@ void Com_Model::Update()
 	//	Renderer::GetDeviceContext()->Unmap(pp_mVertexBuffer[m], 0);
 	//}
 
-	float f = Time->CountStop();
-	cout << "Time : " << f << "sec" << endl;
+	/*float f = Time->CountStop();
+	cout << "Time : " << f << "sec" << endl;*/
 }
 
 void Com_Model::Draw()
@@ -449,12 +461,25 @@ void Com_Model::PlayAnimation(const char* _name)
 	}
 }
 
-void Com_Model::StopAnimation()
+void Com_Model::SetPlayAnimation(bool _val)
 {
-	bPlayAnim = false;
+	bPlayAnim = _val;
 }
 
-void Com_Model::UpdateFrame(int _val)
+void Com_Model::UpdateFrame()
 {
-	iFrame1 += _val;
+	fAnimCnt += Time->GetDeltaTime();
+
+	if (fAnimCnt > fAnimSpeed)
+	{
+		if (bPlayOrder)
+		{
+			iFrame1 += 1;
+		}
+		else
+		{
+			iFrame1 -= 1;
+		}
+		fAnimCnt = 0;
+	}
 }
