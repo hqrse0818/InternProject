@@ -24,7 +24,7 @@ void Manager::Init(Application* ap)
 	Renderer::Init(ap);
 	Com_Audio::InitMaster();
 	// マスターボリューム設定
-	Com_Audio::SetMasterVolume(0.01f);
+	Com_Audio::SetMasterVolume(0.5f);
 
 	// 乱数初期化
 	void RandInit();

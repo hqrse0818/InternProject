@@ -248,6 +248,7 @@
     <ClInclude Include="InternCode.Kizuki\OBJ_PlayerCharacter.h" />
     <ClInclude Include="InternCodeAdachi\CSVLoad.h" />
     <ClInclude Include="InternCodeAdachi\InternCollision.h" />
+    <ClInclude Include="Log.h" />
     <ClInclude Include="main.h" />
     <ClInclude Include="InternCodeAdachi\OBJ_Penguin.h" />
     <ClInclude Include="InternCodeAdachi\OBJ_Ice.h" />
