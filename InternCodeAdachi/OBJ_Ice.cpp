@@ -27,7 +27,7 @@ OBJ_Ice::OBJ_Ice()
 	p_mCollider->SetSize(7.0f, 1.0f, 7.0f);
 	p_mCollider->SetCenter(0.0f, 0.5f, 0.0f);
 	p_mCollider->bCanStepOn = true;
-	p_mCollider->ColliderTag = "Ice";
+	p_mCollider->mColliderTag = ColliderKind::ColTag_Ice;
 
 	AddComponent(p_mCollider);
 

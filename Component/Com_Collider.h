@@ -2,6 +2,11 @@
 #include "Component.h"
 #include <string>
 
+enum class ColliderKind
+{
+    ColTag_None, ColTag_Penguin, ColTag_Azarashi, ColTag_Ice, ColTag_Attack, ColTag_Sea,
+};
+
 class Com_Collider : public Component
 {
 protected:
@@ -16,7 +21,7 @@ public :
     // “o‚ê‚é
     bool bCanStepOn = false;
 
-    std::string ColliderTag = "None";
+    ColliderKind mColliderTag = ColliderKind::ColTag_None;
 
     bool GetHit()
     {

@@ -32,6 +32,10 @@ public:
     void Update();
 
     void HpCalc(); //‘«ê‚ÌHPŒvZ
+    int GetHP()
+    {
+        return iHP;
+    }
     void Shake(); //‘«ê‚Ì—h‚ê
 
     //ƒ‰ƒ“ƒ_ƒ€ŒvZ

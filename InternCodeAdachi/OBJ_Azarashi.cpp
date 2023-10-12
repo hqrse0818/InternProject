@@ -72,6 +72,7 @@ void OBJ_Azarashi::Update()
 		break;
 	case AzrashiState::Spawn:
 	{
+		// –Ú“I’n‚ÉŒü‚©‚Á‚ÄˆÚ“®
 		p_mModelCom->PlayAnimation("Jump");
 		// ˆÚ“®•ûŒü‚ğæ“¾
 		Vector3 Direction = Math::GetVector(p_mTransform->mPosition, mTargetSpawnPoint);
@@ -111,6 +112,12 @@ void OBJ_Azarashi::Update()
 		{
 			mState = AzrashiState::AttackWait;
 			p_mModelCom->SetPlayAnimation(false);
+			if (!p_mGravityCom->bEnable)
+			{
+				mState = AzrashiState::Dive;
+				p_mModelCom->PlayAnimation("Dive");
+				p_mModelCom->SetCurrentKeyFrame(0);
+			}
 		}
 		break;
 	case AzrashiState::AttackWait:
@@ -134,6 +141,7 @@ void OBJ_Azarashi::Update()
 		if (length < 0.05f)
 		{
 			mState = AzrashiState::AttackWait;
+			p_mModelCom->SetPlayAnimation(false);
 			break;
 		}
 
@@ -143,7 +151,19 @@ void OBJ_Azarashi::Update()
 		p_mTransform->Translate(mDamageVelocity);
 	}
 	break;
+	case AzrashiState::Dive:
+		if (p_mModelCom->GetIsRotLastKey())
+		{
+			p_mModelCom->SetPlayAnimation(false);
+			mState = AzrashiState::DiveTo;
+		}
+		break;
+	case AzrashiState::DiveTo:
+		Translate(0.0f, -2.0f, 0.0f);
+		break;
 	case AzrashiState::Death:
+		p_mModelCom->SetPlayAnimation(false);
+		bDestroy = true;
 		break;
 	}
 }
@@ -159,33 +179,37 @@ void OBJ_Azarashi::OnCollisionEnter(GameObject* _obj)
 {
 	GameObject::OnCollisionEnter(_obj);
 
-	if (mState == AzrashiState::Fall)
+
+	if (_obj->mColType == Collider::ColliderForm::Box)
 	{
-		if (_obj->mColType == Collider::ColliderForm::Box)
+		Com_BoxCollider* col = _obj->GetComponent<Com_BoxCollider>();
+		if (mState == AzrashiState::Fall)
 		{
-			Com_BoxCollider* col = _obj->GetComponent<Com_BoxCollider>();
-			if (col->ColliderTag == "Ice")
+			if (col->mColliderTag == ColliderKind::ColTag_Ice)
 			{
 				mState = AzrashiState::AfterSpawnWait;
 			}
-			if (col->ColliderTag == "Sea")
-			{
-				// €–Sˆ—
-				mState = AzrashiState::Death;
-			}
+		}
+		if (col->mColliderTag == ColliderKind::ColTag_Sea)
+		{
+			// €–Sˆ—
+			mState = AzrashiState::Death;
 		}
 	}
+	
 
 	if (_obj->mColType == Collider::ColliderForm::Sphere)
 	{
 		Com_SphereCollider* col = _obj->GetComponent<Com_SphereCollider>();
-		if (col->ColliderTag == "Attack")
+		if (col->mColliderTag == ColliderKind::ColTag_Attack)
 		{
 			// ˆÈ‰º‚Ìó‘Ô‚Ì‚Íreturn 
 			if (mState == AzrashiState::Fall ||
 				mState == AzrashiState::Spawn ||
 				mState == AzrashiState::BeforeSpawnWait ||
-				mState == AzrashiState::Death)
+				mState == AzrashiState::Death ||
+				mState == AzrashiState::Damage ||
+				mState == AzrashiState::Dive)
 				return;
 
 			// ‚«”ò‚Î‚³‚ê‚é—Ê‚ÌŒvZ
@@ -206,10 +230,10 @@ void OBJ_Azarashi::OnCollisionEnter(GameObject* _obj)
 			fCnt = 0;
 			// ƒ_ƒ[ƒWó‘Ô‚ÉˆÚs
 			mState = AzrashiState::Damage;
+			p_mModelCom->PlayAnimation("Damage");
+			p_mModelCom->SetCurrentKeyFrame(0);
 		}
 	}
-
-
 }
 
 void OBJ_Azarashi::OnCollisionStay(GameObject* _obj)
@@ -219,13 +243,32 @@ void OBJ_Azarashi::OnCollisionStay(GameObject* _obj)
 	if (_obj->mColType == Collider::ColliderForm::Box)
 	{
 		Com_BoxCollider* col = _obj->GetComponent<Com_BoxCollider>();
-		if (col->ColliderTag == "Ice" && mState == AzrashiState::Attack)
+		if (col->mColliderTag == ColliderKind::ColTag_Ice && mState == AzrashiState::Attack)
 		{
 			if (!bAttacked)
 			{
 				// ‘«ê‚Ì‘Ï‹v—Í‚ğ1Œ¸‚ç‚·
-				static_cast<OBJ_Ice*>(_obj)->HpCalc();
+				OBJ_Ice* ice = static_cast<OBJ_Ice*>(_obj);
+				ice->HpCalc();
+				if (ice->GetHP() <= 1)
+				{
+					// d—Í‚ÌXV‚ğ’â~
+					p_mGravityCom->bEnable = false;
+					p_mFootCom->bEnable = false;
+					mState = AzrashiState::Dive;
+					p_mModelCom->PlayAnimation("Dive");
+					p_mModelCom->SetCurrentKeyFrame(0);
+				}
 				bAttacked = true;
+			}
+		}
+		if (col->mColliderTag == ColliderKind::ColTag_Sea)
+		{
+			if (mState != AzrashiState::BeforeSpawnWait ||
+				mState != AzrashiState::Spawn)
+			{
+				// €–Sˆ—
+				mState = AzrashiState::Death;
 			}
 		}
 	}
