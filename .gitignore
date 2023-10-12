@@ -361,3 +361,5 @@ MigrationBackup/
 
 # Fody - auto-generated XML schema
 FodyWeavers.xsd
+*.cpp
+/InternCode.Kizuki/OBJ_TitleLogo.h
