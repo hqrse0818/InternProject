@@ -39,6 +39,11 @@ void Scene_Title::Init()
 	Title->AddComponent(Shader_buf);
 	Com_Sprite* Sprite_buf = new Com_Sprite();
 	Sprite_buf->SetTexture("asset/texture/GameTitle.png");
+
+	//ƒ^ƒCƒgƒ‹ƒƒS¶¬
+	//OBJ_TitleLogo* TitleLogo = new OBJ_TitleLogo;
+	//AddGameObject(TitleLogo);
+
 	Title->AddComponent(Sprite_buf);
 	Title->p_mTransform->SetPosition(SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2, 1.0f);
 	Title->p_mTransform->mScale.x = SCREEN_WIDTH;
