@@ -98,8 +98,6 @@ OBJ_Azarashi::OBJ_Azarashi(const char* _name, int _ModelKind)
 void OBJ_Azarashi::Init()
 {
 	GameObject::Init();
-	// スポーン待ち
-	//mState = AzrashiState::BeforeSpawnWait;
 
 	// テスト
 	mState = AzrashiState::SpawnToCenter;
@@ -113,8 +111,6 @@ void OBJ_Azarashi::Update()
 
 	switch (mState)
 	{
-	case AzrashiState::BeforeSpawnWait:
-		break;
 	case AzrashiState::SpawnToCenter:
 	{
 		// 中心地点に向かって移動
@@ -279,7 +275,6 @@ void OBJ_Azarashi::OnCollisionEnter(GameObject* _obj)
 			// 以下の状態の時はreturn 
 			if (mState == AzrashiState::SpawnToTarget ||
 				mState == AzrashiState::SpawnToCenter ||
-				mState == AzrashiState::BeforeSpawnWait ||
 				mState == AzrashiState::Death ||
 				mState == AzrashiState::Damage ||
 				mState == AzrashiState::Dive)
@@ -338,8 +333,7 @@ void OBJ_Azarashi::OnCollisionStay(GameObject* _obj)
 		}
 		if (col->mColliderTag == ColliderKind::ColTag_Sea)
 		{
-			if (mState == AzrashiState::BeforeSpawnWait ||
-				mState == AzrashiState::SpawnToCenter ||
+			if (mState == AzrashiState::SpawnToCenter ||
 				mState == AzrashiState::SpawnToTarget)
 			{
 				return;

@@ -10,8 +10,6 @@
 
 enum class AzrashiState
 {
-    // スポーン前の状態
-    BeforeSpawnWait, 
     // スポーン開始位置とスポーン場所を指定して生成
     SpawnToCenter, 
     // 氷上まで落下
@@ -38,7 +36,7 @@ class OBJ_Azarashi :
 {
 private:
     // スポーン前状態で固定
-    AzrashiState mState = AzrashiState::BeforeSpawnWait;
+    AzrashiState mState = AzrashiState::SpawnToCenter;
     // 被弾時の移動量
     DirectX::SimpleMath::Vector3 mDamageVelocity = DirectX::SimpleMath::Vector3(0.0f, 0.0f, 0.0f);
     // スポーン目的位置

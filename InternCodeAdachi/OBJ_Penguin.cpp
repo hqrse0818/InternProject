@@ -29,8 +29,6 @@ void OBJ_Penguin::CreateFromCSV(const char* _FileName)
 
 	// ペンギン自身のコライダー
 	Com_BoxCollider* p_mCollider = new Com_BoxCollider();
-	p_mCollider->SetSize(6.0f, 8.0f, 6.0f);
-	p_mCollider->SetCenter(0.0f, 4.0f, 0.0f);
 	p_mCollider->bMovable = true;
 
 	AddComponent(p_mCollider);
@@ -70,6 +68,10 @@ void OBJ_Penguin::CreateFromCSV(const char* _FileName)
 	p_mFootCom->SetJumpCom(p_mJumpCom);
 	// カメラのスピード
 	fCamSpeed = stof(sv[6]);
+	// コライダーの中心
+	p_mCollider->SetCenter(stof(sv[7]), stof(sv[8]), stof(sv[9]));
+	// コライダーのサイズ
+	p_mCollider->SetSize(stof(sv[10]), stof(sv[11]), stof(sv[12]));
 	
 	// コンポーネントの追加
 	AddComponent(p_mMoveCom);
@@ -202,28 +204,31 @@ void OBJ_Penguin::Update()
 	}
 	else
 	{
-		if (Controller_Input::GetIsGamePadConnect(0))
+		if (!p_mJumpCom->GetIsDrop())
 		{
-			p_mMoveCom->MoveX(Controller_Input::GetLeftStick(0).x * fAirMoveSpeed);
-			p_mMoveCom->MoveZ(Controller_Input::GetLeftStick(0).y * fAirMoveSpeed);
-		}
-		else
-		{
-			if (Input::GetKeyState(KEYCODE_W) == KEYSTATE::KEY_WHILE_DOWN)
+			if (Controller_Input::GetIsGamePadConnect(0))
 			{
-				p_mMoveCom->MoveZ(fAirMoveSpeed);
+				p_mMoveCom->MoveX(Controller_Input::GetLeftStick(0).x * fAirMoveSpeed);
+				p_mMoveCom->MoveZ(Controller_Input::GetLeftStick(0).y * fAirMoveSpeed);
 			}
-			if (Input::GetKeyState(KEYCODE_S) == KEYSTATE::KEY_WHILE_DOWN)
+			else
 			{
-				p_mMoveCom->MoveZ(-fAirMoveSpeed);
-			}
-			if (Input::GetKeyState(KEYCODE_D) == KEYSTATE::KEY_WHILE_DOWN)
-			{
-				p_mMoveCom->MoveX(fAirMoveSpeed);
-			}
-			if (Input::GetKeyState(KEYCODE_A) == KEYSTATE::KEY_WHILE_DOWN)
-			{
-				p_mMoveCom->MoveX(-fAirMoveSpeed);
+				if (Input::GetKeyState(KEYCODE_W) == KEYSTATE::KEY_WHILE_DOWN)
+				{
+					p_mMoveCom->MoveZ(fAirMoveSpeed);
+				}
+				if (Input::GetKeyState(KEYCODE_S) == KEYSTATE::KEY_WHILE_DOWN)
+				{
+					p_mMoveCom->MoveZ(-fAirMoveSpeed);
+				}
+				if (Input::GetKeyState(KEYCODE_D) == KEYSTATE::KEY_WHILE_DOWN)
+				{
+					p_mMoveCom->MoveX(fAirMoveSpeed);
+				}
+				if (Input::GetKeyState(KEYCODE_A) == KEYSTATE::KEY_WHILE_DOWN)
+				{
+					p_mMoveCom->MoveX(-fAirMoveSpeed);
+				}
 			}
 		}
 	}
