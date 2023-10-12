@@ -6,10 +6,10 @@ std::string ReadDataFromCSV(const char* _FileName, unsigned int ReadRow)
 {
 	// ファイルが存在するか確認
 	ifstream Check(_FileName);
-	bool fileIsEmpty = Check.peek() == ifstream::traits_type::eof();
-	if (fileIsEmpty)
+	if (!Check.is_open())
 	{
 		cout << "ファイルを開けませんでした" << endl;
+		return "";
 	}
 
 	string line;

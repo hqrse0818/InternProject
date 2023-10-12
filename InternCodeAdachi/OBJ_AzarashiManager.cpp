@@ -2,6 +2,7 @@
 #include "CSVLoad.h"
 #include "../System/Time.h"
 #include "../System/HighGetRand.h"
+#include "../Scene/Scene.h"
 
 using namespace DirectX::SimpleMath;
 using namespace std;
@@ -82,11 +83,11 @@ OBJ_AzarashiManager::OBJ_AzarashiManager(const char* _name, const char* _FileNam
 		fBlake = stof(as[9]);
 		// 被弾時の停止許容距離
 		fLength = stof(as[10]);
+		// スポーン時のy座標
+		fSpawnY = stof(as[11]);
+		// 中間地点のy座標
+		fCenterY = stof(as[12]);
 	}
-	
-
-
-
 	gt.clear();
 	sr.clear();
 	as.clear();
@@ -105,10 +106,60 @@ void OBJ_AzarashiManager::Create()
 	}
 
 	OBJ_Azarashi* azarashi = new OBJ_Azarashi("Created", Rand);
+	// アザラシのステータス設定
 	azarashi->GetColliderCom()->SetCenter(mAzarashiCenter.x, mAzarashiCenter.y, mAzarashiCenter.z);
 	azarashi->GetColliderCom()->fRadius = fAzarashiRadius;
 	azarashi->GetFootCom()->SetFootHeight(fFootHeight);
+	azarashi->SetAzrashiStatus(fAfterWait, fAttackDuration, fMoveSpeed, fVelocity, fBlake, fLength);
 
+	azarashi->Init();
+	azarashi->Start();
+	GetScene()->AddGameObject(azarashi);
+
+	// スポーンエリアを大まかに指定
+	Rand = HighRand::GetRand(1, 4);
+	Vector3 init;
+	init.y = fSpawnY;
+	// 初期スポーン地点設定
+	switch (Rand)
+	{
+	case 1:
+	{
+		// x上のスポーン位置
+		init.x = HighRand::fGetRand(-45, 45, 3);
+		// z上のスポーン位置
+		init.z = HighRand::fGetRand(36, 45, 3);
+	}
+	break;
+	case 2:
+	{
+		// x上のスポーン位置
+		init.x = HighRand::fGetRand(36, 45, 3);
+		// z上のスポーン位置
+		init.z = HighRand::fGetRand(-45, 45, 3);
+	}
+	break;
+	case 3 : 
+	{
+		// x上のスポーン位置
+		init.x = HighRand::fGetRand(-45, 45, 3);
+		// z上のスポーン位置
+		init.z = HighRand::fGetRand(-45, -36, 3);
+	}
+	break;
+	case 4:
+	{
+		// x上のスポーン位置
+		init.x = HighRand::fGetRand(-45, -36, 3);
+		// z上のスポーン位置
+		init.z = HighRand::fGetRand(-45, 45, 3);
+	}
+	break;
+	}
+	// ターゲット位置設定
+
+	// スタート位置とターゲット位置の設定
+	azarashi->SetTargetPosition(init.x, init.y, init.z,1.0f, 1.0f, 1.0f, fCenterY);
 }
 
 void OBJ_AzarashiManager::Update()

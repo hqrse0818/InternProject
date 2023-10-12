@@ -77,9 +77,7 @@ OBJ_Azarashi::OBJ_Azarashi(const char* _name, int _ModelKind)
 
 	// コライダー(暫定csvで読めるようにする)
 	p_mColliderCom = new Com_SphereCollider();
-	p_mColliderCom->fRadius = 2.0f;
 	p_mColliderCom->bMovable = true;
-	p_mColliderCom->SetCenter(0.0f, 2.0f, 0.0f);
 	AddComponent(p_mColliderCom);
 
 	// 重力
@@ -91,8 +89,6 @@ OBJ_Azarashi::OBJ_Azarashi(const char* _name, int _ModelKind)
 
 	// 足元コンポーネント
 	p_mFootCom = new Com_Foot();
-	p_mFootCom->SetGravityCom(p_mGravityCom);
-	p_mFootCom->SetFootHeight(2.0f);
 	AddComponent(p_mFootCom);
 }
 
@@ -104,7 +100,7 @@ void OBJ_Azarashi::Init()
 	//mState = AzrashiState::BeforeSpawnWait;
 
 	// テスト
-	mState = AzrashiState::Spawn;
+	mState = AzrashiState::SpawnToCenter;
 	
 }
 
@@ -117,7 +113,7 @@ void OBJ_Azarashi::Update()
 	{
 	case AzrashiState::BeforeSpawnWait:
 		break;
-	case AzrashiState::Spawn:
+	case AzrashiState::SpawnToCenter:
 	{
 		// 目的地に向かって移動
 		p_mModelCom->PlayAnimation("Jump");
@@ -131,7 +127,7 @@ void OBJ_Azarashi::Update()
 		{
 			p_mTransform->mPosition = mTargetSpawnPoint;
 			// スポーン後の攻撃待ちに移行
-			mState = AzrashiState::Fall;
+			mState = AzrashiState::SpawnToTarget;
 			p_mGravityCom->bEnable = true;
 			p_mGravityCom->SetGround(false);
 			break;
@@ -140,7 +136,7 @@ void OBJ_Azarashi::Update()
 		p_mTransform->Translate(Velocity);
 	}
 		break;
-	case AzrashiState::Fall:
+	case AzrashiState::SpawnToTarget:
 		break;
 	case AzrashiState::AfterSpawnWait:
 		fCnt += Time->GetDeltaTime();
@@ -215,11 +211,19 @@ void OBJ_Azarashi::Update()
 	}
 }
 
-void OBJ_Azarashi::SetTargetPosition(float _x, float _y, float _z)
+void OBJ_Azarashi::SetTargetPosition(float _inx, float _iny, float _inz, float _tarx, float _tary, float _tarz, float _heightY)
 {
-	mTargetSpawnPoint.x = _x;
-	mTargetSpawnPoint.y = _y;
-	mTargetSpawnPoint.z = _z;
+	// 始めに自身の位置を設定
+	SetPosition(_inx, _iny, _inz);
+
+	mTargetSpawnPoint.x = _tarx;
+	mTargetSpawnPoint.y = _tary;
+	mTargetSpawnPoint.z = _tarz;
+
+	// 中間地点を割り出す
+	mTargetSpawnCenterPoint.x = p_mTransform->mPosition.x + mTargetSpawnPoint.x / 2;
+	mTargetSpawnCenterPoint.z = p_mTransform->mPosition.z + mTargetSpawnPoint.z / 2;
+	mTargetSpawnCenterPoint.y = _heightY;
 }
 
 void OBJ_Azarashi::OnCollisionEnter(GameObject* _obj)
@@ -230,7 +234,7 @@ void OBJ_Azarashi::OnCollisionEnter(GameObject* _obj)
 	if (_obj->mColType == Collider::ColliderForm::Box)
 	{
 		Com_BoxCollider* col = _obj->GetComponent<Com_BoxCollider>();
-		if (mState == AzrashiState::Fall)
+		if (mState == AzrashiState::SpawnToTarget)
 		{
 			if (col->mColliderTag == ColliderKind::ColTag_Ice)
 			{
@@ -251,8 +255,8 @@ void OBJ_Azarashi::OnCollisionEnter(GameObject* _obj)
 		if (col->mColliderTag == ColliderKind::ColTag_Attack)
 		{
 			// 以下の状態の時はreturn 
-			if (mState == AzrashiState::Fall ||
-				mState == AzrashiState::Spawn ||
+			if (mState == AzrashiState::SpawnToTarget ||
+				mState == AzrashiState::SpawnToCenter ||
 				mState == AzrashiState::BeforeSpawnWait ||
 				mState == AzrashiState::Death ||
 				mState == AzrashiState::Damage ||
@@ -312,7 +316,7 @@ void OBJ_Azarashi::OnCollisionStay(GameObject* _obj)
 		if (col->mColliderTag == ColliderKind::ColTag_Sea)
 		{
 			if (mState != AzrashiState::BeforeSpawnWait ||
-				mState != AzrashiState::Spawn)
+				mState != AzrashiState::SpawnToCenter)
 			{
 				// 死亡処理
 				mState = AzrashiState::Death;

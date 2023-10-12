@@ -13,9 +13,9 @@ enum class AzrashiState
     // スポーン前の状態
     BeforeSpawnWait, 
     // スポーン開始位置とスポーン場所を指定して生成
-    Spawn, 
+    SpawnToCenter, 
     // 氷上まで落下
-    Fall,
+    SpawnToTarget,
     // スポーン場所に到達後攻撃まで待つ(3秒)
     AfterSpawnWait, 
     // 攻撃(モーション終了後待機に入る)
@@ -41,10 +41,11 @@ private:
     AzrashiState mState = AzrashiState::BeforeSpawnWait;
     // 被弾時の移動量
     DirectX::SimpleMath::Vector3 mDamageVelocity = DirectX::SimpleMath::Vector3(0.0f, 0.0f, 0.0f);
-    // スポーン開始地点(最終的にマネージャー側でスポーン開始地点を指定する)
-    DirectX::SimpleMath::Vector3 mInitialSpawnPoint = DirectX::SimpleMath::Vector3(0.0f, 0.0f, 0.0f);
-    // スポーン目的位置(氷上のどこかにスポーンさせる(目的地に着いたら攻撃待ちに移行))
+    // スポーン目的位置
     DirectX::SimpleMath::Vector3 mTargetSpawnPoint = DirectX::SimpleMath::Vector3(0.0f, 0.0f, 0.0f);
+    // スポーン中間地点
+    DirectX::SimpleMath::Vector3 mTargetSpawnCenterPoint = DirectX::SimpleMath::Vector3(0.0f, 0.0f, 0.0f);
+
     // 攻撃までのカウンター
     float fCnt = 0.0f;
     float fAttackDuration = 0.0f;
@@ -79,7 +80,7 @@ public:
     void Update()override;
 
     // スポーン位置の設定
-    void SetTargetPosition(float _x, float _y, float _z);
+    void SetTargetPosition(float _inx, float _iny, float _inz, float _tarx, float _tary, float _tarz, float _heightY);
 
     void OnCollisionEnter(GameObject* _obj);
     void OnCollisionStay(GameObject* _obj);
