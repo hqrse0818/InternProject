@@ -68,6 +68,7 @@ void OBJ_Penguin::CreateFromCSV(const char* _FileName)
 	p_mFootCom->SetJumpCom(p_mJumpCom);
 	// カメラのスピード
 	fCamSpeed = stof(sv[6]);
+	fMouseCamSpeed = stof(sv[13]);
 	// コライダーの中心
 	p_mCollider->SetCenter(stof(sv[7]), stof(sv[8]), stof(sv[9]));
 	// コライダーのサイズ
@@ -169,7 +170,7 @@ void OBJ_Penguin::Update()
 	}
 	// ジャンプ
 	if (Controller_Input::GetButton(0, GAMEPAD_A) == KEYSTATE::KEY_DOWN && p_mGravityCom->GetGround() ||
-		Input::GetKeyState(KEYCODE_MOUSE_LEFT) == KEYSTATE::KEY_DOWN && p_mGravityCom->GetGround())
+		Input::GetKeyState(KEYCODE_SPACE) == KEYSTATE::KEY_DOWN && p_mGravityCom->GetGround())
 	{
 		p_mJumpCom->SetJumpFlg(true);
 	}
@@ -241,7 +242,7 @@ void OBJ_Penguin::Update()
 
 	if (Input::GetIsCenter())
 	{
-		p_mCameraCom->SetAngle(p_mCameraCom->GetAngle() + (Input::GetCursorMove().x * fCamSpeed));
+		p_mCameraCom->SetAngle(p_mCameraCom->GetAngle() + (Input::GetCursorMove().x * fMouseCamSpeed));
 		p_mCameraCom->SetHeight(p_mCameraCom->GetHeight() + Input::GetCursorMove().y);
 	}
 }

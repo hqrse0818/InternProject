@@ -87,5 +87,5 @@ void Scene_ModelLoad::Update()
 		Manager::SetScene<Scene_Test>();
 	}*/
 
-	Manager::SetScene<Scene_Title>();
+	Manager::SetScene<Scene_Test>();
 }

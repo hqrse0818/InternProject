@@ -9,5 +9,5 @@ private:
 
 public:
 	OBJ_AzarashiRemain();
-
+	void Update();
 };

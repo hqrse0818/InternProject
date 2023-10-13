@@ -67,6 +67,11 @@ void Scene_Test::Init()
 
 	OBJ_AzarashiManager* AManager = new OBJ_AzarashiManager("manager", "asset\\data\\csv\\AzarashiManager.csv");
 	AddGameObject(AManager, 0);
+
+	//‰¹
+	p_mAudio = new Com_Audio();
+	p_mAudio->Load("asset\\audio\\BGM\\ƒƒCƒ“ BGM.wav");
+	p_mAudio->SetUseTarget(false);
 }
 
 void Scene_Test::Start()
@@ -74,6 +79,7 @@ void Scene_Test::Start()
 	Player->p_mTransform->SetPosition(0.0f, 5.0f, 0.0f);
 	ShowCursor(false);
 	Input::SetCursorCenterEnable();
+	p_mAudio->Play(true);
 }
 
 void Scene_Test::Update()
@@ -105,4 +111,8 @@ void Scene_Test::Uninit()
 {
 	ShowCursor(true);
 	Input::SetCursorCenterDisable();
+
+	p_mAudio->Stop();
+	p_mAudio->Uninit();
+	delete p_mAudio;
 }

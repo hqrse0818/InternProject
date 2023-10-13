@@ -6,6 +6,7 @@ class Scene_Test :
 {
 private:
     OBJ_Penguin* Player;
+    Com_Audio* p_mAudio{};
 
 public:
     void Init();

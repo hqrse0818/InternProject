@@ -9,4 +9,5 @@ OBJ_AzarashiRemain::OBJ_AzarashiRemain()
 
 void OBJ_AzarashiRemain::Update()
 {
+
 }

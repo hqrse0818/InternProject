@@ -34,6 +34,7 @@ private:
 
     // カメラのスピード
     float fCamSpeed = 1.0f;
+    float fMouseCamSpeed = 0.2f;
 
 private:
     void CreateFromCSV(const char* _FileName);
