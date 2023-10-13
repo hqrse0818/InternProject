@@ -161,7 +161,9 @@
     <ClCompile Include="Component\Com_PointCollider.cpp" />
     <ClCompile Include="Component\Com_RenderCollisionPoint.cpp" />
     <ClCompile Include="Component\Com_RenderCollider.cpp" />
+    <ClCompile Include="InternCode.Kizuki\OBJ_AzarashiRemain.cpp" />
     <ClCompile Include="InternCode.Kizuki\OBJ_Number.cpp" />
+    <ClCompile Include="InternCode.Kizuki\OBJ_Score.cpp" />
     <ClCompile Include="InternCode.Kizuki\OBJ_TitleStart.cpp" />
     <ClCompile Include="InternCode.Kizuki\OBJ_TitleTutorial.cpp" />
     <ClCompile Include="InternCode.Kizuki\Scene_Debug.cpp" />
@@ -227,7 +229,9 @@
     <ClInclude Include="Component\Com_PointCollider.h" />
     <ClInclude Include="Component\Com_RenderCollisionPoint.h" />
     <ClInclude Include="Component\Com_RenderCollider.h" />
+    <ClInclude Include="InternCode.Kizuki\OBJ_AzarashiRemain.h" />
     <ClInclude Include="InternCode.Kizuki\OBJ_Number.h" />
+    <ClInclude Include="InternCode.Kizuki\OBJ_Score.h" />
     <ClInclude Include="InternCode.Kizuki\OBJ_TitleStart.h" />
     <ClInclude Include="InternCode.Kizuki\OBJ_TitleTutorial.h" />
     <ClInclude Include="InternCode.Kizuki\Scene_Debug.h" />

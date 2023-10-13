@@ -38,7 +38,7 @@ void Scene_Title::Init()
 	Shader_buf->p_mPS->Load(PS_SPRITE);
 	Title->AddComponent(Shader_buf);
 	Com_Sprite* Sprite_buf = new Com_Sprite();
-	Sprite_buf->SetTexture("asset/texture/GameTitle.png");
+	Sprite_buf->SetTexture("asset/texture/start.png");
 
 	//ƒ^ƒCƒgƒ‹ƒƒS¶¬
 	//OBJ_TitleLogo* TitleLogo = new OBJ_TitleLogo;
