@@ -35,6 +35,7 @@ void Com_Foot::OnCollisionEnter(GameObject* _obj)
 				{
 					p_mObject->p_mTransform->mPosition.y = heightY;
 					p_mGravityCom->SetGround(true);
+					p_mGravityCom->SetGroundOnThisFrame(true);
 
 					if (p_mJumpCom)
 					{
@@ -57,17 +58,14 @@ void Com_Foot::OnCollisionStay(GameObject* _obj)
 		// 乗ることができるなら
 		if (col->bCanStepOn && p_mGravityCom)
 		{
-			// 且つ現在落下中
-			if (!p_mGravityCom->GetGround())
+			// ボックスのy座標の最大値を取得。
+			float heightY = col->Getmax().y;
+			// フットポジションが
+			if (fFootPos > heightY || fLastFootPos > heightY)
 			{
-				// ボックスのy座標の最大値を取得。
-				float heightY = col->Getmax().y;
-				// フットポジションが
-				if (fFootPos > heightY || fLastFootPos > heightY)
-				{
-					p_mObject->p_mTransform->mPosition.y = heightY;
-					p_mGravityCom->SetGround(true);
-				}
+				p_mObject->p_mTransform->mPosition.y = heightY;
+				p_mGravityCom->SetGround(true);
+				p_mGravityCom->SetGroundOnThisFrame(true);
 			}
 		}
 	}
@@ -83,7 +81,11 @@ void Com_Foot::OnCollisionExit(GameObject* _obj)
 		{
 			if (p_mGravityCom)
 			{
-				p_mGravityCom->SetGround(false);
+				// 今回のフレームで何かしらの上に乗った判定がされていなかったら
+				if (!p_mGravityCom->GetGroundedAtThisFrame())
+				{
+					p_mGravityCom->SetGround(false);
+				}
 			}
 		}
 	}

@@ -18,6 +18,11 @@ void Com_RenderCollider::Uninit()
 	delete p_mVS;
 	p_mPS->Uninit();
 	delete p_mPS;
+	if (p_mVertexBuffer)
+	{
+		p_mVertexBuffer->Release();
+		p_mVertexBuffer = nullptr;
+	}
 }
 
 void Com_RenderCollider::Draw()

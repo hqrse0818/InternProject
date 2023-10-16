@@ -2,6 +2,7 @@
 #include "../System/Input.h"
 #include "../System/Time.h"
 #include "../InternCodeAdachi/CSVLoad.h"
+#include "../ModelName.h"
 
 #define LoadRow (1)
 
@@ -32,14 +33,13 @@ OBJ_Ice::OBJ_Ice()
 	// シェーダー
 	p_mShaderCom = new Com_Shader();
 	p_mShaderCom->p_mVS->Load(VS_MODEL);
-	//p_mShaderCom->p_mPS->Load(PS_MODEL);
-	p_mShaderCom->p_mPS->Load("shader\\PS_IceState.cso");
+	p_mShaderCom->p_mPS->Load(PS_MODEL);
 
 	AddComponent(p_mShaderCom);
 
 	// モデル
 	p_mModelCom = new Com_Model();
-	p_mModelCom->SetModelData("Ice_PatA");
+	p_mModelCom->SetModelData(ICE_HP5);
 
 	AddComponent(p_mModelCom);
 
@@ -109,8 +109,12 @@ void OBJ_Ice::Update()
 	switch (iHP)
 	{
 	case 1:
-		p_mAudio_Break->Play();
-		bDestroy = true; //GameObjectクラスのDestroy()を使うために必要
+		p_mCollider->bEnable = false;
+		fLastLifeWaitTime -= Time->GetDeltaTime();
+		if (fLastLifeWaitTime < 0)
+		{
+			bDestroy = true; //GameObjectクラスのDestroy()を使うために必要
+		}
 		break;
 	case 2:
 		myColor = Color(1.0f, 0.0f, 1.0f, 1.0f);
@@ -141,6 +145,23 @@ void OBJ_Ice::HpCalc()
 	if (2 <= iHP <= 4)
 	{
 		p_mAudio_Damage->Play();
+	}
+
+	switch (iHP)
+	{
+	case 4:
+		p_mModelCom->SetModelData(ICE_HP4);
+		break;
+	case 3:
+		p_mModelCom->SetModelData(ICE_HP3);
+		break;
+	case 2:
+		p_mModelCom->SetModelData(ICE_HP2);
+		break;
+	case 1:
+		p_mAudio_Break->Play();
+		p_mModelCom->SetModelData(ICE_HP1);
+		break;
 	}
 }
 

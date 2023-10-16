@@ -53,31 +53,26 @@ void Com_Jump::OnCollisionEnter(GameObject* _obj)
 	{
 		//ボックスならボックスコライダーを取得
 		Com_BoxCollider* col = _obj->GetComponent<Com_BoxCollider>();
-
-		//ドロップフラグがtrue
-		if (bDrop)
+		if (col->mColliderTag == ColliderKind::ColTag_Ice)
 		{
-			//衝撃オブジェクトを呼び出す
-			OBJ_Inpact* Inpact = new OBJ_Inpact("Inpact");
+			//ドロップフラグがtrue
+			if (bDrop)
+			{
+				//衝撃オブジェクトを呼び出す
+				OBJ_Inpact* Inpact = new OBJ_Inpact("Inpact");
 
-			//高さから範囲と威力を設定
-			Inpact->GetColliderCom()->fRadius = fJumpHeight; //範囲
-			Inpact->GetColliderCom()->bMovable = true;
-			Inpact->GetColliderCom()->bIsTrigger = true;
-			Inpact->SetInpactPower(fJumpPower); //威力の設定
+				//高さから範囲と威力を設定
+				Inpact->GetColliderCom()->fRadius = fImpactRenge; //範囲
+				Inpact->GetColliderCom()->bMovable = true;
+				Inpact->GetColliderCom()->bIsTrigger = true;
+				Inpact->SetInpactPower(fJumpPower); //威力の設定
 
-			cout << fJumpHeight << endl;
+				Inpact->Init();
 
-			Inpact->Init();
+				Inpact->p_mTransform->mPosition = p_mObject->p_mTransform->mPosition;
 
-			Inpact->p_mTransform->mPosition = p_mObject->p_mTransform->mPosition;
-
-			GameObject::GetScene()->AddGameObject(Inpact);
+				GameObject::GetScene()->AddGameObject(Inpact);
+			}
 		}
 	}
-}
-
-void Com_Jump::SetJumpHeight()
-{
-	fJumpHeight = p_mObject->p_mTransform->mPosition.y;
 }

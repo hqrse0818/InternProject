@@ -27,6 +27,7 @@ OBJ_Azarashi::OBJ_Azarashi()
 	p_mColliderCom->fRadius = 2.0f;
 	p_mColliderCom->bMovable = true;
 	p_mColliderCom->SetCenter(0.0f, 2.0f, 0.0f);
+	p_mColliderCom->mColliderTag = ColliderKind::ColTag_Azarashi;
 	AddComponent(p_mColliderCom);
 
 	// 重力
@@ -75,8 +76,9 @@ OBJ_Azarashi::OBJ_Azarashi(const char* _name, int _ModelKind)
 	}
 	AddComponent(p_mModelCom);
 
-	// コライダー(暫定csvで読めるようにする)
+	// コライダー
 	p_mColliderCom = new Com_SphereCollider();
+	p_mColliderCom->mColliderTag = ColliderKind::ColTag_Azarashi;
 	p_mColliderCom->bMovable = true;
 	p_mColliderCom->bEnable = false;
 	AddComponent(p_mColliderCom);
@@ -91,6 +93,7 @@ OBJ_Azarashi::OBJ_Azarashi(const char* _name, int _ModelKind)
 	// 足元コンポーネント
 	p_mFootCom = new Com_Foot();
 	p_mFootCom->SetGravityCom(p_mGravityCom);
+	p_mFootCom->bEnable = false;
 	AddComponent(p_mFootCom);
 }
 
@@ -149,6 +152,7 @@ void OBJ_Azarashi::Update()
 			mState = AzrashiState::AfterSpawnWait;
 			p_mGravityCom->bEnable = true;
 			p_mColliderCom->bEnable = true;
+			p_mFootCom->bEnable = true;
 			p_mGravityCom->SetGround(false);
 			break;
 		}
@@ -288,18 +292,22 @@ void OBJ_Azarashi::OnCollisionEnter(GameObject* _obj)
 			Direction = Math::Normalize(Direction);
 			// 衝突オブジェクトとの距離を取得
 			float dis = Math::GetDistance(p_mTransform->mPosition, _obj->p_mTransform->mPosition);
-			Direction *= (dis * fVelocity);
+			float vec = fVelocityDistance - dis;
+			if (vec > 0.0f)
+			{
+				Direction *= (vec * fVelocity);
 
-			mDamageVelocity.x = Direction.x;
-			mDamageVelocity.z = Direction.z;
-			mDamageVelocity.y = 0.0f;
+				mDamageVelocity.x = Direction.x;
+				mDamageVelocity.z = Direction.z;
+				mDamageVelocity.y = 0.0f;
 
-			// 攻撃までのカウントリセット
-			fCnt = 0;
-			// ダメージ状態に移行
-			mState = AzrashiState::Damage;
-			p_mModelCom->PlayAnimation("Damage");
-			p_mModelCom->SetCurrentKeyFrame(0);
+				// 攻撃までのカウントリセット
+				fCnt = 0;
+				// ダメージ状態に移行
+				mState = AzrashiState::Damage;
+				p_mModelCom->PlayAnimation("Damage");
+				p_mModelCom->SetCurrentKeyFrame(0);
+			}
 		}
 	}
 }

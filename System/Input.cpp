@@ -400,6 +400,21 @@ bool Controller_Input::GetIsGamePadConnect(unsigned int index)
     return false;
 }
 
+bool Controller_Input::GetLeftStickMoveNow(unsigned int index)
+{
+    float ValueX = GamePad[index].Gamepad.sThumbLX;
+    if (ValueX > LeftStickDead || ValueX < -LeftStickDead)
+    {
+        return true;
+    }
+    float ValueY = GamePad[index].Gamepad.sThumbLY;
+    if (ValueY < LeftStickDead || ValueY < -LeftStickDead)
+    {
+        return true;
+    }
+    return false;
+}
+
 void Controller_Input::ControllerInit()
 {
     //XInputEnable(TRUE);

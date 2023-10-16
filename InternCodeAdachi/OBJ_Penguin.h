@@ -9,6 +9,28 @@
 #include "Com_Model.h"
 
 // ペンギンのプレファブ
+#define PenguinStatuNum (15)
+
+// ペンギンのステート
+enum class PenguinState
+{
+    // 歩く(入力可)
+    Walk, 
+    //
+    BeforeJump,
+    // ジャンプ(入力可)
+    Jump, 
+    // ヒップドロップ前の溜めの時間(入力不可)
+    BeforeHipDrop, 
+    // ヒップドロップ中(入力不可)
+    HipDrop, 
+    //
+    AfterHipDrop,
+    // 被弾状態(入力不可)
+    Damage, 
+    // ヒップドロップでアザラシに衝突
+    HipDropOnAzarashi
+};
 
 class OBJ_Penguin :
     public GameObject
@@ -34,7 +56,30 @@ private:
 
     // カメラのスピード
     float fCamSpeed = 1.0f;
-    float fMouseCamSpeed = 0.2f;
+    // マウス用カメラスピード
+    float fMouseCameraSpeed = 0.2f;
+
+    // ヒップインパクトの範囲
+    float fImpactRange = 8.0f;
+
+    // ヒップドロップに移行するまでのディレイ
+    float fImpactDelay = 0.2f;
+    float fImpactCnt = 0.0f;
+
+    // アザラシ衝突時のよろめき
+    float fDamagedPower = 6.0f;
+
+    // 衝突後のブレーキ係数
+    float fBlake = 0.5f;
+
+    // 停止許容距離
+    float fDamagePermission = 0.05f;
+
+    DirectX::SimpleMath::Vector3 mDamageVelocity = DirectX::SimpleMath::Vector3(0.0f, 0.0f, 0.0f);
+
+    PenguinState mState = PenguinState::Walk;
+
+    DirectX::SimpleMath::Vector2 mMoveVelocity = DirectX::SimpleMath::Vector2(0.0f, 0.0f);
 
 private:
     void CreateFromCSV(const char* _FileName);
@@ -46,6 +91,8 @@ public:
 
     void Start()override;
     void Update();
+    void OnCollisionEnter(GameObject* _obj)override;
+    void OnCollisionStay(GameObject* _obj)override;
 
     Com_CharacterMove* GetMoveCom()
     {

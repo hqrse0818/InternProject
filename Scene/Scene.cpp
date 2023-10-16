@@ -425,18 +425,33 @@ bool Scene::CollisionCheck(GameObject* objA, GameObject* objB)
 	// objA‚ªBox
 	if (objA->mColType == Collider::ColliderForm::Box)
 	{
-		AABB Box1 = objA->GetComponent<Com_BoxCollider>()->GetAABB();
+		Com_BoxCollider* bo1 = objA->GetComponent<Com_BoxCollider>();
+		if (!bo1->bEnable)
+		{
+			return false;
+		}
+		AABB Box1 = bo1->GetAABB();
 		// objB‚ªBoxCollider
 		if (objB->mColType == Collider::ColliderForm::Box)
 		{
-			AABB Box2 = objB->GetComponent<Com_BoxCollider>()->GetAABB();
+			Com_BoxCollider* bo2 = objB->GetComponent<Com_BoxCollider>();
+			if (!bo2->bEnable)
+			{
+				return false;
+			}
+			AABB Box2 =bo2->GetAABB();
 			// Õ“Ë”»’è
 			return Collision::AABB2AABB(Box1, Box2);
 		}
 		// objB‚ªSphere
 		else if (objB->mColType == Collider::ColliderForm::Sphere)
 		{
-			Sphere Sphere1 = objB->GetComponent<Com_SphereCollider>()->GetSphere();
+			Com_SphereCollider* sp = objB->GetComponent<Com_SphereCollider>();
+			if (!sp->bEnable)
+			{
+				return false;
+			}
+			Sphere Sphere1 = sp->GetSphere();
 			// Õ“Ë”»’è
 			return CollisionBox2Sphere(Box1, Sphere1);
 		}
@@ -444,11 +459,21 @@ bool Scene::CollisionCheck(GameObject* objA, GameObject* objB)
 	// objA‚ªCylinder
 	else if (objA->mColType == Collider::ColliderForm::Cylinder)
 	{
-		Cylinder Cylinder1 = objA->GetComponent<Com_CylinderCollider>()->GetCylinder();
+		Com_CylinderCollider* cy1 = objA->GetComponent<Com_CylinderCollider>();
+		if (!cy1->bEnable)
+		{
+			return false;
+		}
+		Cylinder Cylinder1 = cy1->GetCylinder();
 		// objB‚ªCylinder
 		if (objB->mColType == Collider::ColliderForm::Cylinder)
 		{
-			Cylinder Cylinder2 = objB->GetComponent<Com_CylinderCollider>()->GetCylinder();
+			Com_CylinderCollider* cy2 = objB->GetComponent<Com_CylinderCollider>();
+			if (!cy2->bEnable)
+			{
+				return false;
+			}
+			Cylinder Cylinder2 = cy2->GetCylinder();
 			// Õ“Ë”»’è
 			return Collision::Cylinder2Cylinder(Cylinder1, Cylinder2);
 		}
@@ -456,17 +481,34 @@ bool Scene::CollisionCheck(GameObject* objA, GameObject* objB)
 	// objA‚ªSphere
 	else if (objA->mColType == Collider::ColliderForm::Sphere)
 	{
-		Sphere sphere1 = objA->GetComponent<Com_SphereCollider>()->GetSphere();
+		Com_SphereCollider* sp1 = objA->GetComponent<Com_SphereCollider>();
+		if (!sp1->bEnable)
+		{
+			return false;
+		}
+
+		Sphere sphere1 = sp1->GetSphere();
 		// objB‚ªSphere;
 		if (objB->mColType == Collider::ColliderForm::Sphere)
 		{
-			Sphere sphere2 = objB->GetComponent<Com_SphereCollider>()->GetSphere();
+			Com_SphereCollider* sp2 = objB->GetComponent<Com_SphereCollider>();
+
+			if (!sp2->bEnable)
+			{
+				return false;
+			}
+			Sphere sphere2 = sp2->GetSphere();
 			// Õ“Ë”»’è
 			return Collision::Sphere2Sphere(sphere1, sphere2);
 		}
 		else if (objB->mColType == Collider::ColliderForm::Box)
 		{
-			AABB Box1 = objB->GetComponent<Com_BoxCollider>()->GetAABB();
+			Com_BoxCollider* bo = objB->GetComponent<Com_BoxCollider>();
+			if (!bo->bEnable)
+			{
+				return false;
+			}
+			AABB Box1 = bo->GetAABB();
 
 			// Õ“Ë”»’è
 			return CollisionBox2Sphere(Box1, sphere1);
