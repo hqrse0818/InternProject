@@ -18,11 +18,9 @@ private:
     float fJumpPower = 10.0f; //ジャンプ力
     float fDropSpeed = -10.0f; //落下速度
     float fDropInitialSpeed = -7.5f;// 落下の初速
-    float fDropCnt = 0.0f; // 落下時間
+    float fDropCnt = 0.0f; // 落下時間s
 
-    float fJumpHeight = 0.0f; //現在の高さ
-    float FInpactRenge = 0.0f; //ヒップインパクトの範囲
-    float fImpactPower = 0.0f; //ヒップインパクトの威力
+    float fImpactRenge = 0.0f; //ヒップインパクトの範囲
 
     float fFallTime = 1.0f; //ヒップインパクトの加速
 
@@ -80,11 +78,9 @@ public:
         return bDrop;
     }
 
-    void SetJumpHeight();
-
-    float GetJumpHeight()
+    void SetImpactRange(float _val)
     {
-        return fJumpHeight;
+        fImpactRenge = _val;
     }
 };
 

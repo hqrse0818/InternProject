@@ -1,9 +1,11 @@
 #include "OBJ_Penguin.h"
 #include "../Component/Com_SphereCollider.h"
 #include "../Component/Com_BoxCollider.h"
+#include "../System/CustomMath.h"
 #include "../System/Input.h"
 #include "../Scene/Scene.h"
 #include "CSVLoad.h"
+#include "../System/Time.h"
 
 #define LoadRow (1)
 
@@ -23,13 +25,13 @@ void OBJ_Penguin::CreateFromCSV(const char* _FileName)
 	// モデル
 	p_mModel = new Com_Model();
 	p_mModel->SetModelData("Penguin");
-	//p_mModel->SetUseMaterial(false);
 
 	AddComponent(p_mModel);
 
 	// ペンギン自身のコライダー
 	Com_BoxCollider* p_mCollider = new Com_BoxCollider();
 	p_mCollider->bMovable = true;
+	p_mCollider->mColliderTag = ColliderKind::ColTag_Penguin;
 
 	AddComponent(p_mCollider);
 
@@ -72,7 +74,8 @@ void OBJ_Penguin::CreateFromCSV(const char* _FileName)
 	p_mCollider->SetCenter(stof(sv[7]), stof(sv[8]), stof(sv[9]));
 	// コライダーのサイズ
 	p_mCollider->SetSize(stof(sv[10]), stof(sv[11]), stof(sv[12]));
-	
+	// ヒップインパクトの範囲
+	p_mJumpCom->SetImpactRange(stof(sv[13]));
 	// コンポーネントの追加
 	AddComponent(p_mMoveCom);
 	AddComponent(p_mJumpCom);
@@ -102,6 +105,7 @@ OBJ_Penguin::OBJ_Penguin()
 	p_mCollider->SetSize(6.0f, 8.0f, 6.0f);
 	p_mCollider->SetCenter(0.0f, 4.0f, 0.0f);
 	p_mCollider->bMovable = true;
+	p_mCollider->mColliderTag = ColliderKind::ColTag_Penguin;
 
 	AddComponent(p_mCollider);
 
@@ -147,92 +151,133 @@ OBJ_Penguin::OBJ_Penguin(const char* _name, const char* _FileName)
 void OBJ_Penguin::Start()
 {
 	GameObject::Start();
+
+	p_mGravityCom->SetGround(false);
 }
 
 void OBJ_Penguin::Update()
 {
 	GameObject::Update();
 
-	p_mModel->PlayAnimation("Walk");
-
-	// ヒップインパクト
-	if (Controller_Input::GetRightTriggerSimple(0) == KEYSTATE::KEY_DOWN && p_mJumpCom->GetIsJump() ||
-		Input::GetKeyState(KEYCODE_MOUSE_LEFT) == KEYSTATE::KEY_DOWN && p_mJumpCom->GetIsJump())
+	// 入力取得
+	if (Controller_Input::GetIsGamePadConnect(0))
 	{
-		p_mJumpCom->SetJumpHeight();
-
-		if (!p_mJumpCom->GetIsDrop())
-		{
-			p_mJumpCom->SetJumpFlg(false);
-			p_mJumpCom->SetDropFlg(true);
-		}
-	}
-	// ジャンプ
-	if (Controller_Input::GetButton(0, GAMEPAD_A) == KEYSTATE::KEY_DOWN && p_mGravityCom->GetGround() ||
-		Input::GetKeyState(KEYCODE_MOUSE_LEFT) == KEYSTATE::KEY_DOWN && p_mGravityCom->GetGround())
-	{
-		p_mJumpCom->SetJumpFlg(true);
-	}
-
-	// 地上にいるときはスティックの値をそのまま反映
-	if (p_mGravityCom->GetGround())
-	{
-		if (Controller_Input::GetIsGamePadConnect(0))
-		{
-			p_mMoveCom->MoveX(Controller_Input::GetLeftStick(0).x);
-			p_mMoveCom->MoveZ(Controller_Input::GetLeftStick(0).y);
-		}
-		else
-		{
-			if (Input::GetKeyState(KEYCODE_W) == KEYSTATE::KEY_WHILE_DOWN)
-			{
-				p_mMoveCom->MoveZ(1.0f);
-			}
-			if (Input::GetKeyState(KEYCODE_S) == KEYSTATE::KEY_WHILE_DOWN)
-			{
-				p_mMoveCom->MoveZ(-1.0f);
-			}
-			if (Input::GetKeyState(KEYCODE_D) == KEYSTATE::KEY_WHILE_DOWN)
-			{
-				p_mMoveCom->MoveX(1.0f);
-			}
-			if (Input::GetKeyState(KEYCODE_A) == KEYSTATE::KEY_WHILE_DOWN)
-			{
-				p_mMoveCom->MoveX(-1.0f);
-			}
-		}
+		mMoveVelocity.x = Controller_Input::GetLeftStick(0).x;
+		mMoveVelocity.y = Controller_Input::GetLeftStick(0).y;
 	}
 	else
 	{
-		if (!p_mJumpCom->GetIsDrop())
-		{
-			if (Controller_Input::GetIsGamePadConnect(0))
-			{
-				p_mMoveCom->MoveX(Controller_Input::GetLeftStick(0).x * fAirMoveSpeed);
-				p_mMoveCom->MoveZ(Controller_Input::GetLeftStick(0).y * fAirMoveSpeed);
-			}
-			else
-			{
-				if (Input::GetKeyState(KEYCODE_W) == KEYSTATE::KEY_WHILE_DOWN)
-				{
-					p_mMoveCom->MoveZ(fAirMoveSpeed);
-				}
-				if (Input::GetKeyState(KEYCODE_S) == KEYSTATE::KEY_WHILE_DOWN)
-				{
-					p_mMoveCom->MoveZ(-fAirMoveSpeed);
-				}
-				if (Input::GetKeyState(KEYCODE_D) == KEYSTATE::KEY_WHILE_DOWN)
-				{
-					p_mMoveCom->MoveX(fAirMoveSpeed);
-				}
-				if (Input::GetKeyState(KEYCODE_A) == KEYSTATE::KEY_WHILE_DOWN)
-				{
-					p_mMoveCom->MoveX(-fAirMoveSpeed);
-				}
-			}
-		}
+		if (Input::GetKeyState(KEYCODE_A) == KEYSTATE::KEY_WHILE_DOWN)mMoveVelocity.x = -1;
+		if (Input::GetKeyState(KEYCODE_D) == KEYSTATE::KEY_WHILE_DOWN)mMoveVelocity.x = 1;
+		if (Input::GetKeyState(KEYCODE_W) == KEYSTATE::KEY_WHILE_DOWN)mMoveVelocity.y = 1;
+		if (Input::GetKeyState(KEYCODE_S) == KEYSTATE::KEY_WHILE_DOWN)mMoveVelocity.y = -1;
 	}
-	
+
+	switch (mState)
+	{
+	case PenguinState::Walk:
+		p_mModel->PlayAnimation("Walk");
+		p_mMoveCom->MoveX(mMoveVelocity.x);
+		p_mMoveCom->MoveZ(mMoveVelocity.y);
+		// ジャンプ
+		if (Controller_Input::GetButton(0, GAMEPAD_A) == KEYSTATE::KEY_WHILE_DOWN && p_mGravityCom->GetGround() ||
+			Input::GetKeyState(KEYCODE_SPACE) == KEYSTATE::KEY_WHILE_DOWN && p_mGravityCom->GetGround())
+		{
+			p_mJumpCom->SetJumpFlg(true);
+			p_mModel->PlayAnimation("ToJump");
+			p_mModel->SetCurrentKeyFrame(0);
+			mState = PenguinState::BeforeJump;
+		}
+		break;
+	case PenguinState::BeforeJump:
+		p_mMoveCom->MoveX(mMoveVelocity.x * fAirMoveSpeed);
+		p_mMoveCom->MoveZ(mMoveVelocity.y * fAirMoveSpeed);
+		if (p_mModel->GetIsRotLastKey())
+		{
+			p_mModel->PlayAnimation("Jump");
+			p_mModel->SetCurrentKeyFrame(0);
+			mState = PenguinState::Jump;
+		}
+		break;
+	case PenguinState::Jump:
+		p_mMoveCom->MoveX(mMoveVelocity.x * fAirMoveSpeed);
+		p_mMoveCom->MoveZ(mMoveVelocity.y * fAirMoveSpeed);
+		// ヒップインパクト
+		if (Controller_Input::GetRightTriggerSimple(0) == KEYSTATE::KEY_WHILE_DOWN ||
+			Input::GetKeyState(KEYCODE_MOUSE_LEFT) == KEYSTATE::KEY_WHILE_DOWN)
+		{
+			// ヒップインパクトの予約
+			p_mModel->PlayAnimation("HipDrop");
+			p_mModel->SetCurrentKeyFrame(0);
+			mState = PenguinState::BeforeHipDrop;
+		}
+		break;
+	case PenguinState::BeforeHipDrop:
+		// アニメーションの最後のキーまで待機
+		if (p_mModel->GetIsRotLastKey())
+		{
+			p_mGravityCom->bEnable = true;
+			p_mJumpCom->SetDropFlg(true);
+			p_mJumpCom->SetJumpFlg(false);
+			p_mModel->SetPlayAnimation(false);
+			mState = PenguinState::HipDrop;
+		}
+		break;
+	case PenguinState::HipDrop:
+		if (p_mGravityCom->GetGround())
+		{
+			p_mModel->PlayAnimation("AfterHipDrop");
+			p_mModel->SetCurrentKeyFrame(0);
+			mState = PenguinState::AfterHipDrop;
+		}
+		break;
+	case PenguinState::AfterHipDrop:
+		if (p_mModel->GetIsRotLastKey())
+		{
+			p_mModel->SetCurrentKeyFrame(0);
+			p_mModel->PlayAnimation("Idle");
+			mState = PenguinState::Idle;
+		}
+		break;
+	case PenguinState::Damage:
+	//{
+	//	// ダメージVelocityの長さを取得
+	//	float length = Math::GetLength(mDamageVelocity);
+
+	//	cout << length << endl;
+	//	// 許容距離よりも短ければ待機状態に移行
+	//	if (length < fDamagePermission)
+	//	{
+	//		mState = PenguinState::Idle;
+	//		p_mModel->SetCurrentKeyFrame(0);
+	//		p_mModel->PlayAnimation("Idle");
+	//		break;
+	//	}
+
+	//	// ブレーキを掛ける
+	//	mDamageVelocity *= fBlake;
+
+	//	p_mTransform->Translate(mDamageVelocity);
+	//}
+		break;
+	case PenguinState::HipDropOnAzarashi:
+		break;
+	case PenguinState::Idle:
+		if (Controller_Input::GetLeftStickMoveNow(0))
+		{
+			mState = PenguinState::Walk;
+		}
+		// ジャンプ
+		if (Controller_Input::GetButton(0, GAMEPAD_A) == KEYSTATE::KEY_DOWN && p_mGravityCom->GetGround() ||
+			Input::GetKeyState(KEYCODE_MOUSE_LEFT) == KEYSTATE::KEY_DOWN && p_mGravityCom->GetGround())
+		{
+			p_mJumpCom->SetJumpFlg(true);
+			p_mModel->PlayAnimation("ToJump");
+			p_mModel->SetCurrentKeyFrame(0);
+			mState = PenguinState::BeforeJump;
+		}
+		break;
+	}
 	// アングル調整
 	// 横の角度
 	p_mCameraCom->SetAngle(p_mCameraCom->GetAngle() + (Controller_Input::GetRightStick(0).x * fCamSpeed));
@@ -241,7 +286,50 @@ void OBJ_Penguin::Update()
 
 	if (Input::GetIsCenter())
 	{
-		p_mCameraCom->SetAngle(p_mCameraCom->GetAngle() + (Input::GetCursorMove().x * fCamSpeed));
+		p_mCameraCom->SetAngle(p_mCameraCom->GetAngle() + (Input::GetCursorMove().x * fMouseCameraSpeed));
 		p_mCameraCom->SetHeight(p_mCameraCom->GetHeight() + Input::GetCursorMove().y);
+	}
+}
+
+void OBJ_Penguin::OnCollisionEnter(GameObject* _obj)
+{
+	GameObject::OnCollisionEnter(_obj);
+	if (_obj->mColType == Collider::ColliderForm::Sphere)
+	{
+		Com_SphereCollider* col = _obj->GetComponent<Com_SphereCollider>();
+		if (col->mColliderTag == ColliderKind::ColTag_Azarashi)
+		{
+			//if (mState != PenguinState::BeforeHipDrop &&
+			//	mState != PenguinState::HipDrop)
+			//{
+			//	Vector3 Direction = Math::GetVector(p_mTransform->mPosition, _obj->p_mTransform->mPosition);
+			//	Direction = Math::Normalize(Direction);
+			//	// ダメージ後のよろめきを計算
+			//	mDamageVelocity = fDamagedPower * Direction;
+			//	mDamageVelocity.y = 0;
+
+			//	mState = PenguinState::Damage;
+			//}
+		}
+		if (col->mColliderTag == ColliderKind::ColTag_Ice)
+		{
+			if (mState != PenguinState::HipDrop && mState != PenguinState::AfterHipDrop && mState != PenguinState::BeforeHipDrop)
+			{
+				mState = PenguinState::Idle;
+			}
+		}
+	}
+}
+
+void OBJ_Penguin::OnCollisionStay(GameObject* _obj)
+{
+	if (_obj->mColType == Collider::ColliderForm::Box)
+	{
+		Com_BoxCollider* col = _obj->GetComponent<Com_BoxCollider>();
+
+		if (col->mColliderTag == ColliderKind::ColTag_Ice)
+		{
+			
+		}
 	}
 }

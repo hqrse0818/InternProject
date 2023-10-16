@@ -10,6 +10,11 @@ void LoadPenguin()
 	ModelData* CreatePenguin = new ModelData();
 	CreatePenguin->LoadModel("asset\\model\\Penguin\\pengin_rig_v1.fbx", true);
 	CreatePenguin->LoadAnimation("asset\\model\\Penguin\\pengin_walk_v1.fbx", "Walk");
+	CreatePenguin->LoadAnimation("asset\\model\\Penguin\\pengin_jump3_v1.fbx", "ToJump");
+	CreatePenguin->LoadAnimation("asset\\model\\Penguin\\pengin_jump2_v1.fbx", "Jump");
+	CreatePenguin->LoadAnimation("asset\\model\\Penguin\\pengin_hipdrop1_v1.fbx", "HipDrop");
+	CreatePenguin->LoadAnimation("asset\\model\\Penguin\\pengin_hipdrop2_v1.fbx", "AfterHipDrop");
+	CreatePenguin->LoadAnimation("asset\\model\\Penguin\\pengin_idle_v1.fbx", "Idle");
 	CreatePenguin->Push("Penguin");
 }
 
@@ -86,6 +91,6 @@ void Scene_ModelLoad::Update()
 	{
 		Manager::SetScene<Scene_Test>();
 	}*/
-
+	
 	Manager::SetScene<Scene_Title>();
 }

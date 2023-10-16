@@ -64,6 +64,9 @@ private:
     // 被弾中移動距離がこの値以下なら止める
     float fDamagePermission = 0.05f;
 
+    // 被弾時の元の移動度(この値から距離を引いたものがふきとびの強さになる)
+    float fVelocityDistance = 0.0f;
+
     // コンポーネント
     Com_SphereCollider* p_mColliderCom = nullptr;
     Com_Gravity* p_mGravityCom = nullptr;
@@ -87,7 +90,7 @@ public:
     Com_SphereCollider* GetColliderCom() { return p_mColliderCom; };
     Com_Model* GetModelCom() { return p_mModelCom; };
 
-    void SetAzrashiStatus(float _SpawnAfter, float _Duration, float _MoveSpeed, float _DamageVelocity, float _Blake, float _Permis)
+    void SetAzrashiStatus(float _SpawnAfter, float _Duration, float _MoveSpeed, float _DamageVelocity, float _Blake, float _Permis, float _VelocityDis)
     {
         fAfterSpawnAttackWait = _SpawnAfter;
         fAttackDuration = _Duration;
@@ -95,6 +98,7 @@ public:
         fVelocity = _DamageVelocity;
         fBlakeVelocity = _Blake;
         fDamagePermission = _Permis;
+        fVelocityDistance = _VelocityDis;
     }
 };
 

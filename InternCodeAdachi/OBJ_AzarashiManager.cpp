@@ -90,6 +90,9 @@ OBJ_AzarashiManager::OBJ_AzarashiManager(const char* _name, const char* _FileNam
 		fCenterY = stof(as[12]);
 		// 氷上での高さ
 		fIceY = stof(as[13]);
+		// 吹き飛ばしの基底距離
+		fDamageDistance = stof(as[14]);
+
 	}
 	gt.clear();
 	sr.clear();
@@ -113,11 +116,11 @@ void OBJ_AzarashiManager::Create()
 	azarashi->GetColliderCom()->SetCenter(mAzarashiCenter.x, mAzarashiCenter.y, mAzarashiCenter.z);
 	azarashi->GetColliderCom()->fRadius = fAzarashiRadius;
 	azarashi->GetFootCom()->SetFootHeight(fFootHeight);
-	azarashi->SetAzrashiStatus(fAfterWait, fAttackDuration, fMoveSpeed, fVelocity, fBlake, fLength);
+	azarashi->SetAzrashiStatus(fAfterWait, fAttackDuration, fMoveSpeed, fVelocity, fBlake, fLength,fDamageDistance);
 
 	azarashi->Init();
 	azarashi->Start();
-	GetScene()->AddGameObject(azarashi);
+	
 
 	// スポーンエリアを大まかに指定
 	Rand = HighRand::GetRand(1, 4);
@@ -170,6 +173,8 @@ void OBJ_AzarashiManager::Create()
 	// スタート位置とターゲット位置の設定
 	azarashi->SetTargetPosition(init.x, init.y, init.z,target.x, fIceY, target.z, fCenterY);
 
+	GetScene()->AddGameObject(azarashi);
+
 	iSpawnedNum++;
 	if (iSpawnedNum >= iMaxSpawn)
 	{
@@ -179,6 +184,8 @@ void OBJ_AzarashiManager::Create()
 	{
 		mState = SpawnState::Wait;
 	}
+
+	
 }
 void OBJ_AzarashiManager::Update()
 {
