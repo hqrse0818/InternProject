@@ -8,6 +8,9 @@
 using namespace DirectX::SimpleMath;
 using namespace std;
 
+int OBJ_AzarashiManager::iMaxSpawn = 0;
+int OBJ_AzarashiManager::iSpawnedNum = 0;
+
 OBJ_AzarashiManager::OBJ_AzarashiManager()
 {
 }
@@ -215,6 +218,9 @@ void OBJ_AzarashiManager::Update()
 		break;
 	case SpawnState::Spawn:
 		Create();
+		break;
+	case SpawnState::Calc:
+
 		break;
 	case SpawnState::End:
 		break;

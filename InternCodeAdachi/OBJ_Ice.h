@@ -25,6 +25,8 @@ private:
 
     float fLastLifeWaitTime = 2.0f;
 
+    int iRemainIce = 0; //残った足場の数
+
     Vector3 originalPosition; // オブジェクトの元の位置を格納する変数
 
     void CreateFromCSV(const char* _FileName);
@@ -50,5 +52,9 @@ public:
         return min + static_cast<float>(rand()) / (static_cast<float>(RAND_MAX / (max - min)));
     }
 
+    int GetRemainIce()
+    {
+        return iRemainIce;
+    }
 };
 

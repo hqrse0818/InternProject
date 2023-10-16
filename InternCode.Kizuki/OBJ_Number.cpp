@@ -7,9 +7,17 @@ OBJ_Number::OBJ_Number()
 	fCurrentz = 0.0f;
 	fCurrentw = 0.0f;
 
-	p_mSprite = new Com_Sprite();
-	p_mSprite->SetUV(mUV); 
+	p_mSprite = new Com_CustomSprite();
+	p_mSprite->mType = Com_CustomSprite::CustomType::LeftTop;
+	p_mSprite->SetUpdate(true);
+	p_mSprite->SetTexture("asset/texture/zanki.png");
 	AddComponent(p_mSprite);
+
+	Com_Shader* p_mShader = new Com_Shader();
+	p_mShader->p_mVS->Load(VS_SPRITE);
+	p_mShader->p_mPS->Load(PS_SPRITE);
+
+	AddComponent(p_mShader);
 }
 
 void OBJ_Number::Update()
@@ -17,7 +25,7 @@ void OBJ_Number::Update()
 	GameObject::Update();
 
 	//0`4‚ğo—Í
-	if (0 <= iNum <= 4)
+	if (iNum < 5)
 	{
 		fCurrentx = iNum * 0.2;
 		fCurrentz = (iNum + 1) * 0.2;
@@ -26,7 +34,7 @@ void OBJ_Number::Update()
 	}
 
 	//5`9‚ğo—Í
-	if (5 <= iNum <= 9)
+	else
 	{
 		fCurrentx = (iNum - 5) * 0.2;
 		fCurrentz = (iNum - 4) * 0.2;
