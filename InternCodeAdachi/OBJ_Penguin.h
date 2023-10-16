@@ -9,6 +9,7 @@
 #include "Com_Model.h"
 
 // ペンギンのプレファブ
+#define PenguinStatuNum (15)
 
 // ペンギンのステート
 enum class PenguinState
@@ -28,9 +29,7 @@ enum class PenguinState
     // 被弾状態(入力不可)
     Damage, 
     // ヒップドロップでアザラシに衝突
-    HipDropOnAzarashi, 
-    // アイドル
-    Idle
+    HipDropOnAzarashi
 };
 
 class OBJ_Penguin :
@@ -58,7 +57,7 @@ private:
     // カメラのスピード
     float fCamSpeed = 1.0f;
     // マウス用カメラスピード
-    float fMouseCameraSpeed = 0.01f;
+    float fMouseCameraSpeed = 0.2f;
 
     // ヒップインパクトの範囲
     float fImpactRange = 8.0f;
@@ -78,7 +77,7 @@ private:
 
     DirectX::SimpleMath::Vector3 mDamageVelocity = DirectX::SimpleMath::Vector3(0.0f, 0.0f, 0.0f);
 
-    PenguinState mState = PenguinState::Idle;
+    PenguinState mState = PenguinState::Walk;
 
     DirectX::SimpleMath::Vector2 mMoveVelocity = DirectX::SimpleMath::Vector2(0.0f, 0.0f);
 

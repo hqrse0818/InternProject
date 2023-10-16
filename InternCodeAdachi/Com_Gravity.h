@@ -8,23 +8,28 @@ class Com_Gravity :
     public Component
 {
 private:
-    float fGravity = 7.0f;
-    float fGravCoef = 2;
+    float fGravity = 5.0f;
+    int fGravCoef = 2;
     float fFallCnt = 0.0f;
     bool bOnGround = false;
 
+    bool bGroundAtthisFrame = false;
+
     float falseCnt = 0.0f;
-    bool bSetToFalse = false;
 public:
     void Update()override;
-  
+    bool GetGroundedAtThisFrame()
+    {
+        return bGroundAtthisFrame;
+    }
+    void SetGroundOnThisFrame(bool _val)
+    {
+        bGroundAtthisFrame = _val;
+    }
+
     void SetGround(bool _val)
     {
         bOnGround = _val;
-    }
-    void SetToFalse(bool _val)
-    {
-        bSetToFalse = _val;
     }
     bool GetGround()
     {

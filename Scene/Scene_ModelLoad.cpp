@@ -46,8 +46,24 @@ void LoadStage()
 {
 	// •X‚Ì“Ç‚Ýž‚Ý
 	ModelData* CreateIce = new ModelData();
-	CreateIce->LoadModel("asset\\model\\Stage\\stage_rep.fbx", true);
-	CreateIce->Push("Ice_PatA");
+	CreateIce->LoadModel("asset\\model\\Stage\\1_stage.fbx", true);
+	CreateIce->Push("Ice_HP5");
+
+	CreateIce = new ModelData();
+	CreateIce->LoadModel("asset\\model\\Stage\\2_stage.fbx", true);
+	CreateIce->Push("Ice_HP4");
+
+	CreateIce = new ModelData();
+	CreateIce->LoadModel("asset\\model\\Stage\\3_stage.fbx", true);
+	CreateIce->Push("Ice_HP3");
+
+	CreateIce = new ModelData();
+	CreateIce->LoadModel("asset\\model\\Stage\\4_stage.fbx", true);
+	CreateIce->Push("Ice_HP2");
+
+	CreateIce = new ModelData();
+	CreateIce->LoadModel("asset\\model\\Stage\\5_stage.fbx", true);
+	CreateIce->Push("Ice_HP1");
 }
 
 void Scene_ModelLoad::Init()

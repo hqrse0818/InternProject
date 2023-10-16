@@ -43,6 +43,11 @@ Com_Model::Com_Model()
 
 bool Com_Model::SetModelData(const char* _ModelName)
 {
+	if (p_mCombBuffer)
+	{
+		p_mCombBuffer->Release();
+	}
+
 	mModelData = ModelPool::GetModelData(_ModelName);
 
 	if (mModelData)

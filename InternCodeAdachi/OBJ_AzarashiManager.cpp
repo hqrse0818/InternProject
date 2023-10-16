@@ -174,6 +174,7 @@ void OBJ_AzarashiManager::Create()
 	azarashi->SetTargetPosition(init.x, init.y, init.z,target.x, fIceY, target.z, fCenterY);
 
 	GetScene()->AddGameObject(azarashi);
+	azarashi->Update();
 
 	iSpawnedNum++;
 	if (iSpawnedNum >= iMaxSpawn)

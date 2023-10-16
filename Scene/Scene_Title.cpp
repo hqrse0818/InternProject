@@ -21,7 +21,7 @@ void Scene_Title::Init()
 	p_mTransition = new OBJ_Transition("Transition");
 	p_mTransition->FadeOut(0.0f);
 	AddKeyObject(p_mTransition, 3);
-	
+
 	// カメラ生成
 	GameObject* Camera = new GameObject("MainCamera");
 	Com_Camera* Camera_buf = new Com_Camera();
@@ -30,7 +30,7 @@ void Scene_Title::Init()
 	Camera->AddComponent(Camera_buf);
 	Camera->p_mTransform->mPosition.z = -10.0f;
 	AddGameObject(Camera, 0);
-	
+
 	GameObject* Title = new GameObject("TitleObj");
 
 	Com_Shader* Shader_buf = new Com_Shader();
@@ -38,7 +38,7 @@ void Scene_Title::Init()
 	Shader_buf->p_mPS->Load(PS_SPRITE);
 	Title->AddComponent(Shader_buf);
 	Com_Sprite* Sprite_buf = new Com_Sprite();
-	Sprite_buf->SetTexture("asset/texture/GameTitle.png");
+	Sprite_buf->SetTexture("asset/texture/start.png");
 
 	//タイトルロゴ生成
 	//OBJ_TitleLogo* TitleLogo = new OBJ_TitleLogo;

@@ -93,6 +93,7 @@ OBJ_Azarashi::OBJ_Azarashi(const char* _name, int _ModelKind)
 	// 足元コンポーネント
 	p_mFootCom = new Com_Foot();
 	p_mFootCom->SetGravityCom(p_mGravityCom);
+	p_mFootCom->bEnable = false;
 	AddComponent(p_mFootCom);
 }
 
@@ -151,6 +152,7 @@ void OBJ_Azarashi::Update()
 			mState = AzrashiState::AfterSpawnWait;
 			p_mGravityCom->bEnable = true;
 			p_mColliderCom->bEnable = true;
+			p_mFootCom->bEnable = true;
 			p_mGravityCom->SetGround(false);
 			break;
 		}
