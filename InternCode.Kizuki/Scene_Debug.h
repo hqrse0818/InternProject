@@ -7,6 +7,7 @@ class Scene_Debug :public Scene
 {
 private:
 	OBJ_Penguin* Player;
+    Com_Audio* p_mAudio{};
 
 public:
 	void Init();

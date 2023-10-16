@@ -38,7 +38,7 @@ void Scene_Debug::Init()
 		for (int j = 0; j < IceNum; j++)
 		{
 			// 氷の生成
-			OBJ_Ice* Ice = new OBJ_Ice("Ice", "asset/data/csv/IceStatus.csv");
+			OBJ_Ice* Ice = new OBJ_Ice("Ice");
 			Ice->p_mTransform->SetPosition(InitPos + i * IceScale, 0.0f, InitPos + j * IceScale);
 			AddGameObject(Ice);
 		}
@@ -56,23 +56,48 @@ void Scene_Debug::Init()
 	// レイヤーを指定してオブジェクトを追加
 	AddGameObject(Camera, 0);
 
-	OBJ_Sea* Sea = new OBJ_Sea("Sea");
-	AddGameObject(Sea);
-
-	OBJ_AzarashiManager* Manager = new OBJ_AzarashiManager("Manager", "asset/data/csv/AzarashiManager.csv");
-	AddGameObject(Manager);
-
 	Player->GetMoveCom()->SetCameraCom(Camera_buf);
 	Player->SetCameraCom(Camera_buf);
+
+	// 海オブジェクト
+	OBJ_Sea* Sea = new OBJ_Sea("Sea");
+	Sea->SetPosition(0.0f, -30.0f, 0.0f);
+
+	AddGameObject(Sea);
+
+	OBJ_AzarashiManager* AManager = new OBJ_AzarashiManager("manager", "asset\\data\\csv\\AzarashiManager.csv");
+	AddGameObject(AManager, 0);
+
+	//アザラシの残機
+	GameObject* ARemain = new GameObject("ARemainOBJ");
+
+	Com_CustomSprite* Sprite_buf = new Com_CustomSprite;
+	Sprite_buf->mType = Com_CustomSprite::CustomType::LeftTop; //CustomSpriteでポジション設定
+	Sprite_buf->SetTexture("asset/texture/nokori.png");
+
+	Com_Shader* Shader_buf = new Com_Shader();
+	Shader_buf->p_mVS->Load(VS_SPRITE);
+	Shader_buf->p_mPS->Load(PS_SPRITE);
+
+	ARemain->AddComponent(Shader_buf);
+	ARemain->AddComponent(Sprite_buf);
+
+	ARemain->p_mTransform->mScale.x = 100.0f;
+	ARemain->p_mTransform->mScale.y = 100.0f;
+	AddGameObject(ARemain);
+
+	//音
+	p_mAudio = new Com_Audio();
+	p_mAudio->Load("asset\\audio\\BGM\\メイン BGM.wav");
+	p_mAudio->SetUseTarget(false);
 }
 
 void Scene_Debug::Start()
 {
 	Player->p_mTransform->SetPosition(0.0f, 5.0f, 0.0f);
-	GetGameObject("Azarashi")->p_mTransform->SetPosition(20.0f, 0.0f, -20.0f);
-	GetGameObject("Azarashi2")->p_mTransform->SetPosition(10.0f, 0.0f, -30.0f);
 	ShowCursor(false);
 	Input::SetCursorCenterEnable();
+	p_mAudio->Play(true);
 }
 
 void Scene_Debug::Update()
@@ -90,15 +115,22 @@ void Scene_Debug::Update()
 		ShowCursor(false);
 		Input::SetCursorCenterEnable();
 	}
-	//最初の状態にリセットする
-	if (Controller_Input::GetButton(0, GAMEPAD_Y) == KEYSTATE::KEY_DOWN || Input::GetKeyState(KEYCODE_1) == KEYSTATE::KEY_DOWN)
+
+	// デバッグ用シーン再読み込み
+#if defined (DEBUG) | defined(_DEBUG)
+	if (Controller_Input::GetButton(0, GAMEPAD_START) == KEYSTATE::KEY_DOWN || Input::GetKeyState(KEYCODE_R) == KEYSTATE::KEY_DOWN)
 	{
 		Manager::SetScene<Scene_Debug>();
 	}
+#endif
 }
 
 void Scene_Debug::Uninit()
 {
 	ShowCursor(true);
 	Input::SetCursorCenterDisable();
+
+	p_mAudio->Stop();
+	p_mAudio->Uninit();
+	delete p_mAudio;
 }

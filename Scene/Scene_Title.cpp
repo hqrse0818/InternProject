@@ -40,15 +40,15 @@ void Scene_Title::Init()
 	Com_Sprite* Sprite_buf = new Com_Sprite();
 	Sprite_buf->SetTexture("asset/texture/start.png");
 
-	//タイトルロゴ生成
-	//OBJ_TitleLogo* TitleLogo = new OBJ_TitleLogo;
-	//AddGameObject(TitleLogo);
-
 	Title->AddComponent(Sprite_buf);
 	Title->p_mTransform->SetPosition(SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2, 1.0f);
 	Title->p_mTransform->mScale.x = SCREEN_WIDTH;
 	Title->p_mTransform->mScale.y = SCREEN_HEIGHT;
 	AddGameObject(Title, 4);
+
+	//タイトルロゴ生成
+	//OBJ_TitleLogo* TitleLogo = new OBJ_TitleLogo;
+	//AddGameObject(TitleLogo);
 
 	p_mAudio->Load("asset\\audio\\BGM\\タイトル画面 BGM.wav");
 	p_mAudio->SetUseTarget(false);
