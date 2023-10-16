@@ -301,7 +301,7 @@ void OBJ_Penguin::OnCollisionEnter(GameObject* _obj)
 		if (col->mColliderTag == ColliderKind::ColTag_Ice)
 		{
 			if (mState != PenguinState::HipDrop && mState != PenguinState::AfterHipDrop && mState != PenguinState::BeforeHipDrop &&
-				mState != PenguinState::BeforeJump && mState != PenguinState::Jump && mState != PenguinState::Damage)
+				mState != PenguinState::BeforeJump && mState != PenguinState::Damage)
 			{
 				mState = PenguinState::Walk;
 			}
