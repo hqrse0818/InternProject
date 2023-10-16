@@ -22,6 +22,8 @@ public:
 
 	void MoveX(float _value);
 
+	void Move(float _x, float _z);
+
 	void SetCameraCom(Com_Camera* _com)
 	{
 		p_mCameraCom = _com;

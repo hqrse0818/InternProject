@@ -6,6 +6,7 @@
 #include "../Scene/Scene.h"
 #include "CSVLoad.h"
 #include "../System/Time.h"
+#include "../GameObject/OBJ_Shadow.h"
 
 #define LoadRow (1)
 
@@ -43,6 +44,8 @@ void OBJ_Penguin::CreateFromCSV(const char* _FileName)
 	p_mGravityCom = new Com_Gravity();
 	// 足元コンポーネント
 	p_mFootCom = new Com_Foot();
+	// 影コンポーネント
+	p_mShadowCom = new Com_Shadow();
 	
 	// 文字列を(,)で分割
 	istringstream iss(Line);
@@ -81,13 +84,15 @@ void OBJ_Penguin::CreateFromCSV(const char* _FileName)
 		// よろめきの強さ
 		this->fDamagedPower = stof(sv[14]);
 	}
+	
 
 	// コンポーネントの追加
 	AddComponent(p_mMoveCom);
 	AddComponent(p_mJumpCom);
 	AddComponent(p_mGravityCom);
 	AddComponent(p_mFootCom);
-
+	AddComponent(p_mShadowCom);
+	p_mShadowCom->SetSize(3.0f, 3.0f);	
 }
 
 OBJ_Penguin::OBJ_Penguin()
@@ -160,6 +165,12 @@ void OBJ_Penguin::Start()
 	mState = PenguinState::Walk;
 
 	p_mGravityCom->SetGround(false);
+
+	OBJ_Shadow* myShadow = new OBJ_Shadow("PenguinShadow");
+	myShadow->SetTarget(this);
+	myShadow->Init();
+	myShadow->Start();
+	GetScene()->AddGameObject(myShadow);
 }
 
 void OBJ_Penguin::Update()
@@ -185,11 +196,10 @@ void OBJ_Penguin::Update()
 		// 歩き状態
 	case PenguinState::Walk:
 		p_mModel->PlayAnimation("Walk");
-		p_mMoveCom->MoveX(mMoveVelocity.x);
-		p_mMoveCom->MoveZ(mMoveVelocity.y);
+		p_mMoveCom->Move(mMoveVelocity.x, mMoveVelocity.y);
 		// ジャンプ
-		if (Controller_Input::GetButton(0, GAMEPAD_A) == KEYSTATE::KEY_WHILE_DOWN && p_mGravityCom->GetGround() ||
-			Input::GetKeyState(KEYCODE_SPACE) == KEYSTATE::KEY_WHILE_DOWN && p_mGravityCom->GetGround())
+		if (Controller_Input::GetButton(0, GAMEPAD_A) == KEYSTATE::KEY_DOWN && p_mGravityCom->GetGround() ||
+			Input::GetKeyState(KEYCODE_SPACE) == KEYSTATE::KEY_DOWN && p_mGravityCom->GetGround())
 		{
 			p_mJumpCom->SetJumpFlg(true);
 			p_mModel->PlayAnimation("ToJump");
@@ -199,8 +209,7 @@ void OBJ_Penguin::Update()
 		break;
 	case PenguinState::BeforeJump:
 		p_mFootCom->bEnable = false;
-		p_mMoveCom->MoveX(mMoveVelocity.x * fAirMoveSpeed);
-		p_mMoveCom->MoveZ(mMoveVelocity.y * fAirMoveSpeed);
+		p_mMoveCom->Move(mMoveVelocity.x * fAirMoveSpeed, mMoveVelocity.y *fAirMoveSpeed);
 		if (p_mModel->GetIsRotLastKey())
 		{
 			p_mJumpCom->SetJumpFlg(false);
@@ -211,8 +220,7 @@ void OBJ_Penguin::Update()
 		break;
 	case PenguinState::Jump:
 		p_mFootCom->bEnable = true;
-		p_mMoveCom->MoveX(mMoveVelocity.x * fAirMoveSpeed);
-		p_mMoveCom->MoveZ(mMoveVelocity.y * fAirMoveSpeed);
+		p_mMoveCom->Move(mMoveVelocity.x * fAirMoveSpeed, mMoveVelocity.y * fAirMoveSpeed);
 		// ヒップインパクト
 		if (Controller_Input::GetRightTriggerSimple(0) == KEYSTATE::KEY_WHILE_DOWN ||
 			Input::GetKeyState(KEYCODE_MOUSE_LEFT) == KEYSTATE::KEY_WHILE_DOWN)
@@ -305,6 +313,8 @@ void OBJ_Penguin::OnCollisionEnter(GameObject* _obj)
 			{
 				mState = PenguinState::Walk;
 			}
+
+			p_mShadowCom->SetShadowHeight(p_mTransform->mPosition.y);
 		}
 	}
 	if (_obj->mColType == Collider::ColliderForm::Sphere)
@@ -322,6 +332,7 @@ void OBJ_Penguin::OnCollisionEnter(GameObject* _obj)
 				mDamageVelocity.y = 0;
 
 				mState = PenguinState::Damage;
+				p_mJumpCom->SetJumpFlg(false);
 			}
 		}
 	}

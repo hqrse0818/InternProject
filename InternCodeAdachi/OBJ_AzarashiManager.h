@@ -3,11 +3,11 @@
 #include "OBJ_Azarashi.h"
 
 #include <vector>
-
-#define GameTimeRow (1)
-#define SpawnRateRow (3)
-#define SpawnNumRow (5)
-#define AzarashiStateRow (7)
+#define RateNumRow (1)
+#define GameTimeRow (3)
+#define SpawnRateRow (5)
+#define SpawnNumRow (7)
+#define AzarashiStateRow (9)
 #define StateSetNum (15)
 
 enum class SpawnState {
@@ -61,15 +61,14 @@ private:
 
     SpawnState mState = SpawnState::Wait;
 
-
-
 public:
     OBJ_AzarashiManager();
     OBJ_AzarashiManager(const char* _name);
     OBJ_AzarashiManager(const char* _name, const char* _FileName);
 
     void Create();
-
     void Update();
+
+
 };
 

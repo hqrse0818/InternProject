@@ -93,6 +93,25 @@ DirectX::SimpleMath::Vector3 Math::Normalize(DirectX::SimpleMath::Vector3 _val)
     return result;
 }
 
+DirectX::SimpleMath::Matrix Math::CalcMatrixFromVector(DirectX::SimpleMath::Vector3 _CurrentForward, DirectX::SimpleMath::Vector3 _TargetForward)
+{
+    // –Ú“I‚Ì³–ÊƒxƒNƒgƒ‹‚ğ³‹K‰»
+    _TargetForward = Normalize(_TargetForward);
+
+    // ‰ñ“]—Ê‚ğŒvZ
+    float dot = GetDot(_CurrentForward, _TargetForward);
+    float angle = acos(dot);
+
+    // ‰ñ“]²‚ğŒvZ
+    Vector3 rotAxis = GetCross(_CurrentForward, _TargetForward);
+
+    // ‰ñ“]s—ñ‚ğŒvZ
+    Matrix ret;
+    ret.CreateFromAxisAngle(rotAxis, angle);
+
+    return ret;
+}
+
 DirectX::SimpleMath::Vector3 Math::GetVector(DirectX::SimpleMath::Vector3 _Start, DirectX::SimpleMath::Vector3 _End)
 {
     Vector3 result = _End - _Start;

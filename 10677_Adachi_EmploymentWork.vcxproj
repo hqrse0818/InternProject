@@ -161,6 +161,7 @@
     <ClCompile Include="Component\Com_PointCollider.cpp" />
     <ClCompile Include="Component\Com_RenderCollisionPoint.cpp" />
     <ClCompile Include="Component\Com_RenderCollider.cpp" />
+    <ClCompile Include="InternCodeAdachi\Com_Shadow.cpp" />
     <ClCompile Include="InternCode.Kizuki\OBJ_AzarashiRemain.cpp" />
     <ClCompile Include="InternCode.Kizuki\OBJ_Number.cpp" />
     <ClCompile Include="InternCode.Kizuki\OBJ_Score.cpp" />
@@ -189,6 +190,7 @@
     <ClCompile Include="InternCodeAdachi\OBJ_Azarashi.cpp" />
     <ClCompile Include="InternCodeAdachi\OBJ_Sea.cpp" />
     <ClCompile Include="InternCodeAdachi\OBJ_AzarashiManager.cpp" />
+    <ClCompile Include="GameObject\OBJ_Shadow.cpp" />
     <ClCompile Include="Scene\Scene.cpp" />
     <ClCompile Include="Scene\Scene_Title.cpp" />
     <ClCompile Include="Scene\Scene_Test.cpp" />
@@ -229,6 +231,7 @@
     <ClInclude Include="Component\Com_PointCollider.h" />
     <ClInclude Include="Component\Com_RenderCollisionPoint.h" />
     <ClInclude Include="Component\Com_RenderCollider.h" />
+    <ClInclude Include="InternCodeAdachi\Com_Shadow.h" />
     <ClInclude Include="InternCode.Kizuki\OBJ_AzarashiRemain.h" />
     <ClInclude Include="InternCode.Kizuki\OBJ_Number.h" />
     <ClInclude Include="InternCode.Kizuki\OBJ_Score.h" />
@@ -263,6 +266,7 @@
     <ClInclude Include="ModelName.h" />
     <ClInclude Include="InternCodeAdachi\OBJ_Sea.h" />
     <ClInclude Include="InternCodeAdachi\OBJ_AzarashiManager.h" />
+    <ClInclude Include="GameObject\OBJ_Shadow.h" />
     <ClInclude Include="Scene\Scene.h" />
     <ClInclude Include="Scene\Scene_Title.h" />
     <ClInclude Include="Scene\Scene_Test.h" />

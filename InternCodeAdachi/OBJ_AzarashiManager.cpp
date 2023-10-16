@@ -19,8 +19,10 @@ OBJ_AzarashiManager::OBJ_AzarashiManager(const char* _name)
 
 OBJ_AzarashiManager::OBJ_AzarashiManager(const char* _name, const char* _FileName)
 {
-	sObjectName = _name;
+
 	
+	sObjectName = _name;
+	string sSpawnRateNum = ReadDataFromCSV(_FileName, RateNumRow);
 	string sGameTime = ReadDataFromCSV(_FileName, GameTimeRow);
 	string sSpawnRate = ReadDataFromCSV(_FileName, SpawnRateRow);
 	string sMaxSpawnNum = ReadDataFromCSV(_FileName, SpawnNumRow);
@@ -30,6 +32,14 @@ OBJ_AzarashiManager::OBJ_AzarashiManager(const char* _name, const char* _FileNam
 	iMaxSpawn = stoi(sMaxSpawnNum);
 
 	// 文字列を(,)で分割
+	istringstream num(sSpawnRateNum);
+	string wo;
+	vector<string>nu;
+	while (getline(num,wo , ','))
+	{
+		nu.emplace_back(wo);
+	}
+	unsigned int SpawnRateNumnum = stoi(nu[0]);
 	istringstream iss(sGameTime);
 	string word;
 	// ゲームタイム
@@ -56,7 +66,7 @@ OBJ_AzarashiManager::OBJ_AzarashiManager(const char* _name, const char* _FileNam
 	assert(sr.size() == gt.size());
 
 	// スポーンレートとスポーンレート変更時間を格納
-	for (unsigned int i = 0; i < gt.size(); i++)
+	for (unsigned int i = 0; i < SpawnRateNumnum; i++)
 	{
 		vec_SpawnRateGameTimer.emplace_back(stoi(gt[i]));
 		vec_SpawnRate.emplace_back(stof(sr[i]));

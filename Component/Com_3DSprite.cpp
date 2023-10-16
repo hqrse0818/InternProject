@@ -67,6 +67,7 @@ void Com_3DSprite::Uninit()
 
 void Com_3DSprite::Update()
 {
+	
 }
 
 void Com_3DSprite::Draw()

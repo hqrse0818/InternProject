@@ -45,8 +45,8 @@ OBJ_Ice::OBJ_Ice()
 
 	// コライダー
 	p_mCollider = new Com_BoxCollider();
-	p_mCollider->SetSize(7.0f, 1.0f, 7.0f);
-	p_mCollider->SetCenter(0.0f, 0.5f, 0.0f);
+	p_mCollider->SetSize(7.0f, 2.0f, 7.0f);
+	p_mCollider->SetCenter(0.0f, 1.0f, 0.0f);
 	p_mCollider->bCanStepOn = true;
 	p_mCollider->mColliderTag = ColliderKind::ColTag_Ice;
 

@@ -7,6 +7,7 @@
 #include "Com_Gravity.h"
 #include "Com_Foot.h"
 #include "Com_Model.h"
+#include "Com_Shadow.h"
 
 // ペンギンのプレファブ
 #define PenguinStatuNum (15)
@@ -50,6 +51,8 @@ private:
     Com_Gravity* p_mGravityCom = nullptr;
     // 足元コンポーネント
     Com_Foot* p_mFootCom = nullptr;
+    // 影
+    Com_Shadow* p_mShadowCom = nullptr;
 
     // 空中での移動制御(スティック入力でどれだけの割合を適用するか)
     float fAirMoveSpeed = 1.0f;

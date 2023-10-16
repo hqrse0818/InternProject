@@ -65,7 +65,7 @@ void Scene_Test::Init()
 
 	AddGameObject(Sea);
 
-	OBJ_AzarashiManager* AManager = new OBJ_AzarashiManager("manager", "asset\\data\\csv\\AzarashiManager.csv");
+	OBJ_AzarashiManager* AManager = new OBJ_AzarashiManager("manager", "asset/data/csv/AzarashiManager.csv");
 	AddGameObject(AManager, 0);
 
 	//‰¹

@@ -25,6 +25,8 @@ namespace Math
 	float GetDoubleLength(DirectX::SimpleMath::Vector3 _val);
 	// 正規化
 	DirectX::SimpleMath::Vector3 Normalize(DirectX::SimpleMath::Vector3 _val);
+	// ベクトルの方向から回転を求める
+	DirectX::SimpleMath::Matrix CalcMatrixFromVector(DirectX::SimpleMath::Vector3 _CurrentForward, DirectX::SimpleMath::Vector3 _TargetForward);
 	// 2点間のベクトル取得
 	DirectX::SimpleMath::Vector3 GetVector(DirectX::SimpleMath::Vector3 _Start, DirectX::SimpleMath::Vector3 _End);
 	// 指定の乗数を取得

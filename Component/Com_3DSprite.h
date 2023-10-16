@@ -23,7 +23,7 @@ public:
     virtual void Update() override;
     virtual void Draw() override;
 
-    void SetTexture(const char* _name);
-    void SetMaterial(MATERIAL mat);
+    virtual void SetTexture(const char* _name);
+    virtual void SetMaterial(MATERIAL mat);
 };
 
