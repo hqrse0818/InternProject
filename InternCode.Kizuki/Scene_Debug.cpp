@@ -12,6 +12,7 @@
 #include "../InternCodeAdachi/OBJ_Ice.h"
 #include "../InternCodeAdachi/OBJ_Sea.h"
 #include "../InternCodeAdachi/OBJ_AzarashiManager.h"
+#include "../InternCode.Kizuki/OBJ_AzarashiRemain.h"
 #include "../Component/Com_CameraTransform.h"
 #include "../Component/Com_Billboard.h"
 
@@ -68,8 +69,8 @@ void Scene_Debug::Init()
 	OBJ_AzarashiManager* AManager = new OBJ_AzarashiManager("manager", "asset\\data\\csv\\AzarashiManager.csv");
 	AddGameObject(AManager, 0);
 
-	//アザラシの残機
-	GameObject* ARemain = new GameObject("ARemainOBJ");
+	//アザラシの残機（キャラクター画像）
+	GameObject* ARemainChar = new GameObject("ARemainChar");
 
 	Com_CustomSprite* Sprite_buf = new Com_CustomSprite;
 	Sprite_buf->mType = Com_CustomSprite::CustomType::LeftTop; //CustomSpriteでポジション設定
@@ -79,12 +80,16 @@ void Scene_Debug::Init()
 	Shader_buf->p_mVS->Load(VS_SPRITE);
 	Shader_buf->p_mPS->Load(PS_SPRITE);
 
-	ARemain->AddComponent(Shader_buf);
-	ARemain->AddComponent(Sprite_buf);
+	ARemainChar->AddComponent(Shader_buf);
+	ARemainChar->AddComponent(Sprite_buf);
 
-	ARemain->p_mTransform->mScale.x = 100.0f;
-	ARemain->p_mTransform->mScale.y = 100.0f;
-	AddGameObject(ARemain);
+	ARemainChar->p_mTransform->mScale.x = 100.0f;
+	ARemainChar->p_mTransform->mScale.y = 100.0f;
+	AddGameObject(ARemainChar);
+
+	//アザラシの残機（数字）
+	OBJ_AzarashiRemain* ARemainNum = new OBJ_AzarashiRemain();
+	AddGameObject(ARemainNum);
 
 	//音
 	p_mAudio = new Com_Audio();

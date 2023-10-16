@@ -133,6 +133,8 @@ void OBJ_Ice::Update()
 		break;
 	}
 
+	
+
 	p_mShaderCom->p_mPS->WriteBuffer(0, &myColor);
 }
 

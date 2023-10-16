@@ -11,7 +11,7 @@
 #define StateSetNum (15)
 
 enum class SpawnState {
-    Wait, Spawn,End
+    Wait, Spawn,End,Calc
 };
 
 // 氷の残っている位置を取得してアザラシをスポーンさせる
@@ -30,8 +30,8 @@ private:
     // ゲーム時間ごとのスポーンレート
     std::vector<float> vec_SpawnRate;
 
-    int iMaxSpawn = 0;
-    int iSpawnedNum = 0;
+    static int iMaxSpawn;
+    static int iSpawnedNum;
     // コライダー中心
     DirectX::SimpleMath::Vector3 mAzarashiCenter = DirectX::SimpleMath::Vector3(0.0f, 0.0f, 0.0f);
     // コライダー半径
@@ -70,5 +70,16 @@ public:
     void Update();
 
 
+    void Update();
+
+    static int GetMaxSpawn()
+    {
+        return iMaxSpawn;
+    }
+
+    static int GetSpawnedNum()
+    {
+        return iSpawnedNum;
+    }
 };
 

@@ -8,6 +8,7 @@
 #include "../System/manager.h"
 #include "../System/Input.h"
 #include "../TextureFilePath.h"
+#include "../InternCode.Kizuki/OBJ_TitleLogo.h"
 #include "Scene_Test.h"
 
 using namespace DirectX::SimpleMath;
@@ -16,7 +17,6 @@ using namespace std;
 void Scene_Title::Init()
 {
 	p_mAudio = new Com_Audio();
-	bCheckCol = true;
 
 	p_mTransition = new OBJ_Transition("Transition");
 	p_mTransition->FadeOut(0.0f);
@@ -38,7 +38,7 @@ void Scene_Title::Init()
 	Shader_buf->p_mPS->Load(PS_SPRITE);
 	Title->AddComponent(Shader_buf);
 	Com_Sprite* Sprite_buf = new Com_Sprite();
-	Sprite_buf->SetTexture("asset/texture/start.png");
+	Sprite_buf->SetTexture("asset/texture/starthaikei.png");
 
 	Title->AddComponent(Sprite_buf);
 	Title->p_mTransform->SetPosition(SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2, 1.0f);
@@ -47,8 +47,11 @@ void Scene_Title::Init()
 	AddGameObject(Title, 4);
 
 	//タイトルロゴ生成
-	//OBJ_TitleLogo* TitleLogo = new OBJ_TitleLogo;
-	//AddGameObject(TitleLogo);
+	OBJ_TitleLogo* TitleLogo = new OBJ_TitleLogo;
+	TitleLogo->p_mTransform->SetPosition(SCREEN_WIDTH / 2, 300.0f, 0.0f);
+	TitleLogo->p_mTransform->mScale.x = 1200.0f;
+	TitleLogo->p_mTransform->mScale.y = 1000.0f;
+	AddGameObject(TitleLogo);
 
 	p_mAudio->Load("asset\\audio\\BGM\\タイトル画面 BGM.wav");
 	p_mAudio->SetUseTarget(false);
