@@ -22,8 +22,6 @@ OBJ_AzarashiManager::OBJ_AzarashiManager(const char* _name)
 
 OBJ_AzarashiManager::OBJ_AzarashiManager(const char* _name, const char* _FileName)
 {
-
-	
 	sObjectName = _name;
 	string sSpawnRateNum = ReadDataFromCSV(_FileName, RateNumRow);
 	string sGameTime = ReadDataFromCSV(_FileName, GameTimeRow);
@@ -214,7 +212,6 @@ void OBJ_AzarashiManager::Update()
 			iCurrentIndex++;
 		}
 	}
-	
 
 	switch (mState)
 	{

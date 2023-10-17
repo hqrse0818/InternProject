@@ -6,18 +6,17 @@ OBJ_Number::OBJ_Number()
 	fCurrenty = 0.0f;
 	fCurrentz = 0.0f;
 	fCurrentw = 0.0f;
+	Com_Shader* p_mShader = new Com_Shader();
+	p_mShader->p_mVS->Load(VS_SPRITE);
+	p_mShader->p_mPS->Load(PS_SPRITE);
+
+	AddComponent(p_mShader);
 
 	p_mSprite = new Com_CustomSprite();
 	p_mSprite->mType = Com_CustomSprite::CustomType::LeftTop;
 	p_mSprite->SetUpdate(true);
 	p_mSprite->SetTexture("asset/texture/zanki.png");
 	AddComponent(p_mSprite);
-
-	Com_Shader* p_mShader = new Com_Shader();
-	p_mShader->p_mVS->Load(VS_SPRITE);
-	p_mShader->p_mPS->Load(PS_SPRITE);
-
-	AddComponent(p_mShader);
 }
 
 void OBJ_Number::Update()

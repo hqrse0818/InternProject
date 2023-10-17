@@ -7,11 +7,18 @@
 class OBJ_AzarashiRemain :public OBJ_Number
 {
 private:
-	OBJ_Number* Nums[3];
+	OBJ_Number* Nums[3]{};
 	int iRemainNum = 0;
+	bool bIceCalc = false;
+	int iIceScore = 0;
 
 public:
 	OBJ_AzarashiRemain();
 	void Start();
 	void Update();
+
+	int GetIceScore()
+	{
+		return iIceScore;
+	}
 };

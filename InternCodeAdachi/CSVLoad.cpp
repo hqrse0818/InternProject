@@ -26,3 +26,17 @@ std::string ReadDataFromCSV(const char* _FileName, unsigned int ReadRow)
 
 	return "";
 }
+
+std::vector<std::string> SeparateString(std::string _str, char _Separatechar)
+{
+	vector<string> ret;
+
+	istringstream iss(_str);
+	string word;
+	while (getline(iss, word, _Separatechar))
+	{
+		ret.emplace_back(word);
+	}
+
+	return ret;
+}

@@ -112,6 +112,39 @@ DirectX::SimpleMath::Matrix Math::CalcMatrixFromVector(DirectX::SimpleMath::Vect
     return ret;
 }
 
+DirectX::SimpleMath::Vector3 Math::RotatoVectorTowardsTarget(DirectX::SimpleMath::Vector3 _myRotation, DirectX::SimpleMath::Vector3 _targetForward)
+{
+    float dot = GetDot(_myRotation, _targetForward);
+    float angle = acos(dot);
+    Vector3 cross = GetCross(_myRotation, _targetForward);
+
+    // 目標の正面ベクトルに対して回転するクォータニオンを作成
+    Quaternion rot;
+    rot.CreateFromAxisAngle(cross, angle);
+
+    // 目標の回転を計算
+    Vector3 ret;
+    ret.Transform(_myRotation, rot);
+
+    return ret;
+}
+
+DirectX::SimpleMath::Vector3 Math::RotatoVectorTowardsTargetY(DirectX::SimpleMath::Vector3 _myRotation, DirectX::SimpleMath::Vector3 _targetForward)
+{
+    float dot = GetDot(_myRotation, _targetForward);
+    float angle = acos(dot);
+
+    // 目標の正面ベクトルに対して回転するクォータニオンを作成
+    Quaternion rot;
+    rot.CreateFromAxisAngle(Vector3(0.0f, 1.0f, 0.0f), angle);
+
+    // 目標の回転を計算
+    Vector3 ret;
+    ret.Transform(_myRotation, rot);
+
+    return ret;
+}
+
 DirectX::SimpleMath::Vector3 Math::GetVector(DirectX::SimpleMath::Vector3 _Start, DirectX::SimpleMath::Vector3 _End)
 {
     Vector3 result = _End - _Start;

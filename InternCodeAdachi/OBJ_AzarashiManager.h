@@ -69,6 +69,7 @@ public:
     void Create();
     void Update();
 
+
     static int GetMaxSpawn()
     {
         return iMaxSpawn;

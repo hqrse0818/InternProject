@@ -2,19 +2,11 @@
 #include "../Scene/Scene.h"
 #include "../Component/Com_CustomSprite.h"
 #include "../Component/Com_Shader.h"
+#include "../InternCodeAdachi/OBJ_Ice.h"
 
 OBJ_AzarashiRemain::OBJ_AzarashiRemain()
 {
-	//Com_CustomSprite* p_mSprite = new Com_CustomSprite();
-	//p_mSprite->mType = Com_CustomSprite::CustomType::LeftTop;
-	//p_mSprite->SetTexture("asset/texture/zanki.png");
-	//AddComponent(p_mSprite);
-	//
-	//Com_Shader* p_mShader = new Com_Shader();
-	//p_mShader->p_mVS->Load(VS_SPRITE);
-	//p_mShader->p_mPS->Load(PS_SPRITE);
-	//
-	//AddComponent(p_mShader);
+	
 }
 
 void OBJ_AzarashiRemain::Start()
@@ -70,4 +62,25 @@ void OBJ_AzarashiRemain::Update()
 	Nums[2]->SetNum(iRemainNum);
 
 	OBJ_Number::Update();
+
+	
+
+	//アザラシの残機が0以下
+	if (iRemainNum <= 0)
+	{
+		//アザラシの全体数を取得
+		std::vector<OBJ_Azarashi*> azarashiRemain = GetScene()->GetGameObjects<OBJ_Azarashi>();
+
+		if (azarashiRemain.size() <= 0)
+		{
+			std::vector<OBJ_Ice*> iceRemain = GetScene()->GetGameObjects<OBJ_Ice>();
+
+			//足場のスコア計算
+			if (!bIceCalc)
+			{
+				iIceScore = iceRemain.size() * 500;
+				bIceCalc = true;
+			}
+		}
+	}
 }

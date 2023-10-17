@@ -48,13 +48,8 @@ void OBJ_Penguin::CreateFromCSV(const char* _FileName)
 	p_mShadowCom = new Com_Shadow();
 	
 	// •¶Žš—ñ‚ð(,)‚Å•ªŠ„
-	istringstream iss(Line);
-	string word;
-	std::vector<string> sv;
-	while (getline(iss, word, ','))
-	{
-		sv.emplace_back(word);
-	}
+	std::vector<string> sv = SeparateString(Line,',');
+	
 
 	if (sv.size() == PenguinStatuNum)
 	{
