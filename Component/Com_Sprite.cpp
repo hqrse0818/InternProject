@@ -18,9 +18,12 @@ void Com_Sprite::Init()
 
 void Com_Sprite::Uninit()
 {
-	p_mVertexBuffer->Release();
-	p_mSRV->Uninit();
-	delete p_mSRV;
+	if (p_mVertexBuffer)
+	{
+		p_mVertexBuffer->Release();
+		p_mSRV->Uninit();
+		delete p_mSRV;
+	}
 }
 
 void Com_Sprite::Update()
