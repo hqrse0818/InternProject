@@ -31,11 +31,12 @@ void OBJ_AzarashiRemain::Update()
 {
 	iRemainNum = OBJ_AzarashiManager::GetMaxSpawn() - OBJ_AzarashiManager::GetSpawnedNum(); //c‚è‚ÌƒAƒUƒ‰ƒV‚ğŒvZ
 	
-	if (iRemainNum < 100)
+	if (iRemainNum < 100) //100–¢–
 	{
-		Nums[0]->SetActive(false);
+		Nums[0]->SetActive(false); //•S‚ÌˆÊ‚ğÁ‚·
 
-		Nums[1]->SetPosition(100.0f, 0.0f, 0.0f);
+		//Œ…‚ğ¶‚É‹l‚ß‚é
+		Nums[1]->SetPosition(100.0f, 0.0f, 0.0f); 
 		Nums[2]->SetPosition(200.0f, 0.0f, 0.0f);
 	}
 	else
@@ -43,8 +44,18 @@ void OBJ_AzarashiRemain::Update()
 		Nums[0]->SetNum(iRemainNum / 100);
 	}
 
-	iRemainNum = abs(iRemainNum % 100);
-	Nums[1]->SetNum(iRemainNum / 10);
+	if (iRemainNum < 10)
+	{
+		Nums[1]->SetActive(false); //\‚ÌˆÊ‚ğÁ‚·
+
+		//Œ…‚ğ¶‚É‹l‚ß‚é
+		Nums[2]->SetPosition(100.0f, 0.0f, 0.0f);
+	}
+	else
+	{
+		iRemainNum = abs(iRemainNum % 100);
+		Nums[1]->SetNum(iRemainNum / 10);
+	}
 
 	iRemainNum = abs(iRemainNum % 10);
 	Nums[2]->SetNum(iRemainNum);

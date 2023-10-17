@@ -16,7 +16,7 @@
 #include "../Component/Com_CameraTransform.h"
 #include "../Component/Com_Billboard.h"
 
-#define IceNum (11)
+#define IceNum (9)
 #define IceScale (7)
 #define InitPos (-35)
 
