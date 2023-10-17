@@ -24,6 +24,8 @@ void OBJ_Ice::CreateFromCSV(const char* _FileName)
 
 	fShakeTime = stof(sv[0]); //—h‚ê‚éŽžŠÔ
 	fShakePower = stof(sv[1]); // —h‚ê‚Ì”ÍˆÍ
+	p_mCollider->SetCenter(stof(sv[2]), stof(sv[3]), stof(sv[4]));
+	p_mCollider->SetSize(stof(sv[5]), stof(sv[6]), stof(sv[7]));
 }
 
 OBJ_Ice::OBJ_Ice()

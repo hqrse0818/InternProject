@@ -15,6 +15,7 @@
 #include "../Component/Com_CameraTransform.h"
 #include "../Component/Com_Billboard.h"
 #include "../InternCodeAdachi/CSVLoad.h"
+#include "../InternCode.Kizuki/OBJ_AzarashiRemain.h"
 
 #define IceScale (7)
 
@@ -56,7 +57,7 @@ void Scene_Test::Init()
 		for (int j = 0; j < stagenum; j++)
 		{
 			// 氷の生成
-			OBJ_Ice* Ice = new OBJ_Ice("Ice");
+			OBJ_Ice* Ice = new OBJ_Ice("Ice", "asset/data/csv/IceStatus.csv");
 			Ice->p_mTransform->SetPosition(StageInit + i * IceScale, 0.0f, StageInit + j * IceScale);
 			AddGameObject(Ice);
 		}
@@ -114,6 +115,10 @@ void Scene_Test::Init()
 	BackGround->AddComponent(Model_buf);
 
 	AddGameObject(BackGround);
+
+	//アザラシの残機（数字）
+	OBJ_AzarashiRemain* ARemainNum = new OBJ_AzarashiRemain();
+	AddGameObject(ARemainNum);
 
 	//音
 	p_mAudio = new Com_Audio();

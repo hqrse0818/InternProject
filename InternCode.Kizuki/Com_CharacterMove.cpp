@@ -51,7 +51,12 @@ void Com_CharacterMove::Move(float _x, float _z)
 {
 	// 移動前の情報を保存
 	Vector3 CurrentPos = p_mObject->p_mTransform->mPosition;
-
+	static int frame = 0;
+	frame++;
+	if (frame > 100)
+	{
+		int a = 0;
+	}
 	// カメラの正面ベクトルを計算
 	Vector3 Target = p_mCameraCom->GetTargetPosition();
 	Vector3 CamPos = p_mCameraCom->p_mObject->p_mTransform->mPosition;
@@ -71,16 +76,27 @@ void Com_CharacterMove::Move(float _x, float _z)
 	Vector3 Velocity = Forward + Right;
 	p_mObject->p_mTransform->Translate(Velocity);
 
-	// 向きたい方向を求める
-	Vector3 CurrentForward = p_mObject->p_mTransform->mForward;
-	Vector3 MyPos = p_mObject->p_mTransform->mPosition * 2;
-	// 向きたい方向
-	Vector3 TargetVector = MyPos - CurrentPos;
-	// 正規化して内積を求める
-	TargetVector = Math::Normalize(TargetVector);
-	CurrentForward = Math::Normalize(CurrentForward);
-	float dot = Math::GetDot(TargetVector, CurrentForward);
-	float angle = acos(dot);
+	if (Velocity.x == 0 && Velocity.z == 0)
+	{
+		return;
+	}
+
+	//// 向きたい方向を求める
+	//Vector3 CurrentForward = p_mObject->p_mTransform->mForward;
+	//Vector3 MyPos = p_mObject->p_mTransform->mPosition * 2;
+	//// 向きたい方向
+	//Vector3 TargetVector = MyPos - CurrentPos;
+	//// 正規化して内積を求める
+	//TargetVector = Math::Normalize(TargetVector);
+	//CurrentForward = Math::Normalize(CurrentForward);
+	//float dot = Math::GetDot(TargetVector, CurrentForward)
+	//float angle = acos(dot);
+	Vector3 v = Math::Normalize(Velocity);
+	float angle = atan2f(v.x, v.z);
+	cout << angle << endl;
+	//Vector3 rot = Math::RotatoVectorTowardsTarget(p_mObject->p_mTransform->mRotation, Math::Normalize(Velocity));
+	//Matrix RotationMat = Math::CalcMatrixFromVector(p_mObject->p_mTransform->mForward, Math::Normalize(Velocity));
+	p_mObject->p_mTransform->mRotation.y = angle;
 
 }
 
