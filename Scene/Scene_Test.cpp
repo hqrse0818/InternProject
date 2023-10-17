@@ -88,27 +88,27 @@ void Scene_Test::Init()
 	OBJ_AzarashiManager* AManager = new OBJ_AzarashiManager("manager", "asset/data/csv/AzarashiManager.csv");
 	AddGameObject(AManager, 0);
 
-	////アザラシの残機
-	//GameObject* ARemain = new GameObject("ARemainOBJ");
+	//アザラシの残機
+	GameObject* ARemain = new GameObject("ARemainOBJ");
 
-	//Com_CustomSprite* Sprite_buf = new Com_CustomSprite;
-	//Sprite_buf->mType = Com_CustomSprite::CustomType::LeftTop; //CustomSpriteでポジション設定
-	//Sprite_buf->SetTexture("asset/texture/nokori.png");
+	Com_CustomSprite* Sprite_buf = new Com_CustomSprite;
+	Sprite_buf->mType = Com_CustomSprite::CustomType::LeftTop; //CustomSpriteでポジション設定
+	Sprite_buf->SetTexture("asset/texture/nokori.png");
 
-	//Com_Shader* Shader_buf = new Com_Shader();
-	//Shader_buf->p_mVS->Load(VS_SPRITE);
-	//Shader_buf->p_mPS->Load(PS_SPRITE);
+	Com_Shader* Shader_buf = new Com_Shader();
+	Shader_buf->p_mVS->Load(VS_SPRITE);
+	Shader_buf->p_mPS->Load(PS_SPRITE);
 
-	//ARemain->AddComponent(Shader_buf);
-	//ARemain->AddComponent(Sprite_buf);
+	ARemain->AddComponent(Shader_buf);
+	ARemain->AddComponent(Sprite_buf);
 
-	//ARemain->p_mTransform->mScale.x = 100.0f;
-	//ARemain->p_mTransform->mScale.y = 100.0f;
-	//AddGameObject(ARemain);
+	ARemain->p_mTransform->mScale.x = 100.0f;
+	ARemain->p_mTransform->mScale.y = 100.0f;
+	AddGameObject(ARemain);
 
 	//アザラシの残機（数字）
-	/*OBJ_AzarashiRemain* ARemainNum = new OBJ_AzarashiRemain("Zanki");
-	AddGameObject(ARemainNum);*/
+	OBJ_AzarashiRemain* ARemainNum = new OBJ_AzarashiRemain("Zanki");
+	AddGameObject(ARemainNum);
 
 	OBJ_BackGround* back = new OBJ_BackGround("haikei");
 	AddGameObject(back);
