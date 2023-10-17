@@ -27,6 +27,10 @@ namespace Math
 	DirectX::SimpleMath::Vector3 Normalize(DirectX::SimpleMath::Vector3 _val);
 	// ベクトルの方向から回転を求める
 	DirectX::SimpleMath::Matrix CalcMatrixFromVector(DirectX::SimpleMath::Vector3 _CurrentForward, DirectX::SimpleMath::Vector3 _TargetForward);
+	// 自身の回転から目標の正面ベクトルの方向に回転させるための値を取得する関数
+	DirectX::SimpleMath::Vector3 RotatoVectorTowardsTarget(DirectX::SimpleMath::Vector3 _myRotation, DirectX::SimpleMath::Vector3 _targetForward);
+	// y軸を中心に自身の回転から目標の正面ベクトルの方向に回転させるための値を取得する関数
+	DirectX::SimpleMath::Vector3 RotatoVectorTowardsTargetY(DirectX::SimpleMath::Vector3 _myRotation, DirectX::SimpleMath::Vector3 _targetForward);
 	// 2点間のベクトル取得
 	DirectX::SimpleMath::Vector3 GetVector(DirectX::SimpleMath::Vector3 _Start, DirectX::SimpleMath::Vector3 _End);
 	// 指定の乗数を取得

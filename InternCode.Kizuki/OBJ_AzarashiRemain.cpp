@@ -2,27 +2,54 @@
 #include "../Scene/Scene.h"
 #include "../Component/Com_CustomSprite.h"
 #include "../Component/Com_Shader.h"
+#include "../InternCodeAdachi/OBJ_Ice.h"
+#include "../InternCodeAdachi/CSVLoad.h"
 
-OBJ_AzarashiRemain::OBJ_AzarashiRemain()
+#define LoadRow (1)
+
+using namespace DirectX::SimpleMath;
+using namespace std;
+
+void OBJ_AzarashiRemain::CreateFromCSV(const char* _FileName)
 {
-	//Com_CustomSprite* p_mSprite = new Com_CustomSprite();
-	//p_mSprite->mType = Com_CustomSprite::CustomType::LeftTop;
-	//p_mSprite->SetTexture("asset/texture/zanki.png");
-	//AddComponent(p_mSprite);
-	//
-	//Com_Shader* p_mShader = new Com_Shader();
-	//p_mShader->p_mVS->Load(VS_SPRITE);
-	//p_mShader->p_mPS->Load(PS_SPRITE);
-	//
-	//AddComponent(p_mShader);
+	string Line = ReadDataFromCSV(_FileName, LoadRow);
+
+	// 文字列を(,)で分割
+	istringstream iss(Line);
+	string word;
+	std::vector<string> sv;
+	while (getline(iss, word, ','))
+	{
+		sv.emplace_back(word);
+	}
+
+	Nums[0]->SetScale(stof(sv[0]), stof(sv[1]), stof(sv[2]));
+	Nums[1]->SetScale(stof(sv[0]), stof(sv[1]), stof(sv[2]));
+	Nums[2]->SetScale(stof(sv[0]), stof(sv[1]), stof(sv[2]));
 }
 
-void OBJ_AzarashiRemain::Start()
+OBJ_AzarashiRemain::OBJ_AzarashiRemain()
 {
 	Nums[0] = new OBJ_Number();
 	Nums[1] = new OBJ_Number();
 	Nums[2] = new OBJ_Number();
+}
 
+OBJ_AzarashiRemain::OBJ_AzarashiRemain(const char* _name)
+	:OBJ_AzarashiRemain()
+{
+	sObjectName = _name;
+}
+
+OBJ_AzarashiRemain::OBJ_AzarashiRemain(const char* _ARemain, const char* _FileName)
+	:OBJ_AzarashiRemain()
+{
+	sObjectName = _ARemain;
+	CreateFromCSV(_FileName);
+}
+
+void OBJ_AzarashiRemain::Start()
+{
 	GetScene()->AddGameObject(Nums[0]);
 	GetScene()->AddGameObject(Nums[1]);
 	GetScene()->AddGameObject(Nums[2]);
@@ -31,43 +58,41 @@ void OBJ_AzarashiRemain::Start()
 	Nums[1]->SetPosition(200.0f, 0.0f, 0.0f);
 	Nums[2]->SetPosition(300.0f, 0.0f, 0.0f);
 
-	Nums[0]->SetScale(100.0f, 100.0f, 0.0f);
-	Nums[1]->SetScale(100.0f, 100.0f, 0.0f);
-	Nums[2]->SetScale(100.0f, 100.0f, 0.0f);
+	//Nums[0]->SetScale(100.0f, 100.0f, 0.0f);
+	//Nums[1]->SetScale(100.0f, 100.0f, 0.0f);
+	//Nums[2]->SetScale(100.0f, 100.0f, 0.0f);
 }
 
 void OBJ_AzarashiRemain::Update()
 {
 	iRemainNum = OBJ_AzarashiManager::GetMaxSpawn() - OBJ_AzarashiManager::GetSpawnedNum(); //残りのアザラシを計算
 	
-	if (iRemainNum < 100) //100未満
-	{
-		Nums[0]->SetActive(false); //百の位を消す
-
-		//桁を左に詰める
-		Nums[1]->SetPosition(100.0f, 0.0f, 0.0f); 
-		Nums[2]->SetPosition(200.0f, 0.0f, 0.0f);
-	}
-	else
-	{
-		Nums[0]->SetNum(iRemainNum / 100);
-	}
-
-	if (iRemainNum < 10)
-	{
-		Nums[1]->SetActive(false); //十の位を消す
-
-		//桁を左に詰める
-		Nums[2]->SetPosition(100.0f, 0.0f, 0.0f);
-	}
-	else
-	{
-		iRemainNum = abs(iRemainNum % 100);
-		Nums[1]->SetNum(iRemainNum / 10);
-	}
-
+	
+	Nums[0]->SetNum(iRemainNum / 100);	
+	iRemainNum = abs(iRemainNum % 100);
+	Nums[1]->SetNum(iRemainNum / 10);
 	iRemainNum = abs(iRemainNum % 10);
 	Nums[2]->SetNum(iRemainNum);
 
 	OBJ_Number::Update();
+
+
+	//アザラシの残機が0以下
+	if (iRemainNum <= 0)
+	{
+		//アザラシの全体数を取得
+		std::vector<OBJ_Azarashi*> azarashiRemain = GetScene()->GetGameObjects<OBJ_Azarashi>();
+
+		if (azarashiRemain.size() <= 0)
+		{
+			std::vector<OBJ_Ice*> iceRemain = GetScene()->GetGameObjects<OBJ_Ice>();
+
+			//足場のスコア計算
+			if (!bIceCalc)
+			{
+				iIceScore = iceRemain.size() * 500;
+				bIceCalc = true;
+			}
+		}
+	}
 }

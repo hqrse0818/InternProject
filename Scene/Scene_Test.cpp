@@ -14,15 +14,34 @@
 #include "../InternCodeAdachi/OBJ_AzarashiManager.h"
 #include "../Component/Com_CameraTransform.h"
 #include "../Component/Com_Billboard.h"
+#include "../InternCodeAdachi/CSVLoad.h"
+#include "../InternCode.Kizuki/OBJ_AzarashiRemain.h"
 
-#define IceNum (11)
 #define IceScale (7)
-#define InitPos (-35)
 
 using namespace DirectX::SimpleMath;
+using namespace std;
 
 void Scene_Test::Init()
 {
+	// ステージのブロック数の読み込み
+	string sStageNum = ReadDataFromCSV("asset/data/csv/Stage.csv", 1);
+	unsigned int stagenum = stoi(sStageNum);
+
+	int Stagecenter = 0;
+
+	if (stagenum % 2 == 0)
+	{
+		Stagecenter = stagenum / 2;
+	}
+	else
+	{
+		Stagecenter = stagenum / 2 + 1;
+	}
+
+	// 生成の開始位置計算
+	int StageInit = Stagecenter * -IceScale;
+	
 	// 当たり判定アクティブ化
 	bCheckCol = true;
 
@@ -33,13 +52,13 @@ void Scene_Test::Init()
 	AddKeyObject(Player);
 
 	// ステージ生成
-	for (int i = 0; i < IceNum; i++)
+	for (int i = 0; i < stagenum; i++)
 	{
-		for (int j = 0; j < IceNum; j++)
+		for (int j = 0; j < stagenum; j++)
 		{
 			// 氷の生成
-			OBJ_Ice* Ice = new OBJ_Ice("Ice");
-			Ice->p_mTransform->SetPosition(InitPos + i * IceScale, 0.0f, InitPos + j * IceScale);
+			OBJ_Ice* Ice = new OBJ_Ice("Ice", "asset/data/csv/IceStatus.csv");
+			Ice->p_mTransform->SetPosition(StageInit + i * IceScale, 0.0f, StageInit + j * IceScale);
 			AddGameObject(Ice);
 		}
 	}
@@ -85,6 +104,21 @@ void Scene_Test::Init()
 	ARemain->p_mTransform->mScale.x = 100.0f;
 	ARemain->p_mTransform->mScale.y = 100.0f;
 	AddGameObject(ARemain);
+
+	GameObject* BackGround = new GameObject("Back");
+	Shader_buf = new Com_Shader();
+	Shader_buf->p_mVS->Load(VS_MODEL);
+	Shader_buf->p_mPS->Load("shader\\PS_HitLine.cso");
+	BackGround->AddComponent(Shader_buf);
+	Com_Model* Model_buf = new Com_Model();
+	Model_buf->SetModelData("Haikei");
+	BackGround->AddComponent(Model_buf);
+
+	AddGameObject(BackGround);
+
+	//アザラシの残機（数字）
+	OBJ_AzarashiRemain* ARemainNum = new OBJ_AzarashiRemain();
+	AddGameObject(ARemainNum);
 
 	//音
 	p_mAudio = new Com_Audio();

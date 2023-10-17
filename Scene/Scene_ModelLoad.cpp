@@ -77,6 +77,11 @@ void Scene_ModelLoad::Init()
 	th3.join();
 	th4 = std::thread(LoadStage);
 	th4.join();
+
+	// ”wŒi“Ç‚Ýž‚Ý
+	ModelData* BackGround = new ModelData();
+	BackGround->LoadModel("asset\\model\\BackGround\\haikei.fbx", true);
+	BackGround->Push("Haikei");
 }
 
 void Scene_ModelLoad::Update()
@@ -108,5 +113,5 @@ void Scene_ModelLoad::Update()
 		Manager::SetScene<Scene_Test>();
 	}*/
 	
-	Manager::SetScene<Scene_Debug>();
+	Manager::SetScene<Scene_Title>();
 }

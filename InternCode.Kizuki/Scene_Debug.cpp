@@ -88,7 +88,7 @@ void Scene_Debug::Init()
 	AddGameObject(ARemainChar);
 
 	//アザラシの残機（数字）
-	OBJ_AzarashiRemain* ARemainNum = new OBJ_AzarashiRemain();
+	OBJ_AzarashiRemain* ARemainNum = new OBJ_AzarashiRemain("ARemainNum","asset/data/csv/AzarashiZankiUI.csv");
 	AddGameObject(ARemainNum);
 
 	//音
