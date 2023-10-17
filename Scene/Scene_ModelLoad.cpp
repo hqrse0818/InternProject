@@ -10,8 +10,8 @@ void LoadPenguin()
 	ModelData* CreatePenguin = new ModelData();
 	CreatePenguin->LoadModel("asset\\model\\Penguin\\pengin_rig_v1.fbx", true);
 	CreatePenguin->LoadAnimation("asset\\model\\Penguin\\pengin_walk_v1.fbx", "Walk");
-	CreatePenguin->LoadAnimation("asset\\model\\Penguin\\pengin_jump3_v1.fbx", "ToJump");
-	CreatePenguin->LoadAnimation("asset\\model\\Penguin\\pengin_jump2_v1.fbx", "Jump");
+	CreatePenguin->LoadAnimation("asset\\model\\Penguin\\pengin_jump1_v3.fbx", "ToJump");
+	CreatePenguin->LoadAnimation("asset\\model\\Penguin\\pengin_jump2_v2.fbx", "Jump");
 	CreatePenguin->LoadAnimation("asset\\model\\Penguin\\pengin_hipdrop1_v1.fbx", "HipDrop");
 	CreatePenguin->LoadAnimation("asset\\model\\Penguin\\pengin_hipdrop2_v1.fbx", "AfterHipDrop");
 	CreatePenguin->LoadAnimation("asset\\model\\Penguin\\pengin_idle_v1.fbx", "Idle");
@@ -66,6 +66,30 @@ void LoadStage()
 	CreateIce->Push("Ice_HP1");
 }
 
+void LoadBackPenguinA()
+{
+	ModelData* Creator = new ModelData();
+	Creator->LoadModel("asset\\model\\BackGround\\pengin_haikei_blue.fbx", true);
+	Creator->LoadAnimation("asset\\model\\BackGround\\pengin_haikei_blue.fbx", "Idle");
+	Creator->Push("BluePenguin");
+}
+
+void LoadBackPenguinB()
+{
+	ModelData* Creator = new ModelData();
+	Creator->LoadModel("asset\\model\\BackGround\\pengin_haikei_red.fbx", true);
+	Creator->LoadAnimation("asset\\model\\BackGround\\pengin_haikei_red.fbx", "Idle");
+	Creator->Push("RedPenguin");
+}
+
+void LoadBackGround()
+{
+	ModelData* Creator = new ModelData();
+	Creator->LoadModel("asset\\model\\BackGround\\haikei_v2.fbx", true);
+	Creator->Push("BackGround");
+}
+
+
 void Scene_ModelLoad::Init()
 {
 	// 使用するモデルデータをここで読み込む
@@ -77,11 +101,12 @@ void Scene_ModelLoad::Init()
 	th3.join();
 	th4 = std::thread(LoadStage);
 	th4.join();
-
-	// 背景読み込み
-	ModelData* BackGround = new ModelData();
-	BackGround->LoadModel("asset\\model\\BackGround\\haikei.fbx", true);
-	BackGround->Push("Haikei");
+	th5 = std::thread(LoadBackPenguinA);
+	th5.join();
+	th6 = std::thread(LoadBackPenguinA);
+	th6.join();
+	th7 = std::thread(LoadBackGround);
+	th7.join();
 }
 
 void Scene_ModelLoad::Update()

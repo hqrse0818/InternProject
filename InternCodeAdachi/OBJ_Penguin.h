@@ -10,7 +10,7 @@
 #include "Com_Shadow.h"
 
 // ペンギンのプレファブ
-#define PenguinStatuNum (15)
+#define PenguinStatuNum (16)
 
 // ペンギンのステート
 enum class PenguinState

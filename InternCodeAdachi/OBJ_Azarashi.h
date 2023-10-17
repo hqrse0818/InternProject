@@ -5,6 +5,7 @@
 #include "../Component/Com_Shader.h"
 #include "Com_Model.h"
 #include "Com_Foot.h"
+#include "../GameObject/OBJ_Shadow.h"
 
 // アザラシ
 
@@ -23,6 +24,8 @@ enum class AzrashiState
     // 被弾状態(移動,移動終了で被弾状態終了->攻撃待ち)
     // 被弾状態中に海に触れる->Deathに移行
     Damage, 
+    //ペンギンに上に乗られた
+
     // 飛び込み
     Dive,
     // 飛び込みアニメーション終了後処理
@@ -73,15 +76,24 @@ private:
     Com_Shader* p_mShaderCom = nullptr;
     Com_Model* p_mModelCom = nullptr;
     Com_Foot* p_mFootCom = nullptr;
+
+    OBJ_Shadow* p_mShadowObj = nullptr;
 public:
     OBJ_Azarashi();
     OBJ_Azarashi(const char* _name);
     OBJ_Azarashi(const char* _name, int _ModelKind);
     void Init()override;
+    void Start()override;
     void Update()override;
 
     // スポーン位置の設定
     void SetTargetPosition(float _inx, float _iny, float _inz, float _tarx, float _tary, float _tarz, float _heightY);
+
+    // 外部からステートの設定
+    void SetAzarashiState(AzrashiState _state)
+    {
+        mState = _state;
+    }
 
     void OnCollisionEnter(GameObject* _obj);
     void OnCollisionStay(GameObject* _obj);

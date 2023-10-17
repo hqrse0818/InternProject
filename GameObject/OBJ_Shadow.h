@@ -11,14 +11,13 @@ private:
     GameObject* p_mTarget;
     Com_Shader* p_mShaderCom;
     Com_Shadow* p_mShadowCom;
-    Com_BoxCollider* p_mColliderCom;
     
 public:
     OBJ_Shadow();
     OBJ_Shadow(const char* _name);
 
+    void Init();
     void Update();
-    void OnCollisionStay(GameObject* _obj);
 
     void SetTarget(GameObject* _target);
 

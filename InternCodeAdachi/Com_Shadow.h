@@ -9,7 +9,6 @@ private:
     DirectX::SimpleMath::Vector2 mSize = DirectX::SimpleMath::Vector2(1.0f, 1.0f);
     DirectX::SimpleMath::Vector2 mOriginalSize = DirectX::SimpleMath::Vector2(1.0f, 1.0f);
     VERTEX_3D vertex[4];
-    float fHeight = 0.05f;
 
     DirectX::SimpleMath::Vector3 mPosition = DirectX::SimpleMath::Vector3(0.0f, 0.0f, 0.0f);
 public:
@@ -19,6 +18,7 @@ public:
     void Init();
     void Update();
     void Draw();
+    void Uninit();
 
     void SetSize(float _x, float _y)
     {
@@ -26,9 +26,9 @@ public:
         mOriginalSize.y = _y;
     }
 
-    void SetShadowHeight(float _height)
+    void SetPositionY(float _height)
     {
-        fHeight = _height;
+        mPosition.y = _height;
     }
 
 };

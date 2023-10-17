@@ -7,6 +7,7 @@
 #include "CSVLoad.h"
 #include "../System/Time.h"
 #include "../GameObject/OBJ_Shadow.h"
+#include "OBJ_Azarashi.h"
 
 #define LoadRow (1)
 
@@ -44,8 +45,6 @@ void OBJ_Penguin::CreateFromCSV(const char* _FileName)
 	p_mGravityCom = new Com_Gravity();
 	// 足元コンポーネント
 	p_mFootCom = new Com_Foot();
-	// 影コンポーネント
-	p_mShadowCom = new Com_Shadow();
 	
 	// 文字列を(,)で分割
 	std::vector<string> sv = SeparateString(Line,',');
@@ -78,6 +77,9 @@ void OBJ_Penguin::CreateFromCSV(const char* _FileName)
 		p_mJumpCom->SetImpactRange(stof(sv[13]));
 		// よろめきの強さ
 		this->fDamagedPower = stof(sv[14]);
+		// スケール
+		float scale = stof(sv[15]);
+		SetScale(scale, scale, scale);
 	}
 	
 
@@ -86,8 +88,6 @@ void OBJ_Penguin::CreateFromCSV(const char* _FileName)
 	AddComponent(p_mJumpCom);
 	AddComponent(p_mGravityCom);
 	AddComponent(p_mFootCom);
-	AddComponent(p_mShadowCom);
-	p_mShadowCom->SetSize(3.0f, 3.0f);	
 }
 
 OBJ_Penguin::OBJ_Penguin()
@@ -308,8 +308,6 @@ void OBJ_Penguin::OnCollisionEnter(GameObject* _obj)
 			{
 				mState = PenguinState::Walk;
 			}
-
-			p_mShadowCom->SetShadowHeight(p_mTransform->mPosition.y);
 		}
 	}
 	if (_obj->mColType == Collider::ColliderForm::Sphere)
@@ -328,6 +326,11 @@ void OBJ_Penguin::OnCollisionEnter(GameObject* _obj)
 
 				mState = PenguinState::Damage;
 				p_mJumpCom->SetJumpFlg(false);
+			}
+			if (mState == PenguinState::HipDrop)
+			{
+				mState = PenguinState::HipDropOnAzarashi;
+				static_cast<OBJ_Azarashi*>(_obj)->SetAzarashiState(AzrashiState::)
 			}
 		}
 	}

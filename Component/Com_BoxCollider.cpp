@@ -33,10 +33,12 @@ void Com_BoxCollider::Update()
 	}
 	// ボックス位置の設定
 	mAABB.Center = p_mObject->p_mTransform->mPosition + mCenter;
+	mAABB.Size = mSize * p_mObject->p_mTransform->mScale;
 }
 
 void Com_BoxCollider::UpdateAABB()
 {
+	mAABB.Size = mSize * p_mObject->p_mTransform->mScale;
 	mAABB.Center = p_mObject->p_mTransform->mPosition + mCenter;
 }
 

@@ -23,9 +23,7 @@ private:
     float fElapsedTime = 0.0f; //経過時間
     float fShakePower = 0.1f; // 揺れの範囲
 
-    float fLastLifeWaitTime = 2.0f;
-
-    int iRemainIce = 0; //残った足場の数
+    float fLastLifeWaitTime = 1.0f;
 
     Vector3 originalPosition; // オブジェクトの元の位置を格納する変数
 
@@ -40,6 +38,9 @@ public:
     void Update();
 
     void HpCalc(); //足場のHP計算
+
+    void SubAllHP();
+    
     int GetHP()
     {
         return iHP;
@@ -52,9 +53,9 @@ public:
         return min + static_cast<float>(rand()) / (static_cast<float>(RAND_MAX / (max - min)));
     }
 
-    int GetRemainIce()
+    Com_BoxCollider* GetColliderCom()
     {
-        return iRemainIce;
+        return p_mCollider;
     }
 };
 

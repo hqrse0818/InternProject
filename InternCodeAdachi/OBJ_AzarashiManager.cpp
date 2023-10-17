@@ -128,9 +128,6 @@ void OBJ_AzarashiManager::Create()
 	azarashi->GetColliderCom()->fRadius = fAzarashiRadius;
 	azarashi->GetFootCom()->SetFootHeight(fFootHeight);
 	azarashi->SetAzrashiStatus(fAfterWait, fAttackDuration, fMoveSpeed, fVelocity, fBlake, fLength,fDamageDistance);
-
-	azarashi->Init();
-	azarashi->Start();
 	
 
 	// スポーンエリアを大まかに指定
@@ -181,10 +178,11 @@ void OBJ_AzarashiManager::Create()
 
 	Vector3 target = vec[r]->p_mTransform->mPosition;
 
-	// スタート位置とターゲット位置の設定
-	azarashi->SetTargetPosition(init.x, init.y, init.z,target.x, fIceY, target.z, fCenterY);
-
 	GetScene()->AddGameObject(azarashi);
+	azarashi->Init();
+	// スタート位置とターゲット位置の設定
+	azarashi->SetTargetPosition(init.x, init.y, init.z, target.x, fIceY, target.z, fCenterY);
+	azarashi->Start();
 	azarashi->Update();
 
 	iSpawnedNum++;

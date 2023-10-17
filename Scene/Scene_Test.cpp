@@ -5,7 +5,6 @@
 #include "../System/Time.h"
 #include "../System/manager.h"
 
-
 #include "../InternCodeAdachi/OBJ_Penguin.h"
 #include "../InternCodeAdachi/OBJ_Azarashi.h"
 #include "../InternCodeAdachi/Com_AngleCamera.h"
@@ -16,8 +15,7 @@
 #include "../Component/Com_Billboard.h"
 #include "../InternCodeAdachi/CSVLoad.h"
 #include "../InternCode.Kizuki/OBJ_AzarashiRemain.h"
-
-#define IceScale (7)
+#include "../InternCodeAdachi/OBJ_BackGround.h"
 
 using namespace DirectX::SimpleMath;
 using namespace std;
@@ -26,7 +24,9 @@ void Scene_Test::Init()
 {
 	// ステージのブロック数の読み込み
 	string sStageNum = ReadDataFromCSV("asset/data/csv/Stage.csv", 1);
-	unsigned int stagenum = stoi(sStageNum);
+	std::vector<string> IceSetting = SeparateString(sStageNum, ',');
+	unsigned int stagenum = stoi(IceSetting[0]);
+	float IceScale = stof(IceSetting[1]);
 
 	int Stagecenter = 0;
 
@@ -40,7 +40,7 @@ void Scene_Test::Init()
 	}
 
 	// 生成の開始位置計算
-	int StageInit = Stagecenter * -IceScale;
+	int StageInit = IceScale * -Stagecenter;
 	
 	// 当たり判定アクティブ化
 	bCheckCol = true;
@@ -58,7 +58,8 @@ void Scene_Test::Init()
 		{
 			// 氷の生成
 			OBJ_Ice* Ice = new OBJ_Ice("Ice", "asset/data/csv/IceStatus.csv");
-			Ice->p_mTransform->SetPosition(StageInit + i * IceScale, 0.0f, StageInit + j * IceScale);
+			Com_BoxCollider* col = Ice->GetColliderCom();
+			Ice->p_mTransform->SetPosition(StageInit + i * col->mSize.x  * Ice->p_mTransform->mScale.x, 0.0f, StageInit + j * col->mSize.z * Ice->p_mTransform->mScale.z);
 			AddGameObject(Ice);
 		}
 	}
@@ -105,20 +106,12 @@ void Scene_Test::Init()
 	ARemain->p_mTransform->mScale.y = 100.0f;
 	AddGameObject(ARemain);
 
-	GameObject* BackGround = new GameObject("Back");
-	Shader_buf = new Com_Shader();
-	Shader_buf->p_mVS->Load(VS_MODEL);
-	Shader_buf->p_mPS->Load("shader\\PS_HitLine.cso");
-	BackGround->AddComponent(Shader_buf);
-	Com_Model* Model_buf = new Com_Model();
-	Model_buf->SetModelData("Haikei");
-	BackGround->AddComponent(Model_buf);
-
-	AddGameObject(BackGround);
-
 	//アザラシの残機（数字）
 	OBJ_AzarashiRemain* ARemainNum = new OBJ_AzarashiRemain();
 	AddGameObject(ARemainNum);
+
+	OBJ_BackGround* back = new OBJ_BackGround("haikei");
+	AddGameObject(back);
 
 	//音
 	p_mAudio = new Com_Audio();

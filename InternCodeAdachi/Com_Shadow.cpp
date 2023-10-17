@@ -58,30 +58,6 @@ void Com_Shadow::Update()
 {
 	mPosition.x = p_mObject->p_mTransform->mPosition.x;
 	mPosition.z = p_mObject->p_mTransform->mPosition.z;
-	mPosition.y = p_mObject->p_mTransform->mPosition.y + fHeight;
-
-	//// ’¸“_î•ñ‚ÌÝ’è
-	//Vector3 Pos = p_mObject->p_mTransform->mPosition;
-
-	//vertex[0].Position = Vector3(Pos.x - mOriginalSize.x, fHeight, Pos.z - mOriginalSize.y);
-	//vertex[0].Normal = Vector3(0.0f, 1.0f, 0.0f);
-	//vertex[0].Diffuse = Vector4(1.0f, 1.0f, 1.0f, 1.0f);
-	//vertex[0].TexCoord = Vector2(0.0f, 0.0f);
-
-	//vertex[1].Position = Vector3(Pos.x + mOriginalSize.x, fHeight, Pos.z - mOriginalSize.y);
-	//vertex[1].Normal = Vector3(0.0f, 1.0f, 0.0f);
-	//vertex[1].Diffuse = Vector4(1.0f, 1.0f, 1.0f, 1.0f);
-	//vertex[1].TexCoord = Vector2(1.0f, 0.0f);
-
-	//vertex[2].Position = Vector3(Pos.x - mOriginalSize.x, fHeight, Pos.z + mOriginalSize.y);
-	//vertex[2].Normal = Vector3(0.0f, 1.0f, 0.0f);
-	//vertex[2].Diffuse = Vector4(1.0f, 1.0f, 1.0f, 1.0f);
-	//vertex[2].TexCoord = Vector2(0.0f, 1.0f);
-
-	//vertex[3].Position = Vector3(Pos.x + mOriginalSize.x, fHeight, Pos.z + mOriginalSize.y);
-	//vertex[3].Normal = Vector3(0.0f, 1.0f, 0.0f);
-	//vertex[3].Diffuse = Vector4(1.0f, 1.0f, 1.0f, 1.0f);
-	//vertex[3].TexCoord = Vector2(1.0f, 1.0f);
 }
 
 void Com_Shadow::Draw()
@@ -116,4 +92,9 @@ void Com_Shadow::Draw()
 	Renderer::GetDeviceContext()->Draw(4, 0);
 
 	Renderer::SetDepthEnable(true);
+}
+
+void Com_Shadow::Uninit()
+{
+	Com_3DSprite::Uninit();
 }

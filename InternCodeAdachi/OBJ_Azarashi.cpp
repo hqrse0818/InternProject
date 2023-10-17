@@ -4,6 +4,8 @@
 #include "../System/Time.h"
 #include "../Component/Com_BoxCollider.h"
 #include "OBJ_Ice.h"
+#include "../GameObject/OBJ_Shadow.h"
+#include "../Scene/Scene.h"
 #include <iostream>
 
 using namespace DirectX::SimpleMath;
@@ -107,6 +109,16 @@ void OBJ_Azarashi::Init()
 	
 }
 
+void OBJ_Azarashi::Start()
+{
+	OBJ_Shadow* myShadow = new OBJ_Shadow("PenguinShadow");
+	myShadow->SetTarget(this);
+	myShadow->Init();
+	myShadow->Start();
+	GetScene()->AddGameObject(myShadow);
+	p_mShadowObj = myShadow;
+}
+
 void OBJ_Azarashi::Update()
 {
 	// コンポーネントの更新
@@ -130,10 +142,18 @@ void OBJ_Azarashi::Update()
 			// スポーン後の攻撃待ちに移行
 			mState = AzrashiState::SpawnToTarget;
 			p_mModelCom->SetPlayAnimation(false);
+			SetRotation(0.0f, 0.0f, 0.0f);
+			p_mShadowObj->SetActive(true);
 			break;
 		}
 		// 移動量が超えない場合移動させる
 		p_mTransform->Translate(Velocity);
+
+		Vector3 v = Math::Normalize(Velocity);
+		float angley = atan2f(v.x, v.z);
+		float anglex = atan2f(v.y, v.z);
+		float anglez = atan2f(v.x, v.z);
+		SetRotation(-anglex, -angley, -anglez);
 	}
 		break;
 	case AzrashiState::SpawnToTarget:
@@ -158,6 +178,11 @@ void OBJ_Azarashi::Update()
 		}
 		// 移動量が超えない場合移動させる
 		p_mTransform->Translate(Velocity);
+		if (Velocity.x == 0 && Velocity.y == 0 && Velocity.z == 0)
+		{
+			return;
+		}
+		Vector3 v = Math::Normalize(Velocity);
 	}
 		break;
 	case AzrashiState::AfterSpawnWait:
@@ -227,6 +252,8 @@ void OBJ_Azarashi::Update()
 		Translate(0.0f, -2.0f, 0.0f);
 		break;
 	case AzrashiState::Death:
+		p_mShadowObj->bDestroy = true;
+		p_mShadowObj->SetActive(false);
 		p_mModelCom->SetPlayAnimation(false);
 		bDestroy = true;
 		break;
