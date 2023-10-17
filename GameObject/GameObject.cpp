@@ -187,11 +187,14 @@ void GameObject::PreDraw()
 
 void GameObject::Draw()
 {
-	for (auto com : p_mComponentList)
+	if (bActive)
 	{
-		if (com->bEnable)
+		for (auto com : p_mComponentList)
 		{
-			com->Draw();
+			if (com->bEnable)
+			{
+				com->Draw();
+			}
 		}
 	}
 }

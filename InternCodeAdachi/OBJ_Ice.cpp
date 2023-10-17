@@ -26,6 +26,7 @@ void OBJ_Ice::CreateFromCSV(const char* _FileName)
 	fShakePower = stof(sv[1]); // —h‚ê‚Ì”ÍˆÍ
 	p_mCollider->SetCenter(stof(sv[2]), stof(sv[3]), stof(sv[4]));
 	p_mCollider->SetSize(stof(sv[5]), stof(sv[6]), stof(sv[7]));
+	SetScale(stof(sv[8]), stof(sv[9]), stof(sv[10]));
 }
 
 OBJ_Ice::OBJ_Ice()
@@ -167,6 +168,13 @@ void OBJ_Ice::HpCalc()
 		p_mModelCom->SetModelData(ICE_HP1);
 		break;
 	}
+}
+
+void OBJ_Ice::SubAllHP()
+{
+	iHP = 1;
+	p_mAudio_Break->Play();
+	p_mModelCom->SetModelData(ICE_HP1);
 }
 
 //‘«ê‚ª—h‚ê‚éˆ—

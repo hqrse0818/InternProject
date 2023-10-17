@@ -193,6 +193,7 @@
     <ClCompile Include="InternCodeAdachi\OBJ_Sea.cpp" />
     <ClCompile Include="InternCodeAdachi\OBJ_AzarashiManager.cpp" />
     <ClCompile Include="GameObject\OBJ_Shadow.cpp" />
+    <ClCompile Include="InternCodeAdachi\OBJ_BackGround.cpp" />
     <ClCompile Include="Scene\Scene.cpp" />
     <ClCompile Include="Scene\Scene_Title.cpp" />
     <ClCompile Include="Scene\Scene_Test.cpp" />
@@ -271,6 +272,7 @@
     <ClInclude Include="InternCodeAdachi\OBJ_Sea.h" />
     <ClInclude Include="InternCodeAdachi\OBJ_AzarashiManager.h" />
     <ClInclude Include="GameObject\OBJ_Shadow.h" />
+    <ClInclude Include="InternCodeAdachi\OBJ_BackGround.h" />
     <ClInclude Include="Scene\Scene.h" />
     <ClInclude Include="Scene\Scene_Title.h" />
     <ClInclude Include="Scene\Scene_Test.h" />

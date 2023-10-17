@@ -2,6 +2,7 @@
 #if defined (DEBUG) || defined(_DEBUG)
 #include "../Component/Com_RenderCollider.h"
 #include "../DirectX//Shader.h"
+#include "../Component/Com_SphereCollider.h"
 #include "../Format.h"
 
 // 球状コライダーの簡易描画用コンポーネント八面体を描画する

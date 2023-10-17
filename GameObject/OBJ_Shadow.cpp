@@ -10,12 +10,8 @@ OBJ_Shadow::OBJ_Shadow()
 	AddComponent(p_mShaderCom);
 	p_mShadowCom = new Com_Shadow();
 	p_mShadowCom->SetSize(4.0f, 4.0f);
+	p_mShadowCom->SetPositionY(2.1f);
 	AddComponent(p_mShadowCom);
-	p_mColliderCom = new Com_BoxCollider();
-	p_mColliderCom->SetCenter(0.0f, 0.0f, 0.0f);
-	p_mColliderCom->SetSize(1.0f, 1.0f, 1.0f);
-	p_mColliderCom->bMovable = true;
-	AddComponent(p_mColliderCom);
 	p_mTransform->mPosition.y = 1.0f;
 }
 
@@ -25,25 +21,27 @@ OBJ_Shadow::OBJ_Shadow(const char* _name)
 	sObjectName = _name;
 }
 
-void OBJ_Shadow::Update()
+void OBJ_Shadow::Init()
 {
-	GameObject::Update();
-
+	GameObject::Init();
 	p_mTransform->mPosition.x = p_mTarget->p_mTransform->mPosition.x;
 	p_mTransform->mPosition.z = p_mTarget->p_mTransform->mPosition.z;
 }
 
-void OBJ_Shadow::OnCollisionStay(GameObject* _obj)
+void OBJ_Shadow::Update()
 {
-	GameObject::OnCollisionStay(_obj);
-
-	if (_obj->mColType == Collider::ColliderForm::Box)
+	if (bActive)
 	{
-		Com_BoxCollider* col = _obj->GetComponent<Com_BoxCollider>();
-		if (col->mColliderTag == ColliderKind::ColTag_Ice)
-		{
-			p_mTransform->mPosition.y = col->Getmax().y + p_mTransform->mScale.y / 2;
-		}
+		GameObject::Update();
+
+		p_mTransform->mPosition.x = p_mTarget->p_mTransform->mPosition.x;
+		p_mTransform->mPosition.z = p_mTarget->p_mTransform->mPosition.z;
+
+		float distance = p_mTarget->p_mTransform->mPosition.y - p_mTransform->mPosition.y;
+
+		// ‹——£‚ª‰“‚¢‚Ù‚ÇƒTƒCƒY‚ª¬‚³‚­‚È‚é
+		float OutSize = 5.0f - (distance / 10);
+		p_mShadowCom->SetSize(OutSize, OutSize);
 	}
 }
 
