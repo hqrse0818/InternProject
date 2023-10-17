@@ -4,8 +4,10 @@
 #include "../GameObject/GameObject.h"
 #include "../Component/Com_Camera.h"
 #include "../System/CustomMath.h"
+#include <iostream>
 
 using namespace DirectX::SimpleMath;
+using namespace std;
 
 Com_CharacterMove::Com_CharacterMove()
 {
@@ -47,6 +49,9 @@ void Com_CharacterMove::MoveX(float _value)
 
 void Com_CharacterMove::Move(float _x, float _z)
 {
+	// 移動前の情報を保存
+	Vector3 CurrentPos = p_mObject->p_mTransform->mPosition;
+
 	// カメラの正面ベクトルを計算
 	Vector3 Target = p_mCameraCom->GetTargetPosition();
 	Vector3 CamPos = p_mCameraCom->p_mObject->p_mTransform->mPosition;
@@ -62,12 +67,20 @@ void Com_CharacterMove::Move(float _x, float _z)
 	Right *= _x * fMoveSpeed * Time->GetDeltaTime();
 	Right.y = 0.0f;
 
-	// 動く方向
+	// 動く方向&向きたい方向
 	Vector3 Velocity = Forward + Right;
 	p_mObject->p_mTransform->Translate(Velocity);
 
-	Vector3 Direction = Math::Normalize(Velocity);
-
+	// 向きたい方向を求める
+	Vector3 CurrentForward = p_mObject->p_mTransform->mForward;
+	Vector3 MyPos = p_mObject->p_mTransform->mPosition * 2;
+	// 向きたい方向
+	Vector3 TargetVector = MyPos - CurrentPos;
+	// 正規化して内積を求める
+	TargetVector = Math::Normalize(TargetVector);
+	CurrentForward = Math::Normalize(CurrentForward);
+	float dot = Math::GetDot(TargetVector, CurrentForward);
+	float angle = acos(dot);
 
 }
 

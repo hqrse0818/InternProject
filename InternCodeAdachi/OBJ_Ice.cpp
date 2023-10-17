@@ -144,7 +144,7 @@ void OBJ_Ice::HpCalc()
 	iHP--;
 	fElapsedTime = 0.0f;
 
-	if (2 <= iHP <= 4)
+	if (iHP <= 4 && iHP > 1);
 	{
 		p_mAudio_Damage->Play();
 	}

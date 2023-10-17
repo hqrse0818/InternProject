@@ -7,7 +7,7 @@
 class OBJ_AzarashiRemain :public OBJ_Number
 {
 private:
-	OBJ_Number* Nums[3];
+	OBJ_Number* Nums[3]{};
 	int iRemainNum = 0;
 
 public:
