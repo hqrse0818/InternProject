@@ -2,6 +2,7 @@
 #include "../Scene/Scene.h"
 #include "../Component/Com_CustomSprite.h"
 #include "../Component/Com_Shader.h"
+#include "../InternCodeAdachi/OBJ_Ice.h"
 
 OBJ_AzarashiRemain::OBJ_AzarashiRemain()
 {
@@ -61,4 +62,25 @@ void OBJ_AzarashiRemain::Update()
 	Nums[2]->SetNum(iRemainNum);
 
 	OBJ_Number::Update();
+
+	
+
+	//アザラシの残機が0以下
+	if (iRemainNum <= 0)
+	{
+		//アザラシの全体数を取得
+		std::vector<OBJ_Azarashi*> azarashiRemain = GetScene()->GetGameObjects<OBJ_Azarashi>();
+
+		if (azarashiRemain.size() <= 0)
+		{
+			std::vector<OBJ_Ice*> iceRemain = GetScene()->GetGameObjects<OBJ_Ice>();
+
+			//足場のスコア計算
+			if (!bIceCalc)
+			{
+				iIceScore = iceRemain.size() * 500;
+				bIceCalc = true;
+			}
+		}
+	}
 }

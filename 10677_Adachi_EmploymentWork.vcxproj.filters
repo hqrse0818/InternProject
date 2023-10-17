@@ -491,15 +491,6 @@
     <ClInclude Include="InternCode.Kizuki\OBJ_TitleLogo.h">
       <Filter>InternCodeKizuki</Filter>
     </ClInclude>
-    <ClInclude Include="InternCodeAdachi\Com_Shadow.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="GameObject\OBJ_Shadow.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="InternCodeAdachi\OBJ_BackGround.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="shader\unlitTexturePS.hlsl">
