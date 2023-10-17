@@ -4,14 +4,12 @@
 #include "../InternCodeAdachi/CSVLoad.h"
 #include "../ModelName.h"
 
-#define LoadRow (1)
-
 using namespace DirectX::SimpleMath;
 using namespace std;
 
 void OBJ_Ice::CreateFromCSV(const char* _FileName)
 {
-	string Line = ReadDataFromCSV(_FileName, LoadRow);
+	string Line = ReadDataFromCSV(_FileName, 1);
 
 	// •¶Žš—ñ‚ð(,)‚Å•ªŠ„
 	istringstream iss(Line);
@@ -147,7 +145,7 @@ void OBJ_Ice::HpCalc()
 	iHP--;
 	fElapsedTime = 0.0f;
 
-	if (iHP <= 4 && iHP > 1);
+	if (iHP <= 4 && iHP > 1)
 	{
 		p_mAudio_Damage->Play();
 	}

@@ -272,6 +272,15 @@ void Renderer::Uninit()
 	p_mSwapChain->Release();
 	p_mDeviceContext->Release();
 	p_mDevice->Release();
+
+	/*SAFE_RELEASE(p_mMatrixBuffer);
+	SAFE_RELEASE(p_mLightBuffer);
+	SAFE_RELEASE(p_mMaterialBuffer);
+	p_mDeviceContext->ClearState();
+	SAFE_RELEASE(p_mRenderTargetView);
+	SAFE_RELEASE(p_mSwapChain);
+	SAFE_RELEASE(p_mDeviceContext);
+	SAFE_RELEASE(p_mDevice);*/
 }
 
 

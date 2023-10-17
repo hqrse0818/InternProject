@@ -9,13 +9,11 @@
 #include "../GameObject/OBJ_Shadow.h"
 #include "OBJ_Azarashi.h"
 
-#define LoadRow (1)
-
 using namespace DirectX::SimpleMath;
 using namespace std;
 void OBJ_Penguin::CreateFromCSV(const char* _FileName)
 {
-	string Line = ReadDataFromCSV(_FileName, LoadRow);
+	string Line = ReadDataFromCSV(_FileName, 1);
 
 	// シェーダー
 	p_mShader = new Com_Shader();
@@ -330,7 +328,7 @@ void OBJ_Penguin::OnCollisionEnter(GameObject* _obj)
 			if (mState == PenguinState::HipDrop)
 			{
 				mState = PenguinState::HipDropOnAzarashi;
-				static_cast<OBJ_Azarashi*>(_obj)->SetAzarashiState(AzrashiState::)
+				//static_cast<OBJ_Azarashi*>(_obj)->SetAzarashiState(AzrashiState::)
 			}
 		}
 	}

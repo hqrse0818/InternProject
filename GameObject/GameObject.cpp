@@ -147,6 +147,7 @@ void GameObject::Update()
 
 void GameObject::Uninit()
 {
+	string name = this->sObjectName;
 	// 自身のコンポーネントを開放
 	for (auto com : p_mComponentList)
 	{

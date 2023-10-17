@@ -1,4 +1,5 @@
 #include "HighGetRand.h"
+#include "../Utility.h"
 
 HighRand* HighRand::instance = nullptr;
 std::default_random_engine HighRand::generator = {};
@@ -68,6 +69,6 @@ void HighRand::Uninit()
 {
 	if (instance != nullptr)
 	{
-		delete instance;
+		SAFE_DELETE(instance);
 	}
 }

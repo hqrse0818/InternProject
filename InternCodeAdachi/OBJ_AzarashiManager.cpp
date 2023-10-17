@@ -112,6 +112,11 @@ OBJ_AzarashiManager::OBJ_AzarashiManager(const char* _name, const char* _FileNam
 
 void OBJ_AzarashiManager::Create()
 {
+	// ターゲット位置設定
+	std::vector<OBJ_Ice*> vec = GetScene()->GetGameObjects<OBJ_Ice>();
+	if (vec.size() == 0)
+		return;
+
 	int Rand = HighRand::GetRand(0, 100);
 	if (Rand > 50)
 	{
@@ -170,10 +175,7 @@ void OBJ_AzarashiManager::Create()
 	}
 	break;
 	}
-	// ターゲット位置設定
-	std::vector<OBJ_Ice*> vec = GetScene()->GetGameObjects<OBJ_Ice>();
-	if (vec.size() == 0)
-		return;
+	
 	int r = HighRand::GetRand(0, vec.size() - 1);
 
 	Vector3 target = vec[r]->p_mTransform->mPosition;
