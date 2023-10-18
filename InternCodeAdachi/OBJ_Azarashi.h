@@ -24,8 +24,6 @@ enum class AzrashiState
     // 被弾状態(移動,移動終了で被弾状態終了->攻撃待ち)
     // 被弾状態中に海に触れる->Deathに移行
     Damage, 
-    //ペンギンに上に乗られた
-    PenguinOn,
     // 飛び込み
     Dive,
     // 飛び込みアニメーション終了後処理
@@ -38,6 +36,9 @@ class OBJ_Azarashi :
     public GameObject
 {
 private:
+    // 氷上のアザラシの数
+    static int s_iOnIceNum;
+
     // スポーン前状態で固定
     AzrashiState mState = AzrashiState::SpawnToCenter;
     // 被弾時の移動量
@@ -51,6 +52,8 @@ private:
     float fCnt = 0.0f;
     float fAttackDuration = 0.0f;
     float fAfterSpawnAttackWait = 0.0f;
+
+    unsigned int iScore = 0;
 
     // スポーン地点までの移動速度
     float fToSpawnSpeed = 20.0f;
@@ -78,6 +81,11 @@ private:
     Com_Foot* p_mFootCom = nullptr;
 
     OBJ_Shadow* p_mShadowObj = nullptr;
+
+    OBJ_Azarashi* p_mLeader = nullptr;
+public:
+    bool bLeader = false;
+
 public:
     OBJ_Azarashi();
     OBJ_Azarashi(const char* _name);
@@ -112,5 +120,13 @@ public:
         fDamagePermission = _Permis;
         fVelocityDistance = _VelocityDis;
     }
+
+    // 氷上のアザラシの数の取得
+    static int GetOnIceNum()
+    {
+        return s_iOnIceNum;
+    }
+
+    void SetLeader(OBJ_Azarashi* _obj);
 };
 

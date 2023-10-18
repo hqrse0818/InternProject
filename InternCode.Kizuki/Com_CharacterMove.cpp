@@ -93,7 +93,6 @@ void Com_CharacterMove::Move(float _x, float _z)
 	//float angle = acos(dot);
 	Vector3 v = Math::Normalize(Velocity);
 	float angle = atan2f(v.x, v.z);
-	cout << angle << endl;
 	//Vector3 rot = Math::RotatoVectorTowardsTarget(p_mObject->p_mTransform->mRotation, Math::Normalize(Velocity));
 	//Matrix RotationMat = Math::CalcMatrixFromVector(p_mObject->p_mTransform->mForward, Math::Normalize(Velocity));
 	p_mObject->p_mTransform->mRotation.y = angle;

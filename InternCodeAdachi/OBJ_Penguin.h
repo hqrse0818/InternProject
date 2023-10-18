@@ -10,7 +10,7 @@
 #include "Com_Shadow.h"
 
 // ペンギンのプレファブ
-#define PenguinStatuNum (16)
+#define PenguinStatuNum (19)
 
 // ペンギンのステート
 enum class PenguinState
@@ -77,6 +77,9 @@ private:
 
     // 停止許容距離
     float fDamagePermission = 0.05f;
+
+    // ヒップインパクトの拡大速度
+    float fImpactScalingSpeed = 0.5f;
 
     DirectX::SimpleMath::Vector3 mDamageVelocity = DirectX::SimpleMath::Vector3(0.0f, 0.0f, 0.0f);
 

@@ -8,6 +8,7 @@
 #include <array>
 #include <string>
 #include <thread>
+#include <iostream>
 
 #define LayerNum 8
 
@@ -191,6 +192,8 @@ public:
 		int layer = LayerCheck(_obj);
 
 		mList[layer].emplace_back(_obj);
+
+		//std::cout << layer << " : " << mList[layer].size() << std::endl;
 	}
 	void AddGameObject(GameObject* _obj, int Layer)
 	{

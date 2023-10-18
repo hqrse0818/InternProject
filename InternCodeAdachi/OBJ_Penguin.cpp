@@ -48,6 +48,7 @@ void OBJ_Penguin::CreateFromCSV(const char* _FileName)
 	std::vector<string> sv = SeparateString(Line,',');
 	
 
+	// vectorコンテナのサイズと設定する数を比較
 	if (sv.size() == PenguinStatuNum)
 	{
 		// 移動速度
@@ -78,9 +79,16 @@ void OBJ_Penguin::CreateFromCSV(const char* _FileName)
 		// スケール
 		float scale = stof(sv[15]);
 		SetScale(scale, scale, scale);
+
+		fImpactScalingSpeed = stof(sv[16]);
+
+		p_mGravityCom->SetGravity(stof(sv[17]));
+
+		p_mGravityCom->SetGravCoef(stof(sv[18]));
 	}
 	
-	p_mGravityCom->SetGravity(8.0f);
+	
+	
 
 	// コンポーネントの追加
 	AddComponent(p_mMoveCom);
@@ -204,6 +212,19 @@ void OBJ_Penguin::Update()
 	case PenguinState::BeforeJump:
 		p_mFootCom->bEnable = false;
 		p_mMoveCom->Move(mMoveVelocity.x * fAirMoveSpeed, mMoveVelocity.y *fAirMoveSpeed);
+
+		// ヒップインパクトに派生できるように
+		if (Controller_Input::GetRightTriggerSimple(0) == KEYSTATE::KEY_WHILE_DOWN ||
+			Input::GetKeyState(KEYCODE_MOUSE_LEFT) == KEYSTATE::KEY_WHILE_DOWN)
+		{
+			// ヒップインパクトの予約
+			p_mModel->PlayAnimation("HipDrop");
+			p_mModel->SetCurrentKeyFrame(0);
+			mState = PenguinState::BeforeHipDrop;
+			p_mGravityCom->bEnable = false;
+			p_mFootCom->bEnable = true;
+		}
+
 		if (p_mModel->GetIsRotLastKey())
 		{
 			p_mJumpCom->SetJumpFlg(false);
@@ -258,7 +279,6 @@ void OBJ_Penguin::Update()
 		// ダメージVelocityの長さを取得
 		float length = Math::GetLength(mDamageVelocity);
 
-		cout << length << endl;
 		// 許容距離よりも短ければ待機状態に移行
 		if (length < fDamagePermission)
 		{
@@ -278,7 +298,6 @@ void OBJ_Penguin::Update()
 		// ダメージVelocityの長さを取得
 		float length = Math::GetLength(mDamageVelocity);
 
-		cout << length << endl;
 		// 許容距離よりも短ければ待機状態に移行
 		if (length < fDamagePermission)
 		{
@@ -360,7 +379,6 @@ void OBJ_Penguin::OnCollisionEnter(GameObject* _obj)
 				p_mJumpCom->SetDropFlg(false);
 				p_mJumpCom->SetJumpFlg(false);
 				p_mGravityCom->SetGround(false);
-				static_cast<OBJ_Azarashi*>(_obj)->SetAzarashiState(AzrashiState::PenguinOn);
 			}
 		}
 	}

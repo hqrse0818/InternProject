@@ -11,6 +11,8 @@ private:
     GameObject* p_mTarget;
     Com_Shader* p_mShaderCom;
     Com_Shadow* p_mShadowCom;
+
+    bool bFollowTargetY = false;
     
 public:
     OBJ_Shadow();
@@ -20,6 +22,10 @@ public:
     void Update();
 
     void SetTarget(GameObject* _target);
+    void SetFollowTargetY(bool _val)
+    {
+        bFollowTargetY = _val;
+    }
 
 };
 

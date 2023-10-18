@@ -165,7 +165,7 @@
     <ClCompile Include="InternCodeAdachi\Com_Shadow.cpp" />
     <ClCompile Include="InternCode.Kizuki\OBJ_AzarashiRemain.cpp" />
     <ClCompile Include="InternCode.Kizuki\OBJ_Number.cpp" />
-    <ClCompile Include="InternCode.Kizuki\OBJ_Score.cpp" />
+    <ClCompile Include="InternCodeAdachi\OBJ_Score.cpp" />
     <ClCompile Include="InternCode.Kizuki\OBJ_TitleLogo.cpp" />
     <ClCompile Include="InternCode.Kizuki\OBJ_TitleStart.cpp" />
     <ClCompile Include="InternCode.Kizuki\OBJ_TitleTutorial.cpp" />
@@ -194,6 +194,9 @@
     <ClCompile Include="InternCodeAdachi\OBJ_AzarashiManager.cpp" />
     <ClCompile Include="GameObject\OBJ_Shadow.cpp" />
     <ClCompile Include="InternCodeAdachi\OBJ_BackGround.cpp" />
+    <ClCompile Include="InternCodeAdachi\OBJ_BackPenguinRed.cpp" />
+    <ClCompile Include="InternCodeAdachi\OBJ_BackPenguinBlue.cpp" />
+    <ClCompile Include="InternCodeAdachi\OBJ_DisplayScore.cpp" />
     <ClCompile Include="Scene\Scene.cpp" />
     <ClCompile Include="Scene\Scene_Title.cpp" />
     <ClCompile Include="Scene\Scene_Test.cpp" />
@@ -238,7 +241,7 @@
     <ClInclude Include="InternCodeAdachi\Com_Shadow.h" />
     <ClInclude Include="InternCode.Kizuki\OBJ_AzarashiRemain.h" />
     <ClInclude Include="InternCode.Kizuki\OBJ_Number.h" />
-    <ClInclude Include="InternCode.Kizuki\OBJ_Score.h" />
+    <ClInclude Include="InternCodeAdachi\OBJ_Score.h" />
     <ClInclude Include="InternCode.Kizuki\OBJ_TitleLogo.h" />
     <ClInclude Include="InternCode.Kizuki\OBJ_TitleStart.h" />
     <ClInclude Include="InternCode.Kizuki\OBJ_TitleTutorial.h" />
@@ -273,6 +276,9 @@
     <ClInclude Include="InternCodeAdachi\OBJ_AzarashiManager.h" />
     <ClInclude Include="GameObject\OBJ_Shadow.h" />
     <ClInclude Include="InternCodeAdachi\OBJ_BackGround.h" />
+    <ClInclude Include="InternCodeAdachi\OBJ_BackPenguinRed.h" />
+    <ClInclude Include="InternCodeAdachi\OBJ_BackPenguinBlue.h" />
+    <ClInclude Include="InternCodeAdachi\OBJ_DisplayScore.h" />
     <ClInclude Include="Scene\Scene.h" />
     <ClInclude Include="Scene\Scene_Title.h" />
     <ClInclude Include="Scene\Scene_Test.h" />
