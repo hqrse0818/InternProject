@@ -1,6 +1,7 @@
 #pragma once
 #include "../Component/Component.h"
 #include "../Component/Com_Billboard.h"
+#include "../Component/Com_DiagonalProjection.h"
 
 class Com_Effect :public Component
 {

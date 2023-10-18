@@ -15,6 +15,7 @@
 #include "../InternCode.Kizuki/OBJ_AzarashiRemain.h"
 #include "../Component/Com_CameraTransform.h"
 #include "../Component/Com_Billboard.h"
+#include "../GameObject/OBJ_Emitter.h"
 
 #define IceNum (9)
 #define IceScale (7)
@@ -54,6 +55,8 @@ void Scene_Debug::Init()
 	Camera->p_mTransform->SetPosition(0.0f, 20.0f, -30.0f);
 	Camera->AddComponent(Camera_buf);
 
+	Com_Billboard::SetCamera(Camera_buf);
+
 	// レイヤーを指定してオブジェクトを追加
 	AddGameObject(Camera, 0);
 
@@ -90,6 +93,11 @@ void Scene_Debug::Init()
 	//アザラシの残機（数字）
 	OBJ_AzarashiRemain* ARemainNum = new OBJ_AzarashiRemain("ARemainNum","asset/data/csv/AzarashiZankiUI.csv");
 	AddGameObject(ARemainNum);
+
+	//エフェクト
+	OBJ_Emitter* Effect = new OBJ_Emitter("Effect");
+	Effect->TexCreate("asset/texture/hip.png");
+	AddGameObject(Effect);
 
 	//音
 	p_mAudio = new Com_Audio();

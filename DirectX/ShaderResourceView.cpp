@@ -15,6 +15,11 @@ ID3D11ShaderResourceView* ShaderResourceView::GetSRV() const
 	return p_mSRV;
 }
 
+void ShaderResourceView::SetSRV(ID3D11ShaderResourceView* _pSRV)
+{
+	p_mSRV = _pSRV;
+}
+
 bool ShaderResourceView::Create(const char* _FileName)
 {
 	TextureCreate::CreateTexture( _FileName, &p_mSRV);
