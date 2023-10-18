@@ -26,6 +26,9 @@ void OBJ_AzarashiRemain::CreateFromCSV(const char* _FileName)
 	Nums[0]->SetScale(stof(sv[0]), stof(sv[1]), stof(sv[2]));
 	Nums[1]->SetScale(stof(sv[0]), stof(sv[1]), stof(sv[2]));
 	Nums[2]->SetScale(stof(sv[0]), stof(sv[1]), stof(sv[2]));
+	Nums[0]->SetPosition(stof(sv[3]), stof(sv[4]), stof(sv[5]));
+	Nums[1]->SetPosition(stof(sv[6]), stof(sv[7]), stof(sv[8]));
+	Nums[2]->SetPosition(stof(sv[9]), stof(sv[10]), stof(sv[11]));
 }
 
 OBJ_AzarashiRemain::OBJ_AzarashiRemain()
@@ -54,9 +57,9 @@ void OBJ_AzarashiRemain::Start()
 	GetScene()->AddGameObject(Nums[1]);
 	GetScene()->AddGameObject(Nums[2]);
 	
-	Nums[0]->SetPosition(100.0f, 0.0f, 0.0f);
-	Nums[1]->SetPosition(200.0f, 0.0f, 0.0f);
-	Nums[2]->SetPosition(300.0f, 0.0f, 0.0f);
+	//Nums[0]->SetPosition(100.0f, 0.0f, 0.0f);
+	//Nums[1]->SetPosition(200.0f, 0.0f, 0.0f);
+	//Nums[2]->SetPosition(300.0f, 0.0f, 0.0f);
 
 	//Nums[0]->SetScale(100.0f, 100.0f, 0.0f);
 	//Nums[1]->SetScale(100.0f, 100.0f, 0.0f);
