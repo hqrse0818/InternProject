@@ -147,8 +147,7 @@ void Application::MainLoop()
     Input::SetHWND(mhWnd);
 
     // ゲームの初期処理
-    std::thread th1(Manager::Init, this);
-    th1.join();
+    Manager::Init(this);
 
     while(WM_QUIT != msg.message)
     {

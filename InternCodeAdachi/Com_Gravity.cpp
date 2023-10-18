@@ -8,6 +8,11 @@ void Com_Gravity::Update()
 {
 	bGroundAtthisFrame = false;
 
+	/*if (p_mObject->mCollisionvector.size() == 0)
+	{
+		bOnGround = false;
+	}*/
+
 	if (bOnGround)
 	{
 		fFallCnt = 0.0f;

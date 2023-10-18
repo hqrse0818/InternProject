@@ -8,14 +8,17 @@ class Com_Gravity :
     public Component
 {
 private:
+    // 重力
     float fGravity = 5.0f;
+    // デルタタイムにかかる係数
     int fGravCoef = 2;
+    // 落下開始からの経過時間
     float fFallCnt = 0.0f;
+    // 接地判定
     bool bOnGround = false;
-
+    // 今回のフレームで何らかの乗れるオブジェクトの上に乗っていれば接地判定をfalseにしない
     bool bGroundAtthisFrame = false;
 
-    float falseCnt = 0.0f;
 public:
     void Update()override;
     bool GetGroundedAtThisFrame()
@@ -34,6 +37,15 @@ public:
     bool GetGround()
     {
         return bOnGround;
+    }
+    void SetGravity(float _val)
+    {
+        fGravity = _val;
+    }
+
+    void SetGravCoef(float _val)
+    {
+        fGravCoef = _val;
     }
 };
 

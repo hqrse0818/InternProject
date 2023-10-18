@@ -25,7 +25,7 @@ enum class AzrashiState
     // 被弾状態中に海に触れる->Deathに移行
     Damage, 
     //ペンギンに上に乗られた
-
+    PenguinOn,
     // 飛び込み
     Dive,
     // 飛び込みアニメーション終了後処理

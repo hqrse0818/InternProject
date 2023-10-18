@@ -23,7 +23,7 @@ private:
     float fElapsedTime = 0.0f; //経過時間
     float fShakePower = 0.1f; // 揺れの範囲
 
-    float fLastLifeWaitTime = 1.0f;
+    float fLastLifeWaitTime = 0.5f;
 
     Vector3 originalPosition; // オブジェクトの元の位置を格納する変数
 
