@@ -34,7 +34,5 @@ public:
 	void SetSRV(ID3D11ShaderResourceView* _pSRV)
 	{
 		m_Texture->SetSRV(_pSRV);
-
-		
 	}
 };

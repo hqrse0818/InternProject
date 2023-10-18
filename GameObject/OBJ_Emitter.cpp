@@ -43,6 +43,13 @@ void OBJ_Emitter::Update()
 	}
 }
 
+void OBJ_Emitter::Uninit()
+{
+	GameObject::Uninit();
+	p_mTexture->Uninit();
+	delete p_mTexture;
+}
+
 void OBJ_Emitter::TexCreate(const char* _name)
 {
 	p_mTexture->Create(_name);

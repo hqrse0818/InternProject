@@ -269,6 +269,8 @@ void OBJ_Penguin::Update()
 	case PenguinState::AfterHipDrop:
 		if (p_mModel->GetIsRotLastKey())
 		{
+			p_mJumpCom->SetDropFlg(false);
+			p_mFootCom->bEnable = true;
 			p_mModel->SetCurrentKeyFrame(0);
 			p_mModel->PlayAnimation("Walk");
 			mState = PenguinState::Walk;
@@ -290,7 +292,9 @@ void OBJ_Penguin::Update()
 		// ブレーキを掛ける
 		mDamageVelocity *= fBlake;
 
-		p_mTransform->Translate(mDamageVelocity);
+		Vector3 Velocity = mDamageVelocity * Time->GetDeltaTime();
+
+		p_mTransform->Translate(Velocity);
 	}
 		break;
 	case PenguinState::HipDropOnAzarashi:
@@ -302,6 +306,8 @@ void OBJ_Penguin::Update()
 		if (length < fDamagePermission)
 		{
 			mState = PenguinState::Walk;
+			p_mGravityCom->bEnable = true;
+			p_mFootCom->bEnable = true;
 			p_mModel->SetCurrentKeyFrame(0);
 			break;
 		}
@@ -309,7 +315,10 @@ void OBJ_Penguin::Update()
 		// ダメージのベクトルを減少させる
 		mDamageVelocity *= fBlake;
 
-		p_mTransform->Translate(mDamageVelocity);
+		Vector3 Velocity = mDamageVelocity * Time->GetDeltaTime();
+
+		p_mTransform->Translate(Velocity);
+		p_mMoveCom->Move(mMoveVelocity.x * fAirMoveSpeed, mMoveVelocity.y * fAirMoveSpeed);
 	}
 		break;
 	}
