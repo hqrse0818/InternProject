@@ -96,7 +96,7 @@ void Scene_Debug::Init()
 
 	//エフェクト
 	OBJ_Emitter* Effect = new OBJ_Emitter("Effect");
-	Effect->TexCreate("asset/texture/hip.png");
+	Effect->TexCreate("asset/texture/start.png");
 	AddGameObject(Effect);
 
 	//音

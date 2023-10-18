@@ -8,13 +8,12 @@ OBJ_Particle::OBJ_Particle()
 {
 	// シェーダー
 	Com_Shader* Shader_buf = new Com_Shader();
-	Shader_buf->p_mVS->Load(VS_MODEL);
-	Shader_buf->p_mPS->Load("shader\\PS_HitLine.cso");
+	Shader_buf->p_mVS->Load(VS_SPRITE);
+	Shader_buf->p_mPS->Load(PS_SPRITE);
 	AddComponent(Shader_buf);
 
 	// モデル
 	p_mBil = new Com_Billboard();
-	//Bill_buf->Load("asset\\model\\WhiteBlock.obj");
 	AddComponent(p_mBil);
 
 	// 斜方投射
