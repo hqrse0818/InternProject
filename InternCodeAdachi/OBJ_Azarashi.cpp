@@ -241,6 +241,9 @@ void OBJ_Azarashi::Update()
 		p_mTransform->Translate(mDamageVelocity);
 	}
 	break;
+	case AzrashiState::PenguinOn:
+
+		break;
 	case AzrashiState::Dive:
 		if (p_mModelCom->GetIsRotLastKey())
 		{
@@ -366,6 +369,27 @@ void OBJ_Azarashi::OnCollisionStay(GameObject* _obj)
 				bAttacked = true;
 			}
 		}
+		else if (col->mColliderTag == ColliderKind::ColTag_Ice && mState == AzrashiState::PenguinOn)
+		{
+			if (!bAttacked)
+			{
+				// ‘«ê‚Ì‘Ï‹v—Í‚ğ1Œ¸‚ç‚·
+				OBJ_Ice* ice = static_cast<OBJ_Ice*>(_obj);
+				ice->SubAllHP();
+				if (ice->GetHP() <= 1)
+				{
+					// d—Í‚ÌXV‚ğ’â~
+					p_mGravityCom->bEnable = false;
+					p_mFootCom->bEnable = false;
+					p_mColliderCom->bEnable = true;
+					mState = AzrashiState::Dive;
+					p_mModelCom->PlayAnimation("Dive");
+					p_mModelCom->SetCurrentKeyFrame(0);
+				}
+				bAttacked = true;
+			}
+		}
+
 		if (col->mColliderTag == ColliderKind::ColTag_Sea)
 		{
 			if (mState == AzrashiState::SpawnToCenter ||

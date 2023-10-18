@@ -528,7 +528,9 @@ void ModelData::Uninit()
 	for (std::pair<const std::string, ID3D11ShaderResourceView*>pair : mModelData->map_mTexture)
 	{
 		if (pair.second)
+		{
 			pair.second->Release();
+		}
 	}
 
 	aiReleaseImport(mModelData->p_mAiScene);

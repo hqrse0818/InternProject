@@ -80,6 +80,7 @@ void OBJ_Penguin::CreateFromCSV(const char* _FileName)
 		SetScale(scale, scale, scale);
 	}
 	
+	p_mGravityCom->SetGravity(8.0f);
 
 	// コンポーネントの追加
 	AddComponent(p_mMoveCom);
@@ -273,6 +274,24 @@ void OBJ_Penguin::Update()
 	}
 		break;
 	case PenguinState::HipDropOnAzarashi:
+	{
+		// ダメージVelocityの長さを取得
+		float length = Math::GetLength(mDamageVelocity);
+
+		cout << length << endl;
+		// 許容距離よりも短ければ待機状態に移行
+		if (length < fDamagePermission)
+		{
+			mState = PenguinState::Walk;
+			p_mModel->SetCurrentKeyFrame(0);
+			break;
+		}
+
+		// ダメージのベクトルを減少させる
+		mDamageVelocity *= fBlake;
+
+		p_mTransform->Translate(mDamageVelocity);
+	}
 		break;
 	}
 	// アングル調整
@@ -314,21 +333,34 @@ void OBJ_Penguin::OnCollisionEnter(GameObject* _obj)
 		if (col->mColliderTag == ColliderKind::ColTag_Azarashi)
 		{
 			if (mState != PenguinState::BeforeHipDrop &&
-				mState != PenguinState::HipDrop)
+				mState != PenguinState::HipDrop && mState != PenguinState::HipDropOnAzarashi)
 			{
 				Vector3 Direction = Math::GetVector(p_mTransform->mPosition, _obj->p_mTransform->mPosition);
 				Direction = Math::Normalize(-Direction);
 				// ダメージ後のよろめきを計算
 				mDamageVelocity = fDamagedPower * Direction;
-				mDamageVelocity.y = 0;
-
+				mDamageVelocity.y = 10.0f;
+				if (mState == PenguinState::BeforeJump)
+				{
+					p_mFootCom->bEnable = true;
+				}
 				mState = PenguinState::Damage;
 				p_mJumpCom->SetJumpFlg(false);
+				p_mJumpCom->SetDropFlg(false);
+				p_mGravityCom->SetGround(false);
 			}
 			if (mState == PenguinState::HipDrop)
 			{
+				// アザラシの上に乗った状態へ
 				mState = PenguinState::HipDropOnAzarashi;
-				//static_cast<OBJ_Azarashi*>(_obj)->SetAzarashiState(AzrashiState::)
+				// 読み込みで変える
+				mDamageVelocity.y = 20.0f;
+				mDamageVelocity.x = 0;
+				mDamageVelocity.z = 0;
+				p_mJumpCom->SetDropFlg(false);
+				p_mJumpCom->SetJumpFlg(false);
+				p_mGravityCom->SetGround(false);
+				static_cast<OBJ_Azarashi*>(_obj)->SetAzarashiState(AzrashiState::PenguinOn);
 			}
 		}
 	}

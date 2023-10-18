@@ -93,50 +93,16 @@ void LoadBackGround()
 void Scene_ModelLoad::Init()
 {
 	// 使用するモデルデータをここで読み込む
-	th1 = std::thread(LoadPenguin);
-	th1.join();
-	th2 = std::thread(LoadAzarashi);
-	th2.join();
-	th3 = std::thread(LoadAzarashi2);
-	th3.join();
-	th4 = std::thread(LoadStage);
-	th4.join();
-	th5 = std::thread(LoadBackPenguinA);
-	th5.join();
-	th6 = std::thread(LoadBackPenguinA);
-	th6.join();
-	th7 = std::thread(LoadBackGround);
-	th7.join();
+	LoadPenguin();
+	LoadAzarashi();
+	LoadAzarashi2();
+	LoadStage();
+	LoadBackPenguinA();
+	LoadBackPenguinB();
+	LoadBackGround();
 }
 
 void Scene_ModelLoad::Update()
 {
-	/*if (th1.joinable())
-	{
-		th1.join();
-		threadwork++;
-	}
-	if (th2.joinable())
-	{
-		th2.join();
-		threadwork++;
-	}
-	if (th3.joinable())
-	{
-		th3.join();
-		threadwork++;
-	}
-	if (th4.joinable())
-	{
-		th4.join();
-		threadwork++;
-	}
-
-
-	if (threadwork == 4)
-	{
-		Manager::SetScene<Scene_Test>();
-	}*/
-	
 	Manager::SetScene<Scene_Title>();
 }
