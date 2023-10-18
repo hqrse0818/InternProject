@@ -401,6 +401,8 @@ void Com_Model::Draw()
 	Renderer::GetDeviceContext()->VSSetConstantBuffers(3, 1, &p_mCombBuffer);
 	Renderer::GetDeviceContext()->VSSetConstantBuffers(4, 1, &p_mScaleBuffer);
 
+	std::string aaa = p_mObject->sObjectName;
+
 	for (unsigned int m = 0; m < mModelData->p_mAiScene->mNumMeshes; m++)
 	{
 		aiMesh* p_mesh = mModelData->p_mAiScene->mMeshes[m];

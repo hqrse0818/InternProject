@@ -149,6 +149,7 @@
     <ClCompile Include="Component\Com_Collider.cpp" />
     <ClCompile Include="Component\Com_CustomSprite.cpp" />
     <ClCompile Include="Component\Com_CylinderCollider.cpp" />
+    <ClCompile Include="Component\Com_DiagonalProjection.cpp" />
     <ClCompile Include="Component\Com_FollowCamera.cpp" />
     <ClCompile Include="Component\Com_3DSprite.cpp" />
     <ClCompile Include="Component\Com_ModelRenderer.cpp" />
@@ -161,7 +162,9 @@
     <ClCompile Include="Component\Com_PointCollider.cpp" />
     <ClCompile Include="Component\Com_RenderCollisionPoint.cpp" />
     <ClCompile Include="Component\Com_RenderCollider.cpp" />
-    <ClCompile Include="InternCode.Kizuki\Com_Effect.cpp" />
+    <ClCompile Include="GameObject\OBJ_Emitter.cpp" />
+    <ClCompile Include="GameObject\OBJ_Particle.cpp" />
+    <ClCompile Include="InternCode.Kizuki\OBJ_JumpEffect.cpp" />
     <ClCompile Include="InternCodeAdachi\Com_Shadow.cpp" />
     <ClCompile Include="InternCode.Kizuki\OBJ_AzarashiRemain.cpp" />
     <ClCompile Include="InternCode.Kizuki\OBJ_Number.cpp" />
@@ -225,6 +228,7 @@
     <ClInclude Include="Component\Com_Collider.h" />
     <ClInclude Include="Component\Com_CustomSprite.h" />
     <ClInclude Include="Component\Com_CylinderCollider.h" />
+    <ClInclude Include="Component\Com_DiagonalProjection.h" />
     <ClInclude Include="Component\Com_FollowCamera.h" />
     <ClInclude Include="Component\Com_3DSprite.h" />
     <ClInclude Include="Component\Com_ModelRenderer.h" />
@@ -237,7 +241,9 @@
     <ClInclude Include="Component\Com_PointCollider.h" />
     <ClInclude Include="Component\Com_RenderCollisionPoint.h" />
     <ClInclude Include="Component\Com_RenderCollider.h" />
-    <ClInclude Include="InternCode.Kizuki\Com_Effect.h" />
+    <ClInclude Include="GameObject\OBJ_Emitter.h" />
+    <ClInclude Include="GameObject\OBJ_Particle.h" />
+    <ClInclude Include="InternCode.Kizuki\OBJ_JumpEffect.h" />
     <ClInclude Include="InternCodeAdachi\Com_Shadow.h" />
     <ClInclude Include="InternCode.Kizuki\OBJ_AzarashiRemain.h" />
     <ClInclude Include="InternCode.Kizuki\OBJ_Number.h" />

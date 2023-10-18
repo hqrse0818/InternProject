@@ -8,6 +8,7 @@ protected:
 public:
 	ShaderResourceView();
 	ID3D11ShaderResourceView* GetSRV() const;
+	void SetSRV(ID3D11ShaderResourceView* _pSRV);
 	virtual bool Create(const char* _FileName);
 	virtual void Uninit();
 };
