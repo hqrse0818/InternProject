@@ -52,7 +52,6 @@ bool Com_Model::SetModelData(const char* _ModelName)
 
 	if (mModelData)
 	{
-		cout << "モデル取得成功" << endl;
 		// 定数バッファを作成
 		D3D11_BUFFER_DESC bd{};
 		ZeroMemory(&bd, sizeof(bd));

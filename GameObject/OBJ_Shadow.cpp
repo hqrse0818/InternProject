@@ -1,4 +1,7 @@
 #include "OBJ_Shadow.h"
+#include <iostream>
+
+using namespace std;
 
 OBJ_Shadow::OBJ_Shadow()
 {
@@ -30,18 +33,23 @@ void OBJ_Shadow::Init()
 
 void OBJ_Shadow::Update()
 {
+	GameObject::Update();
 	if (bActive)
 	{
 		GameObject::Update();
 
 		p_mTransform->mPosition.x = p_mTarget->p_mTransform->mPosition.x;
 		p_mTransform->mPosition.z = p_mTarget->p_mTransform->mPosition.z;
+		if (bFollowTargetY)
+		{
+			p_mTransform->mPosition.y = p_mTarget->p_mTransform->mPosition.y;
+		}
 
 		float distance = p_mTarget->p_mTransform->mPosition.y - p_mTransform->mPosition.y;
 
 		// ‹——£‚ª‰“‚¢‚Ù‚ÇƒTƒCƒY‚ª¬‚³‚­‚È‚é
 		float OutSize = 5.0f - (distance / 10);
-		p_mShadowCom->SetSize(OutSize, OutSize);
+		SetScale(OutSize * 0.1f, OutSize * 0.1f, OutSize * 0.1f);
 	}
 }
 

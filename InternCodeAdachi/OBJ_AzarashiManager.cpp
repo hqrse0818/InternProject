@@ -117,26 +117,16 @@ void OBJ_AzarashiManager::Create()
 	if (vec.size() == 0)
 		return;
 
-	int Rand = HighRand::GetRand(0, 100);
-	if (Rand > 50)
-	{
-		Rand = 1;
-	}
-	else
-	{
-		Rand = 2;
-	}
-
-	OBJ_Azarashi* azarashi = new OBJ_Azarashi("Created", Rand);
+	// リーダーを作成
+	OBJ_Azarashi* LAzarashi = new OBJ_Azarashi("Leader", 2);
 	// アザラシのステータス設定
-	azarashi->GetColliderCom()->SetCenter(mAzarashiCenter.x, mAzarashiCenter.y, mAzarashiCenter.z);
-	azarashi->GetColliderCom()->fRadius = fAzarashiRadius;
-	azarashi->GetFootCom()->SetFootHeight(fFootHeight);
-	azarashi->SetAzrashiStatus(fAfterWait, fAttackDuration, fMoveSpeed, fVelocity, fBlake, fLength,fDamageDistance);
-	
-
+	LAzarashi->GetColliderCom()->SetCenter(mAzarashiCenter.x, mAzarashiCenter.y, mAzarashiCenter.z);
+	LAzarashi->GetColliderCom()->fRadius = fAzarashiRadius;
+	LAzarashi->GetFootCom()->SetFootHeight(fFootHeight);
+	LAzarashi->SetAzrashiStatus(fAfterWait, fAttackDuration, fMoveSpeed, fVelocity, fBlake, fLength, fDamageDistance);
+	LAzarashi->bLeader = true;
 	// スポーンエリアを大まかに指定
-	Rand = HighRand::GetRand(1, 4);
+	int Rand = HighRand::GetRand(1, 4);
 	Vector3 init;
 	init.y = fSpawnY;
 	// 初期スポーン地点設定
@@ -158,7 +148,7 @@ void OBJ_AzarashiManager::Create()
 		init.z = HighRand::fGetRand(-45, 45, 3);
 	}
 	break;
-	case 3 : 
+	case 3:
 	{
 		// x上のスポーン位置
 		init.x = HighRand::fGetRand(-45, 45, 3);
@@ -175,17 +165,94 @@ void OBJ_AzarashiManager::Create()
 	}
 	break;
 	}
-	
+	// リーダーのポジションを決定
+	Vector3 target;
 	int r = HighRand::GetRand(0, vec.size() - 1);
+	target = vec[r]->p_mTransform->mPosition;
 
-	Vector3 target = vec[r]->p_mTransform->mPosition;
+	int row = 0;
+	int line = 0;
+	// 氷は左下から右上に向かって生成される
 
-	GetScene()->AddGameObject(azarashi);
-	azarashi->Init();
+	// 行が端の場合
+	if (vec[r]->myLine == 0 || vec[r]->myLine == OBJ_Ice::s_iMaxNumIndex)
+	{
+		if (vec[r]->myLine == 0)
+		{
+			line = 1;
+		}
+		else
+		{
+			line = 2;
+		}
+	}
+	// 列が端の場合
+	if (vec[r]->myRow == 0 || vec[r]->myRow == OBJ_Ice::s_iMaxNumIndex)
+	{
+		if (vec[r]->myRow == 0)
+		{
+			row = 1;
+		}
+		else
+		{
+			row = 2;
+		}
+	}
+	GetScene()->AddGameObject(LAzarashi);
+	LAzarashi->Init();
 	// スタート位置とターゲット位置の設定
-	azarashi->SetTargetPosition(init.x, init.y, init.z, target.x, fIceY, target.z, fCenterY);
-	azarashi->Start();
-	azarashi->Update();
+	LAzarashi->SetTargetPosition(init.x, init.y, init.z, target.x, fIceY, target.z, fCenterY);
+	LAzarashi->Start();
+	LAzarashi->Update();
+
+	int spawnnum = HighRand::GetRand(2, 4);
+
+	for (int i = 0; i < spawnnum; i++)
+	{
+		OBJ_Azarashi* azarashis = new OBJ_Azarashi("Teshita",1);
+		azarashis->GetColliderCom()->SetCenter(mAzarashiCenter.x, mAzarashiCenter.y, mAzarashiCenter.z);
+		azarashis->GetColliderCom()->fRadius = fAzarashiRadius;
+		azarashis->GetFootCom()->SetFootHeight(fFootHeight);
+		azarashis->SetAzrashiStatus(fAfterWait, fAttackDuration, fMoveSpeed, fVelocity, fBlake, fLength, fDamageDistance);
+		// リーダーと同じ位置を目標地点にする
+		Vector3 TeshitaTarget = target;
+		// 下
+		if (line == 1)
+		{
+			TeshitaTarget.z += HighRand::fGetRand(10.0f, 20.0f, 3);
+		}
+		// 上
+		else if (line == 2)
+		{
+			TeshitaTarget.z -= HighRand::fGetRand(10.0f, 20.0f, 3);
+		}
+		else
+		{
+			TeshitaTarget.z += HighRand::fGetRand(-7.0f, 7.0f, 3);
+		}
+		// 左
+		if (row == 1)
+		{
+			TeshitaTarget.x += HighRand::fGetRand(10.0f, 20.0f, 3);
+		}
+		// 右
+		else if (row == 2)
+		{
+			TeshitaTarget.x -= HighRand::fGetRand(10.0f, 20.0f, 3);
+		}
+		else
+		{
+			TeshitaTarget.x += HighRand::fGetRand(-7.0f, 7.0f, 3);
+		}
+
+		GetScene()->AddGameObject(azarashis);
+		azarashis->Init();
+		azarashis->SetTargetPosition(init.x, init.y, init.z, TeshitaTarget.x, fIceY, TeshitaTarget.z, fCenterY);
+		azarashis->SetLeader(LAzarashi);
+		azarashis->Start();
+		azarashis->Update();
+	}
+	
 
 	iSpawnedNum++;
 	if (iSpawnedNum >= iMaxSpawn)

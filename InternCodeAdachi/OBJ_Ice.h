@@ -30,6 +30,12 @@ private:
     void CreateFromCSV(const char* _FileName);
 
 public:
+    int myLine = 0;
+    int myRow = 0;
+
+    static int s_iMaxNumIndex;
+
+public:
     OBJ_Ice();
     OBJ_Ice(const char* _name);
     OBJ_Ice(const char* _ice, const char* _FileName);
@@ -57,5 +63,6 @@ public:
     {
         return p_mCollider;
     }
+
 };
 

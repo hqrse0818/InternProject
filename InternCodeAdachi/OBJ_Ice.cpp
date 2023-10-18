@@ -7,6 +7,8 @@
 using namespace DirectX::SimpleMath;
 using namespace std;
 
+int OBJ_Ice::s_iMaxNumIndex = 0;
+
 void OBJ_Ice::CreateFromCSV(const char* _FileName)
 {
 	string Line = ReadDataFromCSV(_FileName, 1);
@@ -54,7 +56,6 @@ OBJ_Ice::OBJ_Ice()
 	AddComponent(p_mCollider);
 
 	//音
-
 	//ヒビ
 	p_mAudio_Damage = new Com_Audio();
 	p_mAudio_Damage->Load("asset\\audio\\SE\\SE その他\\氷 ヒビ.wav");
@@ -109,12 +110,16 @@ void OBJ_Ice::Update()
 
 	switch (iHP)
 	{
+	case 0:
+
+		break;
 	case 1:
 		p_mCollider->bEnable = false;
 		fLastLifeWaitTime -= Time->GetDeltaTime();
 		if (fLastLifeWaitTime < 0)
 		{
 			bDestroy = true; //GameObjectクラスのDestroy()を使うために必要
+			iHP = 0;
 		}
 		break;
 	case 2:

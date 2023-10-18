@@ -7,9 +7,12 @@
 #include "../GameObject/OBJ_Shadow.h"
 #include "../Scene/Scene.h"
 #include <iostream>
+#include "OBJ_Score.h"
 
 using namespace DirectX::SimpleMath;
 using namespace std;
+
+int OBJ_Azarashi::s_iOnIceNum = 0;
 
 OBJ_Azarashi::OBJ_Azarashi()
 {
@@ -74,6 +77,7 @@ OBJ_Azarashi::OBJ_Azarashi(const char* _name, int _ModelKind)
 		p_mModelCom->SetModelData(AZARASHIWAKAME);
 		break;
 	default :
+		p_mModelCom->SetModelData(AZARASHI);
 		break;
 	}
 	AddComponent(p_mModelCom);
@@ -111,7 +115,7 @@ void OBJ_Azarashi::Init()
 
 void OBJ_Azarashi::Start()
 {
-	OBJ_Shadow* myShadow = new OBJ_Shadow("PenguinShadow");
+	OBJ_Shadow* myShadow = new OBJ_Shadow("Azarahis");
 	myShadow->SetTarget(this);
 	myShadow->Init();
 	myShadow->Start();
@@ -174,6 +178,8 @@ void OBJ_Azarashi::Update()
 			p_mColliderCom->bEnable = true;
 			p_mFootCom->bEnable = true;
 			p_mGravityCom->SetGround(false);
+			p_mShadowObj->SetFollowTargetY(true);
+			s_iOnIceNum++;
 			break;
 		}
 		// 移動量が超えない場合移動させる
@@ -226,7 +232,6 @@ void OBJ_Azarashi::Update()
 		// ダメージVelocityの長さを取得
 		float length = Math::GetLength(mDamageVelocity);
 
-		cout << length << endl;
 		// 一定以下なら止まって攻撃待ちに移行
 		if (length < fDamagePermission)
 		{
@@ -241,10 +246,8 @@ void OBJ_Azarashi::Update()
 		p_mTransform->Translate(mDamageVelocity);
 	}
 	break;
-	case AzrashiState::PenguinOn:
-
-		break;
 	case AzrashiState::Dive:
+		iScore = 0;
 		if (p_mModelCom->GetIsRotLastKey())
 		{
 			p_mModelCom->SetPlayAnimation(false);
@@ -255,6 +258,8 @@ void OBJ_Azarashi::Update()
 		Translate(0.0f, -2.0f, 0.0f);
 		break;
 	case AzrashiState::Death:
+		s_iOnIceNum--;
+		OBJ_Score::CalcScore(iScore);
 		p_mShadowObj->bDestroy = true;
 		p_mShadowObj->SetActive(false);
 		p_mModelCom->SetPlayAnimation(false);
@@ -322,6 +327,23 @@ void OBJ_Azarashi::OnCollisionEnter(GameObject* _obj)
 			Direction = Math::Normalize(Direction);
 			// 衝突オブジェクトとの距離を取得
 			float dis = Math::GetDistance(p_mTransform->mPosition, _obj->p_mTransform->mPosition);
+
+			cout << dis << endl;
+
+			// 距離によってスコア加算予定値を変更する(距離は仮)
+			if (dis < 6.5f)
+			{
+				iScore = 500;
+			}
+			else if (dis < 12.0f)
+			{
+				iScore = 300;
+			}
+			else
+			{
+				iScore = 100;
+			}
+
 			float vec = fVelocityDistance - dis;
 			if (vec > 0.0f)
 			{
@@ -369,27 +391,6 @@ void OBJ_Azarashi::OnCollisionStay(GameObject* _obj)
 				bAttacked = true;
 			}
 		}
-		else if (col->mColliderTag == ColliderKind::ColTag_Ice && mState == AzrashiState::PenguinOn)
-		{
-			if (!bAttacked)
-			{
-				// 足場の耐久力を1減らす
-				OBJ_Ice* ice = static_cast<OBJ_Ice*>(_obj);
-				ice->SubAllHP();
-				if (ice->GetHP() <= 1)
-				{
-					// 重力の更新を停止
-					p_mGravityCom->bEnable = false;
-					p_mFootCom->bEnable = false;
-					p_mColliderCom->bEnable = true;
-					mState = AzrashiState::Dive;
-					p_mModelCom->PlayAnimation("Dive");
-					p_mModelCom->SetCurrentKeyFrame(0);
-				}
-				bAttacked = true;
-			}
-		}
-
 		if (col->mColliderTag == ColliderKind::ColTag_Sea)
 		{
 			if (mState == AzrashiState::SpawnToCenter ||
@@ -401,4 +402,9 @@ void OBJ_Azarashi::OnCollisionStay(GameObject* _obj)
 				mState = AzrashiState::Death;
 		}
 	}
+}
+
+void OBJ_Azarashi::SetLeader(OBJ_Azarashi* _obj)
+{
+	p_mLeader = _obj;
 }

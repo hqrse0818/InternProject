@@ -26,6 +26,8 @@ void Scene_Test::Init()
 	string sStageNum = ReadDataFromCSV("asset/data/csv/Stage.csv", 1);
 	std::vector<string> IceSetting = SeparateString(sStageNum, ',');
 	unsigned int stagenum = stoi(IceSetting[0]);
+	// ステージの最大のインデックスを格納
+	OBJ_Ice::s_iMaxNumIndex = stagenum;
 	float IceScale = stof(IceSetting[1]);
 
 	int Stagecenter = 0;
@@ -59,7 +61,9 @@ void Scene_Test::Init()
 			// 氷の生成
 			OBJ_Ice* Ice = new OBJ_Ice("Ice", "asset/data/csv/IceStatus.csv");
 			Com_BoxCollider* col = Ice->GetColliderCom();
-			Ice->p_mTransform->SetPosition(StageInit + i * col->mSize.x  * Ice->p_mTransform->mScale.x, 0.0f, StageInit + j * col->mSize.z * Ice->p_mTransform->mScale.z);
+			Ice->p_mTransform->SetPosition(StageInit + i * col->mSize.x * Ice->p_mTransform->mScale.x, 0.0f, StageInit + j * col->mSize.z * Ice->p_mTransform->mScale.z);
+			Ice->myLine = i;
+			Ice->myRow = j;
 			AddGameObject(Ice);
 		}
 	}
@@ -107,7 +111,7 @@ void Scene_Test::Init()
 	AddGameObject(ARemain);
 
 	//アザラシの残機（数字）
-	OBJ_AzarashiRemain* ARemainNum = new OBJ_AzarashiRemain("Zanki");
+	OBJ_AzarashiRemain* ARemainNum = new OBJ_AzarashiRemain("Zanki", "asset/data/csv/AzarashiZankiUI.csv");
 	AddGameObject(ARemainNum);
 
 	OBJ_BackGround* back = new OBJ_BackGround("haikei");
