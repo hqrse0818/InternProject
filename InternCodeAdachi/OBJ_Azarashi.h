@@ -30,7 +30,13 @@ enum class AzrashiState
     // 飛び込みアニメーション終了後処理
     DiveTo,
     // 死亡(アニメーション再生後)
-    Death
+    Death,
+    // 落ちるようオブジェクト衝突時
+    Dive2,
+    // 飛び込みアニメーション終了後
+    DiveTo2,
+    // Dive2終了後処理
+    Death2
 };
 
 class OBJ_Azarashi :

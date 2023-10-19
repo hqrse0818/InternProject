@@ -18,6 +18,10 @@
 #include "../InternCodeAdachi/OBJ_BackGround.h"
 #include "../InternCodeAdachi/OBJ_IceManager.h"
 #include "../InternCodeAdachi/OBJ_DisplayScore.h"
+#include "../InternCodeAdachi/OBJ_Score.h"
+#include "../InternCodeAdachi/GameManager.h"
+#include "../InternCodeAdachi/OBJ_ComboDisplay.h"
+
 #include "../System/HighGetRand.h"
 
 using namespace DirectX::SimpleMath;
@@ -56,6 +60,7 @@ void Scene_Test::Init()
 	// レイヤーの指定なしでキーオブジェクトとして追加
 	AddKeyObject(Player);
 
+	// 氷マネージャー
 	OBJ_IceManager* iMana = new OBJ_IceManager("iMana", "asset/data/csv/IceStatus.csv");
 	AddGameObject(iMana);
 
@@ -104,6 +109,7 @@ void Scene_Test::Init()
 		}
 	}
 
+	// カメラ
 	GameObject* Camera = new GameObject("Camera");
 	Com_AngleCamera* Camera_buf = new Com_AngleCamera();
 	Camera_buf->SetTarget(Player);
@@ -125,6 +131,7 @@ void Scene_Test::Init()
 
 	AddGameObject(Sea);
 
+	// アザラシマネージャー
 	OBJ_AzarashiManager* AManager = new OBJ_AzarashiManager("manager", "asset/data/csv/AzarashiManager.csv");
 	AddGameObject(AManager, 0);
 
@@ -158,8 +165,17 @@ void Scene_Test::Init()
 	p_mAudio->Load("asset\\audio\\BGM\\メイン BGM.wav");
 	p_mAudio->SetUseTarget(false);
 
+	// スコア表示オブジェクト
 	OBJ_DisplayScore* ScoreObj = new OBJ_DisplayScore("dis","asset/data/csv/ScoreUI.csv");
 	AddGameObject(ScoreObj);
+
+	// スコアマネージャー
+	OBJ_Score* ScoreManager = new OBJ_Score("score", "asset/data/csv/ComboSetting.csv");
+	AddGameObject(ScoreManager);
+
+	// コンボ表示オブジェクト
+	OBJ_ComboDisplay* ComboObj = new OBJ_ComboDisplay("combo", "asset/data/csv/ComboUI.csv");
+	AddGameObject(ComboObj);
 }
 
 void Scene_Test::Start()
@@ -193,6 +209,9 @@ void Scene_Test::Update()
 		Manager::SetScene<Scene_Test>();
 	}
 #endif
+
+	// ゲームマネージャーの更新
+	GameManager::Update();
 }
 
 void Scene_Test::Uninit()

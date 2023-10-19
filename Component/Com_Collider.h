@@ -4,7 +4,7 @@
 
 enum class ColliderKind
 {
-    ColTag_None, ColTag_Penguin, ColTag_Azarashi, ColTag_Ice, ColTag_Attack, ColTag_Sea,
+    ColTag_None, ColTag_Penguin, ColTag_Azarashi, ColTag_Ice, ColTag_Attack, ColTag_Sea,ColTag_Fall
 };
 
 class Com_Collider : public Component

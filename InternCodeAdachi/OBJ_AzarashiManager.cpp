@@ -274,7 +274,6 @@ void OBJ_AzarashiManager::Update()
 	case SpawnState::SpawnTeshita:
 		// è‰ºì¬
 		CreateTeshita();
-		mState = SpawnState::Wait;
 		break;
 	case SpawnState::Calc:
 

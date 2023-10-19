@@ -3,6 +3,8 @@
 #include "../System/Time.h"
 #include "../InternCodeAdachi/CSVLoad.h"
 #include "../ModelName.h"
+#include "../Scene/Scene.h"
+#include "OBJ_Fall.h"
 
 using namespace DirectX::SimpleMath;
 using namespace std;
@@ -137,6 +139,11 @@ void OBJ_Ice::Update()
 		if (fLastLifeWaitTime < 0)
 		{
 			bDestroy = true; //GameObjectクラスのDestroy()を使うために必要
+			OBJ_Fall* fall = new OBJ_Fall("fall");
+			fall->Init();
+			fall->Start();
+			fall->SetPosition(p_mTransform->mPosition.x, p_mTransform->mPosition.y + 1.0f, p_mTransform->mPosition.z);
+			GetScene()->AddGameObject(fall);
 			iHP = 10;
 		}
 	}

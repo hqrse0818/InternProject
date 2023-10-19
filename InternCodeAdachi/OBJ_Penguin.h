@@ -11,7 +11,7 @@
 #include "../Component/Com_BoxCollider.h"
 
 // ペンギンのプレファブ
-#define PenguinStatuNum (22)
+#define PenguinStatuNum (23)
 
 // ペンギンのステート
 enum class PenguinState
@@ -92,6 +92,10 @@ private:
     // 直撃後の浮遊状態の継続時間
     float fFloatTime = 0.0f;
     float fFloatCnt = 0.0f;
+
+    // 被弾後の無敵時間
+    float fArmorTime = 0.2f;
+    float fArmorCnt = 0.0f;
 
     float fIdleTime = 0.0f;
     float fIdelCnt = 0.0f;
