@@ -17,6 +17,8 @@
 #include "../InternCode.Kizuki/OBJ_AzarashiRemain.h"
 #include "../InternCodeAdachi/OBJ_BackGround.h"
 #include "../InternCodeAdachi/OBJ_IceManager.h"
+#include "../InternCodeAdachi/OBJ_DisplayScore.h"
+#include "../System/HighGetRand.h"
 
 using namespace DirectX::SimpleMath;
 using namespace std;
@@ -81,6 +83,24 @@ void Scene_Test::Init()
 			Ice->myLine = i;
 			AddGameObject(Ice);
 			iMana->RegisterIce(Ice);
+
+			int r = HighRand::GetRand(1, 4);
+			switch (r)
+			{
+			case 1:
+				Ice->SetRotation(0.0f, Euler_To_Radian(90), 0.0f);
+				break;
+			case 2:
+				Ice->SetRotation(0.0f, Euler_To_Radian(180), 0.0f);
+				break;
+			case 3:
+				Ice->SetRotation(0.0f, Euler_To_Radian(270), 0.0f);
+				break;
+			case 4:
+				break;
+			default:
+				break;
+			}
 		}
 	}
 
@@ -137,6 +157,9 @@ void Scene_Test::Init()
 	p_mAudio = new Com_Audio();
 	p_mAudio->Load("asset\\audio\\BGM\\ƒƒCƒ“ BGM.wav");
 	p_mAudio->SetUseTarget(false);
+
+	OBJ_DisplayScore* ScoreObj = new OBJ_DisplayScore("dis","asset/data/csv/ScoreUI.csv");
+	AddGameObject(ScoreObj);
 }
 
 void Scene_Test::Start()

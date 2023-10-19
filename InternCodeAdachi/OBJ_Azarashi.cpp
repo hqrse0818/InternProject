@@ -106,6 +106,10 @@ OBJ_Azarashi::OBJ_Azarashi(const char* _name, int _ModelKind)
 	p_mFootCom->SetGravityCom(p_mGravityCom);
 	p_mFootCom->bEnable = false;
 	AddComponent(p_mFootCom);
+
+	// アザラシヒットコンポーネント
+	p_mHitCom = new Com_AzarshiHit();
+	AddComponent(p_mHitCom);
 }
 
 

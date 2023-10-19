@@ -6,6 +6,7 @@
 #include "Com_Model.h"
 #include "Com_Foot.h"
 #include "../GameObject/OBJ_Shadow.h"
+#include "Com_AzarshiHit.h"
 
 // ÉAÉUÉâÉV
 
@@ -90,6 +91,7 @@ private:
     Com_Shader* p_mShaderCom = nullptr;
     Com_Model* p_mModelCom = nullptr;
     Com_Foot* p_mFootCom = nullptr;
+    Com_AzarshiHit* p_mHitCom = nullptr;
 
     OBJ_Shadow* p_mShadowObj = nullptr;
 

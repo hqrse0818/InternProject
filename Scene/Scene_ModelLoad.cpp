@@ -51,23 +51,23 @@ void LoadStage()
 {
 	// •X‚Ì“Ç‚Ýž‚Ý
 	ModelData* CreateIce = new ModelData();
-	CreateIce->LoadModel("asset\\model\\Stage\\1_stage.fbx", true);
+	CreateIce->LoadModel("asset\\model\\Stagev2\\1stage.fbx", true);
 	CreateIce->Push("Ice_HP5");
 
 	CreateIce = new ModelData();
-	CreateIce->LoadModel("asset\\model\\Stage\\2_stage.fbx", true);
+	CreateIce->LoadModel("asset\\model\\Stagev2\\2stage.fbx", true);
 	CreateIce->Push("Ice_HP4");
 
 	CreateIce = new ModelData();
-	CreateIce->LoadModel("asset\\model\\Stage\\3_stage.fbx", true);
+	CreateIce->LoadModel("asset\\model\\Stagev2\\3stage.fbx", true);
 	CreateIce->Push("Ice_HP3");
 
 	CreateIce = new ModelData();
-	CreateIce->LoadModel("asset\\model\\Stage\\4_stage.fbx", true);
+	CreateIce->LoadModel("asset\\model\\Stagev2\\4stage.fbx", true);
 	CreateIce->Push("Ice_HP2");
 
 	CreateIce = new ModelData();
-	CreateIce->LoadModel("asset\\model\\Stage\\5_stage.fbx", true);
+	CreateIce->LoadModel("asset\\model\\Stagev2\\5stage.fbx", true);
 	CreateIce->Push("Ice_HP1");
 }
 

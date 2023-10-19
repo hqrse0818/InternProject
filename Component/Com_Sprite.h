@@ -36,6 +36,7 @@ public:
     void SetDivision(float _u, float _v);
     void SetUV(DirectX::SimpleMath::Vector4 _uv);
     void SetTexture(const char* _name);
+    void SetTexture(ShaderResourceView* _psrv);
     void SetMaterial(MATERIAL mat);
     void SetAmbient(DirectX::SimpleMath::Color _color);
     void SetDiffuse(DirectX::SimpleMath::Color _color);
