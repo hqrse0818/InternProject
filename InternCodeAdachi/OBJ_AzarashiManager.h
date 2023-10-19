@@ -58,6 +58,17 @@ private:
     float fIceY = 0.0f;
     // 吹き飛ばし時の基底距離
     float fDamageDistance = 0.0f;
+    // 1回のスポーンでの最小発生数
+    int iSpawnMin = 2;
+    // 1回のスポーンでの最大発生数
+    int iSpawnMax = 4;
+    // 獲得スコア最小
+    int iScoreMin = 100;
+    // 獲得スコア中間
+    int iScoreCenter = 300;
+    // 獲得スコア最大
+    int iScoreMax = 500;
+
 
     SpawnState mState = SpawnState::Wait;
 

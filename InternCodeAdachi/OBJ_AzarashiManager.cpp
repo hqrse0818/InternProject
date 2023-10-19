@@ -104,7 +104,16 @@ OBJ_AzarashiManager::OBJ_AzarashiManager(const char* _name, const char* _FileNam
 		fIceY = stof(as[13]);
 		// 吹き飛ばしの基底距離
 		fDamageDistance = stof(as[14]);
+		// 1回スポーンでの最小数
+		iSpawnMin = stoi(as[15]);
+		// 1回スポーンでの最大数
+		iSpawnMax = stoi(as[16]);
 
+		// スコアの設定
+		OBJ_Azarashi::SetGettingScore(stoi(as[17]), stoi(as[18]), stoi(as[19]));
+
+		// 距離の関係
+		OBJ_Azarashi::SetScoreDistance(stof(as[20]), stof(as[21]));
 	}
 	gt.clear();
 	sr.clear();
@@ -206,7 +215,7 @@ void OBJ_AzarashiManager::Create()
 	LAzarashi->Start();
 	LAzarashi->Update();
 
-	int spawnnum = HighRand::GetRand(2, 4);
+	int spawnnum = HighRand::GetRand(iScoreMin, iSpawnMax);
 
 	for (int i = 0; i < spawnnum; i++)
 	{
@@ -217,15 +226,18 @@ void OBJ_AzarashiManager::Create()
 		azarashis->SetAzrashiStatus(fAfterWait, fAttackDuration, fMoveSpeed, fVelocity, fBlake, fLength, fDamageDistance);
 		// リーダーと同じ位置を目標地点にする
 		Vector3 TeshitaTarget = target;
+
+		// ランダムでオフセット設定
+
 		// 下
 		if (line == 1)
 		{
-			TeshitaTarget.x += HighRand::fGetRand(15.0f, 30.0f, 3);
+			TeshitaTarget.x += HighRand::fGetRand(7.0f, 15.0f, 3);
 		}
 		// 上
 		else if (line == 2)
 		{
-			TeshitaTarget.x -= HighRand::fGetRand(15.0f, 30.0f, 3);
+			TeshitaTarget.x -= HighRand::fGetRand(7.0f, 15.0f, 3);
 		}
 		else
 		{
@@ -234,12 +246,12 @@ void OBJ_AzarashiManager::Create()
 		// 左
 		if (row == 1)
 		{
-			TeshitaTarget.z += HighRand::fGetRand(15.0f, 30.0f, 3);
+			TeshitaTarget.z += HighRand::fGetRand(7.0f, 15.0f, 3);
 		}
 		// 右
 		else if (row == 2)
 		{
-			TeshitaTarget.z -= HighRand::fGetRand(15.0f, 30.0f, 3);
+			TeshitaTarget.z -= HighRand::fGetRand(7.0f, 15.0f, 3);
 		}
 		else
 		{

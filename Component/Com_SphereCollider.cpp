@@ -2,6 +2,7 @@
 #include "../GameObject/GameObject.h"
 #include "../Scene/Scene.h"
 #include "../InternCodeAdachi/Com_RenderCollisionLine_Sphere.h"
+#include "../Debug.h"
 
 using namespace std;
 
@@ -37,17 +38,17 @@ void Com_SphereCollider::Update()
 
 void Com_SphereCollider::OnCollisionEnter(GameObject* _obj)
 {
-	//cout << "Enter" << p_mObject->sObjectName << endl;
+	//DEBUG_LOG("Enter" << p_mObject->sObjectName);
 }
 
 void Com_SphereCollider::OnCollisionStay(GameObject* _obj)
 {
-	//cout << "Stay" << p_mObject->sObjectName << endl;
+	//DEBUG_LOG("Stay" << p_mObject->sObjectName);
 }
 
 void Com_SphereCollider::OnCollisionExit(GameObject* _obj)
 {
-	//cout << "Exit" << p_mObject->sObjectName << endl;
+	//DEBUG_LOG("Exit" << p_mObject->sObjectName);
 }
 
 Com_CircleCollider::Com_CircleCollider()

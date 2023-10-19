@@ -9,6 +9,7 @@
 #include <string>
 #include <thread>
 #include <iostream>
+#include "../Debug.h"
 
 #define LayerNum 8
 
@@ -201,7 +202,7 @@ public:
 
 		mList[layer].emplace_back(_obj);
 
-		//std::cout << layer << " : " << mList[layer].size() << std::endl;
+		DEBUG_LOG(layer << " : " << mList[layer].size());
 	}
 	void AddGameObject(GameObject* _obj, int Layer)
 	{
