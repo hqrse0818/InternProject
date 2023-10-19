@@ -87,6 +87,8 @@ void OBJ_Penguin::CreateFromCSV(const char* _FileName)
 		p_mGravityCom->SetGravCoef(stof(sv[18]));
 
 		fDirectVector = stof(sv[19]);
+
+		fFloatTime = stof(sv[20]);
 	}
 	
 	
@@ -301,21 +303,18 @@ void OBJ_Penguin::Update()
 		break;
 	case PenguinState::HipDropOnAzarashi:
 	{
-		// ダメージVelocityの長さを取得
-		float length = Math::GetLength(mDamageVelocity);
+		fFloatCnt += Time->GetDeltaTime();
+		p_mGravityCom->bEnable = false;
 
-		// 許容距離よりも短ければ待機状態に移行
-		if (length < fDamagePermission)
+		if (fFloatCnt > fFloatTime)
 		{
+			fFloatCnt = 0.0f;
 			mState = PenguinState::Walk;
 			p_mGravityCom->bEnable = true;
 			p_mFootCom->bEnable = true;
 			p_mModel->SetCurrentKeyFrame(0);
 			break;
 		}
-
-		// ダメージのベクトルを減少させる
-		mDamageVelocity *= fBlake;
 
 		Vector3 Velocity = mDamageVelocity * Time->GetDeltaTime();
 

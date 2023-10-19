@@ -10,7 +10,7 @@
 #include "Com_Shadow.h"
 
 // ペンギンのプレファブ
-#define PenguinStatuNum (20)
+#define PenguinStatuNum (21)
 
 // ペンギンのステート
 enum class PenguinState
@@ -83,6 +83,10 @@ private:
 
     // 直撃時の上へのベクトル
     float fDirectVector = 0.0f;
+
+    // 直撃後の浮遊状態の継続時間
+    float fFloatTime = 0.0f;
+    float fFloatCnt = 0.0f;
 
     DirectX::SimpleMath::Vector3 mDamageVelocity = DirectX::SimpleMath::Vector3(0.0f, 0.0f, 0.0f);
 

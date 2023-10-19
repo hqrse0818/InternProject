@@ -3,5 +3,7 @@
 class OBJ_ComboManager :
     public GameObject
 {
+private:
+    float f;
 };
 
