@@ -41,11 +41,20 @@ protected:
 public:
 	// VertexShaderÇÃçÏê¨
 	virtual void Load(const char* _FileName)override;
+	void SetShader(VertexShader* _shader);
 	// 0Ç…ì¸ÇÍÇ»Ç¢Ç±Ç∆
 	void SetTexture(UINT _slot, ShaderResourceView* _pSRV)override;
 	void Bind()override;
 
 	void Uninit()override;
+	ID3D11VertexShader* GetShader()
+	{
+		return p_mVertexShader;
+	}
+	ID3D11InputLayout* GetInputLayout()
+	{
+		return p_mInputLayout;
+	}
 };
 
 class PixelShader
@@ -55,9 +64,15 @@ private:
 	ID3D11PixelShader* p_mPixelShader{};
 public:
 	void Load(const char* _FileName)override;
+	void SetShader(PixelShader* _shader);
 	// 0Ç…Ç¢ÇÍÇ»Ç¢Ç±Ç∆
 	void SetTexture(UINT _slot, ShaderResourceView* _pSRV)override;
 	void Bind()override;
 
 	void Uninit()override;
+
+	ID3D11PixelShader* GetShader()
+	{
+		return p_mPixelShader;
+	}
 };

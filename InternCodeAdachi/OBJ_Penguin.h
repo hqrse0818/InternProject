@@ -11,7 +11,7 @@
 #include "../Component/Com_BoxCollider.h"
 
 // ペンギンのプレファブ
-#define PenguinStatuNum (21)
+#define PenguinStatuNum (22)
 
 // ペンギンのステート
 enum class PenguinState
@@ -31,7 +31,9 @@ enum class PenguinState
     // 被弾状態(入力不可)
     Damage, 
     // ヒップドロップでアザラシに衝突
-    HipDropOnAzarashi
+    HipDropOnAzarashi,
+    // 待機モーション
+    Idle,
 };
 
 class OBJ_Penguin :
@@ -90,6 +92,9 @@ private:
     // 直撃後の浮遊状態の継続時間
     float fFloatTime = 0.0f;
     float fFloatCnt = 0.0f;
+
+    float fIdleTime = 0.0f;
+    float fIdelCnt = 0.0f;
 
     DirectX::SimpleMath::Vector3 mDamageVelocity = DirectX::SimpleMath::Vector3(0.0f, 0.0f, 0.0f);
 

@@ -8,10 +8,10 @@
 #define SpawnRateRow (5)
 #define SpawnNumRow (7)
 #define AzarashiStateRow (9)
-#define StateSetNum (22)
+#define StateSetNum (23)
 
 enum class SpawnState {
-    Wait, Spawn,End,Calc
+    Wait, SpawnLeader,WaitTeshita,SpawnTeshita,End,Calc
 };
 
 // 氷の残っている位置を取得してアザラシをスポーンさせる
@@ -69,15 +69,27 @@ private:
     // 獲得スコア最大
     int iScoreMax = 500;
 
+    // リーダーが出現してから何秒後にスポーンするか
+    float fLeaderSpawnedTime = 0.2f;
+    float fLeaderCnt = 0;
+
+    DirectX::SimpleMath::Vector3 mLeaderPos = DirectX::SimpleMath::Vector3(0.0f, 0.0f, 0.0f);
+    OBJ_Azarashi* p_mCurrentLeader = nullptr;
+
+    DirectX::SimpleMath::Vector3 mInit = DirectX::SimpleMath::Vector3(0.0f, 0.0f, 0.0f);
 
     SpawnState mState = SpawnState::Wait;
+
+    int iRow = 0;
+    int iLine = 0;
 
 public:
     OBJ_AzarashiManager();
     OBJ_AzarashiManager(const char* _name);
     OBJ_AzarashiManager(const char* _name, const char* _FileName);
 
-    void Create();
+    void CreateLeader();
+    void CreateTeshita();
     void Update();
 
 

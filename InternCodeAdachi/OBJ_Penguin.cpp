@@ -89,6 +89,8 @@ void OBJ_Penguin::CreateFromCSV(const char* _FileName)
 		fDirectVector = stof(sv[19]);
 
 		fFloatTime = stof(sv[20]);
+
+		fMouseCameraSpeed = stof(sv[21]);
 	}
 	
 	
@@ -195,6 +197,15 @@ void OBJ_Penguin::Update()
 		if (Input::GetKeyState(KEYCODE_D) == KEYSTATE::KEY_WHILE_DOWN)mMoveVelocity.x = 1;
 		if (Input::GetKeyState(KEYCODE_W) == KEYSTATE::KEY_WHILE_DOWN)mMoveVelocity.y = 1;
 		if (Input::GetKeyState(KEYCODE_S) == KEYSTATE::KEY_WHILE_DOWN)mMoveVelocity.y = -1;
+	}
+
+	if (mMoveVelocity.x == 0 && mMoveVelocity.y == 0)
+	{
+		fIdelCnt += Time->GetDeltaTime();
+		if (fIdelCnt > fIdleTime)
+		{
+			fIdelCnt = 0.0f;
+		}
 	}
 
 	switch (mState)
@@ -315,6 +326,11 @@ void OBJ_Penguin::Update()
 			p_mFootCom->bEnable = true;
 			p_mModel->SetCurrentKeyFrame(0);
 			break;
+			/*p_mJumpCom->SetJumpFlg(true);
+			p_mModel->PlayAnimation("Jump");
+			p_mModel->SetCurrentKeyFrame(0);
+			p_mGravityCom->bEnable = true;
+			mState = PenguinState::Jump;*/
 		}
 
 		Vector3 Velocity = mDamageVelocity * Time->GetDeltaTime();
