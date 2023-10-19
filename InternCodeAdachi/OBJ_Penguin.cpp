@@ -80,11 +80,13 @@ void OBJ_Penguin::CreateFromCSV(const char* _FileName)
 		float scale = stof(sv[15]);
 		SetScale(scale, scale, scale);
 
-		fImpactScalingSpeed = stof(sv[16]);
+		p_mJumpCom->SetImpactSpeed(stof(sv[16]));
 
 		p_mGravityCom->SetGravity(stof(sv[17]));
 
 		p_mGravityCom->SetGravCoef(stof(sv[18]));
+
+		fDirectVector = stof(sv[19]);
 	}
 	
 	
@@ -382,7 +384,7 @@ void OBJ_Penguin::OnCollisionEnter(GameObject* _obj)
 				// ƒAƒUƒ‰ƒV‚Ìã‚Éæ‚Á‚½ó‘Ô‚Ö
 				mState = PenguinState::HipDropOnAzarashi;
 				// “Ç‚Ýž‚Ý‚Å•Ï‚¦‚é
-				mDamageVelocity.y = 20.0f;
+				mDamageVelocity.y = fDirectVector;
 				mDamageVelocity.x = 0;
 				mDamageVelocity.z = 0;
 				p_mJumpCom->SetDropFlg(false);

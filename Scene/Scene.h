@@ -133,7 +133,15 @@ public:
 				obj->Update();
 			}
 			// ラムダ式による破壊チェック
-			List.remove_if([](GameObject* object) {return object->Destroy(); });
+			List.remove_if([](GameObject* object) 
+			{
+				bool des = object->Destroy(); 
+				if (des)
+				{
+					object = nullptr;
+				}
+				return des;
+			});
 		}
 
 		// 更新処理(vector仕様)

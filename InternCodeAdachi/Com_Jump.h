@@ -20,6 +20,8 @@ private:
     float fDropInitialSpeed = -7.5f;// 落下の初速
     float fDropCnt = 0.0f; // 落下時間s
 
+    float fImpactSpeed = 0.0f;
+
     float fImpactRenge = 0.0f; //ヒップインパクトの範囲
 
     float fFallTime = 1.0f; //ヒップインパクトの加速
@@ -82,5 +84,9 @@ public:
     {
         fImpactRenge = _val;
     }
-};
 
+    void SetImpactSpeed(float _val)
+    {
+        fImpactSpeed = _val;
+    }
+};

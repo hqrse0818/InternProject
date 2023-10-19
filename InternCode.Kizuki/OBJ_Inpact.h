@@ -17,8 +17,7 @@ private:
 	//コライダーコンポーネント
 	Com_SphereCollider* p_mColliderCom = nullptr;
 	float fLifeTime = 1.0f; //存在する時間
-	float fCnt = 0.0f;
-	float fInpactPower = 0.0f;
+	float fScaleSpeed = 0.0f;	// 拡大速度
 
 public:
 	OBJ_Inpact();
@@ -36,13 +35,8 @@ public:
 		return p_mColliderCom;
 	}
 
-	void SetInpactPower(float _val)
+	void SetScaleSpeed(float _val)
 	{
-		fInpactPower = _val;
-	}
-
-	float GetInpactPower()
-	{
-		return fInpactPower;
+		fScaleSpeed = _val;
 	}
 };

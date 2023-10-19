@@ -10,7 +10,7 @@
 #include "Com_Shadow.h"
 
 // ペンギンのプレファブ
-#define PenguinStatuNum (19)
+#define PenguinStatuNum (20)
 
 // ペンギンのステート
 enum class PenguinState
@@ -80,6 +80,9 @@ private:
 
     // ヒップインパクトの拡大速度
     float fImpactScalingSpeed = 0.5f;
+
+    // 直撃時の上へのベクトル
+    float fDirectVector = 0.0f;
 
     DirectX::SimpleMath::Vector3 mDamageVelocity = DirectX::SimpleMath::Vector3(0.0f, 0.0f, 0.0f);
 

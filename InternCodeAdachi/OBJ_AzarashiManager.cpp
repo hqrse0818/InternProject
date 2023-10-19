@@ -4,6 +4,7 @@
 #include "../System/HighGetRand.h"
 #include "../Scene/Scene.h"
 #include "OBJ_Ice.h"
+#include "OBJ_IceManager.h"
 
 using namespace DirectX::SimpleMath;
 using namespace std;
@@ -219,30 +220,30 @@ void OBJ_AzarashiManager::Create()
 		// ‰º
 		if (line == 1)
 		{
-			TeshitaTarget.z += HighRand::fGetRand(10.0f, 20.0f, 3);
+			TeshitaTarget.x += HighRand::fGetRand(15.0f, 30.0f, 3);
 		}
 		// ã
 		else if (line == 2)
 		{
-			TeshitaTarget.z -= HighRand::fGetRand(10.0f, 20.0f, 3);
-		}
-		else
-		{
-			TeshitaTarget.z += HighRand::fGetRand(-7.0f, 7.0f, 3);
-		}
-		// ¶
-		if (row == 1)
-		{
-			TeshitaTarget.x += HighRand::fGetRand(10.0f, 20.0f, 3);
-		}
-		// ‰E
-		else if (row == 2)
-		{
-			TeshitaTarget.x -= HighRand::fGetRand(10.0f, 20.0f, 3);
+			TeshitaTarget.x -= HighRand::fGetRand(15.0f, 30.0f, 3);
 		}
 		else
 		{
 			TeshitaTarget.x += HighRand::fGetRand(-7.0f, 7.0f, 3);
+		}
+		// ¶
+		if (row == 1)
+		{
+			TeshitaTarget.z += HighRand::fGetRand(15.0f, 30.0f, 3);
+		}
+		// ‰E
+		else if (row == 2)
+		{
+			TeshitaTarget.z -= HighRand::fGetRand(15.0f, 30.0f, 3);
+		}
+		else
+		{
+			TeshitaTarget.z += HighRand::fGetRand(-7.0f, 7.0f, 3);
 		}
 
 		GetScene()->AddGameObject(azarashis);

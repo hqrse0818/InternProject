@@ -64,5 +64,14 @@ public:
         return p_mCollider;
     }
 
+    void SetShakeTime(float _val)
+    {
+        fShakeTime = _val;
+    }
+
+    void SetShakePower(float _val)
+    {
+        fShakePower = _val;
+    }
 };
 

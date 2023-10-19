@@ -16,6 +16,7 @@
 #include "../InternCodeAdachi/CSVLoad.h"
 #include "../InternCode.Kizuki/OBJ_AzarashiRemain.h"
 #include "../InternCodeAdachi/OBJ_BackGround.h"
+#include "../InternCodeAdachi/OBJ_IceManager.h"
 
 using namespace DirectX::SimpleMath;
 using namespace std;
@@ -27,7 +28,7 @@ void Scene_Test::Init()
 	std::vector<string> IceSetting = SeparateString(sStageNum, ',');
 	unsigned int stagenum = stoi(IceSetting[0]);
 	// ステージの最大のインデックスを格納
-	OBJ_Ice::s_iMaxNumIndex = stagenum;
+	OBJ_Ice::s_iMaxNumIndex = stagenum - 1;
 	float IceScale = stof(IceSetting[1]);
 
 	int Stagecenter = 0;
@@ -53,18 +54,33 @@ void Scene_Test::Init()
 	// レイヤーの指定なしでキーオブジェクトとして追加
 	AddKeyObject(Player);
 
+	OBJ_IceManager* iMana = new OBJ_IceManager("iMana", "asset/data/csv/IceStatus.csv");
+	AddGameObject(iMana);
+
+	float time = iMana->GetShakeTime();
+	float pow = iMana->GetShakePower();
+	Vector3 cen = iMana->GetColCenter();
+	Vector3 size = iMana->GetColSize();
+	Vector3 scale = iMana->GetScale();
+
 	// ステージ生成
 	for (int i = 0; i < stagenum; i++)
 	{
 		for (int j = 0; j < stagenum; j++)
 		{
 			// 氷の生成
-			OBJ_Ice* Ice = new OBJ_Ice("Ice", "asset/data/csv/IceStatus.csv");
+			OBJ_Ice* Ice = new OBJ_Ice("Ice");
+			Ice->SetShakeTime(time);
+			Ice->SetShakePower(pow);
+			Ice->SetScale(scale.x, scale.y, scale.z);
 			Com_BoxCollider* col = Ice->GetColliderCom();
+			col->mCenter = cen;
+			col->mSize = size;
 			Ice->p_mTransform->SetPosition(StageInit + i * col->mSize.x * Ice->p_mTransform->mScale.x, 0.0f, StageInit + j * col->mSize.z * Ice->p_mTransform->mScale.z);
-			Ice->myLine = i;
 			Ice->myRow = j;
+			Ice->myLine = i;
 			AddGameObject(Ice);
+			iMana->RegisterIce(Ice);
 		}
 	}
 
