@@ -215,7 +215,7 @@ void OBJ_AzarashiManager::Create()
 	LAzarashi->Start();
 	LAzarashi->Update();
 
-	int spawnnum = HighRand::GetRand(iScoreMin, iSpawnMax);
+	int spawnnum = HighRand::GetRand(iSpawnMin, iSpawnMax);
 
 	for (int i = 0; i < spawnnum; i++)
 	{
