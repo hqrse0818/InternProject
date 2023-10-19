@@ -347,4 +347,18 @@ public:
 
 		return ret;
 	}
+
+	template<typename T>
+	std::vector<T*>GetGameObjects(int _layer)
+	{
+		std::vector<T*>ret;
+		for (auto & obj : mList[_layer])
+		{
+			if (typeid(*obj) == typeid(T))
+			{
+				ret.push_back(static_cast<T*>(obj));
+			}
+		}
+		return ret;
+	}
 };

@@ -125,7 +125,7 @@ OBJ_AzarashiManager::OBJ_AzarashiManager(const char* _name, const char* _FileNam
 void OBJ_AzarashiManager::CreateLeader()
 {
 	// ターゲット位置設定
-	std::vector<OBJ_Ice*> vec = GetScene()->GetGameObjects<OBJ_Ice>();
+	std::vector<OBJ_Ice*> vec = GetScene()->GetGameObjects<OBJ_Ice>(2);
 	if (vec.size() == 0)
 		return;
 
@@ -288,7 +288,7 @@ void OBJ_AzarashiManager::Update()
 
 void OBJ_AzarashiManager::CreateTeshita()
 {
-	std::vector<OBJ_Ice*> vec = GetScene()->GetGameObjects<OBJ_Ice>();
+	std::vector<OBJ_Ice*> vec = GetScene()->GetGameObjects<OBJ_Ice>(2);
 	if (vec.size() == 0)
 		return;
 
