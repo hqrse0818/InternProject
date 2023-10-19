@@ -3,6 +3,11 @@
 #include "Scene_Test.h"
 #include "../InternCode.Kizuki/Scene_Debug.h"
 #include "../System/manager.h"
+#include "../InternCodeAdachi/CSVLoad.h"
+
+#include <iostream>
+
+using namespace std;
 
 void LoadPenguin()
 {
@@ -100,6 +105,30 @@ void Scene_ModelLoad::Init()
 	LoadBackPenguinA();
 	LoadBackPenguinB();
 	LoadBackGround();
+
+	// ライトの読み込み
+	string sLightState = ReadDataFromCSV("asset/data/csv/LightSetting.csv", 1);
+
+	vector<string> sv = SeparateString(sLightState, ',');
+
+	LIGHT light;
+	light.Enable = TRUE;
+	light.Direction.x = stof(sv[0]);
+	light.Direction.y = stof(sv[1]);
+	light.Direction.z = stof(sv[2]);
+	light.Direction.w = 0.0f;
+	light.Direction.Normalize();
+	light.Ambient.x = stof(sv[3]);
+	light.Ambient.y = stof(sv[4]);
+	light.Ambient.z = stof(sv[5]);
+	light.Ambient.w = stof(sv[6]);
+	light.Diffuse.x = stof(sv[7]);
+	light.Diffuse.y = stof(sv[8]);
+	light.Diffuse.z = stof(sv[9]);
+	light.Diffuse.w = stof(sv[10]);
+	// ライトを設定
+	Renderer::SetLight(light);
+
 }
 
 void Scene_ModelLoad::Update()
