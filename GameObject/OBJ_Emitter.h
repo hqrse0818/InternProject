@@ -10,10 +10,12 @@ public:
     enum Kind
     {
         Particle,
+        JumpEffect,
     };
 
 public:
     Kind mKind = Kind::Particle;
+    Kind eJump = Kind::JumpEffect;
     int iCreateNum;
     
 public:

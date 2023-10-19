@@ -16,6 +16,7 @@
 #include "../Component/Com_CameraTransform.h"
 #include "../Component/Com_Billboard.h"
 #include "../GameObject/OBJ_Emitter.h"
+#include "OBJ_JumpEffect.h"
 
 #define IceNum (9)
 #define IceScale (7)
@@ -95,9 +96,12 @@ void Scene_Debug::Init()
 	AddGameObject(ARemainNum);
 
 	//エフェクト
-	OBJ_Emitter* Effect = new OBJ_Emitter("Effect");
-	Effect->TexCreate("asset/texture/start.png");
-	AddGameObject(Effect);
+	//OBJ_Emitter* Effect = new OBJ_Emitter("Effect");
+	//Effect->TexCreate("asset/texture/start.png");
+	//AddGameObject(Effect);
+
+	OBJ_JumpEffect* JumpEffect = new OBJ_JumpEffect("JumpEffect");
+	AddGameObject(JumpEffect);
 
 	//音
 	p_mAudio = new Com_Audio();

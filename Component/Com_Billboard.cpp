@@ -85,8 +85,11 @@ void Com_Billboard::Update()
 void Com_Billboard::Draw()
 {
 	//テクスチャ座標算出
-	float x = m_Count % 4 * (1.0f / 4);
-	float y = m_Count / 4 * (1.0f / 4);
+	//float x = m_Count % 4 * (1.0f / 4);
+	//float y = m_Count / 4 * (1.0f / 4);
+
+	fCurrentx = 1.0f / fSetx;
+	fCurrenty = 1.0f / fSety;
 
 	//頂点データ書き換え
 	D3D11_MAPPED_SUBRESOURCE msr;
@@ -98,22 +101,22 @@ void Com_Billboard::Draw()
 	vertex[0].Position = Vector3(-1.0f, 1.0f, 0.0f);
 	vertex[0].Normal = Vector3(0.0f, 1.0f, 0.0f);
 	vertex[0].Diffuse = Vector4(1.0f, 1.0f, 1.0f, 1.0f);
-	vertex[0].TexCoord = Vector2(x, y);
+	vertex[0].TexCoord = Vector2(fCurrentx, fCurrenty);
 
 	vertex[1].Position = Vector3(1.0f, 1.0f, 0.0f);
 	vertex[1].Normal = Vector3(0.0f, 1.0f, 0.0f);
 	vertex[1].Diffuse = Vector4(1.0f, 1.0f, 1.0f, 1.0f);
-	vertex[1].TexCoord = Vector2(x + 0.25f, y);
+	vertex[1].TexCoord = Vector2(fCurrentx + 0.25f, fCurrenty);
 
 	vertex[2].Position = Vector3(-1.0f, -1.0f, 0.0f);
 	vertex[2].Normal = Vector3(0.0f, 1.0f, 0.0f);
 	vertex[2].Diffuse = Vector4(1.0f, 1.0f, 1.0f, 1.0f);
-	vertex[2].TexCoord = Vector2(x, y + 0.25f);
+	vertex[2].TexCoord = Vector2(fCurrentx, fCurrenty + 0.25f);
 
 	vertex[3].Position = Vector3(1.0f, -1.0f, 0.0f);
 	vertex[3].Normal = Vector3(0.0f, 1.0f, 0.0f);
 	vertex[3].Diffuse = Vector4(1.0f, 1.0f, 1.0f, 1.0f);
-	vertex[3].TexCoord = Vector2(x + 0.25f, y + 0.25f);
+	vertex[3].TexCoord = Vector2(fCurrentx + 0.25f, fCurrenty + 0.25f);
 
 	Renderer::GetDeviceContext()->Unmap(m_VertexBuffer, 0);
 

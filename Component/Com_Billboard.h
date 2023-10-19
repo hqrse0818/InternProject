@@ -13,6 +13,14 @@ protected:
 
 	ID3D11Buffer* m_VertexBuffer{};
 	ShaderResourceView* m_Texture;
+
+	float fCurrentx;
+	float fCurrenty;
+	float fCurrentz;
+	float fCurrentw;
+
+	float fSetx;
+	float fSety;
 	
 	int m_Count;
 
@@ -34,7 +42,10 @@ public:
 	void SetSRV(ID3D11ShaderResourceView* _pSRV)
 	{
 		m_Texture->SetSRV(_pSRV);
-
-		
+	}
+	void SetUVCut(float _x, float _y)
+	{
+		fSetx = _x;
+		fSety = _y;
 	}
 };

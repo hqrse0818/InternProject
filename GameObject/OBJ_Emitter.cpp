@@ -4,6 +4,7 @@
 //#include "../BaseObject.h"
 #include "../Scene/Scene.h"
 #include "OBJ_Particle.h"
+#include "../InternCode.Kizuki/OBJ_JumpEffect.h"
 
 OBJ_Emitter::OBJ_Emitter()
 {
@@ -12,6 +13,9 @@ OBJ_Emitter::OBJ_Emitter()
 	Com_BoxCollider* Collider_buf = new Com_BoxCollider();
 	Collider_buf->SetSize(2.0f, 2.0f, 2.0f);
 	AddComponent(Collider_buf);
+
+	eJump = JumpEffect;
+	iCreateNum = 10;
 
 	p_mTexture = new ShaderResourceView;
 }
@@ -57,5 +61,14 @@ void OBJ_Emitter::Create()
 		Particle->Init();
 		Particle->SetTexture(p_mTexture->GetSRV());
 		s_p_mScene->AddGameObject(Particle);
+	}
+
+	for (int i = 0; i < iCreateNum; i++)
+	{
+		OBJ_JumpEffect* JumpEffect = new OBJ_JumpEffect("no");
+		JumpEffect->p_mTransform->mPosition = p_mTransform->mPosition;
+		JumpEffect->Init();
+		JumpEffect->SetTexture(p_mTexture->GetSRV());
+		s_p_mScene->AddGameObject(JumpEffect);
 	}
 }

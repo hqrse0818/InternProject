@@ -7,10 +7,11 @@
 
 class OBJ_JumpEffect :public GameObject
 {
-public:
+private:
     Com_DiagonalProjection* p_mTousyaBuf{};
     Com_Billboard* p_mBil{};
     float fLifetime;
+
 public:
     OBJ_JumpEffect();
     OBJ_JumpEffect(const char* _name);
