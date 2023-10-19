@@ -29,11 +29,11 @@ void OBJ_Penguin::CreateFromCSV(const char* _FileName)
 	AddComponent(p_mModel);
 
 	// ペンギン自身のコライダー
-	Com_BoxCollider* p_mCollider = new Com_BoxCollider();
-	p_mCollider->bMovable = true;
-	p_mCollider->mColliderTag = ColliderKind::ColTag_Penguin;
+	p_mColliderCom = new Com_BoxCollider();
+	p_mColliderCom->bMovable = true;
+	p_mColliderCom->mColliderTag = ColliderKind::ColTag_Penguin;
 
-	AddComponent(p_mCollider);
+	AddComponent(p_mColliderCom);
 
 	// 移動コンポーネント
 	p_mMoveCom = new Com_CharacterMove();
@@ -69,9 +69,9 @@ void OBJ_Penguin::CreateFromCSV(const char* _FileName)
 		// カメラのスピード
 		fCamSpeed = stof(sv[6]);
 		// コライダーの中心
-		p_mCollider->SetCenter(stof(sv[7]), stof(sv[8]), stof(sv[9]));
+		p_mColliderCom->SetCenter(stof(sv[7]), stof(sv[8]), stof(sv[9]));
 		// コライダーのサイズ
-		p_mCollider->SetSize(stof(sv[10]), stof(sv[11]), stof(sv[12]));
+		p_mColliderCom->SetSize(stof(sv[10]), stof(sv[11]), stof(sv[12]));
 		// ヒップインパクトの範囲
 		p_mJumpCom->SetImpactRange(stof(sv[13]));
 		// よろめきの強さ
@@ -311,6 +311,7 @@ void OBJ_Penguin::Update()
 			fFloatCnt = 0.0f;
 			mState = PenguinState::Walk;
 			p_mGravityCom->bEnable = true;
+			p_mColliderCom->bEnable = true;
 			p_mFootCom->bEnable = true;
 			p_mModel->SetCurrentKeyFrame(0);
 			break;
@@ -382,10 +383,12 @@ void OBJ_Penguin::OnCollisionEnter(GameObject* _obj)
 			{
 				// アザラシの上に乗った状態へ
 				mState = PenguinState::HipDropOnAzarashi;
+				p_mColliderCom->bEnable = false;
 				// 読み込みで変える
 				mDamageVelocity.y = fDirectVector;
 				mDamageVelocity.x = 0;
 				mDamageVelocity.z = 0;
+				
 				p_mJumpCom->SetDropFlg(false);
 				p_mJumpCom->SetJumpFlg(false);
 				p_mGravityCom->SetGround(false);

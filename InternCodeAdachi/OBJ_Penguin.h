@@ -8,6 +8,7 @@
 #include "Com_Foot.h"
 #include "Com_Model.h"
 #include "Com_Shadow.h"
+#include "../Component/Com_BoxCollider.h"
 
 // ペンギンのプレファブ
 #define PenguinStatuNum (21)
@@ -53,6 +54,8 @@ private:
     Com_Foot* p_mFootCom = nullptr;
     // 影
     Com_Shadow* p_mShadowCom = nullptr;
+    // コライダー
+    Com_BoxCollider* p_mColliderCom = nullptr;
 
     // 空中での移動制御(スティック入力でどれだけの割合を適用するか)
     float fAirMoveSpeed = 1.0f;
