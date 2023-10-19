@@ -80,11 +80,13 @@ void OBJ_Penguin::CreateFromCSV(const char* _FileName)
 		float scale = stof(sv[15]);
 		SetScale(scale, scale, scale);
 
-		fImpactScalingSpeed = stof(sv[16]);
+		p_mJumpCom->SetImpactSpeed(stof(sv[16]));
 
 		p_mGravityCom->SetGravity(stof(sv[17]));
 
 		p_mGravityCom->SetGravCoef(stof(sv[18]));
+
+		fDirectVector = stof(sv[19]);
 	}
 	
 	
@@ -269,6 +271,8 @@ void OBJ_Penguin::Update()
 	case PenguinState::AfterHipDrop:
 		if (p_mModel->GetIsRotLastKey())
 		{
+			p_mJumpCom->SetDropFlg(false);
+			p_mFootCom->bEnable = true;
 			p_mModel->SetCurrentKeyFrame(0);
 			p_mModel->PlayAnimation("Walk");
 			mState = PenguinState::Walk;
@@ -290,7 +294,9 @@ void OBJ_Penguin::Update()
 		// ブレーキを掛ける
 		mDamageVelocity *= fBlake;
 
-		p_mTransform->Translate(mDamageVelocity);
+		Vector3 Velocity = mDamageVelocity * Time->GetDeltaTime();
+
+		p_mTransform->Translate(Velocity);
 	}
 		break;
 	case PenguinState::HipDropOnAzarashi:
@@ -302,6 +308,8 @@ void OBJ_Penguin::Update()
 		if (length < fDamagePermission)
 		{
 			mState = PenguinState::Walk;
+			p_mGravityCom->bEnable = true;
+			p_mFootCom->bEnable = true;
 			p_mModel->SetCurrentKeyFrame(0);
 			break;
 		}
@@ -309,7 +317,10 @@ void OBJ_Penguin::Update()
 		// ダメージのベクトルを減少させる
 		mDamageVelocity *= fBlake;
 
-		p_mTransform->Translate(mDamageVelocity);
+		Vector3 Velocity = mDamageVelocity * Time->GetDeltaTime();
+
+		p_mTransform->Translate(Velocity);
+		p_mMoveCom->Move(mMoveVelocity.x * fAirMoveSpeed, mMoveVelocity.y * fAirMoveSpeed);
 	}
 		break;
 	}
@@ -373,7 +384,7 @@ void OBJ_Penguin::OnCollisionEnter(GameObject* _obj)
 				// アザラシの上に乗った状態へ
 				mState = PenguinState::HipDropOnAzarashi;
 				// 読み込みで変える
-				mDamageVelocity.y = 20.0f;
+				mDamageVelocity.y = fDirectVector;
 				mDamageVelocity.x = 0;
 				mDamageVelocity.z = 0;
 				p_mJumpCom->SetDropFlg(false);

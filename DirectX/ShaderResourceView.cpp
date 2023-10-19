@@ -2,6 +2,7 @@
 #include "../System/TextureCreate.h"
 #include "../Utility.h"
 #include <iostream>
+#include "../Debug.h"
 
 using namespace std;
 
@@ -27,7 +28,7 @@ bool ShaderResourceView::Create(const char* _FileName)
 	{
 		return true;
 	}
-	cout << "テクスチャの作成に失敗 : " << _FileName << endl;
+	DEBUG_LOG("テクスチャの作成に失敗 : " << _FileName);
 	return false;
 }
 

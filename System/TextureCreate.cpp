@@ -4,7 +4,7 @@
 #include "utftosjisconv.h"
 #include "../Utility.h"
 #include <iostream>
-
+#include "../Debug.h"
 using namespace std;
 
 TextureCreate* TextureCreate::p_mInstance = nullptr;
@@ -31,7 +31,7 @@ void TextureCreate::CreateTexture(const char* _FileName, ID3D11ShaderResourceVie
 
     if (FAILED(hr))
     {
-        cout << "エラー" << endl;
+        DEBUG_LOG("エラー");
     }
 
     assert(_pTex);

@@ -6,6 +6,7 @@
     <FxCompile Include="shader\unlitTextureVS.hlsl" />
     <FxCompile Include="shader\vertexLightingPS.hlsl" />
     <FxCompile Include="shader\vertexLightingVS.hlsl" />
+    <FxCompile Include="shader\VS_OneSkinAnimation.hlsl" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Component\Com_Audio.cpp" />
@@ -30,7 +31,6 @@
     <ClCompile Include="InternCodeAdachi\Com_Shadow.cpp" />
     <ClCompile Include="InternCode.Kizuki\OBJ_AzarashiRemain.cpp" />
     <ClCompile Include="InternCode.Kizuki\OBJ_Number.cpp" />
-    <ClCompile Include="InternCode.Kizuki\OBJ_Score.cpp" />
     <ClCompile Include="InternCode.Kizuki\OBJ_TitleLogo.cpp" />
     <ClCompile Include="InternCode.Kizuki\OBJ_TitleStart.cpp" />
     <ClCompile Include="InternCode.Kizuki\OBJ_TitleTutorial.cpp" />
@@ -79,6 +79,13 @@
     <ClCompile Include="GameObject\OBJ_Particle.cpp" />
     <ClCompile Include="GameObject\OBJ_Emitter.cpp" />
     <ClCompile Include="InternCode.Kizuki\OBJ_JumpEffect.cpp" />
+    <ClCompile Include="InternCodeAdachi\OBJ_Score.cpp" />
+    <ClCompile Include="InternCodeAdachi\OBJ_BackPenguinRed.cpp" />
+    <ClCompile Include="InternCodeAdachi\OBJ_BackPenguinBlue.cpp" />
+    <ClCompile Include="InternCodeAdachi\OBJ_DisplayScore.cpp" />
+    <ClCompile Include="InternCodeAdachi\OBJ_IceManager.cpp" />
+    <ClCompile Include="InternCodeAdachi\OBJ_ComboManager.cpp" />
+    <ClCompile Include="InternCodeAdachi\Com_AzarshiHit.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Component\Component.h" />
@@ -106,7 +113,6 @@
     <ClInclude Include="InternCodeAdachi\Com_Shadow.h" />
     <ClInclude Include="InternCode.Kizuki\OBJ_AzarashiRemain.h" />
     <ClInclude Include="InternCode.Kizuki\OBJ_Number.h" />
-    <ClInclude Include="InternCode.Kizuki\OBJ_Score.h" />
     <ClInclude Include="InternCode.Kizuki\OBJ_TitleLogo.h" />
     <ClInclude Include="InternCode.Kizuki\OBJ_TitleStart.h" />
     <ClInclude Include="InternCode.Kizuki\OBJ_TitleTutorial.h" />
@@ -164,6 +170,14 @@
     <ClInclude Include="GameObject\OBJ_Emitter.h" />
     <ClInclude Include="GameObject\OBJ_Particle.h" />
     <ClInclude Include="InternCode.Kizuki\OBJ_JumpEffect.h" />
+    <ClInclude Include="InternCodeAdachi\OBJ_Score.h" />
+    <ClInclude Include="InternCodeAdachi\OBJ_BackPenguinRed.h" />
+    <ClInclude Include="InternCodeAdachi\OBJ_BackPenguinBlue.h" />
+    <ClInclude Include="InternCodeAdachi\OBJ_DisplayScore.h" />
+    <ClInclude Include="InternCodeAdachi\OBJ_IceManager.h" />
+    <ClInclude Include="Debug.h" />
+    <ClInclude Include="InternCodeAdachi\OBJ_ComboManager.h" />
+    <ClInclude Include="InternCodeAdachi\Com_AzarshiHit.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="ClassDiagram.cd" />

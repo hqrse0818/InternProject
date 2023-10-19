@@ -6,6 +6,7 @@
 #include "Com_Model.h"
 #include "Com_Foot.h"
 #include "../GameObject/OBJ_Shadow.h"
+#include "Com_AzarshiHit.h"
 
 // アザラシ
 
@@ -38,6 +39,17 @@ class OBJ_Azarashi :
 private:
     // 氷上のアザラシの数
     static int s_iOnIceNum;
+
+    // スコア一覧
+    static int s_iScoreMin;
+    static int s_iScoreCenter;
+    static int s_iScoreMax;
+
+    // スコアと距離の関係
+     // 最大スコアを得るための基準距離
+    static float fScoreDisMax;
+    // 次のスコアの基準距離
+    static float fScoreDisCen;
 
     // スポーン前状態で固定
     AzrashiState mState = AzrashiState::SpawnToCenter;
@@ -79,6 +91,7 @@ private:
     Com_Shader* p_mShaderCom = nullptr;
     Com_Model* p_mModelCom = nullptr;
     Com_Foot* p_mFootCom = nullptr;
+    Com_AzarshiHit* p_mHitCom = nullptr;
 
     OBJ_Shadow* p_mShadowObj = nullptr;
 
@@ -128,5 +141,18 @@ public:
     }
 
     void SetLeader(OBJ_Azarashi* _obj);
+
+    static void SetGettingScore(int _min, int _cen, int _max)
+    {
+        s_iScoreMin = _min;
+        s_iScoreCenter = _cen;
+        s_iScoreMax = _max;
+    }
+
+    static void SetScoreDistance(float _high, float _cen)
+    {
+        fScoreDisMax = _high;
+        fScoreDisCen = _cen;
+    }
 };
 

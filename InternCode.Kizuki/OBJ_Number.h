@@ -31,4 +31,9 @@ public:
 	{
 		return iNum;
 	}
+
+	Com_CustomSprite* GetSpriteCom()
+	{
+		return p_mSprite;
+	}
 };

@@ -1,6 +1,7 @@
 #include "OBJ_Score.h"
 
 #include <iostream>
+#include "../Debug.h"
 
 using namespace std;
 
@@ -17,6 +18,6 @@ void OBJ_Score::CalcScore(int _val)
 {
 	s_iScore += _val;
 
-	cout << "加算値 : " << _val << endl;
-	cout << "スコア : " << s_iScore << endl;
+	DEBUG_LOG("加算値 : " << _val);
+	DEBUG_LOG("スコア : " << s_iScore);
 }

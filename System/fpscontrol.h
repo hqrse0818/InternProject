@@ -2,6 +2,7 @@
 #include	<iostream>
 #include	<windows.h>
 #include	<timeapi.h>
+#include "../Debug.h"
 
 class FPS {
 public:
@@ -24,7 +25,7 @@ public:
 			float tt = sleep_time / 1000.0f;
 
 			#if defined(DEBUG) || defined(_DEBUG)
-				//std::cout << "sleep time(ms):" << tt << std::endl;
+				//DEBUG_LOG("sleep time(ms):" << tt);
 			#endif
 
 			std::this_thread::sleep_for(std::chrono::milliseconds(static_cast<int>(tt)));

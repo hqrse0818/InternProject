@@ -1,6 +1,6 @@
 #include "Utility.h"
 #include	<filesystem>
-
+#include "Debug.h"
 namespace fs = std::filesystem;
 
 std::string GetFileName(std::string FilePath)
@@ -9,10 +9,10 @@ std::string GetFileName(std::string FilePath)
     fs::path p = fs::u8path(FilePath.c_str());
     // パスから、ファイル名を除いたディレクトリ、ファイル名、
     // 拡張子を除いたファイル名、拡張子を抽出
-//    std::cout << "ディレクトリ名 : " << p.parent_path() << std::endl;
-//    std::cout << "ファイル名  : " << p.filename() << std::endl;
-//    std::cout << "ファイル名（拡張子なし） : " << p.stem() << std::endl;
-//    std::cout << "拡張子 : " << p.extension() << std::endl;
+//    DEBUG_LOG("ディレクトリ名 : " << p.parent_path());
+//    DEBUG_LOG("ファイル名  : " << p.filename());
+//    DEBUG_LOG("ファイル名（拡張子なし） : " << p.stem());
+//    DEBUG_LOG("拡張子 : " << p.extension());
 
     return p.filename().string();
 }
@@ -29,7 +29,7 @@ std::wstring GetFileNameWide(std::string filepath) {
 
     // ロケールを日本にする
     setlocale(LC_ALL, "Japanese");
-    std::wcout << wsfilename << std::endl;
+    WDEBUG_LOG(wsfilename);
 
     return wsfilename;
 }

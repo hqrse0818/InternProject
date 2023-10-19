@@ -2,6 +2,7 @@
 #include <winapifamily.h>
 #include	<timeapi.h>
 #include <iostream>
+#include "../Debug.h"
 
 using namespace std;
 
@@ -45,7 +46,7 @@ void Times::Update()
 	if (FPSTimer < 1)
 	{
 		FPSTimer = 1000;
-		//cout << iFrameCount << "FPS" << endl;
+		//DEBUG_LOG(iFrameCount << "FPS");
 		iFrameCount = 0;
 	}
 

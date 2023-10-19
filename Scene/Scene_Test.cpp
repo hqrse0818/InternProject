@@ -16,6 +16,9 @@
 #include "../InternCodeAdachi/CSVLoad.h"
 #include "../InternCode.Kizuki/OBJ_AzarashiRemain.h"
 #include "../InternCodeAdachi/OBJ_BackGround.h"
+#include "../InternCodeAdachi/OBJ_IceManager.h"
+#include "../InternCodeAdachi/OBJ_DisplayScore.h"
+#include "../System/HighGetRand.h"
 
 using namespace DirectX::SimpleMath;
 using namespace std;
@@ -27,7 +30,7 @@ void Scene_Test::Init()
 	std::vector<string> IceSetting = SeparateString(sStageNum, ',');
 	unsigned int stagenum = stoi(IceSetting[0]);
 	// ステージの最大のインデックスを格納
-	OBJ_Ice::s_iMaxNumIndex = stagenum;
+	OBJ_Ice::s_iMaxNumIndex = stagenum - 1;
 	float IceScale = stof(IceSetting[1]);
 
 	int Stagecenter = 0;
@@ -53,18 +56,51 @@ void Scene_Test::Init()
 	// レイヤーの指定なしでキーオブジェクトとして追加
 	AddKeyObject(Player);
 
+	OBJ_IceManager* iMana = new OBJ_IceManager("iMana", "asset/data/csv/IceStatus.csv");
+	AddGameObject(iMana);
+
+	float time = iMana->GetShakeTime();
+	float pow = iMana->GetShakePower();
+	Vector3 cen = iMana->GetColCenter();
+	Vector3 size = iMana->GetColSize();
+	Vector3 scale = iMana->GetScale();
+
 	// ステージ生成
 	for (int i = 0; i < stagenum; i++)
 	{
 		for (int j = 0; j < stagenum; j++)
 		{
 			// 氷の生成
-			OBJ_Ice* Ice = new OBJ_Ice("Ice", "asset/data/csv/IceStatus.csv");
+			OBJ_Ice* Ice = new OBJ_Ice("Ice");
+			Ice->SetShakeTime(time);
+			Ice->SetShakePower(pow);
+			Ice->SetScale(scale.x, scale.y, scale.z);
 			Com_BoxCollider* col = Ice->GetColliderCom();
+			col->mCenter = cen;
+			col->mSize = size;
 			Ice->p_mTransform->SetPosition(StageInit + i * col->mSize.x * Ice->p_mTransform->mScale.x, 0.0f, StageInit + j * col->mSize.z * Ice->p_mTransform->mScale.z);
-			Ice->myLine = i;
 			Ice->myRow = j;
+			Ice->myLine = i;
 			AddGameObject(Ice);
+			iMana->RegisterIce(Ice);
+
+			int r = HighRand::GetRand(1, 4);
+			switch (r)
+			{
+			case 1:
+				Ice->SetRotation(0.0f, Euler_To_Radian(90), 0.0f);
+				break;
+			case 2:
+				Ice->SetRotation(0.0f, Euler_To_Radian(180), 0.0f);
+				break;
+			case 3:
+				Ice->SetRotation(0.0f, Euler_To_Radian(270), 0.0f);
+				break;
+			case 4:
+				break;
+			default:
+				break;
+			}
 		}
 	}
 
@@ -121,6 +157,9 @@ void Scene_Test::Init()
 	p_mAudio = new Com_Audio();
 	p_mAudio->Load("asset\\audio\\BGM\\メイン BGM.wav");
 	p_mAudio->SetUseTarget(false);
+
+	OBJ_DisplayScore* ScoreObj = new OBJ_DisplayScore("dis","asset/data/csv/ScoreUI.csv");
+	AddGameObject(ScoreObj);
 }
 
 void Scene_Test::Start()

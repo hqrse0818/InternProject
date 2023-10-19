@@ -3,6 +3,7 @@
 #include "../DirectX/renderer.h"
 #include "../System/Time.h"
 #include "../GameObject/GameObject.h"
+#include "../Debug.h"
 
 #include <iostream>
 
@@ -64,7 +65,7 @@ bool Com_Model::SetModelData(const char* _ModelName)
 		HRESULT hr = Renderer::GetDevice()->CreateBuffer(&bd, nullptr, &p_mCombBuffer);
 		if (FAILED(hr))
 		{
-			std::cout << "ボーンコンビネーション行列バッファ作成失敗" << endl;
+			DEBUG_LOG("ボーンコンビネーション行列バッファ作成失敗");
 			return false;
 		}
 		assert(p_mCombBuffer);
@@ -107,14 +108,14 @@ bool Com_Model::SetModelData(const char* _ModelName)
 		hr = Renderer::GetDevice()->CreateBuffer(&bd, NULL, &p_mScaleBuffer);
 		if (FAILED(hr))
 		{
-			std::cout << "スケール用バッファ作成失敗" << endl;
+			DEBUG_LOG("スケール用バッファ作成失敗");
 			return false;
 		}
 
 		return true;
 	}
 	
-	cout << "モデルの取得に失敗 : モデル名 " << _ModelName << endl;
+	DEBUG_LOG("モデルの取得に失敗 : モデル名 " << _ModelName);
 	return false;
 }
 
@@ -389,7 +390,7 @@ void Com_Model::Update()
 	//}
 
 	/*float f = Time->CountStop();
-	cout << "Time : " << f << "sec" << endl;*/
+	DEBUG_LOG("Time : " << f << "sec")*/
 }
 
 void Com_Model::Draw()
@@ -441,7 +442,7 @@ void Com_Model::Draw()
 		Renderer::GetDeviceContext()->DrawIndexed(p_mesh->mNumFaces * 3, 0, 0);
 	}
 	//float f = Time->CountStop();
-	//cout << "Time : " << f << "sec" << endl;
+	//DEBUG_LOG("Time : " << f << "sec");
 }
 
 void Com_Model::Uninit()

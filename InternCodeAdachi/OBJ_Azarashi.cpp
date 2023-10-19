@@ -13,6 +13,11 @@ using namespace DirectX::SimpleMath;
 using namespace std;
 
 int OBJ_Azarashi::s_iOnIceNum = 0;
+int OBJ_Azarashi::s_iScoreMin = 0;
+int OBJ_Azarashi::s_iScoreCenter= 0;
+int OBJ_Azarashi::s_iScoreMax = 0;
+float OBJ_Azarashi::fScoreDisCen = 0.0f;
+float OBJ_Azarashi::fScoreDisMax = 0.0f;
 
 OBJ_Azarashi::OBJ_Azarashi()
 {
@@ -101,6 +106,10 @@ OBJ_Azarashi::OBJ_Azarashi(const char* _name, int _ModelKind)
 	p_mFootCom->SetGravityCom(p_mGravityCom);
 	p_mFootCom->bEnable = false;
 	AddComponent(p_mFootCom);
+
+	// アザラシヒットコンポーネント
+	p_mHitCom = new Com_AzarshiHit();
+	AddComponent(p_mHitCom);
 }
 
 
@@ -328,20 +337,20 @@ void OBJ_Azarashi::OnCollisionEnter(GameObject* _obj)
 			// 衝突オブジェクトとの距離を取得
 			float dis = Math::GetDistance(p_mTransform->mPosition, _obj->p_mTransform->mPosition);
 
-			cout << dis << endl;
+			DEBUG_LOG(dis);
 
 			// 距離によってスコア加算予定値を変更する(距離は仮)
-			if (dis < 6.5f)
+			if (dis < fScoreDisMax)
 			{
-				iScore = 500;
+				iScore = s_iScoreMax;
 			}
-			else if (dis < 12.0f)
+			else if (dis < fScoreDisCen)
 			{
-				iScore = 300;
+				iScore = s_iScoreCenter;
 			}
 			else
 			{
-				iScore = 100;
+				iScore = s_iScoreMin;
 			}
 
 			float vec = fVelocityDistance - dis;

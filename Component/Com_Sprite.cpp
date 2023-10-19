@@ -83,6 +83,11 @@ void Com_Sprite::SetTexture(const char* _name)
 	mMaterial.TextureEnable = true;
 }
 
+void Com_Sprite::SetTexture(ShaderResourceView* _psrv)
+{
+	p_mSRV->SetSRV(_psrv->GetSRV());
+}
+
 void Com_Sprite::SetMaterial(MATERIAL mat)
 {
 	// ƒ}ƒeƒŠƒAƒ‹‚ğİ’è

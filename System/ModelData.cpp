@@ -8,6 +8,7 @@
 #include "../System/TextureCreate.h"
 #include "../Utility.h"
 #include "ModelPool.h"
+#include "../Debug.h"
 
 using namespace DirectX::SimpleMath;
 using namespace std;
@@ -39,7 +40,7 @@ ID3D11ShaderResourceView* ModelData::LoadDiffuseTexture(std::string _FileName, s
 
 		HRESULT hr = LoadFromTGAFile(filepath.c_str(), &meta, *image);
 		if (FAILED(hr)) {
-			std::cout << "LoadFromTGAFile Error (" << _FileName << ")" << std::endl;
+			DEBUG_LOG("LoadFromTGAFile Error (" << _FileName << ")");
 			return nullptr;
 		}
 
@@ -56,7 +57,7 @@ ID3D11ShaderResourceView* ModelData::LoadDiffuseTexture(std::string _FileName, s
 		tex->Release();
 
 		if (FAILED(hr)) {
-			std::cout << "CreateTexture Error (" << _FileName << ")" << std::endl;
+			DEBUG_LOG("CreateTexture Error (" << _FileName << ")");
 			return nullptr;
 		}
 
@@ -68,7 +69,7 @@ ID3D11ShaderResourceView* ModelData::LoadDiffuseTexture(std::string _FileName, s
 			&srv);
 
 		if (FAILED(hr)) {
-			std::wcout << L"CreateShaderResourceView Error (" << filepath.c_str() << L")" << std::endl;
+			DEBUG_LOG(L"CreateShaderResourceView Error (" << filepath.c_str() << L")");
 			return nullptr;
 		}
 	}
@@ -76,7 +77,7 @@ ID3D11ShaderResourceView* ModelData::LoadDiffuseTexture(std::string _FileName, s
 		// テクスチャ読み込み
 		TextureCreate::CreateTexture(filepath.c_str(), &srv);
 		if (srv == nullptr) {
-			std::wcout << L"CreateWICTextureFromFile Error (" << filepath.c_str() << widefilename.c_str() << L")" << std::endl;
+			DEBUG_LOG(L"CreateWICTextureFromFile Error (" << filepath.c_str() << widefilename.c_str() << L")");
 			return nullptr;
 		}
 	}
@@ -127,8 +128,8 @@ void ModelData::LoadModel(const char* _FileName, bool _bLoadMaterial)
 
 	if (mModelData->p_mAiScene == nullptr)
 	{
-		cout << _FileName << " is Error" << endl;
-		cout << aiGetErrorString() << endl;
+		DEBUG_LOG(_FileName << " is Error");
+		DEBUG_LOG(aiGetErrorString());
 	}
 	
 	assert(mModelData->p_mAiScene);
@@ -195,7 +196,7 @@ void ModelData::LoadModel(const char* _FileName, bool _bLoadMaterial)
 			HRESULT hr = Renderer::GetDevice()->CreateBuffer(&bd, &sd, &mModelData->pp_mVertexBuffer[index]);
 			if (FAILED(hr))
 			{
-				cout << _FileName << "頂点バッファの作成に失敗 : " << index << endl;
+				DEBUG_LOG(_FileName << "頂点バッファの作成に失敗 : " << index);
 			}
 
 			delete[] p_vertex;
@@ -479,9 +480,9 @@ void ModelData::LoadModel(const char* _FileName, bool _bLoadMaterial)
 	}
 
 	float time = Time->CountStop();
-	cout << _FileName << endl;
-	cout << "モデル読み込み完了" << endl;
-	cout << "Time : " << time << "sec" << endl;
+	DEBUG_LOG(_FileName);
+	DEBUG_LOG("モデル読み込み完了");
+	DEBUG_LOG("Time : " << time << "sec");
 }
 
 void ModelData::LoadAnimation(const char* _FileName, const char* _AnimName)
@@ -491,17 +492,17 @@ void ModelData::LoadAnimation(const char* _FileName, const char* _AnimName)
 	if (mModelData->map_mAnimation[_AnimName])
 	{
 		float time = Time->CountStop();
-		cout << _FileName << " : " << _AnimName << endl;
-		cout << "アニメーション読み込み成功" << endl;
-		cout << "Time : " << time << "sec" << endl;
+		DEBUG_LOG(_FileName << " : " << _AnimName);
+		DEBUG_LOG("アニメーション読み込み成功");
+		DEBUG_LOG("Time : " << time << "sec");
 	}
 	else
 	{
 		float time = Time->CountStop();
-		cout << _FileName << " : " << _AnimName << endl;
-		cout << _FileName << " , " << _AnimName << endl;
-		cout << "アニメーション読み込み失敗" << endl;
-		cout << "Time : " << time << "sec" << endl;
+		DEBUG_LOG( _FileName << " : " << _AnimName);
+		DEBUG_LOG( _FileName << " , " << _AnimName);
+		DEBUG_LOG( "アニメーション読み込み失敗");
+		DEBUG_LOG( "Time : " << time << "sec");
 	}
 
 	assert(mModelData->map_mAnimation[_AnimName]);

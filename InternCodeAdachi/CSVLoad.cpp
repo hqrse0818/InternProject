@@ -1,5 +1,5 @@
 #include "CSVLoad.h"
-
+#include "../Debug.h"
 using namespace std;
 
 std::string ReadDataFromCSV(const char* _FileName, unsigned int ReadRow)
@@ -8,7 +8,7 @@ std::string ReadDataFromCSV(const char* _FileName, unsigned int ReadRow)
 	ifstream Check(_FileName);
 	if (!Check.is_open())
 	{
-		cout << "ファイルを開けませんでした" << endl;
+		DEBUG_LOG("ファイルを開けませんでした");
 		return "";
 	}
 

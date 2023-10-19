@@ -110,17 +110,8 @@ void OBJ_Ice::Update()
 
 	switch (iHP)
 	{
-	case 0:
+	case 10:
 
-		break;
-	case 1:
-		p_mCollider->bEnable = false;
-		fLastLifeWaitTime -= Time->GetDeltaTime();
-		if (fLastLifeWaitTime < 0)
-		{
-			bDestroy = true; //GameObjectクラスのDestroy()を使うために必要
-			iHP = 0;
-		}
 		break;
 	case 2:
 		myColor = Color(1.0f, 0.0f, 1.0f, 1.0f);
@@ -139,6 +130,16 @@ void OBJ_Ice::Update()
 		break;
 	}
 
+	if (iHP <= 1)
+	{
+		p_mCollider->bEnable = false;
+		fLastLifeWaitTime -= Time->GetDeltaTime();
+		if (fLastLifeWaitTime < 0)
+		{
+			bDestroy = true; //GameObjectクラスのDestroy()を使うために必要
+			iHP = 10;
+		}
+	}
 	
 
 	p_mShaderCom->p_mPS->WriteBuffer(0, &myColor);

@@ -23,6 +23,7 @@ public:
     OBJ_Emitter(std::string _name);
     void Init();
     void Update();
+    void Uninit();
     void TexCreate(const char* _name);
 
 protected:

@@ -65,7 +65,8 @@ void Com_Jump::OnCollisionEnter(GameObject* _obj)
 				Inpact->GetColliderCom()->fRadius = fImpactRenge; //”ÍˆÍ
 				Inpact->GetColliderCom()->bMovable = true;
 				Inpact->GetColliderCom()->bIsTrigger = true;
-				Inpact->SetInpactPower(fJumpPower); //ˆÐ—Í‚ÌÝ’è
+				// Šg‘å‘¬“x‚ÌÝ’è
+				Inpact->SetScaleSpeed(fImpactSpeed);
 
 				Inpact->Init();
 
