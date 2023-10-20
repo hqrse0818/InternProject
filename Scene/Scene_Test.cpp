@@ -22,6 +22,7 @@
 #include "../InternCodeAdachi/GameManager.h"
 #include "../InternCodeAdachi/OBJ_ComboDisplay.h"
 #include "../InternCodeAdachi/OBJ_SeaSprite.h"
+#include "../InternCode.Kizuki/OBJ_HipEffect.h"
 
 #include "../System/HighGetRand.h"
 
@@ -181,6 +182,10 @@ void Scene_Test::Init()
 	// コンボ表示オブジェクト
 	OBJ_ComboDisplay* ComboObj = new OBJ_ComboDisplay("combo", "asset/data/csv/ComboUI.csv");
 	AddGameObject(ComboObj);
+
+	//エフェクト
+	OBJ_HipEffect* HipEffect = new OBJ_HipEffect("HipEffect");
+	AddGameObject(HipEffect);
 }
 
 void Scene_Test::Start()

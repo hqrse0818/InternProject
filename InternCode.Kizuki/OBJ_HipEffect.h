@@ -22,10 +22,14 @@ public:
 	void Update();
 	void Uninit();
 	void TexCreate(const char* _name);
+	void SetEffectFlg(bool _flg)
+	{
+		bEffectflg = _flg;
+	}
 
 protected:
 	ShaderResourceView* p_mTexture;
-	bool bCreate = false;
+	bool bEffectflg = false;
 
 protected:
 	void Create();

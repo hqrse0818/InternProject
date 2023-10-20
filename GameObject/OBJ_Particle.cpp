@@ -14,10 +14,15 @@ OBJ_Particle::OBJ_Particle()
 
 	// ƒ‚ƒfƒ‹
 	p_mBil = new Com_EffectBillboard();
+	p_mBil->SetUVCut(4, 1);
+	p_mBil->SetCurrent(3);
 	AddComponent(p_mBil);
 
 	// Î•û“ŠË
 	p_mTousyaBuf = new Com_DiagonalProjection();
+	p_mTousyaBuf->SetGravity(-3.0f);
+	p_mTousyaBuf->SetInitSpeed(Vector3(0.0f, -100.0f, 0.0f)); //‰‘¬
+	p_mTousyaBuf->SetThrowAngle(Vector3(-100.0f, 0.0f, -100.0f)); //“ŠËŠp
 	AddComponent(p_mTousyaBuf);
 
 	fLifetime = HighRandom->fGetRand(4.0f, 6.0f, 2);

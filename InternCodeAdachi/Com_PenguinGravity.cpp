@@ -26,7 +26,7 @@ void Com_PenguinGravity::Update()
 			float Moveval = fGravity * fGravCnt;
 
 			Moveval *= Time->GetDeltaTime();
-			DEBUG_LOG(MoveVal);
+			DEBUG_LOG(Moveval);
 
 			p_mObject->p_mTransform->Translate(0.0f, -Moveval, 0.0f);
 			fGravCnt += Time->GetDeltaTime() * fGravCoef;

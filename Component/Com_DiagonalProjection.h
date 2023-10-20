@@ -14,6 +14,7 @@ private:
     DirectX::SimpleMath::Vector3 ThrowAngle = DirectX::SimpleMath::Vector3(0.0f, 0.0f, 0.0f);
     bool bGravityReturn = false;
     float Cnt;
+    float fGravity = 4.0f;
 public:
     void SetInitSpeed(DirectX::SimpleMath::Vector3 _val)
     {
@@ -50,6 +51,10 @@ public:
     DirectX::SimpleMath::Vector3 GetCurrentSpeed()
     {
         return CurrentSpeed;
+    }
+    void SetGravity(float _val)
+    {
+        fGravity = _val;
     }
 
     void Update()override;

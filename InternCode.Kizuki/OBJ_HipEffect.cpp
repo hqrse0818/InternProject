@@ -10,7 +10,7 @@ OBJ_HipEffect::OBJ_HipEffect()
 	iCreateNum = 10;
 
 	p_mTexture = new ShaderResourceView;
-	p_mTexture->Create("asset/texture/start.png");
+	p_mTexture->Create("asset/texture/hip.png");
 }
 
 OBJ_HipEffect::OBJ_HipEffect(std::string _name)
@@ -33,7 +33,7 @@ void OBJ_HipEffect::Update()
 		Create();
 	}
 
-	if (bCreate)
+	if (bEffectflg)
 	{
 		Create();
 	}

@@ -18,10 +18,10 @@ void Com_DiagonalProjection::Update()
 		Vector3 Trans = speedVec;
 		Trans.x = Trans.x * Cnt;
 		Trans.z = Trans.z * Cnt;
-		Trans.y = Cnt * speedVec.y - ((Gravity * Cnt * Cnt) / 2);
+		Trans.y = Cnt * speedVec.y - ((fGravity * Cnt * Cnt) / 2);
 
 		// 現在の速度を保存
-		speedVec.y = speedVec.y - (Gravity * Cnt);
+		speedVec.y = speedVec.y - (fGravity * Cnt);
 		CurrentSpeed = speedVec;
 
 		// カウントを進める
@@ -41,10 +41,10 @@ void Com_DiagonalProjection::Update()
 		Vector3 Trans = speedVec;
 		Trans.x = Trans.x * Cnt;
 		Trans.z = Trans.z * Cnt;
-		Trans.y = Cnt * speedVec.y + ((Gravity * Cnt * Cnt) / 2);
+		Trans.y = Cnt * speedVec.y + ((fGravity * Cnt * Cnt) / 2);
 
 		// 現在の速度を保存
-		speedVec.y = speedVec.y + (Gravity * Cnt);
+		speedVec.y = speedVec.y + (fGravity * Cnt);
 		CurrentSpeed = speedVec;
 
 		// カウントを進める
