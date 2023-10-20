@@ -26,11 +26,11 @@ private:
     int iPlayLength{};
 
     // ÀÛ‚É—¬‚·‰¹º‚Ìƒ{ƒŠƒ…[ƒ€
-    float fVolume;
+    float fVolume = 1.0f;
     // ”š‚ª‘å‚«‚¢‚Ù‚Ç‰“‚­‚Å‚à‘å‚«‚¢‰¹‚ª•·‚±‚¦‚é
     float fSoundScaleRatio = 10.0f;
 
-    bool bBGM;
+    bool bBGM = false;
     bool bUseTarget = false;
     bool bPlayAtLocation = false;
     

@@ -168,8 +168,9 @@ void Scene_Test::Init()
 
 	// 海用スプライト
 	OBJ_SeaSprite* seasprite = new OBJ_SeaSprite("umi");
-	seasprite->SetScale(200.0f, 1.0f, 200.0f);
-	seasprite->GetSpriteCom()->SetUV(20.0f, 20.0f);
+	seasprite->SetScale(1.0f, 1.0f, 1.0f);
+	seasprite->GetSpriteCom()->SetUV(2.0f, 2.0f);
+	seasprite->GetSpriteCom()->SetSize(500.0f, 500.0f);
 	AddGameObject(seasprite,3);
 
 	//音

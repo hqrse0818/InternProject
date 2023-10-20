@@ -71,6 +71,8 @@ OBJ_ComboDisplay::OBJ_ComboDisplay(const char* _name, const char* _FileName)
 	fScaleDuration = stof(sv[14]);
 	// ‰ñ“]‘¬“x
 	fRotSpeed = stof(sv[15]);
+	// Šù’è‚ÌŠp“x
+	fEuler = stof(sv[16]);
 }
 
 void OBJ_ComboDisplay::Init()

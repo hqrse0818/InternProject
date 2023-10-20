@@ -17,6 +17,7 @@ protected:
 
     float fMaxU = 10.0f;
     float fMaxV = 10.0f;
+    DirectX::SimpleMath::Vector2 mSize = DirectX::SimpleMath::Vector2(50.0f, 50.0f);
 public:
 
     Com_3DSprite();
@@ -29,5 +30,11 @@ public:
     virtual void SetMaterial(MATERIAL mat);
 
     void SetUV(float _u, float _v);
+
+    void SetSize(float _x, float _y)
+    {
+        mSize.x = _x;
+        mSize.y = _y;
+    }
 };
 

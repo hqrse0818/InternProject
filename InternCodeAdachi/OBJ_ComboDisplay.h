@@ -20,6 +20,8 @@ private:
 
     float fComboCnt = 0.0f;
 
+    float fEuler = 0.0f;
+
     // 初期スケール
     DirectX::SimpleMath::Vector2 mMyInitScale = DirectX::SimpleMath::Vector2(0.0f, 0.0f);
     // 最大スケール

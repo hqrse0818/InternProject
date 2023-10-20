@@ -36,7 +36,10 @@ enum class PenguinState
     HipDropOnAzarashi,
     // 待機モーション
     Idle,
-
+    // 落下モーション
+    FallMotion,
+    // 落下
+    Fall,
     // 死亡
     Death,
 };

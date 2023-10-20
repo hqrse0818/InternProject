@@ -12,7 +12,7 @@ float Com_Audio::s_fMasterVolume = 1.0f;
 void Com_Audio::InitMaster()
 {
 	// COMÇÃèâä˙âª
-	CoInitializeEx(NULL, COINIT_MULTITHREADED);
+	HRESULT hr = CoInitializeEx(NULL, COINIT_MULTITHREADED);
 
 	// XAudio2ÇÃê∂ê¨
 	XAudio2Create(&s_p_mXAudio, 0);

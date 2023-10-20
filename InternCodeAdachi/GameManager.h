@@ -15,7 +15,7 @@ private:
 	static float s_fToOverCnt;
 public:
 	static void SetGameState(GameState _state);
-
+	static GameState GetGameState() {};
 	static void Update();
 };
 
