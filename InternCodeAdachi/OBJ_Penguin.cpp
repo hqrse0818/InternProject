@@ -89,6 +89,10 @@ void OBJ_Penguin::CreateFromCSV(const char* _FileName)
 		fDirectVector = stof(sv[19]);
 
 		fFloatTime = stof(sv[20]);
+
+		fMouseCameraSpeed = stof(sv[21]);
+
+		fArmorTime = stof(sv[22]);
 	}
 	
 	
@@ -197,6 +201,15 @@ void OBJ_Penguin::Update()
 		if (Input::GetKeyState(KEYCODE_S) == KEYSTATE::KEY_WHILE_DOWN)mMoveVelocity.y = -1;
 	}
 
+	if (mMoveVelocity.x == 0 && mMoveVelocity.y == 0)
+	{
+		fIdelCnt += Time->GetDeltaTime();
+		if (fIdelCnt > fIdleTime)
+		{
+			fIdelCnt = 0.0f;
+		}
+	}
+
 	switch (mState)
 	{
 		// 歩き状態
@@ -282,23 +295,26 @@ void OBJ_Penguin::Update()
 		break;
 	case PenguinState::Damage:
 	{
-		// ダメージVelocityの長さを取得
-		float length = Math::GetLength(mDamageVelocity);
+		p_mGravityCom->bEnable = false;
+		p_mColliderCom->bEnable = false;
+		fArmorCnt += Time->GetDeltaTime();
 
 		// 許容距離よりも短ければ待機状態に移行
-		if (length < fDamagePermission)
+		if (fArmorCnt > fArmorTime)
 		{
 			mState = PenguinState::Walk;
+			p_mFootCom->bEnable = true;
+			p_mGravityCom->bEnable = true;
+			p_mColliderCom->bEnable = true;
 			p_mModel->SetCurrentKeyFrame(0);
+			fArmorCnt = 0.0f;
 			break;
 		}
-
-		// ブレーキを掛ける
-		mDamageVelocity *= fBlake;
 
 		Vector3 Velocity = mDamageVelocity * Time->GetDeltaTime();
 
 		p_mTransform->Translate(Velocity);
+		p_mMoveCom->Move(mMoveVelocity.x * fAirMoveSpeed, mMoveVelocity.y * fAirMoveSpeed);
 	}
 		break;
 	case PenguinState::HipDropOnAzarashi:
@@ -315,6 +331,11 @@ void OBJ_Penguin::Update()
 			p_mFootCom->bEnable = true;
 			p_mModel->SetCurrentKeyFrame(0);
 			break;
+			/*p_mJumpCom->SetJumpFlg(true);
+			p_mModel->PlayAnimation("Jump");
+			p_mModel->SetCurrentKeyFrame(0);
+			p_mGravityCom->bEnable = true;
+			mState = PenguinState::Jump;*/
 		}
 
 		Vector3 Velocity = mDamageVelocity * Time->GetDeltaTime();
@@ -363,18 +384,19 @@ void OBJ_Penguin::OnCollisionEnter(GameObject* _obj)
 		if (col->mColliderTag == ColliderKind::ColTag_Azarashi)
 		{
 			if (mState != PenguinState::BeforeHipDrop &&
-				mState != PenguinState::HipDrop && mState != PenguinState::HipDropOnAzarashi)
+				mState != PenguinState::HipDrop && mState != PenguinState::HipDropOnAzarashi && mState != PenguinState::Damage)
 			{
 				Vector3 Direction = Math::GetVector(p_mTransform->mPosition, _obj->p_mTransform->mPosition);
 				Direction = Math::Normalize(-Direction);
 				// ダメージ後のよろめきを計算
 				mDamageVelocity = fDamagedPower * Direction;
-				mDamageVelocity.y = 10.0f;
+				mDamageVelocity.y = fDamagedPower;
 				if (mState == PenguinState::BeforeJump)
 				{
 					p_mFootCom->bEnable = true;
 				}
 				mState = PenguinState::Damage;
+				p_mFootCom->bEnable = false;
 				p_mJumpCom->SetJumpFlg(false);
 				p_mJumpCom->SetDropFlg(false);
 				p_mGravityCom->SetGround(false);

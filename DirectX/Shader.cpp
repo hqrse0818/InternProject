@@ -101,6 +101,12 @@ void VertexShader::Load(const char* _FileName)
 	delete[] buffer;
 }
 
+void VertexShader::SetShader(VertexShader* _shader)
+{
+	p_mVertexShader = _shader->GetShader();
+	p_mInputLayout = _shader->GetInputLayout();
+}
+
 void VertexShader::SetTexture(UINT _slot, ShaderResourceView* _pSRV)
 {
 	ID3D11ShaderResourceView* pTex = _pSRV->GetSRV();
@@ -143,6 +149,11 @@ void PixelShader::Load(const char* _FileName)
 	Renderer::GetDevice()->CreatePixelShader(buffer, filesize, NULL, &p_mPixelShader);
 
 	delete[] buffer;
+}
+
+void PixelShader::SetShader(PixelShader* _shader)
+{
+	p_mPixelShader = _shader->GetShader();
 }
 
 void PixelShader::SetTexture(UINT _slot, ShaderResourceView* _pSRV)

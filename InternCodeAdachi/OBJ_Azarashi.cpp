@@ -266,9 +266,27 @@ void OBJ_Azarashi::Update()
 	case AzrashiState::DiveTo:
 		Translate(0.0f, -2.0f, 0.0f);
 		break;
+	case  AzrashiState::Dive2:
+		if (p_mModelCom->GetIsRotLastKey())
+		{
+			p_mModelCom->SetPlayAnimation(false);
+			mState = AzrashiState::DiveTo2;
+		}
+		break;
+	case AzrashiState::DiveTo2:
+		Translate(0.0f, -2.0f, 0.0f);
+		break;
 	case AzrashiState::Death:
 		s_iOnIceNum--;
 		OBJ_Score::CalcScore(iScore);
+		p_mShadowObj->bDestroy = true;
+		p_mShadowObj->SetActive(false);
+		p_mModelCom->SetPlayAnimation(false);
+		bDestroy = true;
+		break;
+	case AzrashiState::Death2:
+		s_iOnIceNum--;
+		OBJ_Score::AddNoComboScore(50);
 		p_mShadowObj->bDestroy = true;
 		p_mShadowObj->SetActive(false);
 		p_mModelCom->SetPlayAnimation(false);
@@ -325,7 +343,11 @@ void OBJ_Azarashi::OnCollisionEnter(GameObject* _obj)
 				mState == AzrashiState::SpawnToCenter ||
 				mState == AzrashiState::Death ||
 				mState == AzrashiState::Damage ||
-				mState == AzrashiState::Dive)
+				mState == AzrashiState::Dive||
+				mState == AzrashiState::DiveTo ||
+				mState == AzrashiState::Dive2 ||
+				mState == AzrashiState::DiveTo2 ||
+				mState == AzrashiState::Death2)
 				return;
 
 			// ‚«”ò‚Î‚³‚ê‚é—Ê‚ÌŒvZ
@@ -370,6 +392,20 @@ void OBJ_Azarashi::OnCollisionEnter(GameObject* _obj)
 				p_mModelCom->SetCurrentKeyFrame(0);
 			}
 		}
+		else if (col->mColliderTag == ColliderKind::ColTag_Fall && mState != AzrashiState::Damage)
+		{
+			mState = AzrashiState::Dive2;
+			if (iScore == 0)
+			{
+				iScore = 50;
+			}
+			// d—Í‚ÌXV‚ğ’â~
+			p_mGravityCom->bEnable = false;
+			p_mFootCom->bEnable = false;
+			p_mColliderCom->bEnable = true;
+			p_mModelCom->PlayAnimation("Dive");
+			p_mModelCom->SetCurrentKeyFrame(0);
+		}
 	}
 }
 
@@ -407,8 +443,16 @@ void OBJ_Azarashi::OnCollisionStay(GameObject* _obj)
 			{
 				return;
 			}
+			if (mState == AzrashiState::DiveTo2)
+			{
+				mState = AzrashiState::Death2;
+			}
+			else
+			{
 				// €–Sˆ—
 				mState = AzrashiState::Death;
+			}
+				
 		}
 	}
 }

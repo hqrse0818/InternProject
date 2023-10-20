@@ -92,6 +92,20 @@ void Com_CustomSprite::Create()
 	vertex[2].TexCoord = Vector2(mUV.x, mUV.w);
 	vertex[3].TexCoord = Vector2(mUV.z, mUV.w);
 
+	// 回転計算
+	for (int i = 0; i < 4; i++)
+	{
+		vertex[i].Position = vertex[i].Position - StartPoint;
+	}
+
+	Matrix mat = Matrix::CreateFromYawPitchRoll(p_mObject->p_mTransform->mRotation.y, p_mObject->p_mTransform->mRotation.x, p_mObject->p_mTransform->mRotation.z);
+
+	for (int i = 0; i < 4; i++)
+	{
+		vertex[i].Position = Vector3::Transform(vertex[i].Position, mat);
+		vertex[i].Position = vertex[i].Position+ StartPoint;
+	}
+
 	// 頂点バッファ生成
 	D3D11_BUFFER_DESC bd{};
 	bd.Usage = D3D11_USAGE_DEFAULT;
