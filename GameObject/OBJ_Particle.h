@@ -11,6 +11,7 @@ class OBJ_Particle :
 public:
     Com_DiagonalProjection* p_mTousyaBuf{};
     Com_Billboard* p_mBil{};
+    Com_Shader* p_mShadeer{};
     float fLifetime;
 public:
     OBJ_Particle();

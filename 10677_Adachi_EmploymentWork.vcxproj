@@ -164,6 +164,7 @@
     <ClCompile Include="Component\Com_RenderCollider.cpp" />
     <ClCompile Include="InternCodeAdachi\Com_PenguinGravity.cpp" />
     <ClCompile Include="InternCodeAdachi\GameManager.cpp" />
+    <ClCompile Include="InternCode.Kizuki\OBJ_HipEffect.cpp" />
     <ClCompile Include="InternCodeAdachi\Com_AzarshiHit.cpp" />
     <ClCompile Include="GameObject\OBJ_Emitter.cpp" />
     <ClCompile Include="GameObject\OBJ_Particle.cpp" />
@@ -249,6 +250,7 @@
     <ClInclude Include="Component\Com_RenderCollider.h" />
     <ClInclude Include="InternCodeAdachi\Com_PenguinGravity.h" />
     <ClInclude Include="InternCodeAdachi\GameManager.h" />
+    <ClInclude Include="InternCode.Kizuki\OBJ_HipEffect.h" />
     <ClInclude Include="InternCodeAdachi\Com_AzarshiHit.h" />
     <ClInclude Include="Debug.h" />
     <ClInclude Include="GameObject\OBJ_Emitter.h" />
