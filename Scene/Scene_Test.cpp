@@ -21,6 +21,7 @@
 #include "../InternCodeAdachi/OBJ_Score.h"
 #include "../InternCodeAdachi/GameManager.h"
 #include "../InternCodeAdachi/OBJ_ComboDisplay.h"
+#include "../InternCodeAdachi/OBJ_SeaSprite.h"
 
 #include "../System/HighGetRand.h"
 
@@ -159,6 +160,10 @@ void Scene_Test::Init()
 
 	OBJ_BackGround* back = new OBJ_BackGround("haikei");
 	AddGameObject(back);
+
+	// 海用スプライト
+	OBJ_SeaSprite* seasprite = new OBJ_SeaSprite("umi");
+	AddGameObject(seasprite);
 
 	//音
 	p_mAudio = new Com_Audio();

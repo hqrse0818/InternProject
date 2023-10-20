@@ -207,6 +207,7 @@
     <ClCompile Include="InternCodeAdachi\OBJ_IceManager.cpp" />
     <ClCompile Include="InternCodeAdachi\OBJ_Fall.cpp" />
     <ClCompile Include="InternCodeAdachi\OBJ_ComboDisplay.cpp" />
+    <ClCompile Include="InternCodeAdachi\OBJ_SeaSprite.cpp" />
     <ClCompile Include="Scene\Scene.cpp" />
     <ClCompile Include="Scene\Scene_Title.cpp" />
     <ClCompile Include="Scene\Scene_Test.cpp" />
@@ -300,6 +301,7 @@
     <ClInclude Include="InternCodeAdachi\OBJ_IceManager.h" />
     <ClInclude Include="InternCodeAdachi\OBJ_Fall.h" />
     <ClInclude Include="InternCodeAdachi\OBJ_ComboDisplay.h" />
+    <ClInclude Include="InternCodeAdachi\OBJ_SeaSprite.h" />
     <ClInclude Include="Scene\Scene.h" />
     <ClInclude Include="Scene\Scene_Title.h" />
     <ClInclude Include="Scene\Scene_Test.h" />

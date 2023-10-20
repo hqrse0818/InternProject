@@ -12,6 +12,11 @@ void Com_PenguinGravity::Update()
 {
 	if (bUseGrav)
 	{
+		if (p_mObject->mCollisionvector.size() < 1)
+		{
+			bOnGround = false;
+		}
+
 		if (bOnGround)
 		{
 			p_mObject->p_mTransform->mPosition.y = fHeight;

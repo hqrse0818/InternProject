@@ -217,9 +217,6 @@ void OBJ_Penguin::Update()
 		if (Input::GetKeyState(KEYCODE_S) == KEYSTATE::KEY_WHILE_DOWN)mMoveVelocity.y = -1;
 	}
 
-	cout << mMoveVelocity.x << endl;
-	cout << mMoveVelocity.y << endl;
-
 	if (mMoveVelocity.x == 0 && mMoveVelocity.y == 0)
 	{
 		if (mState == PenguinState::Walk)
@@ -283,7 +280,6 @@ void OBJ_Penguin::Update()
 			p_mModel->SetCurrentKeyFrame(0);
 			mState = PenguinState::BeforeHipDrop;
 			p_mGravityCom->bEnable = false;
-			p_mFootCom->bEnable = true;
 		}
 
 		if (p_mModel->GetIsRotLastKey())
@@ -343,31 +339,59 @@ void OBJ_Penguin::Update()
 		break;
 	case PenguinState::Damage:
 	{
-		p_mGravityCom->bEnable = false;
-		p_mColliderCom->bEnable = false;
-		fArmorCnt += Time->GetDeltaTime();
+		//p_mGravityCom->bEnable = false;
+		//p_mColliderCom->bEnable = false;
+		//fArmorCnt += Time->GetDeltaTime();
 
-		// 許容距離よりも短ければ待機状態に移行
-		if (fArmorCnt > fArmorTime)
+		//// 許容距離よりも短ければ待機状態に移行
+		//if (fArmorCnt > fArmorTime)
+		//{
+		//	mState = PenguinState::Walk;
+		//	p_mGravityCom->bEnable = true;
+		//	p_mColliderCom->bEnable = true;
+		//	p_mModel->SetCurrentKeyFrame(0);
+		//	fArmorCnt = 0.0f;
+		//	break;
+		//}
+
+		// ダメージVelocityの長さを取得
+		float length = Math::GetLength(mDamageVelocity);
+
+		// 一定以下なら止まって攻撃待ちに移行
+		if (length < fDamagePermission)
 		{
 			mState = PenguinState::Walk;
-			p_mGravityCom->bEnable = true;
-			p_mColliderCom->bEnable = true;
-			p_mModel->SetCurrentKeyFrame(0);
-			fArmorCnt = 0.0f;
+			p_mModel->SetPlayAnimation(false);
 			break;
 		}
 
-		Vector3 Velocity = mDamageVelocity * Time->GetDeltaTime();
+		// ブレーキを掛ける
 		mDamageVelocity *= fBlake;
 
-		p_mTransform->Translate(Velocity);
+		p_mTransform->Translate(mDamageVelocity);
+
+		/*Vector3 Velocity = mDamageVelocity * Time->GetDeltaTime();
+		mDamageVelocity *= fBlake;
+
+		p_mTransform->Translate(Velocity);*/
 	}
 		break;
 	case PenguinState::HipDropOnAzarashi:
 	{
 		fFloatCnt += Time->GetDeltaTime();
 		p_mGravityCom->bEnable = false;
+
+		// ヒップインパクトに派生できるように
+		if (Controller_Input::GetRightTriggerSimple(0) == KEYSTATE::KEY_WHILE_DOWN  && fFloatCnt > fFloatTime / 2||
+			Input::GetKeyState(KEYCODE_MOUSE_LEFT) == KEYSTATE::KEY_WHILE_DOWN && fFloatCnt > fFloatTime /2)
+		{
+			fFloatCnt = 0.0f;
+			// ヒップインパクトの予約
+			p_mModel->PlayAnimation("HipDrop");
+			p_mModel->SetCurrentKeyFrame(0);
+			mState = PenguinState::BeforeHipDrop;
+			p_mGravityCom->bEnable = false;
+		}
 
 		if (fFloatCnt > fFloatTime)
 		{
@@ -455,16 +479,13 @@ void OBJ_Penguin::OnCollisionEnter(GameObject* _obj)
 				Direction = Math::Normalize(-Direction);
 				// ダメージ後のよろめきを計算
 				mDamageVelocity = fDamagedPower * Direction;
-				mDamageVelocity.y = fDamagedPower;
-				if (mState == PenguinState::BeforeJump)
-				{
-					p_mFootCom->bEnable = true;
-				}
+				//mDamageVelocity.y = fDamagedPower;
+				mDamageVelocity.y = 0.0f;
 				mState = PenguinState::Damage;
-				p_mFootCom->bEnable = false;
 				p_mJumpCom->SetJumpFlg(false);
 				p_mJumpCom->SetDropFlg(false);
 				p_mGravityCom->SetOnGround(false);
+				p_mGravityCom->bEnable = true;
 			}
 			if (mState == PenguinState::HipDrop)
 			{
