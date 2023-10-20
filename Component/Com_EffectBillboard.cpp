@@ -83,13 +83,6 @@ void Com_EffectBillboard::Update()
 
 void Com_EffectBillboard::Draw()
 {
-	//テクスチャ座標算出
-	//float x = m_Count % 4 * (1.0f / 4);
-	//float y = m_Count / 4 * (1.0f / 4);
-
-	fCurrentx = 1.0f / fSetx;
-	fCurrenty = 1.0f / fSety;
-
 	//頂点データ書き換え
 	D3D11_MAPPED_SUBRESOURCE msr;
 	Renderer::GetDeviceContext()->Map(m_VertexBuffer, 0,
@@ -105,17 +98,17 @@ void Com_EffectBillboard::Draw()
 	vertex[1].Position = Vector3(1.0f, 1.0f, 0.0f);
 	vertex[1].Normal = Vector3(0.0f, 1.0f, 0.0f);
 	vertex[1].Diffuse = Vector4(1.0f, 1.0f, 1.0f, 1.0f);
-	vertex[1].TexCoord = Vector2(fCurrentx + 0.25f, fCurrenty);
+	vertex[1].TexCoord = Vector2(fCurrentz, fCurrenty);
 
 	vertex[2].Position = Vector3(-1.0f, -1.0f, 0.0f);
 	vertex[2].Normal = Vector3(0.0f, 1.0f, 0.0f);
 	vertex[2].Diffuse = Vector4(1.0f, 1.0f, 1.0f, 1.0f);
-	vertex[2].TexCoord = Vector2(fCurrentx, fCurrenty + 0.25f);
+	vertex[2].TexCoord = Vector2(fCurrentx, fCurrentw);
 
 	vertex[3].Position = Vector3(1.0f, -1.0f, 0.0f);
 	vertex[3].Normal = Vector3(0.0f, 1.0f, 0.0f);
 	vertex[3].Diffuse = Vector4(1.0f, 1.0f, 1.0f, 1.0f);
-	vertex[3].TexCoord = Vector2(fCurrentx + 0.25f, fCurrenty + 0.25f);
+	vertex[3].TexCoord = Vector2(fCurrentz, fCurrentw);
 
 	Renderer::GetDeviceContext()->Unmap(m_VertexBuffer, 0);
 
@@ -167,4 +160,26 @@ void Com_EffectBillboard::Draw()
 void Com_EffectBillboard::SetTexture(const char* _name)
 {
 	m_Texture->Create(_name);
+}
+
+void Com_EffectBillboard::SetCurrent(int _val)
+{
+	iCurrent = _val;
+
+	//テクスチャ座標算出
+
+	// UV分割数を基に表示位置の計算
+	int SeparateNum = iSeparateX * iSeparateY;
+	if (iCurrent > SeparateNum)
+	{
+		iCurrent = iCurrent % SeparateNum;
+	}
+
+	int x = iCurrent % iSeparateX;
+	fCurrentx = (1 / iSeparateX) * (x - 1);
+	fCurrentz = (1 / iSeparateX) * x;
+
+	int y = iCurrent & iSeparateY;
+	fCurrenty = (1 / iSeparateY) * (y - 1);
+	fCurrenty = (1 / iSeparateY) * y;
 }

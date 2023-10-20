@@ -14,15 +14,22 @@ protected:
 	ID3D11Buffer* m_VertexBuffer{};
 	ShaderResourceView* m_Texture;
 
-	float fCurrentx;
-	float fCurrenty;
-	float fCurrentz;
-	float fCurrentw;
+	// 表示するUV座標の位置
+	// 左
+	float fCurrentx = 0;
+	// 上
+	float fCurrenty = 0;
+	// 右
+	float fCurrentz = 0;
+	// 下
+	float fCurrentw = 0;
 
-	float fSetx;
-	float fSety;
-	
-	int m_Count;
+	// UV分割数
+
+	int iSeparateX;
+	int iSeparateY;
+
+	int iCurrent = 0;
 
 public:
 	Com_EffectBillboard();
@@ -35,7 +42,7 @@ public:
 	void Draw();
 
 	void SetTexture(const char* _name);
-	static void SetCamera(Com_Camera*_cam)
+	static void SetCamera(Com_Camera* _cam)
 	{
 		p_mCamera = _cam;
 	}
@@ -43,9 +50,11 @@ public:
 	{
 		m_Texture->SetSRV(_pSRV);
 	}
-	void SetUVCut(float _x, float _y)
+	void SetUVCut(int _x, int _y)
 	{
-		fSetx = _x;
-		fSety = _y;
+		iSeparateX = _x;
+		iSeparateY = _y;
 	}
+
+	void SetCurrent(int _val);
 };
