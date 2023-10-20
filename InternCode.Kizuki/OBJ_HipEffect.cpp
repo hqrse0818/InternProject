@@ -55,28 +55,30 @@ void OBJ_HipEffect::Create()
 	for (int i = 0; i < iCreateNum; i++)
 	{
 		OBJ_Particle* Particle = new OBJ_Particle("no");
-		Particle->p_mTransform->mPosition = Player->p_mTransform->mPosition;
+		Particle->p_mTransform->mPosition = Target->p_mTransform->mPosition;
 		Particle->Init();
 		Particle->SetTexture(p_mTexture->GetSRV());
 
 		//ŽÎ•û“ŠŽËÝ’è
-		Particle->p_mTousyaBuf->SetGravity(-0.1f);
+		Particle->p_mTousyaBuf->SetGravity(-0.005f);
 		//Particle->p_mTousyaBuf->SetInitSpeed(Vector3(0.0f, 0.0f, 0.0f)); //‰‘¬
 		//Particle->p_mTousyaBuf->SetThrowAngle(Vector3(-100.0f, 0.0f, -100.0f)); //“ŠŽËŠp
 
 		Vector3 angle; //Šp“x
-		angle.x = HighRandom->fGetRand(0, 20, 2);
+		angle.x = HighRand::fGetRand(-90, -70, 3);
 		angle.y = 0;
-		angle.z = HighRandom->fGetRand(0, 20, 2);
+		angle.z = HighRand::fGetRand(-90, -70, 3);
 
 		Particle->p_mTousyaBuf->SetThrowAngle(angle);
 
 		Vector3 speed; //”ÍˆÍ
-		speed.x = HighRandom->fGetRand(-3, 3, 2);
-		speed.y = 0;
-		speed.z = HighRandom->fGetRand(-3, 3, 2);
+		speed.x = HighRand::fGetRand(-3, 3, 2) * 0.3f;
+		speed.y = HighRand::fGetRand(-100, -1, 3) * 0.0001f;
+		speed.z = HighRand::fGetRand(-3, 3, 2) * 0.3f;
 
 		Particle->p_mTousyaBuf->SetInitSpeed(speed);
+
+		Particle->SetLifeTime(HighRand::fGetRand(10, 25, 3) * 0.1f);
 
 		s_p_mScene->AddGameObject(Particle);
 	}

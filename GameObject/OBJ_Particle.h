@@ -27,5 +27,10 @@ public:
     {
         return p_mBil;
     }
+
+    void SetLifeTime(float _val)
+    {
+        fLifetime = _val;
+    }
 };
 

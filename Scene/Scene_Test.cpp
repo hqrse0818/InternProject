@@ -23,6 +23,7 @@
 #include "../InternCodeAdachi/OBJ_ComboDisplay.h"
 #include "../InternCodeAdachi/OBJ_SeaSprite.h"
 #include "../InternCode.Kizuki/OBJ_HipEffect.h"
+#include "../Component/Com_EffectBillboard.h"
 
 #include "../System/HighGetRand.h"
 
@@ -121,6 +122,9 @@ void Scene_Test::Init()
 	Camera->p_mTransform->SetPosition(0.0f, 20.0f, -30.0f);
 	Camera->AddComponent(Camera_buf);
 
+	// ビルボードのカメラ設定
+	Com_EffectBillboard::SetCamera(Camera_buf);
+
 	// レイヤーを指定してオブジェクトを追加
 	AddGameObject(Camera, 0);
 
@@ -188,6 +192,8 @@ void Scene_Test::Init()
 	//エフェクト
 	OBJ_HipEffect* HipEffect = new OBJ_HipEffect("HipEffect");
 	AddGameObject(HipEffect);
+	HipEffect->SetPlayer(Player);
+	Player->SetHipEffect(HipEffect);
 }
 
 void Scene_Test::Start()

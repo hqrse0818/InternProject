@@ -65,7 +65,7 @@ void OBJ_Particle::Update()
 		bDestroy = true;
 	}
 
-	if (fCount > 0.7f)
+	if (fCount > 0.5f)
 	{
 		p_mBil->SetCurrent(p_mBil->GetCurrent() + 1);
 		fCount = 0.0f;

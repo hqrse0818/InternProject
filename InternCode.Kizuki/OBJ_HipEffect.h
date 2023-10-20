@@ -22,20 +22,16 @@ public:
 	void Update();
 	void Uninit();
 	void TexCreate(const char* _name);
-	void SetEffectFlg(bool _flg)
-	{
-		bEffectflg = _flg;
-	}
 
 	void SetPlayer(GameObject* _object)
 	{
-		Player = _object;
+		Target = _object;
 	}
 
 	void Create();
 
 protected:
 	ShaderResourceView* p_mTexture;
-	GameObject* Player;
+	GameObject* Target = nullptr;
 	bool bEffectflg = false;
 };
