@@ -325,6 +325,7 @@ void OBJ_Penguin::Update()
 			p_mSEAttacLand->Play();
 			//p_mModel->SetModelData("AttackPenguin");
 			p_mModel->PlayAnimation("AfterHipDrop");
+			p_mHipEf->Create();
 		}
 		break;
 	case PenguinState::AfterHipDrop:

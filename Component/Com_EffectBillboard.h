@@ -57,4 +57,8 @@ public:
 	}
 
 	void SetCurrent(int _val);
+	int GetCurrent()
+	{
+		return iCurrent;
+	}
 };

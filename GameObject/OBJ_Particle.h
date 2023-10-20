@@ -13,6 +13,7 @@ public:
     Com_EffectBillboard* p_mBil{};
     Com_Shader* p_mShadeer{};
     float fLifetime;
+    float fCount = 0.0f;
 public:
     OBJ_Particle();
     OBJ_Particle(const char* _name);

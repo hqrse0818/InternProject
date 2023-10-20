@@ -14,15 +14,15 @@ OBJ_Particle::OBJ_Particle()
 
 	// ƒ‚ƒfƒ‹
 	p_mBil = new Com_EffectBillboard();
-	p_mBil->SetUVCut(4, 1);
-	p_mBil->SetCurrent(3);
+	p_mBil->SetUVCut(4, 1); //UV•ªŠ„”
+	p_mBil->SetCurrent(HighRand::GetRand(1,100)); //•ªŠ„‚µ‚½Œã‚Ç‚ê‚¾‚¯‰ñ‚·‚©
 	AddComponent(p_mBil);
 
 	// ŽÎ•û“ŠŽË
 	p_mTousyaBuf = new Com_DiagonalProjection();
-	p_mTousyaBuf->SetGravity(-3.0f);
-	p_mTousyaBuf->SetInitSpeed(Vector3(0.0f, -100.0f, 0.0f)); //‰‘¬
-	p_mTousyaBuf->SetThrowAngle(Vector3(-100.0f, 0.0f, -100.0f)); //“ŠŽËŠp
+	p_mTousyaBuf->SetGravity(0.0f);
+	//p_mTousyaBuf->SetInitSpeed(Vector3(0.0f, 1.0f, 0.0f)); //‰‘¬
+	//p_mTousyaBuf->SetThrowAngle(Vector3(-100.0f, 0.0f, -100.0f)); //“ŠŽËŠp
 	AddComponent(p_mTousyaBuf);
 
 	fLifetime = HighRandom->fGetRand(4.0f, 6.0f, 2);
@@ -36,7 +36,7 @@ OBJ_Particle::OBJ_Particle(const char* _name)
 
 void OBJ_Particle::Init()
 {
-	Vector3 angle;
+	/*Vector3 angle;
 	angle.x = HighRandom->fGetRand(-180, 180, 2);
 	angle.y = HighRandom->fGetRand(-180, 180, 2);
 	angle.z = HighRandom->fGetRand(-180, 180, 2);
@@ -48,7 +48,7 @@ void OBJ_Particle::Init()
 	speed.y = HighRandom->fGetRand(-2, 2, 2);
 	speed.z = HighRandom->fGetRand(-2, 2, 2);
 
-	p_mTousyaBuf->SetInitSpeed(speed);
+	p_mTousyaBuf->SetInitSpeed(speed);*/
 
 	GameObject::Init();
 }
@@ -58,9 +58,16 @@ void OBJ_Particle::Update()
 	GameObject::Update();
 
 	fLifetime -= Time->GetDeltaTime();
+	fCount += Time->GetDeltaTime();
 
 	if (fLifetime < 0.0f)
 	{
 		bDestroy = true;
+	}
+
+	if (fCount > 0.7f)
+	{
+		p_mBil->SetCurrent(p_mBil->GetCurrent() + 1);
+		fCount = 0.0f;
 	}
 }

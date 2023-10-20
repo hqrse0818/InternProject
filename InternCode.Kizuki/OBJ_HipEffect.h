@@ -27,10 +27,15 @@ public:
 		bEffectflg = _flg;
 	}
 
-protected:
-	ShaderResourceView* p_mTexture;
-	bool bEffectflg = false;
+	void SetPlayer(GameObject* _object)
+	{
+		Player = _object;
+	}
+
+	void Create();
 
 protected:
-	void Create();
+	ShaderResourceView* p_mTexture;
+	GameObject* Player;
+	bool bEffectflg = false;
 };

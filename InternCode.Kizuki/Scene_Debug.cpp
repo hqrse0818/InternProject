@@ -103,6 +103,8 @@ void Scene_Debug::Init()
 	//AddGameObject(Effect);
 
 	OBJ_HipEffect* HipEffect = new OBJ_HipEffect("HipEffect");
+	HipEffect->SetPlayer(Player); //エフェクトポジション
+	Player->SetHipEffect(HipEffect); //タイミング
 	AddGameObject(HipEffect);
 
 	//音

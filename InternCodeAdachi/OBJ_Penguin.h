@@ -10,6 +10,7 @@
 #include "Com_Shadow.h"
 #include "../Component/Com_BoxCollider.h"
 #include "../Component/Com_Audio.h"
+#include "../InternCode.Kizuki/OBJ_HipEffect.h"
 
 // ペンギンのプレファブ
 #define PenguinStatuNum (23)
@@ -62,6 +63,8 @@ private:
     Com_Shadow* p_mShadowCom = nullptr;
     // コライダー
     Com_BoxCollider* p_mColliderCom = nullptr;
+    // ヒップインパクトエフェクト
+    OBJ_HipEffect* p_mHipEf = nullptr;
 
     // SE再生用
     Com_Audio* p_mSEJump = nullptr;
@@ -145,5 +148,9 @@ public:
         p_mCameraCom = _com;
     }
 
+    void SetHipEffect(OBJ_HipEffect* _obj)
+    {
+        p_mHipEf = _obj;
+    }
 };
 

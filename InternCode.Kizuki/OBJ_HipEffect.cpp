@@ -3,6 +3,10 @@
 #include "../System/Time.h"
 #include "../Scene/Scene.h"
 #include "../GameObject/OBJ_Particle.h"
+#include "../Scene/Scene.h"
+#include "../System/HighGetRand.h"
+
+using namespace DirectX::SimpleMath;
 
 OBJ_HipEffect::OBJ_HipEffect()
 {
@@ -28,11 +32,6 @@ void OBJ_HipEffect::Update()
 {
 	GameObject::Update();
 
-	if (Input::GetKeyState(KEYCODE_MOUSE_LEFT) == KEYSTATE::KEY_DOWN)
-	{
-		Create();
-	}
-
 	if (bEffectflg)
 	{
 		Create();
@@ -56,9 +55,29 @@ void OBJ_HipEffect::Create()
 	for (int i = 0; i < iCreateNum; i++)
 	{
 		OBJ_Particle* Particle = new OBJ_Particle("no");
-		Particle->p_mTransform->mPosition = p_mTransform->mPosition;
+		Particle->p_mTransform->mPosition = Player->p_mTransform->mPosition;
 		Particle->Init();
 		Particle->SetTexture(p_mTexture->GetSRV());
+
+		//ŽÎ•û“ŠŽËÝ’è
+		Particle->p_mTousyaBuf->SetGravity(-0.1f);
+		//Particle->p_mTousyaBuf->SetInitSpeed(Vector3(0.0f, 0.0f, 0.0f)); //‰‘¬
+		//Particle->p_mTousyaBuf->SetThrowAngle(Vector3(-100.0f, 0.0f, -100.0f)); //“ŠŽËŠp
+
+		Vector3 angle; //Šp“x
+		angle.x = HighRandom->fGetRand(0, 20, 2);
+		angle.y = 0;
+		angle.z = HighRandom->fGetRand(0, 20, 2);
+
+		Particle->p_mTousyaBuf->SetThrowAngle(angle);
+
+		Vector3 speed; //”ÍˆÍ
+		speed.x = HighRandom->fGetRand(-3, 3, 2);
+		speed.y = 0;
+		speed.z = HighRandom->fGetRand(-3, 3, 2);
+
+		Particle->p_mTousyaBuf->SetInitSpeed(speed);
+
 		s_p_mScene->AddGameObject(Particle);
 	}
 }
