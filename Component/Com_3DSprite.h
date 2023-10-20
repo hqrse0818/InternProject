@@ -15,6 +15,8 @@ protected:
     ShaderResourceView*   p_mSRV{};
     MATERIAL                    p_mMaterial{};
 
+    float fMaxU = 10.0f;
+    float fMaxV = 10.0f;
 public:
 
     Com_3DSprite();
@@ -25,5 +27,7 @@ public:
 
     virtual void SetTexture(const char* _name);
     virtual void SetMaterial(MATERIAL mat);
+
+    void SetUV(float _u, float _v);
 };
 

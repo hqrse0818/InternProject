@@ -13,5 +13,10 @@ private:
 public:
     OBJ_SeaSprite();
     OBJ_SeaSprite(const char* _name);
+
+    Com_3DSprite* GetSpriteCom()
+    {
+        return p_mSprite;
+    }
 };
 

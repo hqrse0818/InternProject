@@ -177,10 +177,14 @@ void Com_Billboard::SetCurrent(int _val)
 	}
 
 	int x = iCurrent % iSeparateX;
-	fCurrentx = (1 / iSeparateX) * (x -1);
-	fCurrentz = (1 / iSeparateX) * x;
+	float SepX;
+	SepX = 1.0f / iSeparateX;
+	fCurrentx = SepX * (x - 1);
+	fCurrentz = SepX * x;
 
+	float SepY;
+	SepY = 1.0f / iSeparateY;
 	int y = iCurrent & iSeparateY;
-	fCurrenty = (1 / iSeparateY) * (y - 1);
-	fCurrentw = (1 / iSeparateY) * y;
+	fCurrenty = SepY * (y - 1);
+	fCurrentw = SepY * y;
 }

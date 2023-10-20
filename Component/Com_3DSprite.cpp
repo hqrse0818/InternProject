@@ -24,17 +24,17 @@ void Com_3DSprite::Init()
 	vertex[1].Position = Vector3(p_mObject->p_mTransform->mScale.x / 2, 0.0f, p_mObject->p_mTransform->mScale.z / 2);
 	vertex[1].Normal = Vector3(0.0f, 1.0f, 0.0f);
 	vertex[1].Diffuse = Vector4(1.0f, 1.0f, 1.0f, 1.0f);
-	vertex[1].TexCoord = Vector2(p_mObject->p_mTransform->mScale.x*2, 0.0f);
+	vertex[1].TexCoord = Vector2(p_mObject->p_mTransform->mScale.x*  fMaxU, 0.0f);
 
 	vertex[2].Position = Vector3(-p_mObject->p_mTransform->mScale.x / 2, 0.0f, -p_mObject->p_mTransform->mScale.z / 2);
 	vertex[2].Normal = Vector3(0.0f, 1.0f, 0.0f);
 	vertex[2].Diffuse = Vector4(1.0f, 1.0f, 1.0f, 1.0f);
-	vertex[2].TexCoord = Vector2(0.0f, p_mObject->p_mTransform->mScale.y*2);
+	vertex[2].TexCoord = Vector2(0.0f, p_mObject->p_mTransform->mScale.y*fMaxV);
 
 	vertex[3].Position = Vector3(p_mObject->p_mTransform->mScale.x / 2, 0.0f, -p_mObject->p_mTransform->mScale.z / 2);
 	vertex[3].Normal = Vector3(0.0f, 1.0f, 0.0f);
 	vertex[3].Diffuse = Vector4(1.0f, 1.0f, 1.0f, 1.0f);
-	vertex[3].TexCoord = Vector2(p_mObject->p_mTransform->mScale.x*2, p_mObject->p_mTransform->mScale.y*2);
+	vertex[3].TexCoord = Vector2(p_mObject->p_mTransform->mScale.x*fMaxU, p_mObject->p_mTransform->mScale.y*fMaxV);
 
 	// 頂点バッファ生成
 	D3D11_BUFFER_DESC bd;
@@ -51,7 +51,6 @@ void Com_3DSprite::Init()
 	Renderer::GetDevice()->CreateBuffer(&bd, &sd, &p_mVertexBuffer);
 
 	// テクスチャの読み込み
-	p_mSRV->Create("asset/texture/field.jpg");
 
 	p_mMaterial.Diffuse = Color(1.0f, 1.0f, 1.0f, 1.0f);
 	p_mMaterial.TextureEnable = true;
@@ -110,4 +109,10 @@ void Com_3DSprite::SetTexture(const char* _name)
 void Com_3DSprite::SetMaterial(MATERIAL mat)
 {
 	p_mMaterial = mat;
+}
+
+void Com_3DSprite::SetUV(float _u, float _v)
+{
+	fMaxU = _u;
+	fMaxV = _v;
 }
