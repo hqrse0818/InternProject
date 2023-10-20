@@ -182,5 +182,5 @@ void Com_Billboard::SetCurrent(int _val)
 
 	int y = iCurrent & iSeparateY;
 	fCurrenty = (1 / iSeparateY) * (y - 1);
-	fCurrenty = (1 / iSeparateY) * y;
+	fCurrentw = (1 / iSeparateY) * y;
 }
