@@ -28,7 +28,6 @@ private:
 
     bool bJump = false; //ジャンプフラグ
     bool bDrop = false; //ヒップインパクトフラグ
-    Com_Gravity* p_mGravityCom = nullptr;
 
 public:
     void Jump();
@@ -37,10 +36,6 @@ public:
 
     void OnCollisionEnter(GameObject* _obj);
 
-    void SetGravityCom(Com_Gravity* _com)
-    {
-        p_mGravityCom = _com;
-    }
     void SetJumpPower(float _val)
     {
         fJumpPower = _val;

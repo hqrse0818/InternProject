@@ -69,6 +69,8 @@ OBJ_ComboDisplay::OBJ_ComboDisplay(const char* _name, const char* _FileName)
 	fNumDuration = stof(sv[13]);
 	// スケールを無視した調整
 	fScaleDuration = stof(sv[14]);
+	// 回転速度
+	fRotSpeed = stof(sv[15]);
 }
 
 void OBJ_ComboDisplay::Init()
@@ -97,13 +99,27 @@ void OBJ_ComboDisplay::Update()
 		mCurrentNumScale = mNumInitScale;
 		mCurrentMyScale = mMyInitScale;
 		fComboCnt = 0.0f;
+
+		Color col;
+		col.x = 1.0f;
+		col.y = 1.0f;
+		col.z = 1.0f;
+		col.w = 1.0f;
+
+		p_mSprite->SetDiffuse(col);
+		for (int i = 0; i < 3; i++)
+		{
+			Nums[i]->GetSpriteCom()->SetDiffuse(col);
+		}
 	}
 	else if (iLastCombo < 10 && iCurrentCombo >= 10 || iLastCombo < 100 && iCurrentCombo >= 100)
 	{
+		// 桁上げの発生
 		bUpNum = true;
 	}
 	else if (iCurrentCombo == iLastCombo && iCurrentCombo != 0)
 	{
+		// コンボの変動なし
 		fComboCnt += Time->GetDeltaTime();
 		mCurrentNumScale.x += fScaleSpeed * Time->GetDeltaTime();
 		if (mCurrentNumScale.x > mNumMaxScale.x)
@@ -235,7 +251,7 @@ void OBJ_ComboDisplay::Update()
 		// 回転させる
 		for (int i = 0; i < 3; i++)
 		{
-			Nums[i]->Rotate(0.0f, 0.0f, 20.0f * Time->GetDeltaTime());
+			Nums[i]->Rotate(0.0f, 0.0f, fRotSpeed * Time->GetDeltaTime());
 		}
 		if (fRotCnt > fRotTime)
 		{

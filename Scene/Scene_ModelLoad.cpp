@@ -13,14 +13,23 @@ void LoadPenguin()
 {
 	// ペンギンの読み込み
 	ModelData* CreatePenguin = new ModelData();
-	CreatePenguin->LoadModel("asset\\model\\Penguin\\pengin_rig_v1.fbx", true);
-	CreatePenguin->LoadAnimation("asset\\model\\Penguin\\pengin_walk_v1.fbx", "Walk");
-	CreatePenguin->LoadAnimation("asset\\model\\Penguin\\pengin_jump1_v3.fbx", "ToJump");
-	CreatePenguin->LoadAnimation("asset\\model\\Penguin\\pengin_jump2_v2.fbx", "Jump");
-	CreatePenguin->LoadAnimation("asset\\model\\Penguin\\pengin_hipdrop1_v1.fbx", "HipDrop");
-	CreatePenguin->LoadAnimation("asset\\model\\Penguin\\pengin_hipdrop2_v1.fbx", "AfterHipDrop");
-	CreatePenguin->LoadAnimation("asset\\model\\Penguin\\pengin_idle_v1.fbx", "Idle");
+	//CreatePenguin->LoadModel("asset\\model\\Penguinv2\\pengin_rig_v1.fbx", true);
+	CreatePenguin->LoadModel("asset\\model\\Penguinv2\\pengin_walk_v2.fbx", true);
+	CreatePenguin->LoadAnimation("asset\\model\\Penguinv2\\pengin_walk_v2.fbx", "Walk");
+	CreatePenguin->LoadAnimation("asset\\model\\Penguinv2\\pengin_jump1_v4.fbx", "ToJump");
+	CreatePenguin->LoadAnimation("asset\\model\\Penguinv2\\pengin_jump2_v3.fbx", "Jump");
+	CreatePenguin->LoadAnimation("asset\\model\\Penguinv2\\pengin_hipdrop1_v2.fbx", "HipDrop");
+	CreatePenguin->LoadAnimation("asset\\model\\Penguinv2\\pengin_hipdrop2_v2.fbx", "AfterHipDrop");
+	CreatePenguin->LoadAnimation("asset\\model\\Penguinv2\\pengin_idle_v2.fbx", "Idle");
 	CreatePenguin->Push("Penguin");
+}
+
+void LoadAttackPenguin()
+{
+	ModelData* CreatePenguin = new ModelData();
+	CreatePenguin->LoadModel("asset\\model\\Penguinv2\\pengin_hipdrop2_v2.fbx", true);
+	CreatePenguin->LoadAnimation("asset\\model\\Penguinv2\\pengin_hipdrop2_v2.fbx", "AfterHipDrop");
+	CreatePenguin->Push("AttackPenguin");
 }
 
 void LoadAzarashi()
@@ -99,6 +108,7 @@ void Scene_ModelLoad::Init()
 {
 	// 使用するモデルデータをここで読み込む
 	LoadPenguin();
+	LoadAttackPenguin();
 	LoadAzarashi();
 	LoadAzarashi2();
 	LoadStage();

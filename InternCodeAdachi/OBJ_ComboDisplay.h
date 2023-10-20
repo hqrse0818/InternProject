@@ -42,9 +42,15 @@ private:
     // 現在の数字のスケール
     DirectX::SimpleMath::Vector2 mCurrentNumScale = DirectX::SimpleMath::Vector2(0.0f, 0.0f);
 
+    // 桁上げの発生
     bool bUpNum = false;
+
+    // 回転時間
     float fRotTime = 1.0f;
     float fRotCnt = 0.0f;
+
+    // 回転の速度
+    float fRotSpeed = 20.0f;
 
 public:
     OBJ_ComboDisplay();

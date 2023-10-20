@@ -40,7 +40,7 @@ void OBJ_Penguin::CreateFromCSV(const char* _FileName)
 	// ジャンプとヒップインパクトのコンポーネント
 	p_mJumpCom = new Com_Jump();
 	// 重力コンポーネント
-	p_mGravityCom = new Com_Gravity();
+	p_mGravityCom = new Com_PenguinGravity();
 	// 足元コンポーネント
 	p_mFootCom = new Com_Foot();
 	
@@ -61,10 +61,10 @@ void OBJ_Penguin::CreateFromCSV(const char* _FileName)
 		p_mJumpCom->SetDropPower(stof(sv[3]));
 		// ヒップドロップの初速度
 		p_mJumpCom->SetDropInitialSpeed(stof(sv[4]));
-		p_mJumpCom->SetGravityCom(p_mGravityCom);
+		//p_mJumpCom->SetGravityCom(p_mGravityCom);
 		// プレイヤーの足の高さ
 		p_mFootCom->SetFootHeight(stof(sv[5]));
-		p_mFootCom->SetGravityCom(p_mGravityCom);
+		//p_mFootCom->SetGravityCom(p_mGravityCom);
 		p_mFootCom->SetJumpCom(p_mJumpCom);
 		// カメラのスピード
 		fCamSpeed = stof(sv[6]);
@@ -94,8 +94,24 @@ void OBJ_Penguin::CreateFromCSV(const char* _FileName)
 
 		fArmorTime = stof(sv[22]);
 	}
-	
-	
+	p_mSEAttacLand = new Com_Audio();
+	p_mSEAttacLand->Load("asset\\audio\\SE\\SE プレイヤー\\攻撃 着地.wav");
+	AddComponent(p_mSEAttacLand);
+	p_mSEDeath = new Com_Audio();
+	p_mSEDeath->Load("asset\\audio\\SE\\SE プレイヤー\\死亡.wav");
+	AddComponent(p_mSEDeath);
+	p_mSEJump = new Com_Audio();
+	p_mSEJump->Load("asset\\audio\\SE\\SE プレイヤー\\ジャンプ.wav");
+	AddComponent(p_mSEJump);
+	p_mSELand = new Com_Audio();
+	p_mSELand->Load("asset\\audio\\SE\\SE プレイヤー\\着地.wav");
+	AddComponent(p_mSELand);
+	p_mSEMiss = new Com_Audio();
+	p_mSEMiss->Load("asset\\audio\\SE\\SE プレイヤー\\攻撃 失敗.wav");
+	AddComponent(p_mSEMiss);
+	p_mSEWalk = new Com_Audio();
+	p_mSEWalk->Load("asset\\audio\\SE\\SE プレイヤー\\足音.wav");
+	AddComponent(p_mSEWalk);
 	
 
 	// コンポーネントの追加
@@ -143,14 +159,14 @@ OBJ_Penguin::OBJ_Penguin()
 	AddComponent(p_mJumpCom);
 
 	// 重力コンポーネント
-	p_mGravityCom = new Com_Gravity();
-	p_mJumpCom->SetGravityCom(p_mGravityCom);
+	p_mGravityCom = new Com_PenguinGravity();
+	//p_mJumpCom->SetGravityCom(p_mGravityCom);
 
 	AddComponent(p_mGravityCom);
 
 	// 足元コンポーネント
 	p_mFootCom = new Com_Foot();
-	p_mFootCom->SetGravityCom(p_mGravityCom);
+	//p_mFootCom->SetGravityCom(p_mGravityCom);
 	p_mFootCom->SetFootHeight(2.0f);
 	p_mFootCom->SetJumpCom(p_mJumpCom);
 	AddComponent(p_mFootCom);
@@ -174,7 +190,7 @@ void OBJ_Penguin::Start()
 	GameObject::Start();
 	mState = PenguinState::Walk;
 
-	p_mGravityCom->SetGround(false);
+	p_mGravityCom->SetOnGround(false);
 
 	OBJ_Shadow* myShadow = new OBJ_Shadow("PenguinShadow");
 	myShadow->SetTarget(this);
@@ -201,12 +217,28 @@ void OBJ_Penguin::Update()
 		if (Input::GetKeyState(KEYCODE_S) == KEYSTATE::KEY_WHILE_DOWN)mMoveVelocity.y = -1;
 	}
 
+	cout << mMoveVelocity.x << endl;
+	cout << mMoveVelocity.y << endl;
+
 	if (mMoveVelocity.x == 0 && mMoveVelocity.y == 0)
 	{
-		fIdelCnt += Time->GetDeltaTime();
-		if (fIdelCnt > fIdleTime)
+		if (mState == PenguinState::Walk)
 		{
-			fIdelCnt = 0.0f;
+			fIdelCnt += Time->GetDeltaTime();
+			if (fIdelCnt > fIdleTime)
+			{
+				fIdelCnt = 0.0f;
+				p_mModel->SetPlayAnimation(false);
+				mState = PenguinState::Idle;
+				p_mModel->PlayAnimation("Idle");
+			}
+		}
+	}
+	else
+	{
+		if (mState == PenguinState::Idle)
+		{
+			mState = PenguinState::Walk;
 		}
 	}
 
@@ -214,16 +246,28 @@ void OBJ_Penguin::Update()
 	{
 		// 歩き状態
 	case PenguinState::Walk:
+		fWalkSECnt += Time->GetDeltaTime();
+		if (fWalkSECnt > fWalkSEDuration)
+		{
+			p_mSEWalk->Play();
+			fWalkSECnt = 0.0f;
+		}
+
 		p_mModel->PlayAnimation("Walk");
 		p_mMoveCom->Move(mMoveVelocity.x, mMoveVelocity.y);
 		// ジャンプ
-		if (Controller_Input::GetButton(0, GAMEPAD_A) == KEYSTATE::KEY_DOWN && p_mGravityCom->GetGround() ||
-			Input::GetKeyState(KEYCODE_SPACE) == KEYSTATE::KEY_DOWN && p_mGravityCom->GetGround())
+		if (Controller_Input::GetButton(0, GAMEPAD_A) == KEYSTATE::KEY_DOWN && p_mGravityCom->GetOnGround() ||
+			Input::GetKeyState(KEYCODE_SPACE) == KEYSTATE::KEY_DOWN && p_mGravityCom->GetOnGround())
 		{
 			p_mJumpCom->SetJumpFlg(true);
 			p_mModel->PlayAnimation("ToJump");
 			p_mModel->SetCurrentKeyFrame(0);
 			mState = PenguinState::BeforeJump;
+			//
+			p_mGravityCom->bEnable = false;
+			p_mGravityCom->SetOnGround(false);
+			//
+			p_mSEJump->Play();
 		}
 		break;
 	case PenguinState::BeforeJump:
@@ -247,11 +291,13 @@ void OBJ_Penguin::Update()
 			p_mJumpCom->SetJumpFlg(false);
 			p_mModel->PlayAnimation("Jump");
 			p_mModel->SetCurrentKeyFrame(0);
+			//
+			p_mGravityCom->bEnable = true;
+			//
 			mState = PenguinState::Jump;
 		}
 		break;
 	case PenguinState::Jump:
-		p_mFootCom->bEnable = true;
 		p_mMoveCom->Move(mMoveVelocity.x * fAirMoveSpeed, mMoveVelocity.y * fAirMoveSpeed);
 		// ヒップインパクト
 		if (Controller_Input::GetRightTriggerSimple(0) == KEYSTATE::KEY_WHILE_DOWN ||
@@ -276,11 +322,13 @@ void OBJ_Penguin::Update()
 		}
 		break;
 	case PenguinState::HipDrop:
-		if (p_mGravityCom->GetGround())
+		if (p_mGravityCom->GetOnGround())
 		{
-			p_mModel->PlayAnimation("AfterHipDrop");
 			p_mModel->SetCurrentKeyFrame(0);
 			mState = PenguinState::AfterHipDrop;
+			p_mSEAttacLand->Play();
+			//p_mModel->SetModelData("AttackPenguin");
+			p_mModel->PlayAnimation("AfterHipDrop");
 		}
 		break;
 	case PenguinState::AfterHipDrop:
@@ -303,7 +351,6 @@ void OBJ_Penguin::Update()
 		if (fArmorCnt > fArmorTime)
 		{
 			mState = PenguinState::Walk;
-			p_mFootCom->bEnable = true;
 			p_mGravityCom->bEnable = true;
 			p_mColliderCom->bEnable = true;
 			p_mModel->SetCurrentKeyFrame(0);
@@ -312,9 +359,9 @@ void OBJ_Penguin::Update()
 		}
 
 		Vector3 Velocity = mDamageVelocity * Time->GetDeltaTime();
+		mDamageVelocity *= fBlake;
 
 		p_mTransform->Translate(Velocity);
-		p_mMoveCom->Move(mMoveVelocity.x * fAirMoveSpeed, mMoveVelocity.y * fAirMoveSpeed);
 	}
 		break;
 	case PenguinState::HipDropOnAzarashi:
@@ -328,14 +375,22 @@ void OBJ_Penguin::Update()
 			mState = PenguinState::Walk;
 			p_mGravityCom->bEnable = true;
 			p_mColliderCom->bEnable = true;
-			p_mFootCom->bEnable = true;
+			//p_mModel->SetModelData("Penguin");
 			p_mModel->SetCurrentKeyFrame(0);
-			break;
+			
 			/*p_mJumpCom->SetJumpFlg(true);
 			p_mModel->PlayAnimation("Jump");
 			p_mModel->SetCurrentKeyFrame(0);
 			p_mGravityCom->bEnable = true;
 			mState = PenguinState::Jump;*/
+
+			/*p_mJumpCom->SetJumpFlg(true);
+			p_mModel->PlayAnimation("JumpTo");
+			p_mModel->SetCurrentKeyFrame(0);
+			p_mGravityCom->bEnable = false;
+			mState = PenguinState::BeforeJump;*/
+
+			break;
 		}
 
 		Vector3 Velocity = mDamageVelocity * Time->GetDeltaTime();
@@ -343,6 +398,12 @@ void OBJ_Penguin::Update()
 		p_mTransform->Translate(Velocity);
 		p_mMoveCom->Move(mMoveVelocity.x * fAirMoveSpeed, mMoveVelocity.y * fAirMoveSpeed);
 	}
+		break;
+
+	case PenguinState::Idle:
+		break;
+
+	case PenguinState::Death:
 		break;
 	}
 	// アングル調整
@@ -374,6 +435,10 @@ void OBJ_Penguin::OnCollisionEnter(GameObject* _obj)
 			if (mState != PenguinState::HipDrop && mState != PenguinState::AfterHipDrop && mState != PenguinState::BeforeHipDrop &&
 				mState != PenguinState::BeforeJump && mState != PenguinState::Damage)
 			{
+				if (mState == PenguinState::Jump)
+				{
+					p_mSELand->Play();
+				}
 				mState = PenguinState::Walk;
 			}
 		}
@@ -399,7 +464,7 @@ void OBJ_Penguin::OnCollisionEnter(GameObject* _obj)
 				p_mFootCom->bEnable = false;
 				p_mJumpCom->SetJumpFlg(false);
 				p_mJumpCom->SetDropFlg(false);
-				p_mGravityCom->SetGround(false);
+				p_mGravityCom->SetOnGround(false);
 			}
 			if (mState == PenguinState::HipDrop)
 			{
@@ -413,7 +478,8 @@ void OBJ_Penguin::OnCollisionEnter(GameObject* _obj)
 				
 				p_mJumpCom->SetDropFlg(false);
 				p_mJumpCom->SetJumpFlg(false);
-				p_mGravityCom->SetGround(false);
+				p_mGravityCom->SetOnGround(false);
+				p_mSEMiss->Play();
 			}
 		}
 	}

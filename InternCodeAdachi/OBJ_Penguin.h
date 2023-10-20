@@ -4,11 +4,12 @@
 #include "../InternCode.Kizuki/Com_CharacterMove.h"
 #include "Com_Jump.h"
 #include "Com_AngleCamera.h"
-#include "Com_Gravity.h"
+#include "Com_PenguinGravity.h"
 #include "Com_Foot.h"
 #include "Com_Model.h"
 #include "Com_Shadow.h"
 #include "../Component/Com_BoxCollider.h"
+#include "../Component/Com_Audio.h"
 
 // ペンギンのプレファブ
 #define PenguinStatuNum (23)
@@ -34,6 +35,9 @@ enum class PenguinState
     HipDropOnAzarashi,
     // 待機モーション
     Idle,
+
+    // 死亡
+    Death,
 };
 
 class OBJ_Penguin :
@@ -51,13 +55,21 @@ private:
     // ターゲットにされてるカメラコンポーネント
     Com_AngleCamera* p_mCameraCom = nullptr;
     // 重力コンポーネント
-    Com_Gravity* p_mGravityCom = nullptr;
+    Com_PenguinGravity* p_mGravityCom = nullptr;
     // 足元コンポーネント
     Com_Foot* p_mFootCom = nullptr;
     // 影
     Com_Shadow* p_mShadowCom = nullptr;
     // コライダー
     Com_BoxCollider* p_mColliderCom = nullptr;
+
+    // SE再生用
+    Com_Audio* p_mSEJump = nullptr;
+    Com_Audio* p_mSEWalk = nullptr;
+    Com_Audio* p_mSELand = nullptr;
+    Com_Audio* p_mSEAttacLand = nullptr;
+    Com_Audio* p_mSEMiss = nullptr;
+    Com_Audio* p_mSEDeath = nullptr;
 
     // 空中での移動制御(スティック入力でどれだけの割合を適用するか)
     float fAirMoveSpeed = 1.0f;
@@ -99,6 +111,10 @@ private:
 
     float fIdleTime = 0.0f;
     float fIdelCnt = 0.0f;
+
+    // 歩行SEの間隔
+    float fWalkSEDuration = 0.2f;
+    float fWalkSECnt = 0.0f;
 
     DirectX::SimpleMath::Vector3 mDamageVelocity = DirectX::SimpleMath::Vector3(0.0f, 0.0f, 0.0f);
 

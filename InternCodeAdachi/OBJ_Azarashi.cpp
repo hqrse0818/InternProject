@@ -260,6 +260,7 @@ void OBJ_Azarashi::Update()
 		if (p_mModelCom->GetIsRotLastKey())
 		{
 			p_mModelCom->SetPlayAnimation(false);
+			p_mColliderCom->bEnable = true;
 			mState = AzrashiState::DiveTo;
 		}
 		break;
@@ -270,6 +271,7 @@ void OBJ_Azarashi::Update()
 		if (p_mModelCom->GetIsRotLastKey())
 		{
 			p_mModelCom->SetPlayAnimation(false);
+			p_mColliderCom->bEnable = true;
 			mState = AzrashiState::DiveTo2;
 		}
 		break;
@@ -282,6 +284,7 @@ void OBJ_Azarashi::Update()
 		p_mShadowObj->bDestroy = true;
 		p_mShadowObj->SetActive(false);
 		p_mModelCom->SetPlayAnimation(false);
+		p_mColliderCom->bEnable = false;
 		bDestroy = true;
 		break;
 	case AzrashiState::Death2:
@@ -290,6 +293,7 @@ void OBJ_Azarashi::Update()
 		p_mShadowObj->bDestroy = true;
 		p_mShadowObj->SetActive(false);
 		p_mModelCom->SetPlayAnimation(false);
+		p_mColliderCom->bEnable = false;
 		bDestroy = true;
 		break;
 	}
@@ -392,7 +396,13 @@ void OBJ_Azarashi::OnCollisionEnter(GameObject* _obj)
 				p_mModelCom->SetCurrentKeyFrame(0);
 			}
 		}
-		else if (col->mColliderTag == ColliderKind::ColTag_Fall && mState != AzrashiState::Damage)
+		else if (col->mColliderTag == ColliderKind::ColTag_Fall && 
+			mState != AzrashiState::Damage && 
+			mState != AzrashiState::Dive && 
+			mState != AzrashiState::DiveTo && 
+			mState != AzrashiState::Death && 
+			mState != AzrashiState::Dive2 && 
+			mState != AzrashiState::DiveTo2)
 		{
 			mState = AzrashiState::Dive2;
 			if (iScore == 0)
@@ -402,7 +412,7 @@ void OBJ_Azarashi::OnCollisionEnter(GameObject* _obj)
 			// 重力の更新を停止
 			p_mGravityCom->bEnable = false;
 			p_mFootCom->bEnable = false;
-			p_mColliderCom->bEnable = true;
+			p_mColliderCom->bEnable = false;
 			p_mModelCom->PlayAnimation("Dive");
 			p_mModelCom->SetCurrentKeyFrame(0);
 		}
@@ -428,7 +438,7 @@ void OBJ_Azarashi::OnCollisionStay(GameObject* _obj)
 					// 重力の更新を停止
 					p_mGravityCom->bEnable = false;
 					p_mFootCom->bEnable = false;
-					p_mColliderCom->bEnable = true;
+					p_mColliderCom->bEnable = false;
 					mState = AzrashiState::Dive;
 					p_mModelCom->PlayAnimation("Dive");
 					p_mModelCom->SetCurrentKeyFrame(0);
@@ -443,7 +453,7 @@ void OBJ_Azarashi::OnCollisionStay(GameObject* _obj)
 			{
 				return;
 			}
-			if (mState == AzrashiState::DiveTo2)
+			if (mState == AzrashiState::DiveTo2 || mState == AzrashiState::Dive2)
 			{
 				mState = AzrashiState::Death2;
 			}

@@ -43,7 +43,7 @@ OBJ_Score::OBJ_Score(const char* _name, const char* _FileName)
 
 void OBJ_Score::CalcScore(int _val)
 {
-	if (_val != 0)
+	if (_val != 0 && _val != 50)
 	{
 		// コンボの経過時間リセット
 		s_fComCnt = 0.0f;
