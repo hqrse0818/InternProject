@@ -90,6 +90,10 @@
     <ClCompile Include="InternCodeAdachi\OBJ_ComboDisplay.cpp" />
     <ClCompile Include="InternCodeAdachi\Com_PenguinGravity.cpp" />
     <ClCompile Include="InternCode.Kizuki\OBJ_HipEffect.cpp" />
+    <ClCompile Include="InternCodeAdachi\GameManager.cpp" />
+    <ClCompile Include="InternCodeAdachi\OBJ_Fall.cpp" />
+    <ClCompile Include="InternCodeAdachi\OBJ_ComboDisplay.cpp" />
+    <ClCompile Include="Component\Com_EffectBillboard.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Component\Component.h" />
@@ -186,6 +190,10 @@
     <ClInclude Include="InternCodeAdachi\OBJ_ComboDisplay.h" />
     <ClInclude Include="InternCodeAdachi\Com_PenguinGravity.h" />
     <ClInclude Include="InternCode.Kizuki\OBJ_HipEffect.h" />
+    <ClInclude Include="InternCodeAdachi\GameManager.h" />
+    <ClInclude Include="InternCodeAdachi\OBJ_Fall.h" />
+    <ClInclude Include="InternCodeAdachi\OBJ_ComboDisplay.h" />
+    <ClInclude Include="Component\Com_EffectBillboard.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="ClassDiagram.cd" />

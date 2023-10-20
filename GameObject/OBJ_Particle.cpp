@@ -13,7 +13,7 @@ OBJ_Particle::OBJ_Particle()
 	AddComponent(Shader_buf);
 
 	// ƒ‚ƒfƒ‹
-	p_mBil = new Com_Billboard();
+	p_mBil = new Com_EffectBillboard();
 	AddComponent(p_mBil);
 
 	// ŽÎ•û“ŠŽË

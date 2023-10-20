@@ -5,9 +5,15 @@
 
 class OBJ_HipEffect :public GameObject
 {
-protected:
-	ShaderResourceView* p_mTexture;
-	bool bCreate = false;
+public:
+	enum Kind
+	{
+		Particle,
+	};
+
+public:
+	Kind mKind = Kind::Particle;
+	int iCreateNum;
 
 public:
 	OBJ_HipEffect();
@@ -16,4 +22,11 @@ public:
 	void Update();
 	void Uninit();
 	void TexCreate(const char* _name);
+
+protected:
+	ShaderResourceView* p_mTexture;
+	bool bCreate = false;
+
+protected:
+	void Create();
 };
