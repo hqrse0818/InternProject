@@ -2,7 +2,7 @@
 #include "../GameObject/GameObject.h"
 #include "../ComponentHeader.h"
 #include "../Component/Com_DiagonalProjection.h"
-#include "../Component/Com_Billboard.h"
+#include "../Component/Com_EffectBillboard.h"
 #include "../DirectX/ShaderResourceView.h"
 
 class OBJ_Particle :
@@ -10,7 +10,7 @@ class OBJ_Particle :
 {
 public:
     Com_DiagonalProjection* p_mTousyaBuf{};
-    Com_Billboard* p_mBil{};
+    Com_EffectBillboard* p_mBil{};
     Com_Shader* p_mShadeer{};
     float fLifetime;
 public:
@@ -21,6 +21,10 @@ public:
     void SetTexture(ID3D11ShaderResourceView* _pSRV)
     {
         p_mBil->SetSRV(_pSRV);
+    }
+    Com_EffectBillboard* GetBil()
+    {
+        return p_mBil;
     }
 };
 

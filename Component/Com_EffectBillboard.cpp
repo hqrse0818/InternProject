@@ -1,16 +1,16 @@
-#include "Com_Billboard.h"
+#include "Com_EffectBillboard.h"
 #include "../GameObject/GameObject.h"
 #include "../System/TextureCreate.h"
 
-Com_Camera* Com_Billboard::p_mCamera = nullptr;
+Com_Camera* Com_EffectBillboard::p_mCamera = nullptr;
 using namespace DirectX::SimpleMath;
 
-Com_Billboard::Com_Billboard()
+Com_EffectBillboard::Com_EffectBillboard()
 {
 	m_Texture = new ShaderResourceView();
 }
 
-void Com_Billboard::Load()
+void Com_EffectBillboard::Load()
 {
 	
 	VERTEX_3D vertex[4];
@@ -61,28 +61,27 @@ void Com_Billboard::Load()
 	//assert(m_Texture);
 }
 
-void Com_Billboard::Unload()
+void Com_EffectBillboard::Unload()
 {
 	m_VertexBuffer->Release();
-	m_Texture->Uninit();
 }
 
-void Com_Billboard::Init()
+void Com_EffectBillboard::Init()
 {
 	Load();
 }
 
-void Com_Billboard::Uninit()
+void Com_EffectBillboard::Uninit()
 {
 	Unload();
 	delete m_Texture;
 }
 
-void Com_Billboard::Update()
+void Com_EffectBillboard::Update()
 {
 }
 
-void Com_Billboard::Draw()
+void Com_EffectBillboard::Draw()
 {
 	//テクスチャ座標算出
 	//float x = m_Count % 4 * (1.0f / 4);
@@ -165,7 +164,7 @@ void Com_Billboard::Draw()
 	Renderer::GetDeviceContext()->Draw(4, 0);
 }
 
-void Com_Billboard::SetTexture(const char* _name)
+void Com_EffectBillboard::SetTexture(const char* _name)
 {
 	m_Texture->Create(_name);
 }

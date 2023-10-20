@@ -15,8 +15,9 @@
 #include "../InternCode.Kizuki/OBJ_AzarashiRemain.h"
 #include "../Component/Com_CameraTransform.h"
 #include "../Component/Com_Billboard.h"
+#include "../Component/Com_EffectBillboard.h"
 #include "../GameObject/OBJ_Emitter.h"
-#include "OBJ_JumpEffect.h"
+#include "../InternCode.Kizuki/OBJ_HipEffect.h"
 
 #define IceNum (9)
 #define IceScale (7)
@@ -57,6 +58,7 @@ void Scene_Debug::Init()
 	Camera->AddComponent(Camera_buf);
 
 	Com_Billboard::SetCamera(Camera_buf);
+	Com_EffectBillboard::SetCamera(Camera_buf);
 
 	// レイヤーを指定してオブジェクトを追加
 	AddGameObject(Camera, 0);
@@ -100,8 +102,8 @@ void Scene_Debug::Init()
 	//Effect->TexCreate("asset/texture/start.png");
 	//AddGameObject(Effect);
 
-	OBJ_JumpEffect* JumpEffect = new OBJ_JumpEffect("JumpEffect");
-	AddGameObject(JumpEffect);
+	OBJ_HipEffect* HipEffect = new OBJ_HipEffect("HipEffect");
+	AddGameObject(HipEffect);
 
 	//音
 	p_mAudio = new Com_Audio();

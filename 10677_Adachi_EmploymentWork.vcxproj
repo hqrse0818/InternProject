@@ -150,6 +150,7 @@
     <ClCompile Include="Component\Com_CustomSprite.cpp" />
     <ClCompile Include="Component\Com_CylinderCollider.cpp" />
     <ClCompile Include="Component\Com_DiagonalProjection.cpp" />
+    <ClCompile Include="Component\Com_EffectBillboard.cpp" />
     <ClCompile Include="Component\Com_FollowCamera.cpp" />
     <ClCompile Include="Component\Com_3DSprite.cpp" />
     <ClCompile Include="Component\Com_ModelRenderer.cpp" />
@@ -235,6 +236,7 @@
     <ClInclude Include="Component\Com_CustomSprite.h" />
     <ClInclude Include="Component\Com_CylinderCollider.h" />
     <ClInclude Include="Component\Com_DiagonalProjection.h" />
+    <ClInclude Include="Component\Com_EffectBillboard.h" />
     <ClInclude Include="Component\Com_FollowCamera.h" />
     <ClInclude Include="Component\Com_3DSprite.h" />
     <ClInclude Include="Component\Com_ModelRenderer.h" />

@@ -84,9 +84,12 @@
     <ClCompile Include="InternCodeAdachi\OBJ_BackPenguinBlue.cpp" />
     <ClCompile Include="InternCodeAdachi\OBJ_DisplayScore.cpp" />
     <ClCompile Include="InternCodeAdachi\OBJ_IceManager.cpp" />
-    <ClCompile Include="InternCodeAdachi\OBJ_ComboManager.cpp" />
     <ClCompile Include="InternCodeAdachi\Com_AzarshiHit.cpp" />
     <ClCompile Include="InternCode.Kizuki\OBJ_HipEffect.cpp" />
+    <ClCompile Include="InternCodeAdachi\GameManager.cpp" />
+    <ClCompile Include="InternCodeAdachi\OBJ_Fall.cpp" />
+    <ClCompile Include="InternCodeAdachi\OBJ_ComboDisplay.cpp" />
+    <ClCompile Include="Component\Com_EffectBillboard.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Component\Component.h" />
@@ -177,9 +180,12 @@
     <ClInclude Include="InternCodeAdachi\OBJ_DisplayScore.h" />
     <ClInclude Include="InternCodeAdachi\OBJ_IceManager.h" />
     <ClInclude Include="Debug.h" />
-    <ClInclude Include="InternCodeAdachi\OBJ_ComboManager.h" />
     <ClInclude Include="InternCodeAdachi\Com_AzarshiHit.h" />
     <ClInclude Include="InternCode.Kizuki\OBJ_HipEffect.h" />
+    <ClInclude Include="InternCodeAdachi\GameManager.h" />
+    <ClInclude Include="InternCodeAdachi\OBJ_Fall.h" />
+    <ClInclude Include="InternCodeAdachi\OBJ_ComboDisplay.h" />
+    <ClInclude Include="Component\Com_EffectBillboard.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="ClassDiagram.cd" />

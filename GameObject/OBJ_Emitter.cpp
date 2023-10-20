@@ -4,7 +4,6 @@
 //#include "../BaseObject.h"
 #include "../Scene/Scene.h"
 #include "OBJ_Particle.h"
-#include "../InternCode.Kizuki/OBJ_JumpEffect.h"
 
 OBJ_Emitter::OBJ_Emitter()
 {
