@@ -96,6 +96,8 @@
     <ClCompile Include="Component\Com_EffectBillboard.cpp" />
     <ClCompile Include="InternCodeAdachi\OBJ_SeaSprite.cpp" />
     <ClCompile Include="Scene\Scene_Game.cpp" />
+    <ClCompile Include="InternCode.Kizuki\OBJ_AzarashiAttackEffect.cpp" />
+    <ClCompile Include="InternCode.Kizuki\OBJ_AzarashiDeadEffect.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Component\Component.h" />
@@ -199,6 +201,8 @@
     <ClInclude Include="InternCodeAdachi\OBJ_SeaSprite.h" />
     <ClInclude Include="Scene\Scene_Game.h" />
     <ClInclude Include="Scene\GameInclude.h" />
+    <ClInclude Include="InternCode.Kizuki\OBJ_AzarashiAttackEffect.h" />
+    <ClInclude Include="InternCode.Kizuki\OBJ_AzarashiDeadEffect.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="ClassDiagram.cd" />

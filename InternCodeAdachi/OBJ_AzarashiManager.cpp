@@ -6,6 +6,8 @@
 #include "OBJ_Ice.h"
 #include "OBJ_IceManager.h"
 #include "GameManager.h"
+#include "../InternCode.Kizuki/OBJ_AzarashiAttackEffect.h"
+#include "../InternCode.Kizuki/OBJ_AzarashiDeadEffect.h"
 
 using namespace DirectX::SimpleMath;
 using namespace std;
@@ -132,6 +134,18 @@ void OBJ_AzarashiManager::CreateLeader()
 
 	// リーダーを作成
 	OBJ_Azarashi* LAzarashi = new OBJ_Azarashi("Leader", 2);
+
+	//エフェクトを作成
+	OBJ_AzarashiAttackEffect* p_mAttackEf = new OBJ_AzarashiAttackEffect("AttackEffect");
+	p_mAttackEf->SetTarget(LAzarashi);
+	LAzarashi->SetAttackEfect(p_mAttackEf);
+	GetScene()->AddGameObject(p_mAttackEf);
+
+	OBJ_AzarashiDeadEffect* p_mDeadEf = new OBJ_AzarashiDeadEffect("DeadEffect");
+	p_mDeadEf->SetTarget(LAzarashi);
+	LAzarashi->SetDeadEffect(p_mDeadEf);
+	GetScene()->AddGameObject(p_mDeadEf);
+
 	// アザラシのステータス設定
 	LAzarashi->GetColliderCom()->SetCenter(mAzarashiCenter.x, mAzarashiCenter.y, mAzarashiCenter.z);
 	LAzarashi->GetColliderCom()->fRadius = fAzarashiRadius;
@@ -352,6 +366,18 @@ void OBJ_AzarashiManager::CreateTeshita()
 		azarashis->GetColliderCom()->fRadius = fAzarashiRadius;
 		azarashis->GetFootCom()->SetFootHeight(fFootHeight);
 		azarashis->SetAzrashiStatus(fAfterWait, fAttackDuration, fMoveSpeed, fVelocity, fBlake, fLength, fDamageDistance);
+
+		//エフェクトを作成
+		OBJ_AzarashiAttackEffect* p_mAttackEf = new OBJ_AzarashiAttackEffect("AttackEffect");
+		p_mAttackEf->SetTarget(azarashis);
+		azarashis->SetAttackEfect(p_mAttackEf);
+		GetScene()->AddGameObject(p_mAttackEf);
+
+		OBJ_AzarashiDeadEffect* p_mDeadEf = new OBJ_AzarashiDeadEffect("DeadEffect");
+		p_mDeadEf->SetTarget(azarashis);
+		azarashis->SetDeadEffect(p_mDeadEf);
+		GetScene()->AddGameObject(p_mDeadEf);
+
 		// リーダーと同じ位置を目標地点にする
 		Vector3 TeshitaTarget = mLeaderPos;
 

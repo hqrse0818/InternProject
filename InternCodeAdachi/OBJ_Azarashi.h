@@ -7,6 +7,8 @@
 #include "Com_Foot.h"
 #include "../GameObject/OBJ_Shadow.h"
 #include "Com_AzarshiHit.h"
+#include "../InternCode.Kizuki/OBJ_AzarashiAttackEffect.h"
+#include "../InternCode.Kizuki/OBJ_AzarashiDeadEffect.h"
 
 // ÉAÉUÉâÉV
 
@@ -102,6 +104,10 @@ private:
     OBJ_Shadow* p_mShadowObj = nullptr;
 
     OBJ_Azarashi* p_mLeader = nullptr;
+
+    OBJ_AzarashiAttackEffect* p_mAttackEf = nullptr;
+    OBJ_AzarashiDeadEffect* p_mDeadEf = nullptr;
+
 public:
     bool bLeader = false;
 
@@ -159,6 +165,16 @@ public:
     {
         fScoreDisMax = _high;
         fScoreDisCen = _cen;
+    }
+
+    void SetAttackEfect(OBJ_AzarashiAttackEffect* _obj)
+    {
+        p_mAttackEf = _obj;
+    }
+
+    void SetDeadEffect(OBJ_AzarashiDeadEffect* _obj)
+    {
+        p_mDeadEf = _obj;
     }
 };
 

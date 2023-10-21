@@ -24,6 +24,8 @@
 #include "../InternCodeAdachi/OBJ_SeaSprite.h"
 #include "../InternCode.Kizuki/OBJ_HipEffect.h"
 #include "../InternCode.Kizuki/OBJ_JumpEffect.h"
+#include "../InternCode.Kizuki/OBJ_AzarashiAttackEffect.h"
+#include "../InternCode.Kizuki/OBJ_AzarashiDeadEffect.h"
 #include "../Component/Com_EffectBillboard.h"
 #include "../InternCodeAdachi/OBJ_Fall.h"
 #include "../InternCodeAdachi/OBJ_BackPenguinBlue.h"
@@ -232,7 +234,7 @@ void Scene_Test::Init()
 	Player->SetHipEffect(HipEffect);
 
 	// ジャンプエフェクト
-	OBJ_JumpEffect* JumpEffect = new OBJ_JumpEffect("jumpEf");
+	OBJ_JumpEffect* JumpEffect = new OBJ_JumpEffect("jumpEffect");
 	JumpEffect->SetTarget(Player);
 	Player->SetJumpEffect(JumpEffect);
 	AddGameObject(JumpEffect);
