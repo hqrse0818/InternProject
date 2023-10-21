@@ -23,7 +23,7 @@ public:
 	void Uninit();
 	void TexCreate(const char* _name);
 
-	void SetPlayer(GameObject* _object)
+	void SetTarget(GameObject* _object)
 	{
 		Target = _object;
 	}

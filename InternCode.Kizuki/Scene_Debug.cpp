@@ -18,6 +18,7 @@
 #include "../Component/Com_EffectBillboard.h"
 #include "../GameObject/OBJ_Emitter.h"
 #include "../InternCode.Kizuki/OBJ_HipEffect.h"
+#include "../InternCode.Kizuki/OBJ_JumpEffect.h"
 
 #define IceNum (9)
 #define IceScale (7)
@@ -103,9 +104,14 @@ void Scene_Debug::Init()
 	//AddGameObject(Effect);
 
 	OBJ_HipEffect* HipEffect = new OBJ_HipEffect("HipEffect");
-	HipEffect->SetPlayer(Player); //エフェクトポジション
+	HipEffect->SetTarget(Player); //エフェクトポジション
 	Player->SetHipEffect(HipEffect); //タイミング
 	AddGameObject(HipEffect);
+
+	OBJ_JumpEffect* JumpEffect = new OBJ_JumpEffect("JumpEffect");
+	JumpEffect->SetTarget(Player);
+	Player->SetJumpEffect(JumpEffect);
+	AddGameObject(JumpEffect);
 
 	//音
 	p_mAudio = new Com_Audio();

@@ -193,7 +193,7 @@ void Scene_Test::Init()
 	//エフェクト
 	OBJ_HipEffect* HipEffect = new OBJ_HipEffect("HipEffect");
 	AddGameObject(HipEffect);
-	HipEffect->SetPlayer(Player);
+	HipEffect->SetTarget(Player);
 	Player->SetHipEffect(HipEffect);
 }
 

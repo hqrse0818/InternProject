@@ -307,6 +307,7 @@ void OBJ_Penguin::Update()
 			mState = PenguinState::BeforeHipDrop;
 			p_mGravityCom->bEnable = false;
 		}
+		p_mJumpEf->Create(); //ジャンプエフェクト
 		break;
 	case PenguinState::BeforeHipDrop:
 		// アニメーションの最後のキーまで待機

@@ -1,24 +1,37 @@
 #pragma once
-#include "../GameObject/GameObject.h"
-#include "../ComponentHeader.h"
-#include "../Component/Com_DiagonalProjection.h"
 #include "../Component/Com_Billboard.h"
+#include "../GameObject/GameObject.h"
 #include "../DirectX/ShaderResourceView.h"
 
 class OBJ_JumpEffect :public GameObject
 {
-private:
-    Com_DiagonalProjection* p_mTousyaBuf{};
-    Com_Billboard* p_mBil{};
-    float fLifetime;
+public:
+    enum Kind
+    {
+        Particle,
+    };
 
 public:
-    OBJ_JumpEffect();
-    OBJ_JumpEffect(const char* _name);
-    void Init();
-    void Update();
-    void SetTexture(ID3D11ShaderResourceView* _pSRV)
-    {
-        p_mBil->SetSRV(_pSRV);
-    }
+    Kind mKind = Kind::Particle;
+    int iCreateNum;
+
+public:
+	OBJ_JumpEffect();
+	OBJ_JumpEffect(std::string _name);
+	void Init();
+	void Update();
+	void Uninit();
+	void TexCreate(const char* _name);
+
+	void SetTarget(GameObject* _object)
+	{
+		Target = _object;
+	}
+
+	void Create();
+
+protected:
+	ShaderResourceView* p_mTexture;
+	GameObject* Target = nullptr;
+	bool bEffectflg = false;
 };

@@ -1,7 +1,6 @@
 #include "OBJ_HipEffect.h"
 #include "../ComponentHeader.h"
 #include "../System/Time.h"
-#include "../Scene/Scene.h"
 #include "../GameObject/OBJ_Particle.h"
 #include "../Scene/Scene.h"
 #include "../System/HighGetRand.h"
