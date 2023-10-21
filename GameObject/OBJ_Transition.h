@@ -9,17 +9,17 @@ class OBJ_Transition :
 public:
     enum class FadeState
     {
-        Stop,
+        InEnd,
         In,
         Out,
-        Finish
+        OutEnd
     };
 
 private:
     DirectX::SimpleMath::Color mColor = DirectX::SimpleMath::Color(1.0f, 1.0f, 1.0f, 1.0f);
-    FadeState mState = FadeState::Stop;
-    float FadeTime = 0.0f;
-    Com_Sprite* Sprite_buf{};
+    FadeState mState = FadeState::InEnd;
+    float fFadeTime = 0.0f;
+    Com_Sprite* p_mSprite{};
 
 public:
 
@@ -32,17 +32,22 @@ public:
         return mState;
     }
 
+    void SetState(FadeState _state)
+    {
+        mState = _state;
+    }
+
     void FadeIn(float _time)
     {
         mColor.w = 1.0f;
-        FadeTime = _time;
+        fFadeTime = _time;
         mState = FadeState::In;
     }
 
     void FadeOut(float _time)
     {
         mColor.w = 0.0f;
-        FadeTime = _time;
+        fFadeTime = _time;
         mState = FadeState::Out;
     }
 
@@ -56,5 +61,7 @@ public:
     {
         mColor = _Col;
     }
+
+    void SetTexture(const char* _name);
 };
 

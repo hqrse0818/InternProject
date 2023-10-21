@@ -15,12 +15,12 @@ OBJ_Transition::OBJ_Transition()
 	Shader_buf->p_mPS->Load("shader\\unlitTexturePS.cso");
 	AddComponent(Shader_buf);
 
-	Sprite_buf = new Com_Sprite();
-	Sprite_buf->SetTexture(Tex_WhiteBase);
+	p_mSprite = new Com_Sprite();
+	p_mSprite->SetTexture(Tex_WhiteBase);
 	MATERIAL mat{};
 	mat.Diffuse = mColor;
-	Sprite_buf->SetMaterial(mat);
-	AddComponent(Sprite_buf);
+	p_mSprite->SetMaterial(mat);
+	AddComponent(p_mSprite);
 
 	p_mTransform->SetScale(SCREEN_WIDTH, SCREEN_HEIGHT, 1.0f);
 	p_mTransform->mPosition.x = SCREEN_WIDTH / 2;
@@ -37,23 +37,25 @@ void OBJ_Transition::Update()
 {
 	switch (mState)
 	{
-	case OBJ_Transition::FadeState::Stop:
+	case OBJ_Transition::FadeState::InEnd:
+		mColor.w = 0.0f;
 		break;
 	case OBJ_Transition::FadeState::In:
-		mColor.w -= Time->GetDeltaTime() / FadeTime;
+		mColor.w -= Time->GetDeltaTime() / fFadeTime;
 		if (mColor.w <= 0.0f)
 		{
-			mState = FadeState::Stop;
+			mState = FadeState::InEnd;
 		}
 		break;
 	case OBJ_Transition::FadeState::Out:
-		mColor.w += Time->GetDeltaTime() / FadeTime;
+		mColor.w += Time->GetDeltaTime() / fFadeTime;
 		if (mColor.w >= 1.0f)
 		{
-			mState = FadeState::Finish;
+			mState = FadeState::OutEnd;
 		}
 		break;
-	case OBJ_Transition::FadeState::Finish:
+	case OBJ_Transition::FadeState::OutEnd:
+		mColor.w = 1.0f;
 		break;
 	default:
 		break;
@@ -61,7 +63,12 @@ void OBJ_Transition::Update()
 
 	MATERIAL mat{};
 	mat.Diffuse = mColor;
-	Sprite_buf->SetMaterial(mat);
+	p_mSprite->SetMaterial(mat);
 
 	GameObject::Update();
+}
+
+void OBJ_Transition::SetTexture(const char* _name)
+{
+	p_mSprite->SetTexture(_name);
 }

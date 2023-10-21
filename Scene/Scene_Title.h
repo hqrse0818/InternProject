@@ -16,16 +16,26 @@ private:
     OBJ_Transition* p_mTransition{};
     bool bLoadScene = false;
     float fFlashCnt = 0.0f;
-    Com_Audio* p_mAudio{};
+    
 
     TitleState mStatus = TitleState::Start;
 
 
     GameObject* p_mStartLogo{};
+    Com_Scaling* p_mStartScale{};
     GameObject* p_mTutolialLogo{};
+    Com_Scaling* p_mTutoScale{};
     GameObject* p_mAllow{};
+    GameObject* p_mBanner{};
+    GameObject* p_mExp1{};
+    GameObject* p_mExp2{};
+
+    Com_Audio* p_mAudio{};
+    Com_Audio* p_SECursor{};
+    Com_Audio* p_SEDecide{};
 
     bool bisUP = true;
+    bool bisLeft = true;
 public:
     void Init() override;
     void Start()override;

@@ -28,4 +28,5 @@
 
 // ”Ä—p
 #include "Component/Com_Transform.h"
+#include "Component/Com_Scaling.h"
 
