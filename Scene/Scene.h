@@ -67,15 +67,12 @@ public:
 	virtual void PreDraw() {};
 	virtual void Draw() {};
 	virtual void Uninit() {};
-	virtual void ObjectPreDraw();
-	virtual void ObjectDraw();
 
 	// 初期化のベース処理
 	void InitBase()
 	{
 		// 自身の初期化処理を呼ぶ
-		mThreadA = std::thread([this]() { Init(); });
-		mThreadA.join();
+		Init();
 
 		for (auto& List : mList)
 		{
@@ -184,15 +181,33 @@ public:
 	// 描画前処理のベース処理
 	void PreDrawBase()
 	{
-		mThreadA = std::thread([this]() {ObjectPreDraw(); });
-		mThreadA.join();
+		for (auto& List : mList)
+		{
+			for (auto& obj : List)
+			{
+				obj->PreDraw();
+			}
+		}
+
+		PreDraw();
 	}
 
 	// 描画のベース処理
 	void DrawBase()
 	{
-		mThreadA = std::thread([this]() { ObjectDraw(); });
-		mThreadA.join();
+		DirectX::SimpleMath::Matrix matrix;
+		matrix = DirectX::SimpleMath::Matrix::Identity;
+
+		for (auto& List : mList)
+		{
+			for (auto& obj : List)
+			{
+				obj->DrawBase(matrix);
+			}
+		}
+
+		// 自身のDraw処理を呼ぶ
+		Draw();
 	}
 
 	// 通常のオブジェクト登録

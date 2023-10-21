@@ -21,6 +21,7 @@ void LoadPenguin()
 	CreatePenguin->LoadAnimation("asset\\model\\Penguinv2\\pengin_hipdrop1_v2.fbx", "HipDrop");
 	CreatePenguin->LoadAnimation("asset\\model\\Penguinv2\\pengin_hipdrop2_v2.fbx", "AfterHipDrop");
 	CreatePenguin->LoadAnimation("asset\\model\\Penguinv2\\pengin_idle_v2.fbx", "Idle");
+	CreatePenguin->LoadAnimation("asset\\model\\Penguinv2\\pengin_obore.fbx", "Fall");
 	CreatePenguin->Push("Penguin");
 }
 
@@ -143,5 +144,5 @@ void Scene_ModelLoad::Init()
 
 void Scene_ModelLoad::Update()
 {
-	Manager::SetScene<Scene_Title>();
+	Manager::SetNextScene<Scene_Title>();
 }

@@ -9,7 +9,8 @@ class Manager
 {
 private:
 	static Scene* p_mCurrentScene;
-
+	static Scene* p_mNextScene;
+	static bool bChangeScene;
 public:
 	static void Init(Application* ap);
 	static void Uninit();
@@ -32,5 +33,17 @@ public:
 		p_mCurrentScene = new T();
 		p_mCurrentScene->InitBase();
 		p_mCurrentScene->StartBase();
+	}
+
+	template <typename T>
+	static void SetNextScene()
+	{
+		if (p_mNextScene)
+		{
+			delete p_mNextScene;
+			p_mNextScene = nullptr;
+		}
+		p_mNextScene = new T();
+		bChangeScene = true;
 	}
 };

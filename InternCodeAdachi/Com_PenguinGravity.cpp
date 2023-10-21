@@ -20,6 +20,7 @@ void Com_PenguinGravity::Update()
 		if (bOnGround)
 		{
 			p_mObject->p_mTransform->mPosition.y = fHeight;
+			fGravCnt = 0.0f;
 		}
 		else
 		{

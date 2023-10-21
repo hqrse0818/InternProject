@@ -24,6 +24,8 @@
 #include "../InternCodeAdachi/OBJ_SeaSprite.h"
 #include "../InternCode.Kizuki/OBJ_HipEffect.h"
 #include "../Component/Com_EffectBillboard.h"
+#include "../InternCodeAdachi/OBJ_Fall.h"
+
 
 #include "../System/HighGetRand.h"
 
@@ -111,6 +113,31 @@ void Scene_Test::Init()
 			}
 		}
 	}
+	// 氷の位置と数から落下用オブジェクトの位置を決める
+	// 左側
+	OBJ_Fall* fobj = new OBJ_Fall("fall");
+	fobj->SetPosition(StageInit - ((scale.x * size.x) * 2), 0.0f, 0.0f);
+	fobj->GetColliderCom()->SetSize(20.0f, 8.0f, 100.0f);
+	fobj->GetColliderCom()->SetCenter(0.0f, 4.0f, 0.0f);
+	AddGameObject(fobj);
+	// 右側
+	fobj = new OBJ_Fall("fall");
+	fobj->SetPosition(StageInit + ((scale.x * size.x) * (stagenum + 1)), 0.0f, 0.0f);
+	fobj->GetColliderCom()->SetSize(20.0f, 8.0f, 100.0f);
+	fobj->GetColliderCom()->SetCenter(0.0f, 4.0f, 0.0f);
+	AddGameObject(fobj);
+	// 上側
+	fobj = new OBJ_Fall("fall");
+	fobj->SetPosition(0.0f, 0.0f, StageInit + ((scale.z * size.z) * (stagenum + 1)));
+	fobj->GetColliderCom()->SetCenter(0.0f, 4.0f, 0.0f);
+	fobj->GetColliderCom()->SetSize(100.0f, 8.0f, 20.0f);
+	AddGameObject(fobj);
+	// 下側
+	fobj = new OBJ_Fall("fall");
+	fobj->SetPosition(0.0f, 0.0f, StageInit - ((scale.z * size.z) * 2));
+	fobj->GetColliderCom()->SetCenter(0.0f, 4.0f, 0.0f);
+	fobj->GetColliderCom()->SetSize(100.0f, 8.0f, 20.0f);
+	AddGameObject(fobj);
 
 	// カメラ
 	GameObject* Camera = new GameObject("Camera");
@@ -207,7 +234,16 @@ void Scene_Test::Start()
 
 void Scene_Test::Update()
 {
-	// デバッグ用
+	
+	
+
+	
+#if defined (DEBUG) | defined(_DEBUG)
+	// デバッグ用シーン再読み込み
+	if (Controller_Input::GetButton(0, GAMEPAD_START) == KEYSTATE::KEY_DOWN || Input::GetKeyState(KEYCODE_R) == KEYSTATE::KEY_DOWN)
+	{
+		Manager::SetScene<Scene_Test>();
+	}
 	// カーソルを表示するように切り替えて毎フレーム中心に強制的にセットされることを止める
 	if (Input::GetKeyState(KEYCODE_9) == KEYSTATE::KEY_DOWN)
 	{
@@ -219,13 +255,6 @@ void Scene_Test::Update()
 	{
 		ShowCursor(false);
 		Input::SetCursorCenterEnable();
-	}
-
-	// デバッグ用シーン再読み込み
-#if defined (DEBUG) | defined(_DEBUG)
-	if (Controller_Input::GetButton(0, GAMEPAD_START) == KEYSTATE::KEY_DOWN || Input::GetKeyState(KEYCODE_R) == KEYSTATE::KEY_DOWN)
-	{
-		Manager::SetScene<Scene_Test>();
 	}
 #endif
 
