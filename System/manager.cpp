@@ -14,6 +14,8 @@
 using namespace std;
 
 Scene* Manager::p_mCurrentScene{};
+Scene* Manager::p_mNextScene{};
+bool Manager::bChangeScene = false;
 
 void Manager::Init(Application* ap)
 {
@@ -73,9 +75,24 @@ void Manager::Uninit()
 
 void Manager::Update(uint64_t d)
 {
+	if (bChangeScene)
+	{
+		p_mCurrentScene->UninitBase();
+		delete p_mCurrentScene;
+
+		p_mCurrentScene = p_mNextScene;
+		p_mCurrentScene->InitBase();
+		p_mCurrentScene->StartBase();
+		bChangeScene = false;
+		p_mNextScene = nullptr;
+	}
+	// 入力更新
 	Input::Update();
+	// コントローラー入力更新
 	Controller_Input::UpdateCurrentController();
+	// シーンアップデート
 	p_mCurrentScene->UpdateBase();
+	// マウスのリセット
 	Input::RefreshMouse();
 }
 

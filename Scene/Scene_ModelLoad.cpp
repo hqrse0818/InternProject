@@ -143,5 +143,5 @@ void Scene_ModelLoad::Init()
 
 void Scene_ModelLoad::Update()
 {
-	Manager::SetScene<Scene_Title>();
+	Manager::SetNextScene<Scene_Title>();
 }

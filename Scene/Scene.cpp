@@ -550,33 +550,3 @@ bool Scene::CollisionCheck(GameObject* objA, GameObject* objB)
 	}
 	return false;
 }
-
-void Scene::ObjectPreDraw()
-{
-	for (auto& List : mList)
-	{
-		for (auto& obj : List)
-		{
-			obj->PreDraw();
-		}
-	}
-
-	PreDraw();
-}
-
-void Scene::ObjectDraw()
-{
-	DirectX::SimpleMath::Matrix matrix;
-	matrix = DirectX::SimpleMath::Matrix::Identity;
-
-	for (auto& List : mList)
-	{
-		for (auto& obj : List)
-		{
-			obj->DrawBase(matrix);
-		}
-	}
-
-	// ©g‚ÌDrawˆ—‚ğŒÄ‚Ô
-	Draw();
-}
