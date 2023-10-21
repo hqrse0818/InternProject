@@ -35,10 +35,6 @@ void Com_PenguinGravity::Update()
 			if (p_mObject->p_mTransform->mPosition.y < fHeight)
 			{
 				p_mObject->p_mTransform->mPosition.y = fHeight;
-			}
-
-			if (p_mObject->p_mTransform->mPosition.y == fHeight)
-			{
 				bOnGround = true;
 			}
 		}

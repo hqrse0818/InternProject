@@ -13,6 +13,13 @@ void Scene_Game::Init()
 	p_mPlayer = new OBJ_Penguin("Test", "asset/data/csv/PlayerStatus.csv");
 	AddKeyObject(p_mPlayer);
 
+	//ヒップインパクト用エフェクト
+	OBJ_HipEffect* HipEffect = new OBJ_HipEffect("HipEffect");
+	HipEffect->SetTarget(p_mPlayer);
+	p_mPlayer->SetHipEffect(HipEffect);
+	AddGameObject(HipEffect);
+	
+
 	// カメラ
 	GameObject* Camera = new GameObject("Camera");
 	Com_AngleCamera* Camera_buf = new Com_AngleCamera();
@@ -157,4 +164,54 @@ void Scene_Game::Init()
 	OBJ_ComboDisplay* ComboObj = new OBJ_ComboDisplay("combo", "asset/data/csv/ComboUI.csv");
 	AddGameObject(ComboObj);
 	
+
+	// ゲームBGM
+	p_mAudio = new Com_Audio();
+	p_mAudio->Load("asset\\audio\\BGM\\メイン BGM.wav");
+	p_mAudio->SetUseTarget(false);
+
+	// カウントダウン用のオブジェクト作成
+	
+}
+
+void Scene_Game::Start()
+{
+	// 開始前状態に設定
+	GameManager::SetGameState(GameState::WaitStart);
+
+	// プレイヤーの位置を設定
+	p_mPlayer->p_mTransform->SetPosition(0.0f, 2.0f, 0.0f);
+	
+	// カーソルを非表示
+	ShowCursor(false);
+	Input::SetCursorCenterEnable();
+}
+
+void Scene_Game::Update()
+{
+	GameManager::Update();
+	if (GameManager::GetGameState() == GameState::WaitStart)
+	{
+		fWaitCnt += Time->GetDeltaTime();
+		if (fWaitCnt > fWaitTime)
+		{
+
+		}
+		else if (fWaitCnt > 3)
+		{
+
+		}
+		else if (fWaitCnt > 2)
+		{
+
+		}
+		else if (fWaitCnt > 1)
+		{
+
+		}
+		else
+		{
+
+		}
+	}
 }

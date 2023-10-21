@@ -5,6 +5,7 @@
 #include "../Scene/Scene.h"
 #include "OBJ_Ice.h"
 #include "OBJ_IceManager.h"
+#include "GameManager.h"
 
 using namespace DirectX::SimpleMath;
 using namespace std;
@@ -236,52 +237,55 @@ void OBJ_AzarashiManager::CreateLeader()
 }
 void OBJ_AzarashiManager::Update()
 {
-	GameObject::Update();
-	// ゲームタイムを進める
-	fGameCnt += Time->GetDeltaTime();
-	// 現在のゲームタイムが次のスポーン切り替えのタイム以上ならインデックスを進める
-	if (iCurrentIndex < vec_SpawnRateGameTimer.size() - 1)
+	if (GameManager::GetGameState() == GameState::Game)
 	{
-		if(static_cast<int>(fGameCnt) > vec_SpawnRateGameTimer[iCurrentIndex + 1])
+		GameObject::Update();
+		// ゲームタイムを進める
+		fGameCnt += Time->GetDeltaTime();
+		// 現在のゲームタイムが次のスポーン切り替えのタイム以上ならインデックスを進める
+		if (iCurrentIndex < vec_SpawnRateGameTimer.size() - 1)
 		{
-			iCurrentIndex++;
+			if (static_cast<int>(fGameCnt) > vec_SpawnRateGameTimer[iCurrentIndex + 1])
+			{
+				iCurrentIndex++;
+			}
 		}
-	}
 
-	switch (mState)
-	{
-	case SpawnState::Wait:
-		fSpawnCnt += Time->GetDeltaTime();
-		if (fSpawnCnt > vec_SpawnRate[iCurrentIndex])
+		switch (mState)
 		{
-			fSpawnCnt = 0.0f;
-			mState = SpawnState::SpawnLeader;
-		}
-		break;
-	case SpawnState::SpawnLeader:
-		// リーダー作成
-		CreateLeader();
-		mState = SpawnState::WaitTeshita;
-		break; 
-	case SpawnState::WaitTeshita:
-		fLeaderCnt += Time->GetDeltaTime();
-		if (fLeaderCnt > fLeaderSpawnedTime)
-		{
-			fLeaderCnt = 0.0f;
-			mState = SpawnState::SpawnTeshita;
-		}
-		break;
-	case SpawnState::SpawnTeshita:
-		// 手下作成
-		CreateTeshita();
-		break;
-	case SpawnState::Calc:
+		case SpawnState::Wait:
+			fSpawnCnt += Time->GetDeltaTime();
+			if (fSpawnCnt > vec_SpawnRate[iCurrentIndex])
+			{
+				fSpawnCnt = 0.0f;
+				mState = SpawnState::SpawnLeader;
+			}
+			break;
+		case SpawnState::SpawnLeader:
+			// リーダー作成
+			CreateLeader();
+			mState = SpawnState::WaitTeshita;
+			break;
+		case SpawnState::WaitTeshita:
+			fLeaderCnt += Time->GetDeltaTime();
+			if (fLeaderCnt > fLeaderSpawnedTime)
+			{
+				fLeaderCnt = 0.0f;
+				mState = SpawnState::SpawnTeshita;
+			}
+			break;
+		case SpawnState::SpawnTeshita:
+			// 手下作成
+			CreateTeshita();
+			break;
+		case SpawnState::Calc:
 
-		break;
-	case SpawnState::End:
-		break;
-	default:
-		break;
+			break;
+		case SpawnState::End:
+			break;
+		default:
+			break;
+		}
 	}
 }
 

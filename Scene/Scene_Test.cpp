@@ -23,6 +23,7 @@
 #include "../InternCodeAdachi/OBJ_ComboDisplay.h"
 #include "../InternCodeAdachi/OBJ_SeaSprite.h"
 #include "../InternCode.Kizuki/OBJ_HipEffect.h"
+#include "../InternCode.Kizuki/OBJ_JumpEffect.h"
 #include "../Component/Com_EffectBillboard.h"
 #include "../InternCodeAdachi/OBJ_Fall.h"
 
@@ -218,10 +219,17 @@ void Scene_Test::Init()
 	AddGameObject(ComboObj);
 
 	//エフェクト
+	// ヒップインパクト
 	OBJ_HipEffect* HipEffect = new OBJ_HipEffect("HipEffect");
 	AddGameObject(HipEffect);
 	HipEffect->SetTarget(Player);
 	Player->SetHipEffect(HipEffect);
+
+	// ジャンプエフェクト
+	OBJ_JumpEffect* JumpEffect = new OBJ_JumpEffect("jumpEf");
+	JumpEffect->SetTarget(Player);
+	Player->SetJumpEffect(JumpEffect);
+	AddGameObject(JumpEffect);
 }
 
 void Scene_Test::Start()
@@ -230,6 +238,8 @@ void Scene_Test::Start()
 	ShowCursor(false);
 	Input::SetCursorCenterEnable();
 	p_mAudio->Play(true);
+
+	GameManager::SetGameState(GameState::Game);
 }
 
 void Scene_Test::Update()

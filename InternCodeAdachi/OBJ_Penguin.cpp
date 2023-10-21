@@ -268,6 +268,7 @@ void OBJ_Penguin::Update()
 				p_mGravityCom->SetOnGround(false);
 				//
 				p_mSEJump->Play();
+				p_mJumpEf->Create(); //ジャンプエフェクト
 			}
 			break;
 
@@ -351,70 +352,6 @@ void OBJ_Penguin::Update()
 				p_mHipEf->Create();
 			}
 			break;
-
-			// 被弾処理
-		case PenguinState::Damage:
-		{
-			//p_mGravityCom->bEnable = false;
-			//p_mColliderCom->bEnable = false;
-			//fArmorCnt += Time->GetDeltaTime();
-		if (p_mModel->GetIsRotLastKey())
-		{
-			p_mJumpCom->SetJumpFlg(false);
-			p_mModel->PlayAnimation("Jump");
-			p_mModel->SetCurrentKeyFrame(0);
-			//
-			p_mGravityCom->bEnable = true;
-			//
-			mState = PenguinState::Jump;
-		}
-		break;
-	case PenguinState::Jump:
-		p_mMoveCom->Move(mMoveVelocity.x * fAirMoveSpeed, mMoveVelocity.y * fAirMoveSpeed);
-		// ヒップインパクト
-		if (Controller_Input::GetRightTriggerSimple(0) == KEYSTATE::KEY_WHILE_DOWN ||
-			Input::GetKeyState(KEYCODE_MOUSE_LEFT) == KEYSTATE::KEY_WHILE_DOWN)
-		{
-			// ヒップインパクトの予約
-			p_mModel->PlayAnimation("HipDrop");
-			p_mModel->SetCurrentKeyFrame(0);
-			mState = PenguinState::BeforeHipDrop;
-			p_mGravityCom->bEnable = false;
-		}
-		p_mJumpEf->Create(); //ジャンプエフェクト
-		break;
-	case PenguinState::BeforeHipDrop:
-		// アニメーションの最後のキーまで待機
-		if (p_mModel->GetIsRotLastKey())
-		{
-			p_mJumpCom->SetDropFlg(true);
-			p_mJumpCom->SetJumpFlg(false);
-			p_mModel->SetPlayAnimation(false);
-			p_mGravityCom->bEnable = true;
-			mState = PenguinState::HipDrop;
-		}
-		break;
-	case PenguinState::HipDrop:
-		if (p_mGravityCom->GetOnGround())
-		{
-			p_mModel->SetCurrentKeyFrame(0);
-			mState = PenguinState::AfterHipDrop;
-			p_mSEAttacLand->Play();
-			//p_mModel->SetModelData("AttackPenguin");
-			p_mModel->PlayAnimation("AfterHipDrop");
-			p_mHipEf->Create();
-		}
-		break;
-	case PenguinState::AfterHipDrop:
-		if (p_mModel->GetIsRotLastKey())
-		{
-			p_mJumpCom->SetDropFlg(false);
-			p_mModel->SetCurrentKeyFrame(0);
-			p_mModel->PlayAnimation("Walk");
-			mState = PenguinState::Walk;
-			p_mHipEf->Create();
-		}
-		break;
 	case PenguinState::Damage:
 	{
 		//p_mGravityCom->bEnable = false;
