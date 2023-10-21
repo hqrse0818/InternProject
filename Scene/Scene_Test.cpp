@@ -167,7 +167,7 @@ void Scene_Test::Init()
 
 	// 海オブジェクト
 	OBJ_Sea* Sea = new OBJ_Sea("Sea");
-	Sea->SetPosition(0.0f, -30.0f, 0.0f);
+	Sea->SetPosition(0.0f, -22.0f, 0.0f);
 
 	AddGameObject(Sea);
 
@@ -201,11 +201,11 @@ void Scene_Test::Init()
 	AddGameObject(back);
 
 	// 海用スプライト
-	OBJ_SeaSprite* seasprite = new OBJ_SeaSprite("umi");
+	/*OBJ_SeaSprite* seasprite = new OBJ_SeaSprite("umi");
 	seasprite->SetScale(1.0f, 1.0f, 1.0f);
 	seasprite->GetSpriteCom()->SetUV(2.0f, 2.0f);
 	seasprite->GetSpriteCom()->SetSize(500.0f, 500.0f);
-	AddGameObject(seasprite,3);
+	AddGameObject(seasprite,3);*/
 
 	//音
 	p_mAudio = new Com_Audio();

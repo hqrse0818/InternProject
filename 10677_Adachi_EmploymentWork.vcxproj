@@ -175,8 +175,6 @@
     <ClCompile Include="InternCode.Kizuki\OBJ_Number.cpp" />
     <ClCompile Include="InternCodeAdachi\OBJ_Score.cpp" />
     <ClCompile Include="InternCode.Kizuki\OBJ_TitleLogo.cpp" />
-    <ClCompile Include="InternCode.Kizuki\OBJ_TitleStart.cpp" />
-    <ClCompile Include="InternCode.Kizuki\OBJ_TitleTutorial.cpp" />
     <ClCompile Include="InternCode.Kizuki\Scene_Debug.cpp" />
     <ClCompile Include="InternCodeAdachi\Com_AngleCamera.cpp" />
     <ClCompile Include="InternCode.Kizuki\OBJ_Inpact.cpp" />
@@ -265,8 +263,6 @@
     <ClInclude Include="InternCode.Kizuki\OBJ_Number.h" />
     <ClInclude Include="InternCodeAdachi\OBJ_Score.h" />
     <ClInclude Include="InternCode.Kizuki\OBJ_TitleLogo.h" />
-    <ClInclude Include="InternCode.Kizuki\OBJ_TitleStart.h" />
-    <ClInclude Include="InternCode.Kizuki\OBJ_TitleTutorial.h" />
     <ClInclude Include="InternCode.Kizuki\Scene_Debug.h" />
     <ClInclude Include="InternCodeAdachi\Com_AngleCamera.h" />
     <ClInclude Include="InternCode.Kizuki\OBJ_Inpact.h" />
