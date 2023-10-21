@@ -304,8 +304,8 @@ void OBJ_Penguin::Update()
 		case PenguinState::Jump:
 			p_mMoveCom->Move(mMoveVelocity.x * fAirMoveSpeed, mMoveVelocity.y * fAirMoveSpeed);
 			// ヒップインパクト
-			if (Controller_Input::GetRightTriggerSimple(0) == KEYSTATE::KEY_WHILE_DOWN ||
-				Input::GetKeyState(KEYCODE_MOUSE_LEFT) == KEYSTATE::KEY_WHILE_DOWN)
+			if (Controller_Input::GetRightTriggerSimple(0) == KEYSTATE::KEY_DOWN ||
+				Input::GetKeyState(KEYCODE_MOUSE_LEFT) == KEYSTATE::KEY_DOWN)
 			{
 				// ヒップインパクトの予約
 				p_mModel->PlayAnimation("HipDrop");
@@ -507,7 +507,7 @@ void OBJ_Penguin::OnCollisionEnter(GameObject* _obj)
 	if (_obj->mColType == Collider::ColliderForm::Sphere)
 	{
 		Com_SphereCollider* col = _obj->GetComponent<Com_SphereCollider>();
-		if (col->mColliderTag == ColliderKind::ColTag_Azarashi)
+		if (col->mColliderTag == ColliderKind::ColTag_Azarashi && mState != PenguinState::FallMotion && mState != PenguinState::Fall)
 		{
 			if (mState != PenguinState::BeforeHipDrop &&
 				mState != PenguinState::HipDrop && mState != PenguinState::HipDropOnAzarashi && mState != PenguinState::Damage)
@@ -571,7 +571,7 @@ void OBJ_Penguin::OnCollisionStay(GameObject* _obj)
 	{
 		Com_SphereCollider* col = _obj->GetComponent<Com_SphereCollider>();
 
-		if (col->mColliderTag == ColliderKind::ColTag_Azarashi)
+		if (col->mColliderTag == ColliderKind::ColTag_Azarashi && mState != PenguinState::FallMotion && mState != PenguinState::Fall)
 		{
 			if (mState == PenguinState::HipDrop)
 			{

@@ -32,6 +32,16 @@ void OBJ_BackPenguinBlue::Update()
 	fCnt += Time->GetDeltaTime();
 	if (fCnt > fDelay)
 	{
+		bPlay = !bPlay;
+		fCnt = 0.0f;
+	}
+
+	if (bPlay)
+	{
 		p_mModelCom->PlayAnimation("Blue");
+	}
+	else
+	{
+		p_mModelCom->SetPlayAnimation(false);
 	}
 }

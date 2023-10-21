@@ -165,27 +165,27 @@ void Scene_Game::Init()
 		// 氷の位置と数から落下用オブジェクトの位置を決める
 		// 左側
 		OBJ_Fall* fobj = new OBJ_Fall("fall");
-		fobj->SetPosition(StageInit - ((scale.x * size.x) * 2), 0.0f, 0.0f);
-		fobj->GetColliderCom()->SetSize(20.0f, 8.0f, 100.0f);
-		fobj->GetColliderCom()->SetCenter(0.0f, 4.0f, 0.0f);
+		fobj->SetPosition(StageInit - ((scale.x * size.x) * 2), 1.0f, 0.0f);
+		fobj->GetColliderCom()->SetSize(20.0f, 3.0f, 100.0f);
+		fobj->GetColliderCom()->SetCenter(0.0f, 0.0f, 0.0f);
 		AddGameObject(fobj);
 		// 右側
 		fobj = new OBJ_Fall("fall");
-		fobj->SetPosition(StageInit + ((scale.x * size.x) * (stagenum + 1)), 0.0f, 0.0f);
-		fobj->GetColliderCom()->SetSize(20.0f, 8.0f, 100.0f);
-		fobj->GetColliderCom()->SetCenter(0.0f, 4.0f, 0.0f);
+		fobj->SetPosition(StageInit + ((scale.x * size.x) * (stagenum + 1)), 1.0f, 0.0f);
+		fobj->GetColliderCom()->SetSize(20.0f, 3.0f, 100.0f);
+		fobj->GetColliderCom()->SetCenter(0.0f, 0.0f, 0.0f);
 		AddGameObject(fobj);
 		// 上側
 		fobj = new OBJ_Fall("fall");
-		fobj->SetPosition(0.0f, 0.0f, StageInit + ((scale.z * size.z) * (stagenum + 1)));
-		fobj->GetColliderCom()->SetCenter(0.0f, 4.0f, 0.0f);
-		fobj->GetColliderCom()->SetSize(100.0f, 8.0f, 20.0f);
+		fobj->SetPosition(0.0f, 1.0f, StageInit + ((scale.z * size.z) * (stagenum + 1)));
+		fobj->GetColliderCom()->SetCenter(0.0f, 0.0f, 0.0f);
+		fobj->GetColliderCom()->SetSize(100.0f, 3.0f, 20.0f);
 		AddGameObject(fobj);
 		// 下側
 		fobj = new OBJ_Fall("fall");
-		fobj->SetPosition(0.0f, 0.0f, StageInit - ((scale.z * size.z) * 2));
-		fobj->GetColliderCom()->SetCenter(0.0f, 4.0f, 0.0f);
-		fobj->GetColliderCom()->SetSize(100.0f, 8.0f, 20.0f);
+		fobj->SetPosition(0.0f, 1.0f, StageInit - ((scale.z * size.z) * 2));
+		fobj->GetColliderCom()->SetCenter(0.0f, 0.0f, 0.0f);
+		fobj->GetColliderCom()->SetSize(100.0f, 3.0f, 20.0f);
 		AddGameObject(fobj);
 	}
 
