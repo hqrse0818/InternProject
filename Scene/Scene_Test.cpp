@@ -169,7 +169,7 @@ void Scene_Test::Init()
 
 	// 海オブジェクト
 	OBJ_Sea* Sea = new OBJ_Sea("Sea");
-	Sea->SetPosition(0.0f, -30.0f, 0.0f);
+	Sea->SetPosition(0.0f, -22.0f, 0.0f);
 
 	AddGameObject(Sea);
 
@@ -203,11 +203,11 @@ void Scene_Test::Init()
 	AddGameObject(back);
 
 	// 海用スプライト
-	OBJ_SeaSprite* seasprite = new OBJ_SeaSprite("umi");
+	/*OBJ_SeaSprite* seasprite = new OBJ_SeaSprite("umi");
 	seasprite->SetScale(1.0f, 1.0f, 1.0f);
 	seasprite->GetSpriteCom()->SetUV(2.0f, 2.0f);
 	seasprite->GetSpriteCom()->SetSize(500.0f, 500.0f);
-	AddGameObject(seasprite,3);
+	AddGameObject(seasprite,3);*/
 
 	//音
 	p_mAudio = new Com_Audio();
@@ -243,7 +243,7 @@ void Scene_Test::Init()
 	//1
 	OBJ_BackPenguinBlue* bp = new OBJ_BackPenguinBlue("blue");
 	bp->SetPosition(-115.0f, 3.8f, -40.0f);
-	bp->SetDelay(0.0f);
+	bp->SetDelay(1.4f);
 	bp->SetRotation(0.0f, Euler_To_Radian(70.0f), 0.0f);
 	AddGameObject(bp);
 	//2
@@ -255,8 +255,50 @@ void Scene_Test::Init()
 	//3
 	bp = new OBJ_BackPenguinBlue("blue");
 	bp->SetPosition(116.0f, 6.6f, -9.0f);
-	bp->SetDelay(0.7f);
+	bp->SetDelay(0.3f);
 	bp->SetRotation(0.0f, Euler_To_Radian(-70.0f), 0.0f);
+	AddGameObject(bp);
+	//4
+	bp = new OBJ_BackPenguinBlue("blue");
+	bp->SetPosition(110.0f, 6.6f, 40.0f);
+	bp->SetDelay(0.7f);
+	bp->SetRotation(0.0f, Euler_To_Radian(-110.0f), 0.0f);
+	AddGameObject(bp);
+	//5
+	bp = new OBJ_BackPenguinBlue("blue");
+	bp->SetPosition(-110.0f, 6.8f, -85.0f);
+	bp->SetDelay(1.1f);
+	bp->SetRotation(0.0f, Euler_To_Radian(60.0f), 0.0f);
+	AddGameObject(bp);
+	//6
+	bp = new OBJ_BackPenguinBlue("blue");
+	bp->SetPosition(-100.0f, 6.8f, -95.0f);
+	bp->SetDelay(1.4f);
+	bp->SetRotation(0.0f, Euler_To_Radian(40.0f), 0.0f);
+	AddGameObject(bp);
+	//7
+	bp = new OBJ_BackPenguinBlue("blue");
+	bp->SetPosition(-10.0f, 11.0f, -122.0f);
+	bp->SetDelay(1.4f);
+	bp->SetRotation(0.0f, Euler_To_Radian(0.0f), 0.0f);
+	AddGameObject(bp);
+	//8
+	bp = new OBJ_BackPenguinBlue("blue");
+	bp->SetPosition(22.0f, 11.0f, -128.0f);
+	bp->SetDelay(1.4f);
+	bp->SetRotation(0.0f, Euler_To_Radian(-10.0f), 0.0f);
+	AddGameObject(bp);
+	//9
+	bp = new OBJ_BackPenguinBlue("blue");
+	bp->SetPosition(41.0f, 11.0f, -124.0f);
+	bp->SetDelay(1.4f);
+	bp->SetRotation(0.0f, Euler_To_Radian(-20.0f), 0.0f);
+	AddGameObject(bp);
+	//10
+	bp = new OBJ_BackPenguinBlue("blue");
+	bp->SetPosition(58.0f, 11.0f, -126.0f);
+	bp->SetDelay(1.4f);
+	bp->SetRotation(0.0f, Euler_To_Radian(-30.0f), 0.0f);
 	AddGameObject(bp);
 
 	// 背景用ペンギン(赤)
@@ -275,32 +317,38 @@ void Scene_Test::Init()
 	//3
 	rp = new OBJ_BackPenguinRed("red");
 	rp->SetPosition(6.0f, 6.4f, -111.0f);
-	rp->SetDelay(0.3f);
+	rp->SetDelay(0.8f);
 	rp->SetRotation(0.0f, Euler_To_Radian(0.0f), 0.0f);
 	AddGameObject(rp);
 	//4
 	rp = new OBJ_BackPenguinRed("red");
 	rp->SetPosition(-18.0f, 6.4f, -118.0f);
 	rp->SetDelay(0.6f);
-	rp->SetRotation(0.0f, Euler_To_Radian(0.0f), 0.0f);
+	rp->SetRotation(0.0f, Euler_To_Radian(10.0f), 0.0f);
 	AddGameObject(rp);
 	//5
 	rp = new OBJ_BackPenguinRed("red");
 	rp->SetPosition(-4.0f, 6.4f, -111.0f);
-	rp->SetDelay(0.4f);
+	rp->SetDelay(1.4f);
 	rp->SetRotation(0.0f, Euler_To_Radian(0.0f), 0.0f);
 	AddGameObject(rp);
 	//6
 	rp = new OBJ_BackPenguinRed("red");
-	rp->SetPosition(18.0f, 6.4f, -105.0f);
-	rp->SetDelay(2.9f);
-	rp->SetRotation(0.0f, Euler_To_Radian(0.0f), 0.0f);
+	rp->SetPosition(18.0f, 6.4f, -110.0f);
+	rp->SetDelay(2.2f);
+	rp->SetRotation(0.0f, Euler_To_Radian(-10.0f), 0.0f);
 	AddGameObject(rp);
 	//7
 	rp = new OBJ_BackPenguinRed("red");
 	rp->SetPosition(29.0f, 6.4f, -120.0f);
-	rp->SetDelay(0.12f);
-	rp->SetRotation(0.0f, Euler_To_Radian(0.0f), 0.0f);
+	rp->SetDelay(0.8f);
+	rp->SetRotation(0.0f, Euler_To_Radian(-16.0f), 0.0f);
+	AddGameObject(rp);
+	//8
+	rp = new OBJ_BackPenguinRed("red");
+	rp->SetPosition(110.0f, 6.6f, 52.0f);
+	rp->SetDelay(1.6f);
+	rp->SetRotation(0.0f, Euler_To_Radian(-100.0f), 0.0f);
 	AddGameObject(rp);
 
 	// 空のスプライト

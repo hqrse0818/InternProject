@@ -32,6 +32,15 @@ void OBJ_BackPenguinRed::Update()
 
 	if (fCnt > fDelay)
 	{
+		bPlay = !bPlay;
+	}
+
+	if (bPlay)
+	{
 		p_mModelCom->PlayAnimation("Red");
+	}
+	else
+	{
+		p_mModelCom->SetPlayAnimation(false);
 	}
 }

@@ -12,6 +12,8 @@ private:
 
     float fDelay = 0.0f;
     float fCnt = 0.0f;
+
+    bool bPlay = true;
 public:
     OBJ_BackPenguinRed();
     OBJ_BackPenguinRed(const char* _name);
