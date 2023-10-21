@@ -10,6 +10,7 @@
 #include "../TextureFilePath.h"
 #include "../InternCode.Kizuki/OBJ_TitleLogo.h"
 #include "Scene_Test.h"
+#include "../InternCodeAdachi/GameManager.h"
 
 using namespace DirectX::SimpleMath;
 using namespace std;
@@ -60,6 +61,7 @@ void Scene_Title::Init()
 void Scene_Title::Start()
 {
 	p_mAudio->Play(true);
+	GameManager::SetGameState(GameState::Title);
 }
 
 void Scene_Title::Update()

@@ -213,6 +213,7 @@
     <ClCompile Include="Scene\Scene_Title.cpp" />
     <ClCompile Include="Scene\Scene_Test.cpp" />
     <ClCompile Include="Scene\Scene_ModelLoad.cpp" />
+    <ClCompile Include="Scene\Scene_Game.cpp" />
     <ClCompile Include="System\Application.cpp" />
     <ClCompile Include="System\Collision.cpp" />
     <ClCompile Include="System\CustomMath.cpp" />
@@ -304,10 +305,12 @@
     <ClInclude Include="InternCodeAdachi\OBJ_Fall.h" />
     <ClInclude Include="InternCodeAdachi\OBJ_ComboDisplay.h" />
     <ClInclude Include="InternCodeAdachi\OBJ_SeaSprite.h" />
+    <ClInclude Include="Scene\GameInclude.h" />
     <ClInclude Include="Scene\Scene.h" />
     <ClInclude Include="Scene\Scene_Title.h" />
     <ClInclude Include="Scene\Scene_Test.h" />
     <ClInclude Include="Scene\Scene_ModelLoad.h" />
+    <ClInclude Include="Scene\Scene_Game.h" />
     <ClInclude Include="System\Application.h" />
     <ClInclude Include="System\Collision.h" />
     <ClInclude Include="System\CustomMath.h" />

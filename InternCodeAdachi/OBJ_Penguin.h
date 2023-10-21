@@ -122,6 +122,10 @@ private:
     float fWalkSEDuration = 0.2f;
     float fWalkSECnt = 0.0f;
 
+    // —Ž‰ºŠJŽn‘O‘Ò‚¿ŽžŠÔ
+    float fWaitFallTime = 1.5f;
+    float fWaitFallCnt = 0.0f;
+
     DirectX::SimpleMath::Vector3 mDamageVelocity = DirectX::SimpleMath::Vector3(0.0f, 0.0f, 0.0f);
 
     PenguinState mState = PenguinState::Walk;

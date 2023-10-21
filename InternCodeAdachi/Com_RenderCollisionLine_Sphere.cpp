@@ -76,10 +76,10 @@ void Com_RenderCollisionLine_Sphere::Init()
 	{
 		D3D11_BUFFER_DESC bd;
 		ZeroMemory(&bd, sizeof(bd));
-		bd.Usage = D3D11_USAGE_DEFAULT;
+		bd.Usage = D3D11_USAGE_DYNAMIC;
 		bd.ByteWidth = sizeof(Vector3) * 30;	// 頂点データの数分だけ指定
 		bd.BindFlags = D3D11_BIND_VERTEX_BUFFER;
-		bd.CPUAccessFlags = 0;
+		bd.CPUAccessFlags = D3D10_CPU_ACCESS_WRITE;
 
 		D3D11_SUBRESOURCE_DATA sd;
 		ZeroMemory(&sd, sizeof(sd));
@@ -99,6 +99,75 @@ void Com_RenderCollisionLine_Sphere::Update()
 	{
 		SetPixelShaderNoHit();
 	}
+
+	Com_SphereCollider* col = p_mObject->GetComponent<Com_SphereCollider>();
+	Sphere sphere = col->GetSphere();
+
+	fRadius = sphere.Radius;
+	mCenter = sphere.Center;
+
+	D3D11_MAPPED_SUBRESOURCE ms;
+	Renderer::GetDeviceContext()->Map(p_mVertexBuffer, 0, D3D11_MAP_WRITE_DISCARD, 0, &ms);
+
+	Vector3* vertex = (Vector3*)ms.pData;
+
+	// 描画用
+	// 横線
+	vertex[0] = Vector3(-fRadius, 0.0f, 0.0f);
+	vertex[1] = Vector3(fRadius, 0.0f, 0.0f);
+
+	// 縦線
+	vertex[2] = Vector3(0.0f, fRadius, 0.0f);
+	vertex[3] = Vector3(0.0f, -fRadius, 0.0f);
+
+	// 奥行き線
+	vertex[4] = Vector3(0.0f, 0.0f, fRadius);
+	vertex[5] = Vector3(0.0f, 0.0f, -fRadius);
+
+	// 各線をつなぐ
+	// 中心
+	vertex[6] = vertex[0];
+	vertex[7] = vertex[4];
+
+	vertex[8] = vertex[4];
+	vertex[9] = vertex[1];
+
+	vertex[10] = vertex[1];
+	vertex[11] = vertex[5];
+
+	vertex[12] = vertex[5];
+	vertex[13] = vertex[0];
+
+	vertex[14] = vertex[0];
+	vertex[15] = vertex[2];
+
+	vertex[16] = vertex[1];
+	vertex[17] = vertex[2];
+
+	vertex[18] = vertex[4];
+	vertex[19] = vertex[2];
+
+	vertex[20] = vertex[5];
+	vertex[21] = vertex[2];
+
+	vertex[22] = vertex[0];
+	vertex[23] = vertex[3];
+
+	vertex[24] = vertex[1];
+	vertex[25] = vertex[3];
+
+	vertex[26] = vertex[4];
+	vertex[27] = vertex[3];
+
+	vertex[28] = vertex[5];
+	vertex[29] = vertex[3];
+
+	for (int i = 0; i < 30; i++)
+	{
+		vertex[i] += mCenter;
+	}
+
+	Renderer::GetDeviceContext()->Unmap(p_mVertexBuffer, 0);
 }
 
 void Com_RenderCollisionLine_Sphere::Draw()

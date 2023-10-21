@@ -2,7 +2,7 @@
 
 enum GameState
 {
-	Game, TransToClear, TransToOver,None
+	Title,WaitStart,Game, TransToClear, TransToOver,None,End
 };
 
 class GameManager
