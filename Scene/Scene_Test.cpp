@@ -26,6 +26,8 @@
 #include "../InternCode.Kizuki/OBJ_JumpEffect.h"
 #include "../Component/Com_EffectBillboard.h"
 #include "../InternCodeAdachi/OBJ_Fall.h"
+#include "../InternCodeAdachi/OBJ_BackPenguinBlue.h"
+#include "../InternCodeAdachi/OBJ_BackPenguinRed.h"
 
 
 #include "../System/HighGetRand.h"
@@ -118,26 +120,30 @@ void Scene_Test::Init()
 	// ¶‘¤
 	OBJ_Fall* fobj = new OBJ_Fall("fall");
 	fobj->SetPosition(StageInit - ((scale.x * size.x) * 2), 0.0f, 0.0f);
-	fobj->GetColliderCom()->SetSize(20.0f, 8.0f, 100.0f);
-	fobj->GetColliderCom()->SetCenter(0.0f, 4.0f, 0.0f);
+	//fobj->SetPosition(StageInit - ((scale.x * size.x) * 2), 1.0f, 0.0f);
+	fobj->GetColliderCom()->SetSize(20.0f, 3.0f, 100.0f);
+	fobj->GetColliderCom()->SetCenter(0.0f, 0.0f, 0.0f);
 	AddGameObject(fobj);
 	// ‰E‘¤
 	fobj = new OBJ_Fall("fall");
 	fobj->SetPosition(StageInit + ((scale.x * size.x) * (stagenum + 1)), 0.0f, 0.0f);
-	fobj->GetColliderCom()->SetSize(20.0f, 8.0f, 100.0f);
-	fobj->GetColliderCom()->SetCenter(0.0f, 4.0f, 0.0f);
+	//fobj->SetPosition(StageInit + ((scale.x * size.x) * (stagenum + 1)), 1.0f, 0.0f);
+	fobj->GetColliderCom()->SetSize(20.0f, 3.0f, 100.0f);
+	fobj->GetColliderCom()->SetCenter(0.0f, 0.0f, 0.0f);
 	AddGameObject(fobj);
 	// ã‘¤
 	fobj = new OBJ_Fall("fall");
 	fobj->SetPosition(0.0f, 0.0f, StageInit + ((scale.z * size.z) * (stagenum + 1)));
-	fobj->GetColliderCom()->SetCenter(0.0f, 4.0f, 0.0f);
-	fobj->GetColliderCom()->SetSize(100.0f, 8.0f, 20.0f);
+	//fobj->SetPosition(0.0f, 1.0f, StageInit + ((scale.z * size.z) * (stagenum + 1)));
+	fobj->GetColliderCom()->SetCenter(0.0f, 0.0f, 0.0f);
+	fobj->GetColliderCom()->SetSize(100.0f, 3.0f, 20.0f);
 	AddGameObject(fobj);
 	// ‰º‘¤
 	fobj = new OBJ_Fall("fall");
 	fobj->SetPosition(0.0f, 0.0f, StageInit - ((scale.z * size.z) * 2));
-	fobj->GetColliderCom()->SetCenter(0.0f, 4.0f, 0.0f);
-	fobj->GetColliderCom()->SetSize(100.0f, 8.0f, 20.0f);
+	//fobj->SetPosition(0.0f, 1.0f, StageInit - ((scale.z * size.z) * 2));
+	fobj->GetColliderCom()->SetCenter(0.0f, 0.0f, 0.0f);
+	fobj->GetColliderCom()->SetSize(100.0f, 3.0f, 20.0f);
 	AddGameObject(fobj);
 
 	// ƒJƒƒ‰
@@ -230,6 +236,136 @@ void Scene_Test::Init()
 	JumpEffect->SetTarget(Player);
 	Player->SetJumpEffect(JumpEffect);
 	AddGameObject(JumpEffect);
+
+	// ”wŒi—pƒyƒ“ƒMƒ“(Â)
+	//1
+	OBJ_BackPenguinBlue* bp = new OBJ_BackPenguinBlue("blue");
+	bp->SetPosition(-115.0f, 3.8f, -40.0f);
+	bp->SetDelay(0.0f);
+	bp->SetRotation(0.0f, Euler_To_Radian(70.0f), 0.0f);
+	AddGameObject(bp);
+	//2
+	bp = new OBJ_BackPenguinBlue("blue");
+	bp->SetPosition(-115.0f, 3.8f, -22.0f);
+	bp->SetDelay(1.2f);
+	bp->SetRotation(0.0f, Euler_To_Radian(100.0f), 0.0f);
+	AddGameObject(bp);
+	//3
+	bp = new OBJ_BackPenguinBlue("blue");
+	bp->SetPosition(116.0f, 6.6f, -9.0f);
+	bp->SetDelay(0.7f);
+	bp->SetRotation(0.0f, Euler_To_Radian(-70.0f), 0.0f);
+	AddGameObject(bp);
+
+	// ”wŒi—pƒyƒ“ƒMƒ“(Ô)
+	//1
+	OBJ_BackPenguinRed* rp = new OBJ_BackPenguinRed("red");
+	rp->SetPosition(121.0f, 6.6f, 0.0f);
+	rp->SetDelay(0.2f);
+	rp->SetRotation(0.0f, Euler_To_Radian(-90.0f), 0.0f);
+	AddGameObject(rp);
+	//2
+	rp = new OBJ_BackPenguinRed("red");
+	rp->SetPosition(110.0f, 6.6f, 10.0f);
+	rp->SetDelay(0.0f);
+	rp->SetRotation(0.0f, Euler_To_Radian(-100.0f), 0.0f);
+	AddGameObject(rp);
+	//3
+	rp = new OBJ_BackPenguinRed("red");
+	rp->SetPosition(6.0f, 6.4f, -111.0f);
+	rp->SetDelay(0.3f);
+	rp->SetRotation(0.0f, Euler_To_Radian(0.0f), 0.0f);
+	AddGameObject(rp);
+	//4
+	rp = new OBJ_BackPenguinRed("red");
+	rp->SetPosition(-18.0f, 6.4f, -118.0f);
+	rp->SetDelay(0.6f);
+	rp->SetRotation(0.0f, Euler_To_Radian(0.0f), 0.0f);
+	AddGameObject(rp);
+	//5
+	rp = new OBJ_BackPenguinRed("red");
+	rp->SetPosition(-4.0f, 6.4f, -111.0f);
+	rp->SetDelay(0.4f);
+	rp->SetRotation(0.0f, Euler_To_Radian(0.0f), 0.0f);
+	AddGameObject(rp);
+	//6
+	rp = new OBJ_BackPenguinRed("red");
+	rp->SetPosition(18.0f, 6.4f, -105.0f);
+	rp->SetDelay(2.9f);
+	rp->SetRotation(0.0f, Euler_To_Radian(0.0f), 0.0f);
+	AddGameObject(rp);
+	//7
+	rp = new OBJ_BackPenguinRed("red");
+	rp->SetPosition(29.0f, 6.4f, -120.0f);
+	rp->SetDelay(0.12f);
+	rp->SetRotation(0.0f, Euler_To_Radian(0.0f), 0.0f);
+	AddGameObject(rp);
+
+	// ‹ó‚ÌƒXƒvƒ‰ƒCƒg
+	GameObject* SkyA = new GameObject("Sky");
+	Com_Shader* SkyShader = new Com_Shader();
+	SkyShader->p_mVS->Load(VS_SPRITE);
+	SkyShader->p_mPS->Load(PS_SPRITE);
+	SkyA->AddComponent(SkyShader);
+
+	Com_3DSprite* sprite3D = new Com_3DSprite();
+	sprite3D->SetTexture("asset\\texture\\sora.png");
+	sprite3D->SetSize(1920.0f * 0.5f, 1080.0f * 0.5f);
+	sprite3D->SetUV(1.0f, 1.0f);
+	SkyA->AddComponent(sprite3D);
+
+	SkyA->SetPosition(400.0f, 200.0f, 0.0f);
+	SkyA->SetRotation(Euler_To_Radian(-90.0f), Euler_To_Radian(90.0f), 0.0f);
+
+	AddGameObject(SkyA);
+
+	SkyA = new GameObject("Sky");
+	SkyShader = new Com_Shader();
+	SkyShader->p_mVS->Load(VS_SPRITE);
+	SkyShader->p_mPS->Load(PS_SPRITE);
+	SkyA->AddComponent(SkyShader);
+	sprite3D = new Com_3DSprite();
+	sprite3D->SetTexture("asset\\texture\\sora.png");
+	sprite3D->SetSize(1920.0f * 0.5f, 1080.0f * 0.5f);
+	sprite3D->SetUV(1.0f, 1.0f);
+	SkyA->AddComponent(sprite3D);
+
+	SkyA->SetPosition(-400.0f, 200.0f, 0.0f);
+	SkyA->SetRotation(Euler_To_Radian(-90.0f), Euler_To_Radian(270.0f), 0.0f);
+
+	AddGameObject(SkyA);
+
+	SkyA = new GameObject("Sky");
+	SkyShader = new Com_Shader();
+	SkyShader->p_mVS->Load(VS_SPRITE);
+	SkyShader->p_mPS->Load(PS_SPRITE);
+	SkyA->AddComponent(SkyShader);
+	sprite3D = new Com_3DSprite();
+	sprite3D->SetTexture("asset\\texture\\sora.png");
+	sprite3D->SetSize(1920.0f * 0.5f, 1080.0f * 0.5f);
+	sprite3D->SetUV(1.0f, 1.0f);
+	SkyA->AddComponent(sprite3D);
+
+	SkyA->SetPosition(0.0f, 200.0f, 400.0f);
+	SkyA->SetRotation(Euler_To_Radian(-90.0f), 0.0, 0.0f);
+
+	AddGameObject(SkyA);
+
+	SkyA = new GameObject("Sky");
+	SkyShader = new Com_Shader();
+	SkyShader->p_mVS->Load(VS_SPRITE);
+	SkyShader->p_mPS->Load(PS_SPRITE);
+	SkyA->AddComponent(SkyShader);
+	sprite3D = new Com_3DSprite();
+	sprite3D->SetTexture("asset\\texture\\sora.png");
+	sprite3D->SetSize(1920.0f * 0.5f, 1080.0f * 0.5f);
+	sprite3D->SetUV(1.0f, 1.0f);
+	SkyA->AddComponent(sprite3D);
+
+	SkyA->SetPosition(0.0f, 200.0f, -400.0f);
+	SkyA->SetRotation(Euler_To_Radian(-90.0f), Euler_To_Radian(180.0f), 0.0f);
+
+	AddGameObject(SkyA);
 }
 
 void Scene_Test::Start()

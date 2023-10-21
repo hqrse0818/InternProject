@@ -43,6 +43,9 @@ private:
     // èáçƒê∂Ç©Ç«Ç§Ç©
     bool bPlayOrder = true;
 
+    int iAnimNumber = 0;
+    bool bResetFrame = false;
+
 private:
     void UpdateBoneMatrix(aiNode* _Node, aiMatrix4x4 _Matrix);
 
@@ -100,6 +103,16 @@ public:
     void SetCurrentKeyFrame(int _val)
     {
         iFrame1 = _val;
+    }
+
+    void SetAnimNumber(int _num)
+    {
+        iAnimNumber = _num;
+    }
+
+    void SetResetKey(bool _val)
+    {
+        bResetFrame = _val;
     }
 };
 

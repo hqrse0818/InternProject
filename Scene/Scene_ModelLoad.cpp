@@ -85,7 +85,7 @@ void LoadBackPenguinA()
 {
 	ModelData* Creator = new ModelData();
 	Creator->LoadModel("asset\\model\\BackGround\\pengin_haikei_blue.fbx", true);
-	Creator->LoadAnimation("asset\\model\\BackGround\\pengin_haikei_blue.fbx", "Idle");
+	Creator->LoadAnimation("asset\\model\\BackGround\\pengin_haikei_blue.fbx", "Blue");
 	Creator->Push("BluePenguin");
 }
 
@@ -93,7 +93,7 @@ void LoadBackPenguinB()
 {
 	ModelData* Creator = new ModelData();
 	Creator->LoadModel("asset\\model\\BackGround\\pengin_haikei_red.fbx", true);
-	Creator->LoadAnimation("asset\\model\\BackGround\\pengin_haikei_red.fbx", "Idle");
+	Creator->LoadAnimation("asset\\model\\BackGround\\pengin_haikei_red.fbx", "Red");
 	Creator->Push("RedPenguin");
 }
 

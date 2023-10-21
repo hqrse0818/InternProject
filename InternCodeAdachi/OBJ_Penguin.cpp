@@ -202,10 +202,10 @@ void OBJ_Penguin::Start()
 
 void OBJ_Penguin::Update()
 {
+	GameObject::Update();
+
 	if (GameManager::GetGameState() == GameState::Game)
 	{
-		GameObject::Update();
-
 		// 入力取得
 		if (Controller_Input::GetIsGamePadConnect(0))
 		{
@@ -479,121 +479,114 @@ void OBJ_Penguin::Update()
 
 void OBJ_Penguin::OnCollisionEnter(GameObject* _obj)
 {
-	if (GameManager::GetGameState() == GameState::Game)
+	GameObject::OnCollisionEnter(_obj);
+	if (_obj->mColType == Collider::ColliderForm::Box)
 	{
-		GameObject::OnCollisionEnter(_obj);
-		if (_obj->mColType == Collider::ColliderForm::Box)
-		{
-			Com_BoxCollider* col = _obj->GetComponent<Com_BoxCollider>();
+		Com_BoxCollider* col = _obj->GetComponent<Com_BoxCollider>();
 
-			if (col->mColliderTag == ColliderKind::ColTag_Ice)
+		if (col->mColliderTag == ColliderKind::ColTag_Ice)
+		{
+			if (mState != PenguinState::HipDrop && mState != PenguinState::AfterHipDrop && mState != PenguinState::BeforeHipDrop &&
+				mState != PenguinState::BeforeJump && mState != PenguinState::Damage)
 			{
-				if (mState != PenguinState::HipDrop && mState != PenguinState::AfterHipDrop && mState != PenguinState::BeforeHipDrop &&
-					mState != PenguinState::BeforeJump && mState != PenguinState::Damage)
+				if (mState == PenguinState::Jump)
 				{
-					if (mState == PenguinState::Jump)
-					{
-						p_mSELand->Play();
-					}
-					mState = PenguinState::Walk;
+					p_mSELand->Play();
 				}
-			}
-			if (col->mColliderTag == ColliderKind::ColTag_Fall && mState != PenguinState::FallMotion && mState != PenguinState::Fall)
-			{
-				// 落下させる
-				mState = PenguinState::FallMotion;
-				p_mModel->PlayAnimation("Fall");
-				p_mModel->SetCurrentKeyFrame(0);
+				mState = PenguinState::Walk;
 			}
 		}
-		if (_obj->mColType == Collider::ColliderForm::Sphere)
+		if (col->mColliderTag == ColliderKind::ColTag_Fall && mState != PenguinState::FallMotion && mState != PenguinState::Fall)
 		{
-			Com_SphereCollider* col = _obj->GetComponent<Com_SphereCollider>();
-			if (col->mColliderTag == ColliderKind::ColTag_Azarashi)
+			// 落下させる
+			mState = PenguinState::FallMotion;
+			p_mModel->PlayAnimation("Fall");
+			p_mModel->SetCurrentKeyFrame(0);
+		}
+	}
+	if (_obj->mColType == Collider::ColliderForm::Sphere)
+	{
+		Com_SphereCollider* col = _obj->GetComponent<Com_SphereCollider>();
+		if (col->mColliderTag == ColliderKind::ColTag_Azarashi)
+		{
+			if (mState != PenguinState::BeforeHipDrop &&
+				mState != PenguinState::HipDrop && mState != PenguinState::HipDropOnAzarashi && mState != PenguinState::Damage)
 			{
-				if (mState != PenguinState::BeforeHipDrop &&
-					mState != PenguinState::HipDrop && mState != PenguinState::HipDropOnAzarashi && mState != PenguinState::Damage)
-				{
-					Vector3 Direction = Math::GetVector(p_mTransform->mPosition, _obj->p_mTransform->mPosition);
-					Direction = Math::Normalize(-Direction);
-					// ダメージ後のよろめきを計算
-					mDamageVelocity = fDamagedPower * Direction;
-					//mDamageVelocity.y = fDamagedPower;
-					mDamageVelocity.y = 0.0f;
-					mState = PenguinState::Damage;
-					p_mJumpCom->SetJumpFlg(false);
-					p_mJumpCom->SetDropFlg(false);
-					p_mGravityCom->SetOnGround(false);
-					p_mGravityCom->bEnable = true;
-				}
-				else if (mState == PenguinState::HipDrop)
-				{
-					// アザラシの上に乗った状態へ
-					mState = PenguinState::HipDropOnAzarashi;
-					p_mColliderCom->bEnable = false;
-					// 読み込みで変える
-					mDamageVelocity.y = fDirectVector;
-					mDamageVelocity.x = 0;
-					mDamageVelocity.z = 0;
+				Vector3 Direction = Math::GetVector(p_mTransform->mPosition, _obj->p_mTransform->mPosition);
+				Direction = Math::Normalize(-Direction);
+				// ダメージ後のよろめきを計算
+				mDamageVelocity = fDamagedPower * Direction;
+				//mDamageVelocity.y = fDamagedPower;
+				mDamageVelocity.y = 0.0f;
+				mState = PenguinState::Damage;
+				p_mJumpCom->SetJumpFlg(false);
+				p_mJumpCom->SetDropFlg(false);
+				p_mGravityCom->SetOnGround(false);
+				p_mGravityCom->bEnable = true;
+			}
+			else if (mState == PenguinState::HipDrop)
+			{
+				// アザラシの上に乗った状態へ
+				mState = PenguinState::HipDropOnAzarashi;
+				p_mColliderCom->bEnable = false;
+				// 読み込みで変える
+				mDamageVelocity.y = fDirectVector;
+				mDamageVelocity.x = 0;
+				mDamageVelocity.z = 0;
 
-					p_mJumpCom->SetDropFlg(false);
-					p_mJumpCom->SetJumpFlg(false);
-					p_mGravityCom->SetOnGround(false);
-					p_mSEMiss->Play();
-				}
+				p_mJumpCom->SetDropFlg(false);
+				p_mJumpCom->SetJumpFlg(false);
+				p_mGravityCom->SetOnGround(false);
+				p_mSEMiss->Play();
 			}
 		}
 	}
-	
 }
 
 void OBJ_Penguin::OnCollisionStay(GameObject* _obj)
 {
-	if (GameManager::GetGameState() == GameState::Game)
+	GameObject::OnCollisionStay(_obj);
+	if (_obj->mColType == Collider::ColliderForm::Box)
 	{
-		GameObject::OnCollisionStay(_obj);
-		if (_obj->mColType == Collider::ColliderForm::Box)
+		Com_BoxCollider* col = _obj->GetComponent<Com_BoxCollider>();
+		if (col->mColliderTag == ColliderKind::ColTag_Ice)
 		{
-			Com_BoxCollider* col = _obj->GetComponent<Com_BoxCollider>();
-			if (col->mColliderTag == ColliderKind::ColTag_Ice)
-			{
 
-			}
-
-			if (col->mColliderTag == ColliderKind::ColTag_Fall && mState != PenguinState::FallMotion && mState != PenguinState::Fall)
-			{
-				// 落下させる
-				mState = PenguinState::FallMotion;
-				p_mModel->PlayAnimation("Fall");
-				p_mModel->SetCurrentKeyFrame(0);
-			}
-
-			if (col->mColliderTag == ColliderKind::ColTag_Sea)
-			{
-				mState = PenguinState::Death;
-			}
 		}
-		if (_obj->mColType == Collider::ColliderForm::Sphere)
+
+		if (col->mColliderTag == ColliderKind::ColTag_Fall && mState != PenguinState::FallMotion && mState != PenguinState::Fall)
 		{
-			Com_SphereCollider* col = _obj->GetComponent<Com_SphereCollider>();
+			// 落下させる
+			mState = PenguinState::FallMotion;
+			p_mModel->PlayAnimation("Fall");
+			p_mModel->SetCurrentKeyFrame(0);
+		}
 
-			if (col->mColliderTag == ColliderKind::ColTag_Azarashi)
+		if (col->mColliderTag == ColliderKind::ColTag_Sea)
+		{
+			mState = PenguinState::Death;
+		}
+	}
+	if (_obj->mColType == Collider::ColliderForm::Sphere)
+	{
+		Com_SphereCollider* col = _obj->GetComponent<Com_SphereCollider>();
+
+		if (col->mColliderTag == ColliderKind::ColTag_Azarashi)
+		{
+			if (mState == PenguinState::HipDrop)
 			{
-				if (mState == PenguinState::HipDrop)
-				{
-					// アザラシの上に乗った状態へ
-					mState = PenguinState::HipDropOnAzarashi;
-					p_mColliderCom->bEnable = false;
-					// 読み込みで変える
-					mDamageVelocity.y = fDirectVector;
-					mDamageVelocity.x = 0;
-					mDamageVelocity.z = 0;
+				// アザラシの上に乗った状態へ
+				mState = PenguinState::HipDropOnAzarashi;
+				p_mColliderCom->bEnable = false;
+				// 読み込みで変える
+				mDamageVelocity.y = fDirectVector;
+				mDamageVelocity.x = 0;
+				mDamageVelocity.z = 0;
 
-					p_mJumpCom->SetDropFlg(false);
-					p_mJumpCom->SetJumpFlg(false);
-					p_mGravityCom->SetOnGround(false);
-					p_mSEMiss->Play();
-				}
+				p_mJumpCom->SetDropFlg(false);
+				p_mJumpCom->SetJumpFlg(false);
+				p_mGravityCom->SetOnGround(false);
+				p_mSEMiss->Play();
 			}
 		}
 	}

@@ -1,6 +1,7 @@
 #pragma once
 #pragma once
 #include "../GameObject/GameObject.h"
+#include "../Component/Com_Audio.h"
 
 // スコア計算用オブジェクト
 
@@ -24,6 +25,7 @@ private:
 	// 最大加算率
 	static float s_fMaxAddVal;
 
+	static Com_Audio* SEs[10];
 public:
 	OBJ_Score();
 	OBJ_Score(const char* _name);

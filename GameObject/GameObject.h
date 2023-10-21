@@ -177,4 +177,5 @@ public:
 	void Translate(DirectX::SimpleMath::Vector3 _val);
 	void Rotate(float _x, float _y, float _z);
 	void Rotate(DirectX::SimpleMath::Vector3 _val);
+	void Scaling(float _x, float _y, float _z);
 };

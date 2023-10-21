@@ -58,22 +58,57 @@ void Com_Sprite::Draw()
 
 }
 
-void Com_Sprite::SetDivision(float _u, float _v)
+void Com_Sprite::SetSeparateNum(int _u, int _v)
 {
 	if (_u != 0)
 	{
-		mDivision.x = _u;
+		iSeparateX = _u;
 	}
 	if (_v != 0)
 	{
-		mDivision.y = _v;
+		iSeparateY = _v;
 	}
 }
 
-void Com_Sprite::SetUV(DirectX::SimpleMath::Vector4 _uv)
+void Com_Sprite::SetCurrent(int _val)
 {
-	mUV = _uv;
+	iCurrent = _val;
+
+	//テクスチャ座標算出
+
+	// UV分割数を基に表示位置の計算
+	int SeparateNum = iSeparateX * iSeparateY;
+	if (iCurrent > SeparateNum)
+	{
+		iCurrent = iCurrent % SeparateNum;
+	}
+
+	int x = iCurrent % iSeparateX;
+	float SepX;
+	SepX = 1.0f / iSeparateX;
+	fCurrentx = SepX * (x - 1);
+	fCurrentz = SepX * x;
+
+	float SepY;
+	SepY = 1.0f / iSeparateY;
+	int y = 1;
+	int num = iCurrent;
+	while (true)
+	{
+		if (num > iSeparateX)
+		{
+			y++;
+			num = num - iSeparateX;
+		}
+		else
+		{
+			break;
+		}
+	}
+	fCurrenty = SepY * (y - 1);
+	fCurrentw = SepY * y;
 }
+
 
 void Com_Sprite::SetTexture(const char* _name)
 {
@@ -125,22 +160,22 @@ void Com_Sprite::Create()
 	vx[0] = Vector3(p_mObject->p_mTransform->mPosition.x - p_mObject->p_mTransform->mScale.x / 2, p_mObject->p_mTransform->mPosition.y - p_mObject->p_mTransform->mScale.y / 2, 0.0f);
 	vertex[0].Normal = Vector3(0.0f, 0.0f, 0.0f);
 	vertex[0].Diffuse = Color(1.0f, 1.0f, 1.0f, 1.0f);
-	vertex[0].TexCoord = Vector2(mUV.x, mUV.y);
+	vertex[0].TexCoord = Vector2(fCurrentx, fCurrenty);
 
 	vx[1] = Vector3(p_mObject->p_mTransform->mPosition.x + p_mObject->p_mTransform->mScale.x / 2, p_mObject->p_mTransform->mPosition.y - p_mObject->p_mTransform->mScale.y / 2, 0.0f);
 	vertex[1].Normal = Vector3(0.0f, 0.0f, 0.0f);
 	vertex[1].Diffuse = Color(1.0f, 1.0f, 1.0f, 1.0f);
-	vertex[1].TexCoord = Vector2(mUV.z, mUV.y);
+	vertex[1].TexCoord = Vector2(fCurrentz, fCurrenty);
 
 	vx[2] = Vector3(p_mObject->p_mTransform->mPosition.x - p_mObject->p_mTransform->mScale.x / 2, p_mObject->p_mTransform->mPosition.y + p_mObject->p_mTransform->mScale.y / 2, 0.0f);
 	vertex[2].Normal = Vector3(0.0f, 0.0f, 0.0f);
 	vertex[2].Diffuse = Color(1.0f, 1.0f, 1.0f, 1.0f);
-	vertex[2].TexCoord = Vector2(mUV.x, mUV.w);
+	vertex[2].TexCoord = Vector2(fCurrentx, fCurrentw);
 
 	vx[3] = Vector3(p_mObject->p_mTransform->mPosition.x + p_mObject->p_mTransform->mScale.x / 2, p_mObject->p_mTransform->mPosition.y + p_mObject->p_mTransform->mScale.y / 2, 0.0f);
 	vertex[3].Normal = Vector3(0.0f, 0.0f, 0.0f);
 	vertex[3].Diffuse = Color(1.0f, 1.0f, 1.0f, 1.0f);
-	vertex[3].TexCoord = Vector2(mUV.z, mUV.w);
+	vertex[3].TexCoord = Vector2(fCurrentz, fCurrentw);
 
 	// 回転計算
 	for (int i = 0; i < 4; i++)

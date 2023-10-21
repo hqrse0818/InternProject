@@ -304,3 +304,8 @@ void GameObject::Rotate(DirectX::SimpleMath::Vector3 _val)
 {
 	p_mTransform->Rotate(_val);
 }
+
+void GameObject::Scaling(float _x, float _y, float _z)
+{
+	p_mTransform->Scaling(_x, _y, _z);
+}

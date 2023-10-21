@@ -73,6 +73,15 @@ OBJ_ComboDisplay::OBJ_ComboDisplay(const char* _name, const char* _FileName)
 	fRotSpeed = stof(sv[15]);
 	// ä˘íËÇÃäpìx
 	fEuler = stof(sv[16]);
+
+	fEuler = Euler_To_Radian(fEuler);
+
+
+	Nums[0]->SetRotation(0.0f,  0.0f, fEuler);
+	Nums[1]->SetRotation(0.0f, 0.0f, fEuler);
+	Nums[2]->SetRotation(0.0f, 0.0f, fEuler);
+
+	SetRotation(0.0f, 0.0f, fEuler);
 }
 
 void OBJ_ComboDisplay::Init()
@@ -262,7 +271,7 @@ void OBJ_ComboDisplay::Update()
 			// âÒì]ã∏ê≥
 			for (int i = 0; i < 3; i++)
 			{
-				Nums[i]->SetRotation(0.0f, 0.0f, 0.0f);
+				Nums[i]->SetRotation(0.0f, 0.0f, fEuler);
 			}
 		}
 	}

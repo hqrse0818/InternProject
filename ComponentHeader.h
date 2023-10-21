@@ -20,10 +20,12 @@
 #include "Component/Com_Sprite.h"
 #include "Component/Com_CustomSprite.h"
 #include "Component/Com_Shader.h"
-
+#include "Component/Com_Billboard.h"
+#include "Component/Com_EffectBillboard.h"
 
 // ‰¹ŠÖ˜A
 #include "Component/Com_Audio.h"
 
 // ”Ä—p
 #include "Component/Com_Transform.h"
+

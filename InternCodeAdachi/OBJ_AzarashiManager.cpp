@@ -237,9 +237,9 @@ void OBJ_AzarashiManager::CreateLeader()
 }
 void OBJ_AzarashiManager::Update()
 {
+	GameObject::Update();
 	if (GameManager::GetGameState() == GameState::Game)
 	{
-		GameObject::Update();
 		// ゲームタイムを進める
 		fGameCnt += Time->GetDeltaTime();
 		// 現在のゲームタイムが次のスポーン切り替えのタイム以上ならインデックスを進める

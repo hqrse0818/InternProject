@@ -38,7 +38,7 @@ private:
     float fNumDuration = 10.0f;
     float fScaleDuration = 40.0f;
 
-    // 現在の地震のスケール
+    // 現在の自身のスケール
     DirectX::SimpleMath::Vector2 mCurrentMyScale = DirectX::SimpleMath::Vector2(0.0f, 0.0f);
 
     // 現在の数字のスケール

@@ -1,5 +1,6 @@
 #include "Scene_Game.h"
 #include "GameInclude.h"
+#include "../main.h"
 
 using namespace DirectX::SimpleMath;
 using namespace std;
@@ -18,6 +19,11 @@ void Scene_Game::Init()
 	HipEffect->SetTarget(p_mPlayer);
 	p_mPlayer->SetHipEffect(HipEffect);
 	AddGameObject(HipEffect);
+	// ジャンプ用エフェクト
+	OBJ_JumpEffect* JumpEffect = new OBJ_JumpEffect("JumpEff");
+	JumpEffect->SetTarget(p_mPlayer);
+	p_mPlayer->SetJumpEffect(JumpEffect);
+	AddGameObject(JumpEffect);
 	
 
 	// カメラ
@@ -29,6 +35,7 @@ void Scene_Game::Init()
 	Camera_buf->SetDistance(50.0f);
 	Camera->p_mTransform->SetPosition(0.0f, 20.0f, -30.0f);
 	Camera->AddComponent(Camera_buf);
+	AddGameObject(Camera, 0);
 
 	// ビルボードのカメラ設定
 	Com_EffectBillboard::SetCamera(Camera_buf);
@@ -37,6 +44,35 @@ void Scene_Game::Init()
 	// ペンギン関連のカメラ設定
 	p_mPlayer->GetMoveCom()->SetCameraCom(Camera_buf);
 	p_mPlayer->SetCameraCom(Camera_buf);
+
+	// アザラシ
+	{
+		// アザラシマネージャー
+		OBJ_AzarashiManager* AManager = new OBJ_AzarashiManager("manager", "asset/data/csv/AzarashiManager.csv");
+		AddGameObject(AManager, 0);
+
+		//アザラシの残機
+		GameObject* ARemain = new GameObject("ARemainOBJ");
+
+		Com_CustomSprite* Sprite_buf = new Com_CustomSprite;
+		Sprite_buf->mType = Com_CustomSprite::CustomType::LeftTop; //CustomSpriteでポジション設定
+		Sprite_buf->SetTexture("asset/texture/nokori.png");
+
+		Com_Shader* Shader_buf = new Com_Shader();
+		Shader_buf->p_mVS->Load(VS_SPRITE);
+		Shader_buf->p_mPS->Load(PS_SPRITE);
+
+		ARemain->AddComponent(Shader_buf);
+		ARemain->AddComponent(Sprite_buf);
+
+		ARemain->p_mTransform->mScale.x = 100.0f;
+		ARemain->p_mTransform->mScale.y = 100.0f;
+		AddGameObject(ARemain);
+
+		//アザラシの残機（数字）
+		OBJ_AzarashiRemain* ARemainNum = new OBJ_AzarashiRemain("Zanki", "asset/data/csv/AzarashiZankiUI.csv");
+		AddGameObject(ARemainNum);
+	}
 
 	// 海オブジェクト
 	{
@@ -50,7 +86,9 @@ void Scene_Game::Init()
 		seasprite->GetSpriteCom()->SetSize(500.0f, 500.0f);
 		AddGameObject(seasprite, 3);
 	}
-	
+	// 背景
+	OBJ_BackGround* back = new OBJ_BackGround("haikei");
+	AddGameObject(back);
 
 	// ステージ設計
 	{
@@ -166,12 +204,38 @@ void Scene_Game::Init()
 	
 
 	// ゲームBGM
-	p_mAudio = new Com_Audio();
-	p_mAudio->Load("asset\\audio\\BGM\\メイン BGM.wav");
-	p_mAudio->SetUseTarget(false);
+	p_mBGM = new Com_Audio();
+	p_mBGM->Load("asset\\audio\\BGM\\メイン BGM.wav");
+	p_mBGM->SetUseTarget(false);
 
 	// カウントダウン用のオブジェクト作成
-	
+	p_mObjNum = new GameObject("Num");
+	p_mSpriteNum = new Com_CustomSprite();
+	p_mSpriteNum->SetTexture("asset\\texture\\cowntdown.png");
+	p_mSpriteNum->mType = Com_CustomSprite::CustomType::Center;
+	p_mSpriteNum->SetSeparateNum(5, 2);
+	p_mSpriteNum->SetCurrent(3);
+	p_mSpriteNum->SetUpdate(true);
+	p_mObjNum->AddComponent(p_mSpriteNum);
+	p_mObjNum->SetScale(0.0f, 0.0f, 1.0f);
+	p_mObjNum->SetPosition(SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2, 0.0f);
+	AddGameObject(p_mObjNum);
+	p_mSECount = new Com_Audio();
+	p_mSECount->Load("asset\\audio\\SE\\SE その他\\カウントダウン.wav");
+	// 開始用オブジェクト
+	p_mObjGo = new GameObject("Go");
+	p_mSpriteGo = new Com_CustomSprite();
+	p_mSpriteGo->SetTexture("asset\\texture\\countdown_go.png");
+	p_mSpriteGo->mType = Com_CustomSprite::CustomType::Center;
+	p_mSpriteGo->SetSeparateNum(1, 1);
+	p_mSpriteGo->SetCurrent(1);
+	p_mSpriteGo->SetUpdate(true);
+	p_mObjGo->AddComponent(p_mSpriteGo);
+	p_mObjGo->SetScale(0.0f, 0.0f, 1.0f);
+	p_mObjGo->SetPosition(SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2, 0.0f);
+	AddGameObject(p_mObjGo);
+	p_mSEGo = new Com_Audio();
+	p_mSEGo->Load("asset\\audio\\SE\\SE その他\\ゲーム開始.wav");
 }
 
 void Scene_Game::Start()
@@ -192,26 +256,76 @@ void Scene_Game::Update()
 	GameManager::Update();
 	if (GameManager::GetGameState() == GameState::WaitStart)
 	{
-		fWaitCnt += Time->GetDeltaTime();
 		if (fWaitCnt > fWaitTime)
 		{
-
+			GameManager::SetGameState(GameState::Game);
+			p_mBGM->Play(true);
+		}
+		else if (fWaitCnt > 4)
+		{
+			fWaitCnt += Time->GetDeltaTime();
+			p_mObjGo->Scaling(300.0f * Time->GetDeltaTime(), 300.0f * Time->GetDeltaTime(), 0.0f);
+			if (fWaitCnt > fWaitTime)
+			{
+				p_mSEGo->Play();
+				p_mObjGo->SetScale(0.0f, 0.0f, 0.0f);
+				p_mObjGo->bDestroy = true;
+			}
 		}
 		else if (fWaitCnt > 3)
 		{
-
+			fWaitCnt += Time->GetDeltaTime();
+			p_mObjNum->Scaling(300.0f * Time->GetDeltaTime(), 300.0f * Time->GetDeltaTime(), 0.0f);
+			if (fWaitCnt > 4)
+			{
+				p_mSECount->Play();
+				p_mObjNum->SetScale(0.0f, 0.0f, 0.0f);
+				p_mObjNum->bDestroy = true;
+			}
 		}
 		else if (fWaitCnt > 2)
 		{
-
+			fWaitCnt += Time->GetDeltaTime();
+			p_mObjNum->Scaling(300.0f * Time->GetDeltaTime(), 300.0f * Time->GetDeltaTime(), 0.0f);
+			if (fWaitCnt > 3)
+			{
+				p_mSECount->Play();
+				p_mObjNum->SetScale(0.0f, 0.0f, 0.0f);
+				p_mSpriteNum->SetCurrent(1);
+			}
 		}
-		else if (fWaitCnt > 1)
+		else if(fWaitCnt > 1)
 		{
-
+			fWaitCnt += Time->GetDeltaTime();
+			p_mObjNum->Scaling(300.0f * Time->GetDeltaTime(), 300.0f * Time->GetDeltaTime(), 0.0f);
+			if (fWaitCnt > 2)
+			{
+				p_mSECount->Play();
+				p_mObjNum->SetScale(0.0f, 0.0f, 0.0f);
+				p_mSpriteNum->SetCurrent(2);
+			}
 		}
 		else
 		{
-
+			fWaitCnt += Time->GetDeltaTime();
 		}
 	}
+}
+
+void Scene_Game::Uninit()
+{
+	ShowCursor(true);
+	Input::SetCursorCenterDisable();
+
+	p_mBGM->Stop();
+	p_mBGM->Uninit();
+	delete p_mBGM;
+
+	p_mSECount->Stop();
+	p_mSECount->Uninit();
+	delete p_mSECount;
+
+	p_mSEGo->Stop();
+	p_mSEGo->Uninit();
+	delete p_mSEGo;
 }

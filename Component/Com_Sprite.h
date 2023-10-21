@@ -9,14 +9,20 @@ class Com_Sprite :
 protected:
     ID3D11Buffer* p_mVertexBuffer{};
     ShaderResourceView* p_mSRV{};
-    DirectX::SimpleMath::Vector2 mDivision = 
-        DirectX::SimpleMath::Vector2(1.0f, 1.0f);
-    DirectX::SimpleMath::Vector4 mUV =
-        DirectX::SimpleMath::Vector4(0.0f, 0.0f, 1.0f, 1.0f);
 
     bool bUpdate = false;
 
     MATERIAL mMaterial{};
+
+    int iSeparateX = 1;
+    int iSeparateY = 1;
+
+    float fCurrentx = 0;
+    float fCurrenty = 0;
+    float fCurrentz = 1;
+    float fCurrentw = 1;
+
+    int iCurrent;
 
 public:
 
@@ -33,8 +39,9 @@ public:
         bUpdate = _val;
     };
 
-    void SetDivision(float _u, float _v);
-    void SetUV(DirectX::SimpleMath::Vector4 _uv);
+    void SetSeparateNum(int _u, int _v);
+    void SetCurrent(int _val);
+
     void SetTexture(const char* _name);
     void SetTexture(ShaderResourceView* _psrv);
     void SetMaterial(MATERIAL mat);

@@ -87,10 +87,10 @@ void Com_CustomSprite::Create()
 		vertex[i].Diffuse = Vector4(1.0f, 1.0f, 1.0f, 1.0f);
 		vertex[i].Normal = Vector3(0.0f, 0.0f, 0.0f);
 	}
-	vertex[0].TexCoord = Vector2(mUV.x, mUV.y);
-	vertex[1].TexCoord = Vector2(mUV.z, mUV.y);
-	vertex[2].TexCoord = Vector2(mUV.x, mUV.w);
-	vertex[3].TexCoord = Vector2(mUV.z, mUV.w);
+	vertex[0].TexCoord = Vector2(fCurrentx, fCurrenty);
+	vertex[1].TexCoord = Vector2(fCurrentz, fCurrenty);
+	vertex[2].TexCoord = Vector2(fCurrentx, fCurrentw);
+	vertex[3].TexCoord = Vector2(fCurrentz, fCurrentw);
 
 	// ‰ñ“]ŒvŽZ
 	for (int i = 0; i < 4; i++)

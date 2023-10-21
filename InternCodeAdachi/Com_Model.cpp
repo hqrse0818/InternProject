@@ -154,7 +154,7 @@ void Com_Model::Update()
 		
 
 	// アニメーションを取得
-	aiAnimation* animation = mModelData->map_mAnimation[p_cPlayAnimationName]->mAnimations[0];
+	aiAnimation* animation = mModelData->map_mAnimation[p_cPlayAnimationName]->mAnimations[iAnimNumber];
 
 
 	for (unsigned int i = 0; i < animation->mNumChannels; i++)
@@ -187,7 +187,7 @@ void Com_Model::Update()
 				rot, pos);
 	}
 
-	if (bRotLastKey && bPosLastKey)
+	if (bRotLastKey && bPosLastKey && bResetFrame)
 	{
 		iFrame1 = 0;
 	}
