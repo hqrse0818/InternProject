@@ -18,7 +18,7 @@ private:
     float fFlashCnt = 0.0f;
     
 
-    TitleState mStatus = TitleState::Start;
+    TitleState mState = TitleState::Start;
 
 
     GameObject* p_mStartLogo{};
@@ -31,8 +31,8 @@ private:
     GameObject* p_mExp2{};
 
     Com_Audio* p_mAudio{};
-    Com_Audio* p_SECursor{};
-    Com_Audio* p_SEDecide{};
+    Com_Audio* p_mSECursor{};
+    Com_Audio* p_mSEDecide{};
 
     bool bisUP = true;
     bool bisLeft = true;

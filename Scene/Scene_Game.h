@@ -1,5 +1,6 @@
 #pragma once
 #include "Scene.h"
+#include "../GameObject/OBJ_Transition.h"
 
 class OBJ_Penguin;
 
@@ -7,6 +8,8 @@ class Scene_Game :
     public Scene
 {
 private:
+    OBJ_Transition* p_mTransition{};
+
     // ÉvÉåÉCÉÑÅ[
     OBJ_Penguin* p_mPlayer{};
 

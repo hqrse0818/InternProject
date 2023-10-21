@@ -236,12 +236,18 @@ void Scene_Game::Init()
 	AddGameObject(p_mObjGo);
 	p_mSEGo = new Com_Audio();
 	p_mSEGo->Load("asset\\audio\\SE\\SE その他\\ゲーム開始.wav");
+
+	// 遷移用オブジェクト
+	p_mTransition = new OBJ_Transition("tra");
+	p_mTransition->SetState(OBJ_Transition::FadeState::OutEnd);
+	AddGameObject(p_mTransition);
 }
 
 void Scene_Game::Start()
 {
+	p_mTransition->FadeIn(1.5);
 	// 開始前状態に設定
-	GameManager::SetGameState(GameState::WaitStart);
+	GameManager::SetGameState(GameState::WaitFade);
 
 	// プレイヤーの位置を設定
 	p_mPlayer->p_mTransform->SetPosition(0.0f, 2.0f, 0.0f);
@@ -254,7 +260,17 @@ void Scene_Game::Start()
 void Scene_Game::Update()
 {
 	GameManager::Update();
-	if (GameManager::GetGameState() == GameState::WaitStart)
+
+	switch (GameManager::GetGameState())
+	{
+	case GameState::WaitFade:
+		if (p_mTransition->GetState() == OBJ_Transition::FadeState::InEnd)
+		{
+			GameManager::SetGameState(GameState::WaitStart);
+		}
+		break;
+
+	case GameState::WaitStart:
 	{
 		if (fWaitCnt > fWaitTime)
 		{
@@ -294,7 +310,7 @@ void Scene_Game::Update()
 				p_mSpriteNum->SetCurrent(1);
 			}
 		}
-		else if(fWaitCnt > 1)
+		else if (fWaitCnt > 1)
 		{
 			fWaitCnt += Time->GetDeltaTime();
 			p_mObjNum->Scaling(300.0f * Time->GetDeltaTime(), 300.0f * Time->GetDeltaTime(), 0.0f);
@@ -309,6 +325,12 @@ void Scene_Game::Update()
 		{
 			fWaitCnt += Time->GetDeltaTime();
 		}
+	}
+		break;
+
+	
+	default:
+		break;
 	}
 }
 
