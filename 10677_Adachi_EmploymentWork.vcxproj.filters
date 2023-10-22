@@ -100,6 +100,7 @@
     <ClCompile Include="Component\Com_Scaling.cpp" />
     <ClCompile Include="Scene\Scene_Clear.cpp" />
     <ClCompile Include="GameObject\OBJ_HalfFade.cpp" />
+    <ClCompile Include="GameObject\OBJ_GameOver.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Component\Component.h" />
@@ -206,6 +207,7 @@
     <ClInclude Include="Component\Com_Scaling.h" />
     <ClInclude Include="Scene\Scene_Clear.h" />
     <ClInclude Include="GameObject\OBJ_HalfFade.h" />
+    <ClInclude Include="GameObject\OBJ_GameOver.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="ClassDiagram.cd" />

@@ -8,6 +8,7 @@
 #include "../Scene/Scene.h"
 #include <iostream>
 #include "OBJ_Score.h"
+#include "GameManager.h"
 
 using namespace DirectX::SimpleMath;
 using namespace std;
@@ -140,167 +141,170 @@ void OBJ_Azarashi::Update()
 	// コンポーネントの更新
 	GameObject::Update();
 
-	switch (mState)
+	if (GameManager::GetGameState() == GameState::Game)
 	{
-	case AzrashiState::SpawnToCenter:
-	{
-		// 中心地点に向かって移動
-		p_mModelCom->PlayAnimation("Jump");
-		// 移動方向を取得
-		Vector3 Direction = Math::GetVector(p_mTransform->mPosition, mTargetSpawnCenterPoint);
-		Direction = Math::Normalize(Direction);
-		float Distance = Math::GetDoubleDistance(p_mTransform->mPosition, mTargetSpawnCenterPoint);
-		Vector3 Velocity = Direction * Time->GetDeltaTime() * fToSpawnSpeed;
-		float Length = Math::GetDoubleLength(Velocity);
-		if (Distance <= Length)
+		switch (mState)
 		{
-			p_mTransform->mPosition = mTargetSpawnCenterPoint;
-			// スポーン後の攻撃待ちに移行
-			mState = AzrashiState::SpawnToTarget;
-			p_mModelCom->SetPlayAnimation(false);
-			SetRotation(0.0f, 0.0f, 0.0f);
-			p_mShadowObj->SetActive(true);
-			break;
-		}
-		// 移動量が超えない場合移動させる
-		p_mTransform->Translate(Velocity);
-
-		Vector3 v = Math::Normalize(Velocity);
-		float angley = atan2f(v.x, v.z);
-		float anglex = atan2f(v.y, v.z);
-		float anglez = atan2f(v.x, v.z);
-		SetRotation(-anglex, -angley, -anglez);
-	}
-		break;
-	case AzrashiState::SpawnToTarget:
-	{
-		// 目標地点に向かって移動
-		// 移動方向を取得
-		Vector3 Direction = Math::GetVector(p_mTransform->mPosition, mTargetSpawnPoint);
-		Direction = Math::Normalize(Direction);
-		float Distance = Math::GetDoubleDistance(p_mTransform->mPosition, mTargetSpawnPoint);
-		Vector3 Velocity = Direction * Time->GetDeltaTime() * fToSpawnSpeed;
-		float Length = Math::GetDoubleLength(Velocity);
-		if (Distance <= Length)
+		case AzrashiState::SpawnToCenter:
 		{
-			p_mTransform->mPosition = mTargetSpawnPoint;
-			// スポーン後の攻撃待ちに移行
-			mState = AzrashiState::AfterSpawnWait;
-			p_mGravityCom->bEnable = true;
-			p_mColliderCom->bEnable = true;
-			p_mFootCom->bEnable = true;
-			p_mGravityCom->SetGround(false);
-			p_mShadowObj->SetFollowTargetY(true);
-			s_iOnIceNum++;
-			break;
-		}
-		// 移動量が超えない場合移動させる
-		p_mTransform->Translate(Velocity);
-		if (Velocity.x == 0 && Velocity.y == 0 && Velocity.z == 0)
-		{
-			return;
-		}
-		Vector3 v = Math::Normalize(Velocity);
-	}
-		break;
-	case AzrashiState::AfterSpawnWait:
-		fCnt += Time->GetDeltaTime();
-		if (fCnt > fAfterSpawnAttackWait)
-		{
-			fCnt = 0;
-			bAttacked = false;
-			p_mModelCom->PlayAnimation("Attack");
-			p_mModelCom->SetCurrentKeyFrame(0);
-			mState = AzrashiState::Attack;
-		}
-		break;
-	case AzrashiState::Attack:
-		// アニメーションの最後のフレームかチェックする
-		if (p_mModelCom->GetIsRotLastKey())
-		{
-			mState = AzrashiState::AttackWait;
-			p_mModelCom->SetPlayAnimation(false);
-			if (!p_mGravityCom->bEnable)
+			// 中心地点に向かって移動
+			p_mModelCom->PlayAnimation("Jump");
+			// 移動方向を取得
+			Vector3 Direction = Math::GetVector(p_mTransform->mPosition, mTargetSpawnCenterPoint);
+			Direction = Math::Normalize(Direction);
+			float Distance = Math::GetDoubleDistance(p_mTransform->mPosition, mTargetSpawnCenterPoint);
+			Vector3 Velocity = Direction * Time->GetDeltaTime() * fToSpawnSpeed;
+			float Length = Math::GetDoubleLength(Velocity);
+			if (Distance <= Length)
 			{
-				mState = AzrashiState::Dive;
-				p_mModelCom->PlayAnimation("Dive");
-				p_mModelCom->SetCurrentKeyFrame(0);
+				p_mTransform->mPosition = mTargetSpawnCenterPoint;
+				// スポーン後の攻撃待ちに移行
+				mState = AzrashiState::SpawnToTarget;
+				p_mModelCom->SetPlayAnimation(false);
+				SetRotation(0.0f, 0.0f, 0.0f);
+				p_mShadowObj->SetActive(true);
+				break;
 			}
-		}
-		break;
-	case AzrashiState::AttackWait:
-		fCnt += Time->GetDeltaTime();
-		if (fCnt > fAttackDuration)
-		{
-			fCnt = 0;
-			bAttacked = false;
-			p_mModelCom->PlayAnimation("Attack");
-			p_mModelCom->SetCurrentKeyFrame(0);
-			mState = AzrashiState::Attack;
-			p_mAttackEf->p_mTransform->mPosition = this->p_mTransform->mPosition;
-			p_mAttackEf->Create();
-		}
-		break;
-	case AzrashiState::Damage:
-	{
-		// ダメージVelocityの長さを取得
-		float length = Math::GetLength(mDamageVelocity);
+			// 移動量が超えない場合移動させる
+			p_mTransform->Translate(Velocity);
 
-		// 一定以下なら止まって攻撃待ちに移行
-		if (length < fDamagePermission)
+			Vector3 v = Math::Normalize(Velocity);
+			float angley = atan2f(v.x, v.z);
+			float anglex = atan2f(v.y, v.z);
+			float anglez = atan2f(v.x, v.z);
+			SetRotation(-anglex, -angley, -anglez);
+		}
+		break;
+		case AzrashiState::SpawnToTarget:
 		{
-			mState = AzrashiState::AttackWait;
+			// 目標地点に向かって移動
+			// 移動方向を取得
+			Vector3 Direction = Math::GetVector(p_mTransform->mPosition, mTargetSpawnPoint);
+			Direction = Math::Normalize(Direction);
+			float Distance = Math::GetDoubleDistance(p_mTransform->mPosition, mTargetSpawnPoint);
+			Vector3 Velocity = Direction * Time->GetDeltaTime() * fToSpawnSpeed;
+			float Length = Math::GetDoubleLength(Velocity);
+			if (Distance <= Length)
+			{
+				p_mTransform->mPosition = mTargetSpawnPoint;
+				// スポーン後の攻撃待ちに移行
+				mState = AzrashiState::AfterSpawnWait;
+				p_mGravityCom->bEnable = true;
+				p_mColliderCom->bEnable = true;
+				p_mFootCom->bEnable = true;
+				p_mGravityCom->SetGround(false);
+				p_mShadowObj->SetFollowTargetY(true);
+				s_iOnIceNum++;
+				break;
+			}
+			// 移動量が超えない場合移動させる
+			p_mTransform->Translate(Velocity);
+			if (Velocity.x == 0 && Velocity.y == 0 && Velocity.z == 0)
+			{
+				return;
+			}
+			Vector3 v = Math::Normalize(Velocity);
+		}
+		break;
+		case AzrashiState::AfterSpawnWait:
+			fCnt += Time->GetDeltaTime();
+			if (fCnt > fAfterSpawnAttackWait)
+			{
+				fCnt = 0;
+				bAttacked = false;
+				p_mModelCom->PlayAnimation("Attack");
+				p_mModelCom->SetCurrentKeyFrame(0);
+				mState = AzrashiState::Attack;
+			}
+			break;
+		case AzrashiState::Attack:
+			// アニメーションの最後のフレームかチェックする
+			if (p_mModelCom->GetIsRotLastKey())
+			{
+				mState = AzrashiState::AttackWait;
+				p_mModelCom->SetPlayAnimation(false);
+				if (!p_mGravityCom->bEnable)
+				{
+					mState = AzrashiState::Dive;
+					p_mModelCom->PlayAnimation("Dive");
+					p_mModelCom->SetCurrentKeyFrame(0);
+				}
+			}
+			break;
+		case AzrashiState::AttackWait:
+			fCnt += Time->GetDeltaTime();
+			if (fCnt > fAttackDuration)
+			{
+				fCnt = 0;
+				bAttacked = false;
+				p_mModelCom->PlayAnimation("Attack");
+				p_mModelCom->SetCurrentKeyFrame(0);
+				mState = AzrashiState::Attack;
+				p_mAttackEf->p_mTransform->mPosition = this->p_mTransform->mPosition;
+				p_mAttackEf->Create();
+			}
+			break;
+		case AzrashiState::Damage:
+		{
+			// ダメージVelocityの長さを取得
+			float length = Math::GetLength(mDamageVelocity);
+
+			// 一定以下なら止まって攻撃待ちに移行
+			if (length < fDamagePermission)
+			{
+				mState = AzrashiState::AttackWait;
+				p_mModelCom->SetPlayAnimation(false);
+				break;
+			}
+
+			// ブレーキを掛ける
+			mDamageVelocity *= fBlakeVelocity;
+
+			p_mTransform->Translate(mDamageVelocity);
+		}
+		break;
+		case AzrashiState::Dive:
+			iScore = 0;
+			if (p_mModelCom->GetIsRotLastKey())
+			{
+				p_mModelCom->SetPlayAnimation(false);
+				p_mColliderCom->bEnable = true;
+				mState = AzrashiState::DiveTo;
+			}
+			break;
+		case AzrashiState::DiveTo:
+			Translate(0.0f, -2.0f, 0.0f);
+			break;
+		case  AzrashiState::Dive2:
+			if (p_mModelCom->GetIsRotLastKey())
+			{
+				p_mModelCom->SetPlayAnimation(false);
+				p_mColliderCom->bEnable = true;
+				mState = AzrashiState::DiveTo2;
+			}
+			break;
+		case AzrashiState::DiveTo2:
+			Translate(0.0f, -2.0f, 0.0f);
+			break;
+		case AzrashiState::Death:
+			s_iOnIceNum--;
+			OBJ_Score::CalcScore(iScore);
+			p_mShadowObj->bDestroy = true;
+			p_mShadowObj->SetActive(false);
 			p_mModelCom->SetPlayAnimation(false);
+			p_mColliderCom->bEnable = false;
+			bDestroy = true;
+			break;
+		case AzrashiState::Death2:
+			s_iOnIceNum--;
+			OBJ_Score::AddNoComboScore(50);
+			p_mShadowObj->bDestroy = true;
+			p_mShadowObj->SetActive(false);
+			p_mModelCom->SetPlayAnimation(false);
+			p_mColliderCom->bEnable = false;
+			bDestroy = true;
 			break;
 		}
-
-		// ブレーキを掛ける
-		mDamageVelocity *= fBlakeVelocity;
-
-		p_mTransform->Translate(mDamageVelocity);
-	}
-	break;
-	case AzrashiState::Dive:
-		iScore = 0;
-		if (p_mModelCom->GetIsRotLastKey())
-		{
-			p_mModelCom->SetPlayAnimation(false);
-			p_mColliderCom->bEnable = true;
-			mState = AzrashiState::DiveTo;
-		}
-		break;
-	case AzrashiState::DiveTo:
-		Translate(0.0f, -2.0f, 0.0f);
-		break;
-	case  AzrashiState::Dive2:
-		if (p_mModelCom->GetIsRotLastKey())
-		{
-			p_mModelCom->SetPlayAnimation(false);
-			p_mColliderCom->bEnable = true;
-			mState = AzrashiState::DiveTo2;
-		}
-		break;
-	case AzrashiState::DiveTo2:
-		Translate(0.0f, -2.0f, 0.0f);
-		break;
-	case AzrashiState::Death:
-		s_iOnIceNum--;
-		OBJ_Score::CalcScore(iScore);
-		p_mShadowObj->bDestroy = true;
-		p_mShadowObj->SetActive(false);
-		p_mModelCom->SetPlayAnimation(false);
-		p_mColliderCom->bEnable = false;
-		bDestroy = true;
-		break;
-	case AzrashiState::Death2:
-		s_iOnIceNum--;
-		OBJ_Score::AddNoComboScore(50);
-		p_mShadowObj->bDestroy = true;
-		p_mShadowObj->SetActive(false);
-		p_mModelCom->SetPlayAnimation(false);
-		p_mColliderCom->bEnable = false;
-		bDestroy = true;
-		break;
 	}
 }
 

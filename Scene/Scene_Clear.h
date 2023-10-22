@@ -36,6 +36,8 @@ private:
     int currentbre = 0;
     int currentsco = 0;
 
+    int isc = 0;
+
     OBJ_Number* p_mComs[3];
     OBJ_Number* p_mIces[2];
     OBJ_Number* p_mBreaks[3];

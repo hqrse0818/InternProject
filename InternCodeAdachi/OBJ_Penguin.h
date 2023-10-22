@@ -12,6 +12,7 @@
 #include "../Component/Com_Audio.h"
 #include "../InternCode.Kizuki/OBJ_HipEffect.h"
 #include "../InternCode.Kizuki/OBJ_JumpEffect.h"
+#include "../GameObject/OBJ_Shadow.h"
 
 // ペンギンのプレファブ
 #define PenguinStatuNum (23)
@@ -71,6 +72,8 @@ private:
     OBJ_HipEffect* p_mHipEf = nullptr;
     //ジャンプエフェクト
     OBJ_JumpEffect* p_mJumpEf = nullptr;
+
+    OBJ_Shadow* myShadow = nullptr;
 
     // SE再生用
     Com_Audio* p_mSEJump = nullptr;

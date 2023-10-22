@@ -296,9 +296,9 @@ void Scene_Title::Update()
 	case Scene_Title::TitleState::ToGame:
 		if (p_mTransition->GetState() == OBJ_Transition::FadeState::OutEnd)
 		{
-			//Manager::SetNextScene<Scene_Game>();
+			Manager::SetNextScene<Scene_Game>();
 			//Manager::SetNextScene<Scene_Test>();
-			Manager::SetNextScene<Scene_Clear>();
+			//Manager::SetNextScene<Scene_Clear>();
 		}
 		break;
 	default:

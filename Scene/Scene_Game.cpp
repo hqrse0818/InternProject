@@ -240,7 +240,7 @@ void Scene_Game::Init()
 	// ゲームオーバー遷移用
 	p_mHalfFade = new OBJ_HalfFade("half");
 	p_mHalfFade->SetState(OBJ_Transition::FadeState::InEnd);
-	p_mHalfFade->SetAlpha(0.75f);
+	p_mHalfFade->SetAlpha(0.9f);
 	AddGameObject(p_mHalfFade);
 
 	// 氷
@@ -345,6 +345,15 @@ void Scene_Game::Init()
 	p_mAllow->SetScale(80.0f, 80.0f, 1.0f);
 	p_mAllow->SetPosition(SCREEN_WIDTH / 2 - 150.0f, 545.0f, 0.0f);
 	AddGameObject(p_mAllow);
+
+	p_mOvobj = new OBJ_GameOver("over");
+	p_mOvobj->SetPosition(SCREEN_WIDTH / 2, -300.0f, 0.0f);
+	p_mOvobj->SetScale(1920.0f * 0.3f, 1080.0f * 0.3f, 1.0f);
+	p_mOvobj->SetStopPosA(SCREEN_WIDTH / 2, -0.0f);
+	p_mOvobj->SetStopPosB(SCREEN_WIDTH / 2, 150.0f);
+	p_mOvobj->SetFinalPos(SCREEN_WIDTH / 2, 350.0f);
+	AddGameObject(p_mOvobj);
+
 
 	// 遷移用オブジェクト
 	p_mTransition = new OBJ_Transition("tra");
@@ -481,6 +490,7 @@ void Scene_Game::Update()
 		ComboObj->SetDisplay(false);
 		ScoreObj->SetDisplay(false);
 		p_mHalfFade->FadeOut(1.5);
+		p_mOvobj->FallStart();
 		p_mBGM->Stop();
 		p_mSEOver->Play();
 		GameManager::SetGameState(GameState::OverFade);

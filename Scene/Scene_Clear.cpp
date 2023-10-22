@@ -233,6 +233,8 @@ void Scene_Clear::Start()
 {
 	// スコア関連の取得
 	iTotalScore = OBJ_Score::GetScore();
+	isc = iTotalScore;
+	isc = isc / fDrumDuration;
 	iMaxCombo = OBJ_Score::GetMaxCombo();
 	iBreakAzarashiNum = OBJ_Score::GetBreakNum();
 	iRemainIceNum = OBJ_Score::GetIceNum();
@@ -277,12 +279,10 @@ void Scene_Clear::Update()
 		if (fDrumCnt > fDrumDuration)
 		{
 			fDrumCnt = 0.0f;
-			p_mSEDrum->Stop();
-			p_mSEDrum->Play();
 			bSEEnd = true;
 		}
 
-		currentsco += 789;
+		currentsco += static_cast<int>(isc * Time->GetDeltaTime());
 		if (currentsco >= iTotalScore)
 		{
 			currentsco = iTotalScore;

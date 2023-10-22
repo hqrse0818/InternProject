@@ -193,7 +193,7 @@ void OBJ_Penguin::Start()
 
 	p_mGravityCom->SetOnGround(false);
 
-	OBJ_Shadow* myShadow = new OBJ_Shadow("PenguinShadow");
+	myShadow = new OBJ_Shadow("PenguinShadow");
 	myShadow->SetTarget(this);
 	myShadow->Init();
 	myShadow->Start();
@@ -465,6 +465,7 @@ void OBJ_Penguin::Update()
 			p_mJumpCom->SetDropFlg(false);
 			p_mJumpCom->SetJumpFlg(false);
 			p_mJumpCom->bEnable = false;
+			myShadow->SetActive(false);
 			// ゲームマネージャーを変更
 			GameManager::SetGameState(GameState::TransToOver);
 			break;

@@ -5,6 +5,7 @@
 #include "../InternCodeAdachi/OBJ_ComboDisplay.h"
 #include "../InternCodeAdachi/OBJ_DisplayScore.h"
 #include "../InternCode.Kizuki/OBJ_AzarashiRemain.h"
+#include "../GameObject/OBJ_GameOver.h"
 
 class OBJ_Penguin;
 
@@ -49,6 +50,7 @@ private:
 
 
     // ゲームオーバー用
+    OBJ_GameOver* p_mOvobj{};
     OBJ_HalfFade* p_mHalfFade{};
     GameObject* ice1{};
     GameObject* ice2{};
