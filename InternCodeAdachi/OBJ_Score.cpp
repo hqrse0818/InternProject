@@ -8,12 +8,17 @@ using namespace std;
 
 int OBJ_Score::s_iScore = 0;
 int OBJ_Score::s_iCurrentComCount = 0;
+int OBJ_Score::s_iBreakNum = 0;
+int OBJ_Score::s_iMaxCombo = 0;
+int OBJ_Score::s_iLastIceNum = 0;
 bool OBJ_Score::s_bNowCombo = false;
 float OBJ_Score::s_fComAddPerCombo = 0.0f;
 float OBJ_Score::s_fComCnt = 0.0f;
 float OBJ_Score::s_fComReceptionTime = 0.0f;
 float OBJ_Score::s_fCurrentAddVal = 0.0f;
 float OBJ_Score::s_fMaxAddVal = 0.0f;
+
+
 Com_Audio* OBJ_Score::SEs[10]{};
 
 
@@ -57,6 +62,15 @@ OBJ_Score::OBJ_Score(const char* _name, const char* _FileName)
 	SEs[7]->Load("asset\\audio\\SE\\SE その他\\コンボ8.wav");
 	SEs[8]->Load("asset\\audio\\SE\\SE その他\\コンボ9.wav");
 	SEs[9]->Load("asset\\audio\\SE\\SE その他\\コンボ10.wav");
+
+	// 初期化
+	s_iBreakNum = 0;
+	s_iMaxCombo = 0;
+	s_iScore = 0;
+	s_fCurrentAddVal = 0.0f;
+	s_fComCnt = 0.0f;
+	s_iLastIceNum = 0;
+	s_bNowCombo = false;
 }
 
 void OBJ_Score::CalcScore(int _val)
@@ -67,6 +81,11 @@ void OBJ_Score::CalcScore(int _val)
 		s_fComCnt = 0.0f;
 		// コンボ数を加算
 		s_iCurrentComCount++;
+		if (s_iCurrentComCount > s_iMaxCombo)
+		{
+			s_iMaxCombo = s_iCurrentComCount;
+		}
+		s_iBreakNum++;
 		// コンボ開始合図
 		s_bNowCombo = true;
 		// ボーナス点を加算

@@ -12,6 +12,7 @@
 #include "Scene_Test.h"
 #include "Scene_Game.h"
 #include "../InternCodeAdachi/GameManager.h"
+#include "Scene_Clear.h"
 
 using namespace DirectX::SimpleMath;
 using namespace std;
@@ -50,6 +51,22 @@ void Scene_Title::Init()
 	TitleLogo->bRotate = true;
 	AddGameObject(TitleLogo);
 
+	// バナー
+	p_mBanner = new GameObject("Banner");
+	Shader_buf = new Com_Shader();
+	Shader_buf->p_mVS->Load(VS_SPRITE);
+	Shader_buf->p_mPS->Load(PS_SPRITE);
+	p_mBanner->AddComponent(Shader_buf);
+	Sprite_buf = new Com_Sprite();
+	Sprite_buf->SetTexture("asset/texture/banner.png");
+	Sprite_buf->SetSeparateNum(1, 1);
+	Sprite_buf->SetCurrent(1);
+	Sprite_buf->SetUpdate(true);
+	p_mBanner->AddComponent(Sprite_buf);
+	p_mBanner->SetScale(600.0f, 600.0f, 0.0f);
+	p_mBanner->SetPosition(SCREEN_WIDTH / 2, 485.0f, 0.0f);
+	AddGameObject(p_mBanner);
+
 	// 氷ロゴ
 	GameObject* pIceLogo = new GameObject("Icelogo");
 	Shader_buf = new Com_Shader();
@@ -78,22 +95,6 @@ void Scene_Title::Init()
 	pIceLogo->SetScale(1920.0f * 0.275f, 1080.0f * 0.275f, 1.0f);
 	pIceLogo->SetPosition(SCREEN_WIDTH / 2, 650.0f, 0.0f);
 	AddGameObject(pIceLogo);
-
-	// バナー
-	p_mBanner = new GameObject("Banner");
-	Shader_buf = new Com_Shader();
-	Shader_buf->p_mVS->Load(VS_SPRITE);
-	Shader_buf->p_mPS->Load(PS_SPRITE);
-	p_mBanner->AddComponent(Shader_buf);
-	Sprite_buf = new Com_Sprite();
-	Sprite_buf->SetTexture("asset/texture/banner.png");
-	Sprite_buf->SetSeparateNum(1,1);
-	Sprite_buf->SetCurrent(1);
-	Sprite_buf->SetUpdate(true);
-	p_mBanner->AddComponent(Sprite_buf);
-	p_mBanner->SetScale(600.0f, 600.0f, 0.0f);
-	p_mBanner->SetPosition(SCREEN_WIDTH / 2, 485.0f, 0.0f);
-	AddGameObject(p_mBanner);
 
 	// スタートロゴ
 	p_mStartLogo = new GameObject("start");
@@ -194,7 +195,7 @@ void Scene_Title::Init()
 	p_mSEDecide->Load("asset\\audio\\SE\\SE その他\\決定.wav");
 
 	p_mTransition = new OBJ_Transition("Transition");
-	p_mTransition->SetState(OBJ_Transition::FadeState::InEnd);
+	p_mTransition->SetState(OBJ_Transition::FadeState::OutEnd);
 	AddKeyObject(p_mTransition);
 }
 
@@ -205,13 +206,20 @@ void Scene_Title::Start()
 
 	p_mAudio->Play(true);
 	GameManager::SetGameState(GameState::Title);
+
+	p_mTransition->FadeIn(1);
 }
 
 void Scene_Title::Update()
 {
 	switch (mState)
 	{
-	case Scene_Title::TitleState::Start:
+	case Scene_Title::TitleState::WaitFade:
+		if (p_mTransition->GetState() == OBJ_Transition::FadeState::InEnd)
+		{
+			mState = TitleState::WaitInput;
+		}
+	case Scene_Title::TitleState::WaitInput:
 		if (Controller_Input::GetButton(0, GAMEPAD_A) == KEYSTATE::KEY_DOWN || Input::GetKeyState(KEYCODE_RETURN) == KEYSTATE::KEY_DOWN)
 		{
 			p_mSEDecide->Play();
@@ -282,14 +290,15 @@ void Scene_Title::Update()
 			bisLeft = true;
 			p_mExp1->SetActive(false);
 			p_mExp2->SetActive(false);
-			mState = TitleState::Start;
+			mState = TitleState::WaitInput;
 		}
 		break;
 	case Scene_Title::TitleState::ToGame:
 		if (p_mTransition->GetState() == OBJ_Transition::FadeState::OutEnd)
 		{
 			//Manager::SetNextScene<Scene_Game>();
-			Manager::SetNextScene<Scene_Test>();
+			//Manager::SetNextScene<Scene_Test>();
+			Manager::SetNextScene<Scene_Clear>();
 		}
 		break;
 	default:

@@ -96,6 +96,8 @@
     <ClCompile Include="Scene\Scene_Game.cpp" />
     <ClCompile Include="InternCode.Kizuki\OBJ_AzarashiAttackEffect.cpp" />
     <ClCompile Include="InternCode.Kizuki\OBJ_AzarashiDeadEffect.cpp" />
+    <ClCompile Include="Component\Com_Scaling.cpp" />
+    <ClCompile Include="Scene\Scene_Clear.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Component\Component.h" />
@@ -199,6 +201,8 @@
     <ClInclude Include="Scene\GameInclude.h" />
     <ClInclude Include="InternCode.Kizuki\OBJ_AzarashiAttackEffect.h" />
     <ClInclude Include="InternCode.Kizuki\OBJ_AzarashiDeadEffect.h" />
+    <ClInclude Include="Component\Com_Scaling.h" />
+    <ClInclude Include="Scene\Scene_Clear.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="ClassDiagram.cd" />

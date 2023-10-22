@@ -24,8 +24,13 @@ private:
 	static float s_fCurrentAddVal;
 	// 最大加算率
 	static float s_fMaxAddVal;
+	// 最終的な氷の数
+	static int s_iLastIceNum;
 
 	static Com_Audio* SEs[10];
+
+	static int s_iMaxCombo;
+	static int s_iBreakNum;
 public:
 	OBJ_Score();
 	OBJ_Score(const char* _name);
@@ -37,11 +42,6 @@ public:
 	static void AddNoComboScore(int _val);
 	// アザラシ用スコアの加算
 	static void CalcScore(int _val);
-	// スコアを取得
-	static int GetScore()
-	{
-		return s_iScore;
-	}
 	// コンボのリセット関数
 	static void ResetCombo();
 	// 現在のコンボ数の取得
@@ -65,5 +65,31 @@ public:
 	static void ResetScore()
 	{
 		s_iScore = 0;
+	}
+
+	static void SetLastIceNum(int _val)
+	{
+		s_iLastIceNum = _val;
+	}
+
+	// 残った氷の数を取得
+	static int GetIceNum()
+	{
+		return s_iLastIceNum;
+	}
+	// 撃破数の取得
+	static int GetBreakNum()
+	{
+		return s_iBreakNum;
+	}
+	// 最大コンボ数の取得
+	static int GetMaxCombo()
+	{
+		return s_iMaxCombo;
+	}
+	// スコアを取得
+	static int GetScore()
+	{
+		return s_iScore;
 	}
 };

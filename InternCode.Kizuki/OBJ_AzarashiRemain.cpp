@@ -4,6 +4,7 @@
 #include "../Component/Com_Shader.h"
 #include "../InternCodeAdachi/OBJ_Ice.h"
 #include "../InternCodeAdachi/CSVLoad.h"
+#include "../InternCodeAdachi/OBJ_Score.h"
 
 #define LoadRow (1)
 
@@ -93,7 +94,10 @@ void OBJ_AzarashiRemain::Update()
 			//足場のスコア計算
 			if (!bIceCalc)
 			{
+				int remain = iceRemain.size();
+				OBJ_Score::SetLastIceNum(remain);
 				iIceScore = iceRemain.size() * 500;
+				OBJ_Score::AddNoComboScore(iIceScore);
 				bIceCalc = true;
 			}
 		}

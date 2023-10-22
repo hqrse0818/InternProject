@@ -9,7 +9,7 @@ class Scene_Title :
 private:
     enum class TitleState
     {
-        Start, Tutorial,ToGame,
+        WaitFade, WaitInput, Tutorial,ToGame,
     };
 
 private:
@@ -18,7 +18,7 @@ private:
     float fFlashCnt = 0.0f;
     
 
-    TitleState mState = TitleState::Start;
+    TitleState mState = TitleState::WaitFade;
 
 
     GameObject* p_mStartLogo{};
