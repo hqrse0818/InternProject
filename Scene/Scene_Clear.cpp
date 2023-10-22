@@ -9,8 +9,10 @@
 #include "../System/manager.h"
 #include "../InternCodeAdachi/GameManager.h"
 #include "../InternCodeAdachi/OBJ_Score.h"
+#include "../InternCodeAdachi/CSVLoad.h"
 
 using namespace DirectX::SimpleMath;
+using namespace std;
 
 void Scene_Clear::Init()
 {
@@ -140,6 +142,28 @@ void Scene_Clear::Init()
 	p_mAllow->SetPosition(970.0f, 550.0f, 0.0f);
 	AddGameObject(p_mAllow);
 
+	
+
+	// トータルスコア
+	string sState = ReadDataFromCSV("asset/data/csv/TotalScoreUI.csv", 1);
+	vector<string> sv = SeparateString(sState,',');
+
+	Vector2 InitPos;
+	InitPos.x = stof(sv[0]);
+	InitPos.y = stof(sv[1]);
+	Vector2 Scale;
+	Scale.x = stof(sv[2]);
+	Scale.y = stof(sv[3]);
+	float duration = stof(sv[4]);
+	for (int i = 0; i < 6; i++)
+	{
+		p_mScores[i] = new OBJ_Number();
+		p_mScores[i]->GetSpriteCom()->SetTexture("asset/texture/result_score.png");
+		p_mScores[i]->SetScale(Scale.x, Scale.y, 1.0f);
+		p_mScores[i]->SetPosition(InitPos.x - (Scale.x * i) - (duration * i), InitPos.y, 1.0f);
+		AddGameObject(p_mScores[i]);
+	}
+
 	// 遷移用オブジェクト
 	p_mTransition = new OBJ_Transition();
 	p_mTransition->SetState(OBJ_Transition::FadeState::InEnd);
@@ -151,6 +175,15 @@ void Scene_Clear::Init()
 
 	p_mSEDecide = new Com_Audio();
 	p_mSEDecide->Load("asset\\audio\\SE\\SE その他\\決定.wav");
+
+	p_mSEClear = new Com_Audio();
+	p_mSEClear->Load("asset\\audio\\SE\\SE その他\\ゲームクリア.wav");
+
+	p_mSEDrum = new Com_Audio();
+	p_mSEDrum->Load("asset\\audio\\SE\\SE その他\\リザルトドラムロール.wav");
+
+	p_mSEResult = new Com_Audio();
+	p_mSEResult->Load("asset\\audio\\SE\\SE その他\\リザルト発表.wav");
 }
 
 void Scene_Clear::Start()
@@ -160,9 +193,33 @@ void Scene_Clear::Start()
 	iMaxCombo = OBJ_Score::GetMaxCombo();
 	iBreakAzarashiNum = OBJ_Score::GetBreakNum();
 	iRemainIceNum = OBJ_Score::GetIceNum();
+
+	if (iTotalScore < 100000)
+	{
+		p_mScores[5]->SetActive(false);
+	}
+	if (iTotalScore < 10000)
+	{
+		p_mScores[4]->SetActive(false);
+	}
+	if (iTotalScore < 1000)
+	{
+		p_mScores[3]->SetActive(false);
+	}
+	if (iTotalScore < 100)
+	{
+		p_mScores[2]->SetActive(false);
+	}
+	if (iTotalScore < 10)
+	{
+		p_mScores[1]->SetActive(false);
+	}
+
 	// テスト用入力待ち
-	mState = ClearState::WaitInput;
+	mState = ClearState::WaitTotal;
 	p_mOneScale->SetUpdate(true);
+
+	p_mSEDrum->Play();
 }
 
 void Scene_Clear::Update()
@@ -170,8 +227,46 @@ void Scene_Clear::Update()
 	switch (mState)
 	{
 	case Scene_Clear::ClearState::WaitState:
+		
 		break;
 	case Scene_Clear::ClearState::WaitTotal:
+	{
+		fDrumCnt += Time->GetDeltaTime();
+		if (fDrumCnt > fDrumDuration)
+		{
+			fDrumCnt = 0.0f;
+			p_mSEDrum->Stop();
+			p_mSEDrum->Play();
+		}
+
+		currentsco += 5;
+		if (currentsco >= iTotalScore)
+		{
+			currentsco = iTotalScore;
+		}
+		if (Controller_Input::GetButton(0, GAMEPAD_A) == KEYSTATE::KEY_DOWN || Input::GetKeyState(KEYCODE_RETURN) == KEYSTATE::KEY_DOWN)
+		{
+			currentsco = iTotalScore;
+		}
+		int val = 1000000;
+		int waru = 100000;
+		for (int i = 5; i >= 0; i--)
+		{
+			int num = currentsco % val;
+			p_mScores[i]->SetNum(num / waru);
+			val *= 0.1f;
+			waru *= 0.1f;
+		}
+
+
+
+		if (currentsco == iTotalScore)
+		{
+			p_mSEDrum->Stop();
+			p_mSEResult->Play();
+			mState = ClearState::WaitInput;
+		}
+	}
 		break;
 	case Scene_Clear::ClearState::WaitInput:
 		if (Controller_Input::GetButton(0, GAMEPAD_A) == KEYSTATE::KEY_DOWN || Input::GetKeyState(KEYCODE_RETURN) == KEYSTATE::KEY_DOWN)
@@ -237,6 +332,18 @@ void Scene_Clear::Update()
 
 void Scene_Clear::Uninit()
 {
+	p_mSEClear->Stop();
+	p_mSEClear->Uninit();
+	delete p_mSEClear;
+
+	p_mSEDrum->Stop();
+	p_mSEDrum->Uninit();
+	delete p_mSEDrum;
+
+	p_mSEResult->Stop();
+	p_mSEResult->Uninit();
+	delete p_mSEResult;
+
 	p_mSECursor->Stop();
 	p_mSECursor->Uninit();
 	delete p_mSECursor;

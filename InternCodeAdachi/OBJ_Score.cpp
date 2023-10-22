@@ -6,7 +6,7 @@
 
 using namespace std;
 
-int OBJ_Score::s_iScore = 0;
+int OBJ_Score::s_iScore = 100000;
 int OBJ_Score::s_iCurrentComCount = 0;
 int OBJ_Score::s_iBreakNum = 0;
 int OBJ_Score::s_iMaxCombo = 0;
@@ -66,7 +66,7 @@ OBJ_Score::OBJ_Score(const char* _name, const char* _FileName)
 	// èâä˙âª
 	s_iBreakNum = 0;
 	s_iMaxCombo = 0;
-	s_iScore = 0;
+	s_iScore = 100000;
 	s_fCurrentAddVal = 0.0f;
 	s_fComCnt = 0.0f;
 	s_iLastIceNum = 0;
