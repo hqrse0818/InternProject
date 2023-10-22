@@ -64,9 +64,38 @@ void Scene_Clear::Init()
 	sprite->SetSeparateNum(1, 2);
 	sprite->SetCurrent(2);
 	obj->AddComponent(sprite);
-	obj->SetScale(1920.0f * 0.5f * 0.6, 1080.0f / 4 * 0.6, 0.0f);
-	obj->SetPosition(SCREEN_WIDTH / 2 + 200.0f, 250.0f, 0.0f);
+	obj->SetScale(1920.0f * 0.5f * 0.7, 1080.0f / 4 * 0.7, 0.0f);
+	obj->SetPosition(SCREEN_WIDTH / 2 + 310.0f, 250.0f, 0.0f);
 	AddGameObject(obj);
+
+	// 氷
+	GameObject* ice = new GameObject("ice");
+	shader = new Com_Shader();
+	shader->p_mVS->Load(VS_SPRITE);
+	shader->p_mPS->Load(PS_SPRITE);
+	ice->AddComponent(shader);
+	sprite = new Com_Sprite();
+	sprite->SetTexture("asset/texture/ressult_sozai.png");
+	sprite->SetSeparateNum(2, 2);
+	sprite->SetCurrent(1);
+	ice->AddComponent(sprite);
+	ice->SetScale(1920.0f * 0.175f, 1080.0f * 0.175f, 1.0f);
+	ice->SetPosition(1100.0f, 540.0f, 0.0f);
+	AddGameObject(ice);
+
+	ice = new GameObject("ice");
+	shader = new Com_Shader();
+	shader->p_mVS->Load(VS_SPRITE);
+	shader->p_mPS->Load(PS_SPRITE);
+	ice->AddComponent(shader);
+	sprite = new Com_Sprite();
+	sprite->SetTexture("asset/texture/ressult_sozai.png");
+	sprite->SetSeparateNum(2, 2);
+	sprite->SetCurrent(3);
+	ice->AddComponent(sprite);
+	ice->SetScale(1920.0f * 0.175f, 1080.0f * 0.175f, 1.0f);
+	ice->SetPosition(1100.0f, 650.0f, 0.0f);
+	AddGameObject(ice);
 
 	// バナー
 	p_mBanner = new GameObject("banner");
@@ -80,8 +109,8 @@ void Scene_Clear::Init()
 	sprite->SetCurrent(1);
 	sprite->SetUpdate(true);
 	p_mBanner->AddComponent(sprite);
-	p_mBanner->SetScale(400.0f, 400.0f, 0.0f);
-	p_mBanner->SetPosition(1100.0, 540.0f, 0.0f);
+	p_mBanner->SetScale(420.0f, 420.0f, 0.0f);
+	p_mBanner->SetPosition(1100.0, 545.0f, 0.0f);
 	AddGameObject(p_mBanner);
 
 	// タイトルに戻る
@@ -91,9 +120,9 @@ void Scene_Clear::Init()
 	shader->p_mPS->Load(PS_SPRITE);
 	p_mReturn->AddComponent(shader);
 	sprite = new Com_Sprite();
-	sprite->SetTexture("asset/texture/sozai2.png");
-	sprite->SetSeparateNum(1, 1);
-	sprite->SetCurrent(1);
+	sprite->SetTexture("asset/texture/ressult_sozai.png");
+	sprite->SetSeparateNum(2, 2);
+	sprite->SetCurrent(2);
 	sprite->SetUpdate(true);
 	p_mReturn->AddComponent(sprite);
 	p_mRetScale = new Com_Scaling();
@@ -101,8 +130,8 @@ void Scene_Clear::Init()
 	p_mRetScale->SetTime(0.6f);
 	p_mRetScale->SetUpdate(false);
 	p_mReturn->AddComponent(p_mRetScale);
-	p_mReturn->SetScale(300.0f, 300.0f, 1.0f);
-	p_mReturn->SetPosition(1100.0f, 550.0f, 1.0f);
+	p_mReturn->SetScale(1920.0f * 0.15f, 1080.0f * 0.15f, 1.0f);
+	p_mReturn->SetPosition(1100.0f, 530.0f, 1.0f);
 	AddGameObject(p_mReturn);
 
 	// もう一度遊ぶ
@@ -112,9 +141,9 @@ void Scene_Clear::Init()
 	shader->p_mPS->Load(PS_SPRITE);
 	p_mOnemore->AddComponent(shader);
 	sprite = new Com_Sprite();
-	sprite->SetTexture("asset/texture/sozai1.png");
-	sprite->SetSeparateNum(1, 1);
-	sprite->SetCurrent(1);
+	sprite->SetTexture("asset/texture/ressult_sozai.png");
+	sprite->SetSeparateNum(2, 2);
+	sprite->SetCurrent(4);
 	sprite->SetUpdate(true);
 	p_mOnemore->AddComponent(sprite);
 	p_mOneScale = new Com_Scaling();
@@ -122,8 +151,8 @@ void Scene_Clear::Init()
 	p_mOneScale->SetTime(0.6f);
 	p_mOneScale->SetUpdate(false);
 	p_mOnemore->AddComponent(p_mOneScale);
-	p_mOnemore->SetScale(300.0f, 300.0f, 1.0f);
-	p_mOnemore->SetPosition(1100.0f, 625.0f, 1.0f);
+	p_mOnemore->SetScale(1920.0f * 0.15f, 1080.0f * 0.15f, 1.0f);
+	p_mOnemore->SetPosition(1100.0f, 635.0f, 1.0f);
 	AddGameObject(p_mOnemore);
 
 	// 矢印
@@ -139,7 +168,7 @@ void Scene_Clear::Init()
 	sprite->SetUpdate(true);
 	p_mAllow->AddComponent(sprite);
 	p_mAllow->SetScale(80.0f, 80.0f, 1.0f);
-	p_mAllow->SetPosition(970.0f, 550.0f, 0.0f);
+	p_mAllow->SetPosition(950.0f, 545.0f, 0.0f);
 	AddGameObject(p_mAllow);
 
 	
@@ -231,7 +260,6 @@ void Scene_Clear::Start()
 
 	// テスト用入力待ち
 	mState = ClearState::WaitTotal;
-	p_mOneScale->SetUpdate(true);
 
 	p_mSEDrum->Play();
 }
@@ -251,12 +279,14 @@ void Scene_Clear::Update()
 			fDrumCnt = 0.0f;
 			p_mSEDrum->Stop();
 			p_mSEDrum->Play();
+			bSEEnd = true;
 		}
 
-		currentsco += 5;
+		currentsco += 789;
 		if (currentsco >= iTotalScore)
 		{
 			currentsco = iTotalScore;
+			bSEEnd = true;
 		}
 		if (Controller_Input::GetButton(0, GAMEPAD_A) == KEYSTATE::KEY_DOWN || Input::GetKeyState(KEYCODE_RETURN) == KEYSTATE::KEY_DOWN)
 		{
@@ -274,7 +304,7 @@ void Scene_Clear::Update()
 
 
 
-		if (currentsco == iTotalScore)
+		if (currentsco == iTotalScore && bSEEnd == true)
 		{
 			p_mSEDrum->Stop();
 			p_mSEResult->Play();
@@ -305,8 +335,8 @@ void Scene_Clear::Update()
 				p_mSECursor->Play();
 			}
 			bisUP = true;
-			p_mAllow->SetPosition(970.0f, 550.0f, 0.0f);
-			p_mBanner->SetPosition(1100.0, 550.0f, 0.0f);
+			p_mAllow->SetPosition(950.0f, 545.0f, 0.0f);
+			p_mBanner->SetPosition(1100.0, 545.0f, 0.0f);
 			p_mRetScale->SetUpdate(true);
 			p_mOneScale->SetUpdate(false);
 		}
@@ -318,8 +348,8 @@ void Scene_Clear::Update()
 				p_mSECursor->Play();
 			}
 			bisUP = false;
-			p_mAllow->SetPosition(970.0f, 625.0f, 0.0f);
-			p_mBanner->SetPosition(1100.0, 625.0f, 0.0f);
+			p_mAllow->SetPosition(950.0f, 620.0f, 0.0f);
+			p_mBanner->SetPosition(1100.0, 620.0f, 0.0f);
 			p_mRetScale->SetUpdate(false);
 			p_mOneScale->SetUpdate(true);
 		}

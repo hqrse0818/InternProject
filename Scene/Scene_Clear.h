@@ -46,7 +46,7 @@ private:
 
     Com_Audio* p_mSEClear{};
     Com_Audio* p_mSEDrum{};
-    float fDrumDuration = 3.0f;
+    float fDrumDuration = 3.5f;
     float fDrumCnt = 0.0f;
     Com_Audio* p_mSEResult{};
     Com_Audio* p_mSECursor{};
@@ -61,6 +61,7 @@ private:
 
     bool bisUP = false;
 
+    bool bSEEnd = false;
     ClearState mState = ClearState::WaitState;
 public:
 

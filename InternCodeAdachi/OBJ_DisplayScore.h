@@ -15,5 +15,13 @@ public:
     void Start();
     void Update();
     void Uninit();
+
+    void SetDisplay(bool _val)
+    {
+        for (int i = 0; i < 6; i++)
+        {
+            Nums[i]->SetActive(_val);
+        }
+    }
 };
 

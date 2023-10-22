@@ -189,6 +189,16 @@ void Renderer::Init(Application* ap)
 
 	p_mDeviceContext->PSSetSamplers( 0, 1, &samplerState );
 
+	samplerDesc.Filter = D3D11_FILTER_ANISOTROPIC;
+	samplerDesc.AddressU = D3D11_TEXTURE_ADDRESS_MIRROR;
+	samplerDesc.AddressV = D3D11_TEXTURE_ADDRESS_MIRROR;
+	samplerDesc.AddressW =D3D11_TEXTURE_ADDRESS_MIRROR;
+	samplerDesc.MaxAnisotropy = 4;
+	samplerDesc.MaxLOD = D3D11_FLOAT32_MAX;
+
+	p_mDevice->CreateSamplerState(&samplerDesc, &samplerState);
+
+	p_mDeviceContext->PSSetSamplers(1, 1, &samplerState);
 
 
 	// 定数バッファ生成

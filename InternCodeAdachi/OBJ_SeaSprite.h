@@ -14,6 +14,8 @@ public:
     OBJ_SeaSprite();
     OBJ_SeaSprite(const char* _name);
 
+    void Update();
+
     Com_3DSprite* GetSpriteCom()
     {
         return p_mSprite;

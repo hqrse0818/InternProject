@@ -202,7 +202,11 @@ void OBJ_Penguin::Start()
 
 void OBJ_Penguin::Update()
 {
-	GameObject::Update();
+	if (GameManager::GetGameState() != TransToOver && GameManager::GetGameState() != GameState::OverFade && GameManager::GetGameState() != GameState::Over)
+	{
+		GameObject::Update();
+	}
+	
 
 	if (GameManager::GetGameState() == GameState::Game)
 	{
@@ -456,20 +460,31 @@ void OBJ_Penguin::Update()
 			Translate(0.0f, -5.0 * Time->GetDeltaTime(), 0.0f);
 			break;
 		case PenguinState::Death:
+			p_mColliderCom->bEnable = false;
+			p_mGravityCom->bEnable = false;
+			p_mJumpCom->SetDropFlg(false);
+			p_mJumpCom->SetJumpFlg(false);
+			p_mJumpCom->bEnable = false;
 			// ゲームマネージャーを変更
+			GameManager::SetGameState(GameState::TransToOver);
 			break;
 		}
-		// アングル調整
-		// 横の角度
-		p_mCameraCom->SetAngle(p_mCameraCom->GetAngle() + (Controller_Input::GetRightStick(0).x * fCamSpeed));
-		// 高さ
-		p_mCameraCom->SetHeight(p_mCameraCom->GetHeight() - Controller_Input::GetRightStick(0).y);
-
-		if (Input::GetIsCenter())
+		
+		if (GameManager::GetGameState() == GameState::Game)
 		{
-			p_mCameraCom->SetAngle(p_mCameraCom->GetAngle() + (Input::GetCursorMove().x * fMouseCameraSpeed));
-			p_mCameraCom->SetHeight(p_mCameraCom->GetHeight() + Input::GetCursorMove().y);
+			// アングル調整
+			// 横の角度
+			p_mCameraCom->SetAngle(p_mCameraCom->GetAngle() + (Controller_Input::GetRightStick(0).x * fCamSpeed));
+			// 高さ
+			p_mCameraCom->SetHeight(p_mCameraCom->GetHeight() - Controller_Input::GetRightStick(0).y);
+
+			if (Input::GetIsCenter())
+			{
+				p_mCameraCom->SetAngle(p_mCameraCom->GetAngle() + (Input::GetCursorMove().x * fMouseCameraSpeed));
+				p_mCameraCom->SetHeight(p_mCameraCom->GetHeight() + Input::GetCursorMove().y);
+			}
 		}
+		
 
 		// Velocityリセット
 		mMoveVelocity.x = 0;

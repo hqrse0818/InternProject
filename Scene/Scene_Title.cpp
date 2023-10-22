@@ -51,22 +51,6 @@ void Scene_Title::Init()
 	TitleLogo->bRotate = true;
 	AddGameObject(TitleLogo);
 
-	// バナー
-	p_mBanner = new GameObject("Banner");
-	Shader_buf = new Com_Shader();
-	Shader_buf->p_mVS->Load(VS_SPRITE);
-	Shader_buf->p_mPS->Load(PS_SPRITE);
-	p_mBanner->AddComponent(Shader_buf);
-	Sprite_buf = new Com_Sprite();
-	Sprite_buf->SetTexture("asset/texture/banner.png");
-	Sprite_buf->SetSeparateNum(1, 1);
-	Sprite_buf->SetCurrent(1);
-	Sprite_buf->SetUpdate(true);
-	p_mBanner->AddComponent(Sprite_buf);
-	p_mBanner->SetScale(600.0f, 600.0f, 0.0f);
-	p_mBanner->SetPosition(SCREEN_WIDTH / 2, 485.0f, 0.0f);
-	AddGameObject(p_mBanner);
-
 	// 氷ロゴ
 	GameObject* pIceLogo = new GameObject("Icelogo");
 	Shader_buf = new Com_Shader();
@@ -95,6 +79,22 @@ void Scene_Title::Init()
 	pIceLogo->SetScale(1920.0f * 0.275f, 1080.0f * 0.275f, 1.0f);
 	pIceLogo->SetPosition(SCREEN_WIDTH / 2, 650.0f, 0.0f);
 	AddGameObject(pIceLogo);
+
+	// バナー
+	p_mBanner = new GameObject("Banner");
+	Shader_buf = new Com_Shader();
+	Shader_buf->p_mVS->Load(VS_SPRITE);
+	Shader_buf->p_mPS->Load(PS_SPRITE);
+	p_mBanner->AddComponent(Shader_buf);
+	Sprite_buf = new Com_Sprite();
+	Sprite_buf->SetTexture("asset/texture/banner.png");
+	Sprite_buf->SetSeparateNum(1, 1);
+	Sprite_buf->SetCurrent(1);
+	Sprite_buf->SetUpdate(true);
+	p_mBanner->AddComponent(Sprite_buf);
+	p_mBanner->SetScale(600.0f, 600.0f, 0.0f);
+	p_mBanner->SetPosition(SCREEN_WIDTH / 2, 485.0f, 0.0f);
+	AddGameObject(p_mBanner);
 
 	// スタートロゴ
 	p_mStartLogo = new GameObject("start");
@@ -296,9 +296,9 @@ void Scene_Title::Update()
 	case Scene_Title::TitleState::ToGame:
 		if (p_mTransition->GetState() == OBJ_Transition::FadeState::OutEnd)
 		{
-			Manager::SetNextScene<Scene_Game>();
+			//Manager::SetNextScene<Scene_Game>();
 			//Manager::SetNextScene<Scene_Test>();
-			//Manager::SetNextScene<Scene_Clear>();
+			Manager::SetNextScene<Scene_Clear>();
 		}
 		break;
 	default:

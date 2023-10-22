@@ -31,4 +31,11 @@ public:
 	{
 		return iIceScore;
 	}
+
+	void SetDisplay(bool _val)
+	{
+		Nums[0]->SetActive(_val);
+		Nums[1]->SetActive(_val);
+		Nums[2]->SetActive(_val);
+	}
 };

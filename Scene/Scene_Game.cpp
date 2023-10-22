@@ -55,7 +55,7 @@ void Scene_Game::Init()
 		AddGameObject(AManager, 0);
 
 		//アザラシの残機
-		GameObject* ARemain = new GameObject("ARemainOBJ");
+		ARemain = new GameObject("ARemainOBJ");
 
 		Com_CustomSprite* Sprite_buf = new Com_CustomSprite;
 		Sprite_buf->mType = Com_CustomSprite::CustomType::LeftTop; //CustomSpriteでポジション設定
@@ -73,7 +73,7 @@ void Scene_Game::Init()
 		AddGameObject(ARemain);
 
 		//アザラシの残機（数字）
-		OBJ_AzarashiRemain* ARemainNum = new OBJ_AzarashiRemain("Zanki", "asset/data/csv/AzarashiZankiUI.csv");
+		ARemainNum = new OBJ_AzarashiRemain("Zanki", "asset/data/csv/AzarashiZankiUI.csv");
 		AddGameObject(ARemainNum);
 	}
 
@@ -85,8 +85,8 @@ void Scene_Game::Init()
 		// 海用スプライト
 		OBJ_SeaSprite* seasprite = new OBJ_SeaSprite("umi");
 		seasprite->SetScale(1.0f, 1.0f, 1.0f);
-		seasprite->GetSpriteCom()->SetUV(2.0f, 2.0f);
-		seasprite->GetSpriteCom()->SetSize(500.0f, 500.0f);
+		seasprite->GetSpriteCom()->SetUV(60.0f, 60.0f);
+		seasprite->GetSpriteCom()->SetSize(15000.0f, 15000.0f);
 		AddGameObject(seasprite, 3);
 	}
 	// 背景
@@ -194,7 +194,7 @@ void Scene_Game::Init()
 
 
 	// スコア表示オブジェクト
-	OBJ_DisplayScore* ScoreObj = new OBJ_DisplayScore("dis", "asset/data/csv/ScoreUI.csv");
+	ScoreObj = new OBJ_DisplayScore("dis", "asset/data/csv/ScoreUI.csv");
 	AddGameObject(ScoreObj);
 
 	// スコアマネージャー
@@ -202,7 +202,7 @@ void Scene_Game::Init()
 	AddGameObject(ScoreManager);
 
 	// コンボ表示オブジェクト
-	OBJ_ComboDisplay* ComboObj = new OBJ_ComboDisplay("combo", "asset/data/csv/ComboUI.csv");
+	ComboObj = new OBJ_ComboDisplay("combo", "asset/data/csv/ComboUI.csv");
 	AddGameObject(ComboObj);
 	
 
@@ -223,8 +223,7 @@ void Scene_Game::Init()
 	p_mObjNum->SetScale(0.0f, 0.0f, 1.0f);
 	p_mObjNum->SetPosition(SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2, 0.0f);
 	AddGameObject(p_mObjNum);
-	p_mSECount = new Com_Audio();
-	p_mSECount->Load("asset\\audio\\SE\\SE その他\\カウントダウン.wav");
+
 	// 開始用オブジェクト
 	p_mObjGo = new GameObject("Go");
 	p_mSpriteGo = new Com_CustomSprite();
@@ -237,17 +236,148 @@ void Scene_Game::Init()
 	p_mObjGo->SetScale(0.0f, 0.0f, 1.0f);
 	p_mObjGo->SetPosition(SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2, 0.0f);
 	AddGameObject(p_mObjGo);
-	p_mSEGo = new Com_Audio();
-	p_mSEGo->Load("asset\\audio\\SE\\SE その他\\ゲーム開始.wav");
+
+	// ゲームオーバー遷移用
+	p_mHalfFade = new OBJ_HalfFade("half");
+	p_mHalfFade->SetState(OBJ_Transition::FadeState::InEnd);
+	p_mHalfFade->SetAlpha(0.75f);
+	AddGameObject(p_mHalfFade);
+
+	// 氷
+	ice1 = new GameObject("ice");
+	Com_Shader* shader = new Com_Shader();
+	shader->p_mVS->Load(VS_SPRITE);
+	shader->p_mPS->Load(PS_SPRITE);
+	ice1->AddComponent(shader);
+	Com_Sprite* sprite = new Com_Sprite();
+	sprite->SetTexture("asset/texture/ressult_sozai.png");
+	sprite->SetSeparateNum(2, 2);
+	sprite->SetCurrent(1);
+	ice1->AddComponent(sprite);
+	ice1->SetScale(1920.0f * 0.175f, 1080.0f * 0.175f, 1.0f);
+	ice1->SetPosition(SCREEN_WIDTH/2, 540.0f, 0.0f);
+	AddGameObject(ice1);
+
+	ice2 = new GameObject("ice");
+	shader = new Com_Shader();
+	shader->p_mVS->Load(VS_SPRITE);
+	shader->p_mPS->Load(PS_SPRITE);
+	ice2->AddComponent(shader);
+	sprite = new Com_Sprite();
+	sprite->SetTexture("asset/texture/ressult_sozai.png");
+	sprite->SetSeparateNum(2, 2);
+	sprite->SetCurrent(3);
+	ice2->AddComponent(sprite);
+	ice2->SetScale(1920.0f * 0.175f, 1080.0f * 0.175f, 1.0f);
+	ice2->SetPosition(SCREEN_WIDTH/2, 650.0f, 0.0f);
+	AddGameObject(ice2);
+
+	// バナー
+	p_mBanner = new GameObject("banner");
+	shader = new Com_Shader();
+	shader->p_mVS->Load(VS_SPRITE);
+	shader->p_mPS->Load(PS_SPRITE);
+	p_mBanner->AddComponent(shader);
+	sprite = new Com_Sprite();
+	sprite->SetTexture("asset/texture/banner.png");
+	sprite->SetSeparateNum(1, 1);
+	sprite->SetCurrent(1);
+	sprite->SetUpdate(true);
+	p_mBanner->AddComponent(sprite);
+	p_mBanner->SetScale(420.0f, 420.0f, 0.0f);
+	p_mBanner->SetPosition(SCREEN_WIDTH/2, 545.0f, 0.0f);
+	AddGameObject(p_mBanner);
+
+	// タイトルに戻る
+	p_mReturn = new GameObject("rettitle");
+	shader = new Com_Shader();
+	shader->p_mVS->Load(VS_SPRITE);
+	shader->p_mPS->Load(PS_SPRITE);
+	p_mReturn->AddComponent(shader);
+	sprite = new Com_Sprite();
+	sprite->SetTexture("asset/texture/ressult_sozai.png");
+	sprite->SetSeparateNum(2, 2);
+	sprite->SetCurrent(2);
+	sprite->SetUpdate(true);
+	p_mReturn->AddComponent(sprite);
+	p_mRetScale = new Com_Scaling();
+	p_mRetScale->SetSpeed(30.0f, -30.0f);
+	p_mRetScale->SetTime(0.6f);
+	p_mRetScale->SetUpdate(false);
+	p_mReturn->AddComponent(p_mRetScale);
+	p_mReturn->SetScale(1920.0f * 0.15f, 1080.0f * 0.15f, 1.0f);
+	p_mReturn->SetPosition(SCREEN_WIDTH/2, 530.0f, 1.0f);
+	AddGameObject(p_mReturn);
+
+	// もう一度遊ぶ
+	p_mOnemore = new GameObject("more");
+	shader = new Com_Shader();
+	shader->p_mVS->Load(VS_SPRITE);
+	shader->p_mPS->Load(PS_SPRITE);
+	p_mOnemore->AddComponent(shader);
+	sprite = new Com_Sprite();
+	sprite->SetTexture("asset/texture/ressult_sozai.png");
+	sprite->SetSeparateNum(2, 2);
+	sprite->SetCurrent(4);
+	sprite->SetUpdate(true);
+	p_mOnemore->AddComponent(sprite);
+	p_mOneScale = new Com_Scaling();
+	p_mOneScale->SetSpeed(30.0f, -30.0f);
+	p_mOneScale->SetTime(0.6f);
+	p_mOneScale->SetUpdate(false);
+	p_mOnemore->AddComponent(p_mOneScale);
+	p_mOnemore->SetScale(1920.0f * 0.15f, 1080.0f * 0.15f, 1.0f);
+	p_mOnemore->SetPosition(SCREEN_WIDTH/2, 635.0f, 1.0f);
+	AddGameObject(p_mOnemore);
+
+	// 矢印
+	p_mAllow = new GameObject("allow");
+	shader = new Com_Shader();
+	shader->p_mVS->Load(VS_SPRITE);
+	shader->p_mPS->Load(PS_SPRITE);
+	p_mAllow->AddComponent(shader);
+	sprite = new Com_Sprite();
+	sprite->SetTexture("asset/texture/sozai3.png");
+	sprite->SetSeparateNum(1, 1);
+	sprite->SetCurrent(1);
+	sprite->SetUpdate(true);
+	p_mAllow->AddComponent(sprite);
+	p_mAllow->SetScale(80.0f, 80.0f, 1.0f);
+	p_mAllow->SetPosition(SCREEN_WIDTH / 2 - 150.0f, 545.0f, 0.0f);
+	AddGameObject(p_mAllow);
 
 	// 遷移用オブジェクト
 	p_mTransition = new OBJ_Transition("tra");
 	p_mTransition->SetState(OBJ_Transition::FadeState::OutEnd);
-	AddGameObject(p_mTransition);
+	AddGameObject(p_mTransition,7);
+
+	// サウンド
+	// 開始音
+	p_mSEGo = new Com_Audio();
+	p_mSEGo->Load("asset\\audio\\SE\\SE その他\\ゲーム開始.wav");
+	// カウントダウン音
+	p_mSECount = new Com_Audio();
+	p_mSECount->Load("asset\\audio\\SE\\SE その他\\カウントダウン.wav");
+	// ゲームオーバー音
+	p_mSEOver = new Com_Audio();
+	p_mSEOver->Load("asset\\audio\\SE\\SE その他\\ゲームオーバー.wav");
+	// カーソル
+	p_mSECursor = new Com_Audio();
+	p_mSECursor->Load("asset\\audio\\SE\\SE その他\\カーソル移動.wav");
+	// 決定
+	p_mSEDecide = new Com_Audio();
+	p_mSEDecide->Load("asset\\audio\\SE\\SE その他\\決定.wav");
 }
 
 void Scene_Game::Start()
 {
+	ice1->SetActive(false);
+	ice2->SetActive(false);
+	p_mOnemore->SetActive(false);
+	p_mReturn->SetActive(false);
+	p_mBanner->SetActive(false);
+	p_mAllow->SetActive(false);
+
 	p_mTransition->FadeIn(1.5);
 	// 開始前状態に設定
 	GameManager::SetGameState(GameState::GameFade);
@@ -345,18 +475,32 @@ void Scene_Game::Update()
 		break;
 
 	case GameState::TransToOver:
-		p_mTransition->FadeOut(1.5);
+		// UIを非表示
+		ARemain->SetActive(false);
+		ARemainNum->SetDisplay(false);
+		ComboObj->SetDisplay(false);
+		ScoreObj->SetDisplay(false);
+		p_mHalfFade->FadeOut(1.5);
+		p_mBGM->Stop();
+		p_mSEOver->Play();
 		GameManager::SetGameState(GameState::OverFade);
 		break;
 
 	case GameState::OverFade:
-		if (p_mTransition->GetState() == OBJ_Transition::FadeState::OutEnd)
+		if (p_mHalfFade->GetState() == OBJ_Transition::FadeState::OutEnd)
 		{
 			GameManager::SetGameState(GameState::Over);
-			Manager::SetNextScene<Scene_Clear>();
 		}
 		break;
-
+	case GameState::Over:
+		// ゲームオーバーオブジェクトを落としてくる
+		ice1->SetActive(true);
+		ice2->SetActive(true);
+		p_mOnemore->SetActive(true);
+		p_mReturn->SetActive(true);
+		p_mBanner->SetActive(true);
+		p_mAllow->SetActive(true);
+		break;
 	default:
 		break;
 	}
@@ -378,4 +522,16 @@ void Scene_Game::Uninit()
 	p_mSEGo->Stop();
 	p_mSEGo->Uninit();
 	delete p_mSEGo;
+
+	p_mSECursor->Stop();
+	p_mSECursor->Uninit();
+	delete p_mSECursor;
+
+	p_mSEDecide->Stop();
+	p_mSEDecide->Uninit();
+	delete p_mSEDecide;
+
+	p_mSEOver->Stop();
+	p_mSEOver->Uninit();
+	delete p_mSEOver;
 }

@@ -70,39 +70,42 @@ void OBJ_AzarashiRemain::Start()
 
 void OBJ_AzarashiRemain::Update()
 {
-	iRemainNum = OBJ_AzarashiManager::GetMaxSpawn() - OBJ_AzarashiManager::GetSpawnedNum(); //残りのアザラシを計算
-	
-	int remain = iRemainNum;
-	
-	Nums[0]->SetNum(iRemainNum / 100);	
-	iRemainNum = abs(iRemainNum % 100);
-	Nums[1]->SetNum(iRemainNum / 10);
-	iRemainNum = abs(iRemainNum % 10);
-	Nums[2]->SetNum(iRemainNum);
-
-	OBJ_Number::Update();
-
-
-	//アザラシの残機が0以下
-	if (remain <= 0)
+	if (bActive)
 	{
-		//アザラシの全体数を取得
-		std::vector<OBJ_Azarashi*> azarashiRemain = GetScene()->GetGameObjects<OBJ_Azarashi>();
+		iRemainNum = OBJ_AzarashiManager::GetMaxSpawn() - OBJ_AzarashiManager::GetSpawnedNum(); //残りのアザラシを計算
 
-		if (azarashiRemain.size() <= 0)
+		int remain = iRemainNum;
+
+		Nums[0]->SetNum(iRemainNum / 100);
+		iRemainNum = abs(iRemainNum % 100);
+		Nums[1]->SetNum(iRemainNum / 10);
+		iRemainNum = abs(iRemainNum % 10);
+		Nums[2]->SetNum(iRemainNum);
+
+		OBJ_Number::Update();
+
+
+		//アザラシの残機が0以下
+		if (remain <= 0)
 		{
-			std::vector<OBJ_Ice*> iceRemain = GetScene()->GetGameObjects<OBJ_Ice>();
+			//アザラシの全体数を取得
+			std::vector<OBJ_Azarashi*> azarashiRemain = GetScene()->GetGameObjects<OBJ_Azarashi>();
 
-			//足場のスコア計算
-			if (!bIceCalc)
+			if (azarashiRemain.size() <= 0)
 			{
-				int remain = iceRemain.size();
-				OBJ_Score::SetLastIceNum(remain);
-				iIceScore = iceRemain.size() * 500;
-				OBJ_Score::AddNoComboScore(iIceScore);
-				bIceCalc = true;
+				std::vector<OBJ_Ice*> iceRemain = GetScene()->GetGameObjects<OBJ_Ice>();
 
-				GameManager::SetGameState(GameState::TransToClear);
+				//足場のスコア計算
+				if (!bIceCalc)
+				{
+					int remain = iceRemain.size();
+					OBJ_Score::SetLastIceNum(remain);
+					iIceScore = iceRemain.size() * 500;
+					OBJ_Score::AddNoComboScore(iIceScore);
+					bIceCalc = true;
+
+					GameManager::SetGameState(GameState::TransToClear);
+				}
 			}
 		}
 	}

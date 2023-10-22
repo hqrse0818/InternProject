@@ -210,6 +210,7 @@
     <ClCompile Include="InternCodeAdachi\OBJ_Fall.cpp" />
     <ClCompile Include="InternCodeAdachi\OBJ_ComboDisplay.cpp" />
     <ClCompile Include="InternCodeAdachi\OBJ_SeaSprite.cpp" />
+    <ClCompile Include="GameObject\OBJ_HalfFade.cpp" />
     <ClCompile Include="Scene\Scene_Clear.cpp" />
     <ClCompile Include="Scene\Scene.cpp" />
     <ClCompile Include="Scene\Scene_Title.cpp" />
@@ -308,6 +309,7 @@
     <ClInclude Include="InternCodeAdachi\OBJ_Fall.h" />
     <ClInclude Include="InternCodeAdachi\OBJ_ComboDisplay.h" />
     <ClInclude Include="InternCodeAdachi\OBJ_SeaSprite.h" />
+    <ClInclude Include="GameObject\OBJ_HalfFade.h" />
     <ClInclude Include="Scene\Scene_Clear.h" />
     <ClInclude Include="Scene\GameInclude.h" />
     <ClInclude Include="Scene\Scene.h" />
@@ -337,6 +339,12 @@
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Pixel</ShaderType>
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Pixel</ShaderType>
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Pixel</ShaderType>
+    </FxCompile>
+    <FxCompile Include="shader\PS_MirrorUV.hlsl">
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Pixel</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Pixel</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Pixel</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Pixel</ShaderType>
     </FxCompile>
     <FxCompile Include="shader\unlitTexturePS.hlsl">
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Pixel</ShaderType>

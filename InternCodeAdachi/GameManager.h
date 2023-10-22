@@ -18,7 +18,7 @@ enum GameState
 	Clear,
 	// オーバー画面に遷移予約
 	TransToOver,
-	// オーバー画面へのフェード委
+	// オーバー画面へのフェード
 	OverFade,
 	// オーバー画面
 	Over,

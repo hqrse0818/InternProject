@@ -15,7 +15,7 @@ public:
         OutEnd
     };
 
-private:
+protected:
     DirectX::SimpleMath::Color mColor = DirectX::SimpleMath::Color(1.0f, 1.0f, 1.0f, 1.0f);
     FadeState mState = FadeState::InEnd;
     float fFadeTime = 0.0f;
