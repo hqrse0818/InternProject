@@ -351,71 +351,81 @@ void Scene_Test::Init()
 	rp->SetRotation(0.0f, Euler_To_Radian(-100.0f), 0.0f);
 	AddGameObject(rp);
 
-	// 空のスプライト
-	GameObject* SkyA = new GameObject("Sky");
-	Com_Shader* SkyShader = new Com_Shader();
-	SkyShader->p_mVS->Load(VS_SPRITE);
-	SkyShader->p_mPS->Load(PS_SPRITE);
-	SkyA->AddComponent(SkyShader);
+	//// 空のスプライト
+	//GameObject* SkyA = new GameObject("Sky");
+	//Com_Shader* SkyShader = new Com_Shader();
+	//SkyShader->p_mVS->Load(VS_SPRITE);
+	//SkyShader->p_mPS->Load(PS_SPRITE);
+	//SkyA->AddComponent(SkyShader);
 
-	Com_3DSprite* sprite3D = new Com_3DSprite();
-	sprite3D->SetTexture("asset\\texture\\sora.png");
-	sprite3D->SetSize(1920.0f * 0.5f, 1080.0f * 0.5f);
-	sprite3D->SetUV(1.0f, 1.0f);
-	SkyA->AddComponent(sprite3D);
+	//Com_3DSprite* sprite3D = new Com_3DSprite();
+	//sprite3D->SetTexture("asset\\texture\\sora.png");
+	//sprite3D->SetSize(1920.0f * 0.5f, 1080.0f * 0.5f);
+	//sprite3D->SetUV(1.0f, 1.0f);
+	//SkyA->AddComponent(sprite3D);
 
-	SkyA->SetPosition(400.0f, 200.0f, 0.0f);
-	SkyA->SetRotation(Euler_To_Radian(-90.0f), Euler_To_Radian(90.0f), 0.0f);
+	//SkyA->SetPosition(400.0f, 200.0f, 0.0f);
+	//SkyA->SetRotation(Euler_To_Radian(-90.0f), Euler_To_Radian(90.0f), 0.0f);
 
-	AddGameObject(SkyA);
+	//AddGameObject(SkyA);
 
-	SkyA = new GameObject("Sky");
-	SkyShader = new Com_Shader();
-	SkyShader->p_mVS->Load(VS_SPRITE);
-	SkyShader->p_mPS->Load(PS_SPRITE);
-	SkyA->AddComponent(SkyShader);
-	sprite3D = new Com_3DSprite();
-	sprite3D->SetTexture("asset\\texture\\sora.png");
-	sprite3D->SetSize(1920.0f * 0.5f, 1080.0f * 0.5f);
-	sprite3D->SetUV(1.0f, 1.0f);
-	SkyA->AddComponent(sprite3D);
+	//SkyA = new GameObject("Sky");
+	//SkyShader = new Com_Shader();
+	//SkyShader->p_mVS->Load(VS_SPRITE);
+	//SkyShader->p_mPS->Load(PS_SPRITE);
+	//SkyA->AddComponent(SkyShader);
+	//sprite3D = new Com_3DSprite();
+	//sprite3D->SetTexture("asset\\texture\\sora.png");
+	//sprite3D->SetSize(1920.0f * 0.5f, 1080.0f * 0.5f);
+	//sprite3D->SetUV(1.0f, 1.0f);
+	//SkyA->AddComponent(sprite3D);
 
-	SkyA->SetPosition(-400.0f, 200.0f, 0.0f);
-	SkyA->SetRotation(Euler_To_Radian(-90.0f), Euler_To_Radian(270.0f), 0.0f);
+	//SkyA->SetPosition(-400.0f, 200.0f, 0.0f);
+	//SkyA->SetRotation(Euler_To_Radian(-90.0f), Euler_To_Radian(270.0f), 0.0f);
 
-	AddGameObject(SkyA);
+	//AddGameObject(SkyA);
 
-	SkyA = new GameObject("Sky");
-	SkyShader = new Com_Shader();
-	SkyShader->p_mVS->Load(VS_SPRITE);
-	SkyShader->p_mPS->Load(PS_SPRITE);
-	SkyA->AddComponent(SkyShader);
-	sprite3D = new Com_3DSprite();
-	sprite3D->SetTexture("asset\\texture\\sora.png");
-	sprite3D->SetSize(1920.0f * 0.5f, 1080.0f * 0.5f);
-	sprite3D->SetUV(1.0f, 1.0f);
-	SkyA->AddComponent(sprite3D);
+	//SkyA = new GameObject("Sky");
+	//SkyShader = new Com_Shader();
+	//SkyShader->p_mVS->Load(VS_SPRITE);
+	//SkyShader->p_mPS->Load(PS_SPRITE);
+	//SkyA->AddComponent(SkyShader);
+	//sprite3D = new Com_3DSprite();
+	//sprite3D->SetTexture("asset\\texture\\sora.png");
+	//sprite3D->SetSize(1920.0f * 0.5f, 1080.0f * 0.5f);
+	//sprite3D->SetUV(1.0f, 1.0f);
+	//SkyA->AddComponent(sprite3D);
 
-	SkyA->SetPosition(0.0f, 200.0f, 400.0f);
-	SkyA->SetRotation(Euler_To_Radian(-90.0f), 0.0, 0.0f);
+	//SkyA->SetPosition(0.0f, 200.0f, 400.0f);
+	//SkyA->SetRotation(Euler_To_Radian(-90.0f), 0.0, 0.0f);
 
-	AddGameObject(SkyA);
+	//AddGameObject(SkyA);
 
-	SkyA = new GameObject("Sky");
-	SkyShader = new Com_Shader();
-	SkyShader->p_mVS->Load(VS_SPRITE);
-	SkyShader->p_mPS->Load(PS_SPRITE);
-	SkyA->AddComponent(SkyShader);
-	sprite3D = new Com_3DSprite();
-	sprite3D->SetTexture("asset\\texture\\sora.png");
-	sprite3D->SetSize(1920.0f * 0.5f, 1080.0f * 0.5f);
-	sprite3D->SetUV(1.0f, 1.0f);
-	SkyA->AddComponent(sprite3D);
+	//SkyA = new GameObject("Sky");
+	//SkyShader = new Com_Shader();
+	//SkyShader->p_mVS->Load(VS_SPRITE);
+	//SkyShader->p_mPS->Load(PS_SPRITE);
+	//SkyA->AddComponent(SkyShader);
+	//sprite3D = new Com_3DSprite();
+	//sprite3D->SetTexture("asset\\texture\\sora.png");
+	//sprite3D->SetSize(1920.0f * 0.5f, 1080.0f * 0.5f);
+	//sprite3D->SetUV(1.0f, 1.0f);
+	//SkyA->AddComponent(sprite3D);
 
-	SkyA->SetPosition(0.0f, 200.0f, -400.0f);
-	SkyA->SetRotation(Euler_To_Radian(-90.0f), Euler_To_Radian(180.0f), 0.0f);
+	//SkyA->SetPosition(0.0f, 200.0f, -400.0f);
+	//SkyA->SetRotation(Euler_To_Radian(-90.0f), Euler_To_Radian(180.0f), 0.0f);
 
-	AddGameObject(SkyA);
+	//AddGameObject(SkyA);
+
+	GameObject* Sky = new GameObject("Sky");
+	Com_Shader* s = new Com_Shader();
+	s->p_mVS->Load(VS_MODEL);
+	s->p_mPS->Load(PS_MODEL);
+	Sky->AddComponent(s);
+	Com_Model* m = new Com_Model();
+	m->SetModelData("Sky");
+	Sky->AddComponent(m);
+	AddGameObject(Sky);
 }
 
 void Scene_Test::Start()

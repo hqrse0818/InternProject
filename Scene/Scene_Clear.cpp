@@ -164,6 +164,20 @@ void Scene_Clear::Init()
 		AddGameObject(p_mScores[i]);
 	}
 
+	//// モデル2D表示テスト
+	//GameObject* pen = new GameObject("pn");
+	//shader = new Com_Shader();
+	//shader->p_mVS->Load("shader\\VS_OneSkinAnimation.cso");
+	//shader->p_mPS->Load(PS_MODEL);
+	//pen->AddComponent(shader);
+	//Com_Model* mod = new Com_Model();
+	//mod->SetModelData("Penguin");
+	//mod->b2D = true;
+	//pen->AddComponent(mod);
+	//pen->SetPosition(SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2, -3.0f);
+	//pen->SetScale(100.0f, 100.0f, 100.0f);
+	//AddGameObject(pen, 7);
+
 	// 遷移用オブジェクト
 	p_mTransition = new OBJ_Transition();
 	p_mTransition->SetState(OBJ_Transition::FadeState::InEnd);
@@ -321,8 +335,8 @@ void Scene_Clear::Update()
 	case Scene_Clear::ClearState::ToGame:
 		if (p_mTransition->GetState() == OBJ_Transition::FadeState::OutEnd)
 		{
-			GameManager::SetGameState(GameState::Title);
-			Manager::SetNextScene<Scene_Title>();
+			GameManager::SetGameState(GameState::GameFade);
+			Manager::SetNextScene<Scene_Game>();
 		}
 		break;
 	default:

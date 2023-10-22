@@ -50,6 +50,9 @@ private:
     void UpdateBoneMatrix(aiNode* _Node, aiMatrix4x4 _Matrix);
 
 public:
+    bool b2D = false;
+
+public:
     Com_Model();
 
     bool SetModelData(const char* _ModelName);

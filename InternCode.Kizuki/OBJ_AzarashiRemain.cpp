@@ -72,6 +72,7 @@ void OBJ_AzarashiRemain::Update()
 {
 	iRemainNum = OBJ_AzarashiManager::GetMaxSpawn() - OBJ_AzarashiManager::GetSpawnedNum(); //残りのアザラシを計算
 	
+	int remain = iRemainNum;
 	
 	Nums[0]->SetNum(iRemainNum / 100);	
 	iRemainNum = abs(iRemainNum % 100);
@@ -83,7 +84,7 @@ void OBJ_AzarashiRemain::Update()
 
 
 	//アザラシの残機が0以下
-	if (iRemainNum <= 0)
+	if (remain <= 0)
 	{
 		//アザラシの全体数を取得
 		std::vector<OBJ_Azarashi*> azarashiRemain = GetScene()->GetGameObjects<OBJ_Azarashi>();

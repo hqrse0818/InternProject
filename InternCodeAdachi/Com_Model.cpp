@@ -395,6 +395,14 @@ void Com_Model::Update()
 
 void Com_Model::Draw()
 {
+
+	// マトリクス設定
+	if (b2D)
+	{
+		Renderer::SetWorldViewProjection2D();
+	}
+	
+
 	//Time->CountStart();
 	Renderer::SetTopologyTriangleList();
 

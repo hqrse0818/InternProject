@@ -146,6 +146,8 @@ void Com_EffectBillboard::Draw()
 
 	ID3D11DeviceContext* pDC = Renderer::GetDeviceContext();
 
+	GameObject* obj = p_mObject;
+
 	// テクスチャ設定
 	ID3D11ShaderResourceView* pSRV = m_Texture->GetSRV();
 	Renderer::GetDeviceContext()->PSSetShaderResources(0, 1, &pSRV);

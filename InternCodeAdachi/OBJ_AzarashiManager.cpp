@@ -33,8 +33,10 @@ OBJ_AzarashiManager::OBJ_AzarashiManager(const char* _name, const char* _FileNam
 	string sMaxSpawnNum = ReadDataFromCSV(_FileName, SpawnNumRow);
 	string sAzarashiState = ReadDataFromCSV(_FileName, AzarashiStateRow);
 
+	vector<string> spn = SeparateString(sMaxSpawnNum, ',');
+
 	// 出現最大数を格納
-	iMaxSpawn = stoi(sMaxSpawnNum);
+	iMaxSpawn = stoi(spn[0]);
 
 	// 文字列を(,)で分割
 	istringstream num(sSpawnRateNum);
@@ -123,14 +125,19 @@ OBJ_AzarashiManager::OBJ_AzarashiManager(const char* _name, const char* _FileNam
 	gt.clear();
 	sr.clear();
 	as.clear();
+
+	iSpawnedNum = 0;
 }
 
 void OBJ_AzarashiManager::CreateLeader()
 {
+	Time->CountStart();
 	// ターゲット位置設定
 	std::vector<OBJ_Ice*> vec = GetScene()->GetGameObjects<OBJ_Ice>(2);
 	if (vec.size() == 0)
 		return;
+	float f = Time->CountStop();
+	DEBUG_LOG("リーダー : " << f);
 
 	// リーダーを作成
 	OBJ_Azarashi* LAzarashi = new OBJ_Azarashi("Leader", 2);
@@ -294,6 +301,7 @@ void OBJ_AzarashiManager::Update()
 
 void OBJ_AzarashiManager::CreateTeshita()
 {
+	Time->CountStart();
 	std::vector<OBJ_Ice*> vec = GetScene()->GetGameObjects<OBJ_Ice>(2);
 	if (vec.size() == 0)
 		return;
@@ -356,17 +364,6 @@ void OBJ_AzarashiManager::CreateTeshita()
 		azarashis->GetFootCom()->SetFootHeight(fFootHeight);
 		azarashis->SetAzrashiStatus(fAfterWait, fAttackDuration, fMoveSpeed, fVelocity, fBlake, fLength, fDamageDistance);
 
-		//エフェクトを作成
-		OBJ_AzarashiAttackEffect* p_mAttackEf = new OBJ_AzarashiAttackEffect("AttackEffect");
-		//p_mAttackEf->SetTarget(azarashis);
-		azarashis->SetAttackEfect(p_mAttackEf);
-		GetScene()->AddGameObject(p_mAttackEf);
-
-		OBJ_AzarashiDeadEffect* p_mDeadEf = new OBJ_AzarashiDeadEffect("DeadEffect");
-		//p_mDeadEf->SetTarget(azarashis);
-		azarashis->SetDeadEffect(p_mDeadEf);
-		GetScene()->AddGameObject(p_mDeadEf);
-
 		// リーダーと同じ位置を目標地点にする
 		Vector3 TeshitaTarget = mLeaderPos;
 
@@ -408,7 +405,6 @@ void OBJ_AzarashiManager::CreateTeshita()
 		// どこかの氷の上
 		azarashis->SetTargetPosition(mInit.x, mInit.y, mInit.z, target.x, fIceY, target.z, fCenterY);
 		//azarashis->SetTargetPosition(init.x, init.y, init.z, TeshitaTarget.x, fIceY, TeshitaTarget.z, fCenterY);
-		azarashis->SetLeader(p_mCurrentLeader);
 		azarashis->Start();
 		azarashis->Update();
 	}
@@ -423,6 +419,9 @@ void OBJ_AzarashiManager::CreateTeshita()
 	{
 		mState = SpawnState::Wait;
 	}
+
+	float f = Time->CountStop();
+	DEBUG_LOG("手下 : " << f);
 }
 
 void OBJ_AzarashiManager::Start()

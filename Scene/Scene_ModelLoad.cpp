@@ -104,6 +104,12 @@ void LoadBackGround()
 	Creator->Push("BackGround");
 }
 
+void LoadSky()
+{
+	ModelData* Creator = new ModelData();
+	Creator->LoadModel("asset\\model\\BackGround\\sora.fbx", true);
+	Creator->Push("Sky");
+}
 
 void Scene_ModelLoad::Init()
 {
@@ -116,6 +122,7 @@ void Scene_ModelLoad::Init()
 	LoadBackPenguinA();
 	LoadBackPenguinB();
 	LoadBackGround();
+	LoadSky();
 
 	// ƒ‰ƒCƒg‚Ì“Ç‚İ‚İ
 	string sLightState = ReadDataFromCSV("asset/data/csv/LightSetting.csv", 1);
