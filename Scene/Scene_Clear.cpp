@@ -65,7 +65,7 @@ void Scene_Clear::Init()
 	sprite->SetCurrent(2);
 	obj->AddComponent(sprite);
 	obj->SetScale(1920.0f * 0.5f * 0.7, 1080.0f / 4 * 0.7, 0.0f);
-	obj->SetPosition(SCREEN_WIDTH / 2 + 310.0f, 250.0f, 0.0f);
+	obj->SetPosition(SCREEN_WIDTH / 2 + 400.0f, 250.0f, 0.0f);
 	AddGameObject(obj);
 
 	// •X

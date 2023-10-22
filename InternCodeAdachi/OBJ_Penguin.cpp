@@ -460,11 +460,17 @@ void OBJ_Penguin::Update()
 			fWaitFallCnt += Time->GetDeltaTime();
 			if (fWaitFallCnt > fWaitFallTime)
 			{
+				fWaitFallCnt = 0.0f;
 				mState = PenguinState::Fall;
 			}
 			break;
 		case PenguinState::Fall:
-			Translate(0.0f, -5.0 * Time->GetDeltaTime(), 0.0f);
+			fWaitFallCnt += Time->GetDeltaTime();
+			if (fWaitFallCnt > fWaitFallTime)
+			{
+				mState = PenguinState::Death;
+			}
+			Translate(0.0f, -20.0 * Time->GetDeltaTime(), 0.0f);
 			break;
 		case PenguinState::Death:
 			p_mColliderCom->bEnable = false;
@@ -585,6 +591,7 @@ void OBJ_Penguin::OnCollisionStay(GameObject* _obj)
 			mState = PenguinState::FallMotion;
 			p_mModel->PlayAnimation("Fall");
 			p_mModel->SetCurrentKeyFrame(0);
+			p_mColliderCom->bEnable = false;
 		}
 
 		if (col->mColliderTag == ColliderKind::ColTag_Sea)

@@ -117,6 +117,7 @@ OBJ_Azarashi::OBJ_Azarashi(const char* _name, int _ModelKind)
 
 	p_mSESpawn = new Com_Audio();
 	p_mSESpawn->Load("asset\\audio\\SE\\SE アザラシ\\登場.wav");
+	p_mSESpawn->SetVolume(0.25f);
 	AddComponent(p_mSESpawn);
 	p_mSEHitBig = new Com_Audio();
 	p_mSEHitBig->Load("asset\\audio\\SE\\SE アザラシ\\ヒット強.wav");
