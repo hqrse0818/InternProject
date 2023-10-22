@@ -219,9 +219,6 @@ void Scene_Clear::Init()
 	p_mSEDecide = new Com_Audio();
 	p_mSEDecide->Load("asset\\audio\\SE\\SE その他\\決定.wav");
 
-	p_mSEClear = new Com_Audio();
-	p_mSEClear->Load("asset\\audio\\SE\\SE その他\\ゲームクリア.wav");
-
 	p_mSEDrum = new Com_Audio();
 	p_mSEDrum->Load("asset\\audio\\SE\\SE その他\\リザルトドラムロール.wav");
 
@@ -376,9 +373,6 @@ void Scene_Clear::Update()
 
 void Scene_Clear::Uninit()
 {
-	p_mSEClear->Stop();
-	p_mSEClear->Uninit();
-	delete p_mSEClear;
 
 	p_mSEDrum->Stop();
 	p_mSEDrum->Uninit();

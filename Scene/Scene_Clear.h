@@ -46,7 +46,7 @@ private:
 
     OBJ_Transition* p_mTransition{};
 
-    Com_Audio* p_mSEClear{};
+    
     Com_Audio* p_mSEDrum{};
     float fDrumDuration = 3.5f;
     float fDrumCnt = 0.0f;
@@ -61,7 +61,7 @@ private:
     GameObject* p_mBanner{};
     GameObject* p_mAllow{};
 
-    bool bisUP = false;
+    bool bisUP = true;
 
     bool bSEEnd = false;
     ClearState mState = ClearState::WaitState;

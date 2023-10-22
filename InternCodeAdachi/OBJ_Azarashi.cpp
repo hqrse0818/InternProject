@@ -114,6 +114,25 @@ OBJ_Azarashi::OBJ_Azarashi(const char* _name, int _ModelKind)
 	// アザラシヒットコンポーネント
 	p_mHitCom = new Com_AzarshiHit();
 	AddComponent(p_mHitCom);
+
+	p_mSESpawn = new Com_Audio();
+	p_mSESpawn->Load("asset\\audio\\SE\\SE アザラシ\\登場.wav");
+	AddComponent(p_mSESpawn);
+	p_mSEHitBig = new Com_Audio();
+	p_mSEHitBig->Load("asset\\audio\\SE\\SE アザラシ\\ヒット強.wav");
+	AddComponent(p_mSEHitBig);
+	p_mSEHitMid	= new Com_Audio();
+	p_mSEHitMid->Load("asset\\audio\\SE\\SE アザラシ\\ヒット中.wav");
+	AddComponent(p_mSEHitMid);
+	p_mSEHitSma	= new Com_Audio();
+	p_mSEHitSma->Load("asset\\audio\\SE\\SE アザラシ\\ヒット弱.wav");
+	AddComponent(p_mSEHitSma);
+	p_mSELand = new Com_Audio();
+	p_mSELand->Load("asset\\audio\\SE\\SE アザラシ\\スポーン 着地.wav");
+	AddComponent(p_mSELand);
+	p_mSEDeath = new Com_Audio();
+	p_mSEDeath->Load("asset\\audio\\SE\\SE アザラシ\\死亡.wav");
+	AddComponent(p_mSEDeath);
 }
 
 
@@ -195,6 +214,7 @@ void OBJ_Azarashi::Update()
 				p_mGravityCom->SetGround(false);
 				p_mShadowObj->SetFollowTargetY(true);
 				s_iOnIceNum++;
+				p_mSELand->Play();
 				break;
 			}
 			// 移動量が超えない場合移動させる
@@ -287,22 +307,30 @@ void OBJ_Azarashi::Update()
 			Translate(0.0f, -2.0f, 0.0f);
 			break;
 		case AzrashiState::Death:
-			s_iOnIceNum--;
-			OBJ_Score::CalcScore(iScore);
-			p_mShadowObj->bDestroy = true;
-			p_mShadowObj->SetActive(false);
-			p_mModelCom->SetPlayAnimation(false);
-			p_mColliderCom->bEnable = false;
-			bDestroy = true;
+			fDeadCnt += Time->GetDeltaTime();
+			if (fDeadCnt > fDeadTime)
+			{
+				s_iOnIceNum--;
+				OBJ_Score::CalcScore(iScore);
+				p_mShadowObj->bDestroy = true;
+				p_mShadowObj->SetActive(false);
+				p_mModelCom->SetPlayAnimation(false);
+				p_mColliderCom->bEnable = false;
+				bDestroy = true;
+			}
 			break;
 		case AzrashiState::Death2:
-			s_iOnIceNum--;
-			OBJ_Score::AddNoComboScore(50);
-			p_mShadowObj->bDestroy = true;
-			p_mShadowObj->SetActive(false);
-			p_mModelCom->SetPlayAnimation(false);
-			p_mColliderCom->bEnable = false;
-			bDestroy = true;
+			fDeadCnt += Time->GetDeltaTime();
+			if (fDeadCnt > fDeadTime)
+			{
+				s_iOnIceNum--;
+				OBJ_Score::AddNoComboScore(50);
+				p_mShadowObj->bDestroy = true;
+				p_mShadowObj->SetActive(false);
+				p_mModelCom->SetPlayAnimation(false);
+				p_mColliderCom->bEnable = false;
+				bDestroy = true;
+			}
 			break;
 		}
 	}
@@ -379,14 +407,17 @@ void OBJ_Azarashi::OnCollisionEnter(GameObject* _obj)
 			// 距離によってスコア加算予定値を変更する(距離は仮)
 			if (dis < fScoreDisMax)
 			{
+				p_mSEHitBig->Play();
 				iScore = s_iScoreMax;
 			}
 			else if (dis < fScoreDisCen)
 			{
+				p_mSEHitMid->Play();
 				iScore = s_iScoreCenter;
 			}
 			else
 			{
+				p_mSEHitSma->Play();
 				iScore = s_iScoreMin;
 			}
 
@@ -446,14 +477,17 @@ void OBJ_Azarashi::OnCollisionStay(GameObject* _obj)
 			}
 			if (mState == AzrashiState::DiveTo2 || mState == AzrashiState::Dive2)
 			{
+				p_mSEDeath->Play();
 				mState = AzrashiState::Death2;
+				p_mColliderCom->bEnable = false;
 			}
-			else
+			else if(mState != AzrashiState::Death && mState != AzrashiState::Death2)
 			{
 				// 死亡処理
+				p_mSEDeath->Play();
 				mState = AzrashiState::Death;
+				p_mColliderCom->bEnable = false;
 			}
-				
 		}
 		if (col->mColliderTag == ColliderKind::ColTag_Fall)
 		{

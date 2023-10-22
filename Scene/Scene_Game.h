@@ -12,7 +12,16 @@ class OBJ_Penguin;
 class Scene_Game :
     public Scene
 {
+public:
+    // ゲームオーバー用ステート
+    enum class OverState
+    {
+        Game, WaitInput,ToGame,ToTitle
+    };
+
 private:
+    OverState mState = OverState::Game;
+
     OBJ_Transition* p_mTransition{};
 
     // プレイヤー
@@ -43,12 +52,13 @@ private:
     Com_Audio* p_mSEOver{};
     Com_Audio* p_mSECursor{};
     Com_Audio* p_mSEDecide{};
+    Com_Audio* p_mSEClear{};
 
     float fWaitTime = 5.0f;
     float fWaitCnt = 0.0f;
     bool bChangeNum = false;
 
-
+    bool bisUP = true;
     // ゲームオーバー用
     OBJ_GameOver* p_mOvobj{};
     OBJ_HalfFade* p_mHalfFade{};

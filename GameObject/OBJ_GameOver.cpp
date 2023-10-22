@@ -113,6 +113,7 @@ void OBJ_GameOver::Update()
 			
 			break;
 		case OBJ_GameOver::GameOverObjState::Finish:
+			SetRotation(0.0f, 0.0f, Euler_To_Radian(10.0f));
 			break;
 		default:
 			break;

@@ -5,6 +5,7 @@
 #include "../Component/Com_Shader.h"
 #include "Com_Model.h"
 #include "Com_Foot.h"
+#include "../Component/Com_Audio.h"
 #include "../GameObject/OBJ_Shadow.h"
 #include "Com_AzarshiHit.h"
 #include "../InternCode.Kizuki/OBJ_AzarashiAttackEffect.h"
@@ -100,6 +101,15 @@ private:
     Com_Model* p_mModelCom = nullptr;
     Com_Foot* p_mFootCom = nullptr;
     Com_AzarshiHit* p_mHitCom = nullptr;
+    Com_Audio* p_mSESpawn = nullptr;
+    Com_Audio* p_mSEHitBig = nullptr;
+    Com_Audio* p_mSEHitMid = nullptr;
+    Com_Audio* p_mSEHitSma = nullptr;
+    Com_Audio* p_mSELand = nullptr;
+    Com_Audio* p_mSEDeath = nullptr;
+
+    float fDeadTime = 1.0f;
+    float fDeadCnt = 0.0f;
 
     OBJ_Shadow* p_mShadowObj = nullptr;
 
@@ -175,6 +185,11 @@ public:
     static void SetDeadEffect(OBJ_AzarashiDeadEffect* _obj)
     {
         p_mDeadEf = _obj;
+    }
+
+    Com_Audio* GetSpawnAudio()
+    {
+        return p_mSESpawn;
     }
 };
 

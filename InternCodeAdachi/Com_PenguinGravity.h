@@ -31,5 +31,9 @@ public:
     bool GetOnGround();
     void SetOnGround(bool _val);
     void SetGravCoef(float _val);
+    void SetGravCnt(float _val)
+    {
+        fGravCnt = _val;
+    }
 };
 

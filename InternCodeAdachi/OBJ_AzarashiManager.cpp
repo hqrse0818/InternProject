@@ -231,7 +231,7 @@ void OBJ_AzarashiManager::CreateLeader()
 	LAzarashi->SetTargetPosition(init.x, init.y, init.z, target.x, fIceY, target.z, fCenterY);
 	LAzarashi->Start();
 	LAzarashi->Update();
-	
+	LAzarashi->GetSpawnAudio()->Play();
 
 	iSpawnedNum++;
 	if (iSpawnedNum >= iMaxSpawn)
@@ -407,6 +407,7 @@ void OBJ_AzarashiManager::CreateTeshita()
 		//azarashis->SetTargetPosition(init.x, init.y, init.z, TeshitaTarget.x, fIceY, TeshitaTarget.z, fCenterY);
 		azarashis->Start();
 		azarashis->Update();
+		azarashis->GetSpawnAudio()->Play();
 	}
 
 	iSpawnedNum += spawnnum;

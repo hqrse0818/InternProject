@@ -138,6 +138,8 @@ private:
 
     DirectX::SimpleMath::Vector2 mMoveVelocity = DirectX::SimpleMath::Vector2(0.0f, 0.0f);
 
+    bool bInit = false;
+
 private:
     void CreateFromCSV(const char* _FileName);
 

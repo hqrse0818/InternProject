@@ -3,6 +3,9 @@
 #include "../main.h"
 #include "../System/manager.h"
 #include "Scene_Clear.h"
+#include "Scene_Title.h"
+#include "../InternCodeAdachi/OBJ_BackPenguinBlue.h"
+#include "../InternCodeAdachi/OBJ_BackPenguinRed.h"
 
 
 using namespace DirectX::SimpleMath;
@@ -93,6 +96,132 @@ void Scene_Game::Init()
 	OBJ_BackGround* back = new OBJ_BackGround("haikei");
 	AddGameObject(back);
 
+
+	// 背景ペンギン
+	{
+		//1
+		OBJ_BackPenguinBlue* bp = new OBJ_BackPenguinBlue("blue");
+		bp->SetPosition(-115.0f, 3.8f, -40.0f);
+		bp->SetDelay(1.4f);
+		bp->SetRotation(0.0f, Euler_To_Radian(70.0f), 0.0f);
+		AddGameObject(bp);
+		//2
+		bp = new OBJ_BackPenguinBlue("blue");
+		bp->SetPosition(-115.0f, 3.8f, -22.0f);
+		bp->SetDelay(1.2f);
+		bp->SetRotation(0.0f, Euler_To_Radian(100.0f), 0.0f);
+		AddGameObject(bp);
+		//3
+		bp = new OBJ_BackPenguinBlue("blue");
+		bp->SetPosition(116.0f, 6.6f, -9.0f);
+		bp->SetDelay(0.3f);
+		bp->SetRotation(0.0f, Euler_To_Radian(-70.0f), 0.0f);
+		AddGameObject(bp);
+		//4
+		bp = new OBJ_BackPenguinBlue("blue");
+		bp->SetPosition(110.0f, 6.6f, 40.0f);
+		bp->SetDelay(0.7f);
+		bp->SetRotation(0.0f, Euler_To_Radian(-110.0f), 0.0f);
+		AddGameObject(bp);
+		//5
+		bp = new OBJ_BackPenguinBlue("blue");
+		bp->SetPosition(-110.0f, 6.8f, -85.0f);
+		bp->SetDelay(1.1f);
+		bp->SetRotation(0.0f, Euler_To_Radian(60.0f), 0.0f);
+		AddGameObject(bp);
+		//6
+		bp = new OBJ_BackPenguinBlue("blue");
+		bp->SetPosition(-100.0f, 6.8f, -95.0f);
+		bp->SetDelay(1.4f);
+		bp->SetRotation(0.0f, Euler_To_Radian(40.0f), 0.0f);
+		AddGameObject(bp);
+		//7
+		bp = new OBJ_BackPenguinBlue("blue");
+		bp->SetPosition(-10.0f, 11.0f, -122.0f);
+		bp->SetDelay(1.4f);
+		bp->SetRotation(0.0f, Euler_To_Radian(0.0f), 0.0f);
+		AddGameObject(bp);
+		//8
+		bp = new OBJ_BackPenguinBlue("blue");
+		bp->SetPosition(22.0f, 11.0f, -128.0f);
+		bp->SetDelay(1.4f);
+		bp->SetRotation(0.0f, Euler_To_Radian(-10.0f), 0.0f);
+		AddGameObject(bp);
+		//9
+		bp = new OBJ_BackPenguinBlue("blue");
+		bp->SetPosition(41.0f, 11.0f, -124.0f);
+		bp->SetDelay(1.4f);
+		bp->SetRotation(0.0f, Euler_To_Radian(-20.0f), 0.0f);
+		AddGameObject(bp);
+		//10
+		bp = new OBJ_BackPenguinBlue("blue");
+		bp->SetPosition(58.0f, 11.0f, -126.0f);
+		bp->SetDelay(1.4f);
+		bp->SetRotation(0.0f, Euler_To_Radian(-30.0f), 0.0f);
+		AddGameObject(bp);
+
+		// 背景用ペンギン(赤)
+		//1
+		OBJ_BackPenguinRed* rp = new OBJ_BackPenguinRed("red");
+		rp->SetPosition(121.0f, 6.6f, 0.0f);
+		rp->SetDelay(0.2f);
+		rp->SetRotation(0.0f, Euler_To_Radian(-90.0f), 0.0f);
+		AddGameObject(rp);
+		//2
+		rp = new OBJ_BackPenguinRed("red");
+		rp->SetPosition(110.0f, 6.6f, 10.0f);
+		rp->SetDelay(0.0f);
+		rp->SetRotation(0.0f, Euler_To_Radian(-100.0f), 0.0f);
+		AddGameObject(rp);
+		//3
+		rp = new OBJ_BackPenguinRed("red");
+		rp->SetPosition(6.0f, 6.4f, -111.0f);
+		rp->SetDelay(0.8f);
+		rp->SetRotation(0.0f, Euler_To_Radian(0.0f), 0.0f);
+		AddGameObject(rp);
+		//4
+		rp = new OBJ_BackPenguinRed("red");
+		rp->SetPosition(-18.0f, 6.4f, -118.0f);
+		rp->SetDelay(0.6f);
+		rp->SetRotation(0.0f, Euler_To_Radian(10.0f), 0.0f);
+		AddGameObject(rp);
+		//5
+		rp = new OBJ_BackPenguinRed("red");
+		rp->SetPosition(-4.0f, 6.4f, -111.0f);
+		rp->SetDelay(1.4f);
+		rp->SetRotation(0.0f, Euler_To_Radian(0.0f), 0.0f);
+		AddGameObject(rp);
+		//6
+		rp = new OBJ_BackPenguinRed("red");
+		rp->SetPosition(18.0f, 6.4f, -110.0f);
+		rp->SetDelay(2.2f);
+		rp->SetRotation(0.0f, Euler_To_Radian(-10.0f), 0.0f);
+		AddGameObject(rp);
+		//7
+		rp = new OBJ_BackPenguinRed("red");
+		rp->SetPosition(29.0f, 6.4f, -120.0f);
+		rp->SetDelay(0.8f);
+		rp->SetRotation(0.0f, Euler_To_Radian(-16.0f), 0.0f);
+		AddGameObject(rp);
+		//8
+		rp = new OBJ_BackPenguinRed("red");
+		rp->SetPosition(110.0f, 6.6f, 52.0f);
+		rp->SetDelay(1.6f);
+		rp->SetRotation(0.0f, Euler_To_Radian(-100.0f), 0.0f);
+		AddGameObject(rp);
+	}
+
+	// 空
+	GameObject* Sky = new GameObject("Sky");
+	Com_Shader* s = new Com_Shader();
+	s->p_mVS->Load(VS_MODEL);
+	s->p_mPS->Load(PS_MODEL);
+	Sky->AddComponent(s);
+	Com_Model* m = new Com_Model();
+	m->SetModelData("Sky");
+	Sky->AddComponent(m);
+	AddGameObject(Sky);
+
 	// ステージ設計
 	{
 		// ステージのブロック数の読み込み
@@ -169,26 +298,42 @@ void Scene_Game::Init()
 		// 左側
 		OBJ_Fall* fobj = new OBJ_Fall("fall");
 		fobj->SetPosition(StageInit - ((scale.x * size.x) * 2), 1.0f, 0.0f);
-		fobj->GetColliderCom()->SetSize(20.0f, 3.0f, 100.0f);
+		fobj->GetColliderCom()->SetSize(20.0f, 3.0f, 200.0f);
 		fobj->GetColliderCom()->SetCenter(0.0f, 0.0f, 0.0f);
+		AddGameObject(fobj);
+		fobj = new OBJ_Fall("fall");
+		fobj->SetPosition(StageInit - ((scale.x * size.x) * 3), 1.0f, 0.0f);
+		fobj->GetColliderCom()->SetSize(2.0f, 40.0f, 200.0f);
 		AddGameObject(fobj);
 		// 右側
 		fobj = new OBJ_Fall("fall");
 		fobj->SetPosition(StageInit + ((scale.x * size.x) * (stagenum + 1)), 1.0f, 0.0f);
-		fobj->GetColliderCom()->SetSize(20.0f, 3.0f, 100.0f);
+		fobj->GetColliderCom()->SetSize(20.0f, 3.0f, 200.0f);
 		fobj->GetColliderCom()->SetCenter(0.0f, 0.0f, 0.0f);
+		AddGameObject(fobj);
+		fobj = new OBJ_Fall("fall");
+		fobj->SetPosition(StageInit + ((scale.x * size.x) * (stagenum + 2)), 1.0f, 0.0f);
+		fobj->GetColliderCom()->SetSize(2.0f, 40.0f, 200.0f);
 		AddGameObject(fobj);
 		// 上側
 		fobj = new OBJ_Fall("fall");
 		fobj->SetPosition(0.0f, 1.0f, StageInit + ((scale.z * size.z) * (stagenum + 1)));
 		fobj->GetColliderCom()->SetCenter(0.0f, 0.0f, 0.0f);
-		fobj->GetColliderCom()->SetSize(100.0f, 3.0f, 20.0f);
+		fobj->GetColliderCom()->SetSize(200.0f, 3.0f, 20.0f);
+		AddGameObject(fobj);
+		fobj = new OBJ_Fall("fall");
+		fobj->SetPosition(0.0f, 1.0f, StageInit + ((scale.z * size.z) * (stagenum + 2)));
+		fobj->GetColliderCom()->SetSize(200.0f, 40.0f, 2.0f);
 		AddGameObject(fobj);
 		// 下側
 		fobj = new OBJ_Fall("fall");
 		fobj->SetPosition(0.0f, 1.0f, StageInit - ((scale.z * size.z) * 2));
 		fobj->GetColliderCom()->SetCenter(0.0f, 0.0f, 0.0f);
-		fobj->GetColliderCom()->SetSize(100.0f, 3.0f, 20.0f);
+		fobj->GetColliderCom()->SetSize(200.0f, 3.0f, 20.0f);
+		AddGameObject(fobj);
+		fobj = new OBJ_Fall("fall");
+		fobj->SetPosition(0.0f, 1.0f, StageInit - ((scale.z * size.z) * 3));
+		fobj->GetColliderCom()->SetSize(200.0f, 40.0f, 2.0f);
 		AddGameObject(fobj);
 	}
 
@@ -351,7 +496,8 @@ void Scene_Game::Init()
 	p_mOvobj->SetScale(1920.0f * 0.3f, 1080.0f * 0.3f, 1.0f);
 	p_mOvobj->SetStopPosA(SCREEN_WIDTH / 2, -0.0f);
 	p_mOvobj->SetStopPosB(SCREEN_WIDTH / 2, 150.0f);
-	p_mOvobj->SetFinalPos(SCREEN_WIDTH / 2, 350.0f);
+	p_mOvobj->SetFinalPos(SCREEN_WIDTH / 2, 300.0f);
+	p_mOvobj->SetWaitTime(0.2f);
 	AddGameObject(p_mOvobj);
 
 
@@ -376,6 +522,9 @@ void Scene_Game::Init()
 	// 決定
 	p_mSEDecide = new Com_Audio();
 	p_mSEDecide->Load("asset\\audio\\SE\\SE その他\\決定.wav");
+	// クリア
+	p_mSEClear = new Com_Audio();
+	p_mSEClear->Load("asset\\audio\\SE\\SE その他\\ゲームクリア.wav");
 }
 
 void Scene_Game::Start()
@@ -422,7 +571,7 @@ void Scene_Game::Update()
 		else if (fWaitCnt > 4)
 		{
 			fWaitCnt += Time->GetDeltaTime();
-			p_mObjGo->Scaling(300.0f * Time->GetDeltaTime(), 300.0f * Time->GetDeltaTime(), 0.0f);
+			p_mObjGo->Scaling(800.0f * Time->GetDeltaTime(), 800.0f * Time->GetDeltaTime(), 0.0f);
 			if (fWaitCnt > fWaitTime)
 			{
 				p_mSEGo->Play();
@@ -472,6 +621,7 @@ void Scene_Game::Update()
 
 	case GameState::TransToClear:
 		p_mTransition->FadeOut(1.5);
+		p_mSEClear->Play();
 		GameManager::SetGameState(GameState::ClearFade);
 		break;
 
@@ -490,6 +640,7 @@ void Scene_Game::Update()
 		ComboObj->SetDisplay(false);
 		ScoreObj->SetDisplay(false);
 		p_mHalfFade->FadeOut(1.5);
+		// ゲームオーバーオブジェクトを落としてくる
 		p_mOvobj->FallStart();
 		p_mBGM->Stop();
 		p_mSEOver->Play();
@@ -497,19 +648,82 @@ void Scene_Game::Update()
 		break;
 
 	case GameState::OverFade:
-		if (p_mHalfFade->GetState() == OBJ_Transition::FadeState::OutEnd)
+		if (p_mHalfFade->GetState() == OBJ_Transition::FadeState::OutEnd && p_mOvobj->GetState() == OBJ_GameOver::GameOverObjState::Finish)
 		{
 			GameManager::SetGameState(GameState::Over);
+			// 入力待ちに移行
+			mState = OverState::WaitInput;
+			ice1->SetActive(true);
+			ice2->SetActive(true);
+			p_mOnemore->SetActive(true);
+			p_mReturn->SetActive(true);
+			p_mBanner->SetActive(true);
+			p_mAllow->SetActive(true);
 		}
 		break;
 	case GameState::Over:
-		// ゲームオーバーオブジェクトを落としてくる
-		ice1->SetActive(true);
-		ice2->SetActive(true);
-		p_mOnemore->SetActive(true);
-		p_mReturn->SetActive(true);
-		p_mBanner->SetActive(true);
-		p_mAllow->SetActive(true);
+		break;
+	}
+
+	switch (mState)
+	{
+	case Scene_Game::OverState::Game:
+		break;
+	case Scene_Game::OverState::WaitInput:
+		if (Controller_Input::GetButton(0, GAMEPAD_A) == KEYSTATE::KEY_DOWN || Input::GetKeyState(KEYCODE_RETURN) == KEYSTATE::KEY_DOWN)
+		{
+			p_mSEDecide->Play();
+			if (bisUP)
+			{
+				p_mTransition->FadeOut(1.5);
+				mState = OverState::ToTitle;
+			}
+			else
+			{
+				p_mTransition->FadeOut(1.5);
+				mState = OverState::ToGame;
+			}
+		}
+		else if (Controller_Input::GetLeftStick(0).y > 0.5f || Controller_Input::GetButton(0, GAMEPAD_UP) == KEYSTATE::KEY_DOWN ||
+			Input::GetKeyState(KEYCODE_W) == KEYSTATE::KEY_DOWN || Input::GetKeyState(KEYCODE_UP) == KEYSTATE::KEY_DOWN)
+		{
+			if (!bisUP)
+			{
+				p_mSECursor->Play();
+			}
+			bisUP = true;
+			p_mAllow->SetPosition(SCREEN_WIDTH / 2 - 150.0f, 545.0f, 0.0f);
+			p_mBanner->SetPosition(SCREEN_WIDTH / 2, 545.0f, 0.0f);
+			p_mRetScale->SetUpdate(true);
+			p_mOneScale->SetUpdate(false);
+		}
+		else if (Controller_Input::GetLeftStick(0).y < -0.5f || Controller_Input::GetButton(0, GAMEPAD_DOWN) == KEYSTATE::KEY_DOWN ||
+			Input::GetKeyState(KEYCODE_S) == KEYSTATE::KEY_DOWN || Input::GetKeyState(KEYCODE_DOWN) == KEYSTATE::KEY_DOWN)
+		{
+			if (bisUP)
+			{
+				p_mSECursor->Play();
+			}
+			bisUP = false;
+			p_mAllow->SetPosition(SCREEN_WIDTH / 2 - 150.0f, 620.0f, 0.0f);
+			p_mBanner->SetPosition(SCREEN_WIDTH / 2, 620.0f, 0.0f);
+			p_mRetScale->SetUpdate(false);
+			p_mOneScale->SetUpdate(true);
+		}
+		break;
+	case Scene_Game::OverState::ToGame:
+		if (p_mTransition->GetState() == OBJ_Transition::FadeState::OutEnd)
+		{
+			GameManager::SetGameState(GameState::GameFade);
+			Manager::SetNextScene<Scene_Game>();
+		}
+		break;
+	case Scene_Game::OverState::ToTitle:
+		if (p_mTransition->GetState() == OBJ_Transition::FadeState::OutEnd)
+		{
+			GameManager::SetGameState(GameState::Title);
+			Manager::SetNextScene<Scene_Title>();
+		}
 		break;
 	default:
 		break;
@@ -544,4 +758,8 @@ void Scene_Game::Uninit()
 	p_mSEOver->Stop();
 	p_mSEOver->Uninit();
 	delete p_mSEOver;
+
+	p_mSEClear->Stop();
+	p_mSEClear->Uninit();
+	delete p_mSEClear;
 }
