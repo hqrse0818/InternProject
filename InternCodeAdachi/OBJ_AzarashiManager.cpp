@@ -135,17 +135,6 @@ void OBJ_AzarashiManager::CreateLeader()
 	// リーダーを作成
 	OBJ_Azarashi* LAzarashi = new OBJ_Azarashi("Leader", 2);
 
-	//エフェクトを作成
-	OBJ_AzarashiAttackEffect* p_mAttackEf = new OBJ_AzarashiAttackEffect("AttackEffect");
-	p_mAttackEf->SetTarget(LAzarashi);
-	LAzarashi->SetAttackEfect(p_mAttackEf);
-	GetScene()->AddGameObject(p_mAttackEf);
-
-	OBJ_AzarashiDeadEffect* p_mDeadEf = new OBJ_AzarashiDeadEffect("DeadEffect");
-	p_mDeadEf->SetTarget(LAzarashi);
-	LAzarashi->SetDeadEffect(p_mDeadEf);
-	GetScene()->AddGameObject(p_mDeadEf);
-
 	// アザラシのステータス設定
 	LAzarashi->GetColliderCom()->SetCenter(mAzarashiCenter.x, mAzarashiCenter.y, mAzarashiCenter.z);
 	LAzarashi->GetColliderCom()->fRadius = fAzarashiRadius;
@@ -369,12 +358,12 @@ void OBJ_AzarashiManager::CreateTeshita()
 
 		//エフェクトを作成
 		OBJ_AzarashiAttackEffect* p_mAttackEf = new OBJ_AzarashiAttackEffect("AttackEffect");
-		p_mAttackEf->SetTarget(azarashis);
+		//p_mAttackEf->SetTarget(azarashis);
 		azarashis->SetAttackEfect(p_mAttackEf);
 		GetScene()->AddGameObject(p_mAttackEf);
 
 		OBJ_AzarashiDeadEffect* p_mDeadEf = new OBJ_AzarashiDeadEffect("DeadEffect");
-		p_mDeadEf->SetTarget(azarashis);
+		//p_mDeadEf->SetTarget(azarashis);
 		azarashis->SetDeadEffect(p_mDeadEf);
 		GetScene()->AddGameObject(p_mDeadEf);
 
@@ -434,4 +423,17 @@ void OBJ_AzarashiManager::CreateTeshita()
 	{
 		mState = SpawnState::Wait;
 	}
+}
+
+void OBJ_AzarashiManager::Start()
+{
+	//エフェクトを作成
+	OBJ_AzarashiAttackEffect* p_mAttackEf = new OBJ_AzarashiAttackEffect("AttackEffect");
+	GetScene()->AddGameObject(p_mAttackEf);
+
+	OBJ_AzarashiDeadEffect* p_mDeadEf = new OBJ_AzarashiDeadEffect("DeadEffect");
+	GetScene()->AddGameObject(p_mDeadEf);
+
+	OBJ_Azarashi::SetAttackEfect(p_mAttackEf);
+	OBJ_Azarashi::SetDeadEffect(p_mDeadEf);
 }

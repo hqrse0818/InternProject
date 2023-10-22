@@ -10,7 +10,7 @@ using namespace DirectX::SimpleMath;
 OBJ_AzarashiDeadEffect::OBJ_AzarashiDeadEffect()
 {
 	mKind = Particle;
-	iCreateNum = 10;
+	iCreateNum = 2;
 
 	p_mTexture = new ShaderResourceView;
 	p_mTexture->Create("asset/texture/azarashi_sibou.png");
@@ -54,9 +54,10 @@ void OBJ_AzarashiDeadEffect::Create()
 	for (int i = 0; i < iCreateNum; i++)
 	{
 		OBJ_Particle* Particle = new OBJ_Particle("no");
-		Particle->p_mTransform->mPosition = Target->p_mTransform->mPosition;
+		//Particle->p_mTransform->mPosition = Target->p_mTransform->mPosition;
 		Particle->Init();
 		Particle->SetTexture(p_mTexture->GetSRV());
+		Particle->p_mTransform->mPosition = this->p_mTransform->mPosition;
 
 		//ŽÎ•û“ŠŽËÝ’è
 		Particle->p_mTousyaBuf->SetGravity(0.1f);
@@ -65,7 +66,7 @@ void OBJ_AzarashiDeadEffect::Create()
 
 		Vector3 angle; //Šp“x
 		angle.x = HighRand::fGetRand(-70, -30, 3);
-		angle.y = 0;
+		angle.y = HighRand::fGetRand(100, 150, 3);
 		angle.z = HighRand::fGetRand(-70, -30, 3);
 
 		Particle->p_mTousyaBuf->SetThrowAngle(angle);

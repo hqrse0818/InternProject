@@ -105,8 +105,8 @@ private:
 
     OBJ_Azarashi* p_mLeader = nullptr;
 
-    OBJ_AzarashiAttackEffect* p_mAttackEf = nullptr;
-    OBJ_AzarashiDeadEffect* p_mDeadEf = nullptr;
+    static OBJ_AzarashiAttackEffect* p_mAttackEf;
+    static OBJ_AzarashiDeadEffect* p_mDeadEf;
 
 public:
     bool bLeader = false;
@@ -167,12 +167,12 @@ public:
         fScoreDisCen = _cen;
     }
 
-    void SetAttackEfect(OBJ_AzarashiAttackEffect* _obj)
+    static void SetAttackEfect(OBJ_AzarashiAttackEffect* _obj)
     {
         p_mAttackEf = _obj;
     }
 
-    void SetDeadEffect(OBJ_AzarashiDeadEffect* _obj)
+    static void SetDeadEffect(OBJ_AzarashiDeadEffect* _obj)
     {
         p_mDeadEf = _obj;
     }

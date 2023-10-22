@@ -90,6 +90,7 @@ public:
 
     void CreateLeader();
     void CreateTeshita();
+    void Start();
     void Update();
 
 

@@ -8,7 +8,7 @@
 OBJ_AzarashiAttackEffect::OBJ_AzarashiAttackEffect()
 {
 	mKind = Particle;
-	iCreateNum = 10;
+	iCreateNum = 2;
 
 	p_mTexture = new ShaderResourceView;
 	p_mTexture->Create("asset/texture/azarashi_kougeki.png");
@@ -47,9 +47,10 @@ void OBJ_AzarashiAttackEffect::Create()
 	for (int i = 0; i < iCreateNum; i++)
 	{
 		OBJ_Particle* Particle = new OBJ_Particle("no");
-		Particle->p_mTransform->mPosition = Target->p_mTransform->mPosition;
+		//Particle->p_mTransform->mPosition = Target->p_mTransform->mPosition;
 		Particle->Init();
 		Particle->SetTexture(p_mTexture->GetSRV());
+		Particle->p_mTransform->mPosition = this->p_mTransform->mPosition;
 
 		//ŽÎ•û“ŠŽËÝ’è
 		Particle->p_mTousyaBuf->SetGravity(0.1f);

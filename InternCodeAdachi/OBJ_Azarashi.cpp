@@ -19,6 +19,9 @@ int OBJ_Azarashi::s_iScoreMax = 0;
 float OBJ_Azarashi::fScoreDisCen = 0.0f;
 float OBJ_Azarashi::fScoreDisMax = 0.0f;
 
+OBJ_AzarashiAttackEffect* OBJ_Azarashi::p_mAttackEf = nullptr;
+OBJ_AzarashiDeadEffect* OBJ_Azarashi::p_mDeadEf = nullptr;
+
 OBJ_Azarashi::OBJ_Azarashi()
 {
 	// シェーダー
@@ -234,6 +237,7 @@ void OBJ_Azarashi::Update()
 			p_mModelCom->PlayAnimation("Attack");
 			p_mModelCom->SetCurrentKeyFrame(0);
 			mState = AzrashiState::Attack;
+			p_mAttackEf->p_mTransform->mPosition = this->p_mTransform->mPosition;
 			p_mAttackEf->Create();
 		}
 		break;
@@ -286,7 +290,6 @@ void OBJ_Azarashi::Update()
 		p_mShadowObj->SetActive(false);
 		p_mModelCom->SetPlayAnimation(false);
 		p_mColliderCom->bEnable = false;
-		p_mDeadEf->bDestroy = true;
 		bDestroy = true;
 		break;
 	case AzrashiState::Death2:
@@ -296,7 +299,6 @@ void OBJ_Azarashi::Update()
 		p_mShadowObj->SetActive(false);
 		p_mModelCom->SetPlayAnimation(false);
 		p_mColliderCom->bEnable = false;
-		p_mDeadEf->bDestroy = true;
 		bDestroy = true;
 		break;
 	}
@@ -336,6 +338,7 @@ void OBJ_Azarashi::OnCollisionEnter(GameObject* _obj)
 		{
 			// 死亡処理
 			mState = AzrashiState::Death;
+			p_mDeadEf->p_mTransform->mPosition = this->p_mTransform->mPosition;
 			p_mDeadEf->Create();
 		}
 	}

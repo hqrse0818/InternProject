@@ -27,15 +27,15 @@ public:
 	void Uninit();
 	void TexCreate(const char* _name);
 
-	void SetTarget(GameObject* _object)
+	/*void SetTarget(GameObject* _object)
 	{
 		Target = _object;
-	}
+	}*/
 
 	void Create();
 
 protected:
 	ShaderResourceView* p_mTexture;
-	GameObject* Target = nullptr;
+	//GameObject* Target = nullptr;
 	bool bEffectflg = false;
 };
