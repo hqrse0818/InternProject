@@ -1,6 +1,9 @@
 #include "Scene_Game.h"
 #include "GameInclude.h"
 #include "../main.h"
+#include "../System/manager.h"
+#include "Scene_Clear.h"
+
 
 using namespace DirectX::SimpleMath;
 using namespace std;
@@ -247,7 +250,7 @@ void Scene_Game::Start()
 {
 	p_mTransition->FadeIn(1.5);
 	// 開始前状態に設定
-	GameManager::SetGameState(GameState::WaitFade);
+	GameManager::SetGameState(GameState::GameFade);
 
 	// プレイヤーの位置を設定
 	p_mPlayer->p_mTransform->SetPosition(0.0f, 2.0f, 0.0f);
@@ -263,7 +266,7 @@ void Scene_Game::Update()
 
 	switch (GameManager::GetGameState())
 	{
-	case GameState::WaitFade:
+	case GameState::GameFade:
 		if (p_mTransition->GetState() == OBJ_Transition::FadeState::InEnd)
 		{
 			GameManager::SetGameState(GameState::WaitStart);
@@ -328,7 +331,32 @@ void Scene_Game::Update()
 	}
 		break;
 
-	
+	case GameState::TransToClear:
+		p_mTransition->FadeOut(1.5);
+		GameManager::SetGameState(GameState::ClearFade);
+		break;
+
+	case GameState::ClearFade:
+		if (p_mTransition->GetState() == OBJ_Transition::FadeState::OutEnd)
+		{
+			GameManager::SetGameState(GameState::Clear);
+			Manager::SetNextScene<Scene_Clear>();
+		}
+		break;
+
+	case GameState::TransToOver:
+		p_mTransition->FadeOut(1.5);
+		GameManager::SetGameState(GameState::OverFade);
+		break;
+
+	case GameState::OverFade:
+		if (p_mTransition->GetState() == OBJ_Transition::FadeState::OutEnd)
+		{
+			GameManager::SetGameState(GameState::Over);
+			Manager::SetNextScene<Scene_Clear>();
+		}
+		break;
+
 	default:
 		break;
 	}

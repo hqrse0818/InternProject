@@ -5,6 +5,7 @@
 #include "../InternCodeAdachi/OBJ_Ice.h"
 #include "../InternCodeAdachi/CSVLoad.h"
 #include "../InternCodeAdachi/OBJ_Score.h"
+#include "../InternCodeAdachi/GameManager.h"
 
 #define LoadRow (1)
 
@@ -99,6 +100,8 @@ void OBJ_AzarashiRemain::Update()
 				iIceScore = iceRemain.size() * 500;
 				OBJ_Score::AddNoComboScore(iIceScore);
 				bIceCalc = true;
+
+				GameManager::SetGameState(GameState::TransToClear);
 			}
 		}
 	}

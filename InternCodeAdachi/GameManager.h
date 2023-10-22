@@ -2,7 +2,28 @@
 
 enum GameState
 {
-	Title, WaitFade, WaitStart,Game, TransToClear, TransToOver,None,End
+	// タイトル
+	Title, 
+	// ゲーム画面前のフェード
+	GameFade,
+	// ゲーム開始待ち
+	WaitStart,
+	// ゲーム中
+	Game, 
+	// クリア画面に遷移予約
+	TransToClear, 
+	// クリア画面へのフェード
+	ClearFade,
+	// クリア画面
+	Clear,
+	// オーバー画面に遷移予約
+	TransToOver,
+	// オーバー画面へのフェード委
+	OverFade,
+	// オーバー画面
+	Over,
+	// 終了
+	End
 };
 
 class GameManager

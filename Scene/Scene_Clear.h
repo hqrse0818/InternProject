@@ -1,6 +1,7 @@
 #pragma once
 #include "Scene.h"
 #include "../GameObject/OBJ_Transition.h"
+#include "../InternCode.Kizuki/OBJ_Number.h"
 
 class Scene_Clear :
     public Scene
@@ -30,10 +31,23 @@ private:
     // åÇîjÉAÉUÉâÉVêî
     int iBreakAzarashiNum = 0;
 
+    int currentcom = 0;
+    int currentice = 0;
+    int currentbre = 0;
+    int currentsco = 0;
+
+    OBJ_Number* p_mComs[3];
+    OBJ_Number* p_mIces[2];
+    OBJ_Number* p_mBreaks[3];
+    OBJ_Number* p_mScores[6];
+    int scoresnum = 0;
+
     OBJ_Transition* p_mTransition{};
 
     Com_Audio* p_mSEClear{};
     Com_Audio* p_mSEDrum{};
+    float fDrumDuration = 3.0f;
+    float fDrumCnt = 0.0f;
     Com_Audio* p_mSEResult{};
     Com_Audio* p_mSECursor{};
     Com_Audio* p_mSEDecide{};
