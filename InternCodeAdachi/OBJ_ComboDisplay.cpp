@@ -28,6 +28,34 @@ OBJ_ComboDisplay::OBJ_ComboDisplay()
 		Nums[i]->GetSpriteCom()->SetTexture(p_mSRV);
 		Nums[i]->GetSpriteCom()->mType = Com_CustomSprite::CustomType::Center;
 	}
+
+	p_ComboFrame = new GameObject("frame");
+	Com_Shader* shader = new Com_Shader();
+	shader->p_mVS->Load(VS_SPRITE);
+	shader->p_mPS->Load(PS_SPRITE);
+	p_ComboFrame->AddComponent(shader);
+	Com_CustomSprite* frameSp = new Com_CustomSprite();
+	frameSp->SetTexture("asset/texture/combo1.png");
+	frameSp->SetUpdate(true);
+	frameSp->mType = Com_CustomSprite::CustomType::Left;
+	p_ComboFrame->AddComponent(frameSp);
+	p_ComboFrame->SetPosition(900.0f, 700.0f, 0.0f);
+	p_ComboFrame->SetScale(1175.0f * 0.3f, 48.0f * 0.3f, 0.0);
+
+	p_ComboGage = new GameObject("gage");
+	shader = new Com_Shader();
+	shader->p_mVS->Load(VS_SPRITE);
+	shader->p_mPS->Load(PS_SPRITE);
+	p_ComboGage->AddComponent(shader);
+	p_GageSp = new Com_CustomSprite();
+	p_GageSp->SetTexture("asset/texture/combo2.png");
+	p_GageSp->SetUpdate(true);
+	p_GageSp->mType = Com_CustomSprite::CustomType::Left;
+	p_ComboGage->AddComponent(p_GageSp);
+	p_ComboGage->SetPosition(900.0f, 700.0f, 0.0f);
+	p_ComboGage->SetScale(0.0f, 48.0f * 0.28f, 0.0f);
+
+	fComboScale = p_ComboFrame->p_mTransform->mScale.x;
 }
 
 OBJ_ComboDisplay::OBJ_ComboDisplay(const char* _name)
@@ -76,7 +104,6 @@ OBJ_ComboDisplay::OBJ_ComboDisplay(const char* _name, const char* _FileName)
 
 	fEuler = Euler_To_Radian(fEuler);
 
-
 	Nums[0]->SetRotation(0.0f,  0.0f, fEuler);
 	Nums[1]->SetRotation(0.0f, 0.0f, fEuler);
 	Nums[2]->SetRotation(0.0f, 0.0f, fEuler);
@@ -97,12 +124,23 @@ void OBJ_ComboDisplay::Start()
 	{
 		GetScene()->AddGameObject(Nums[i]);
 	}
+
+	GetScene()->AddGameObject(p_ComboFrame);
+	p_ComboFrame->Init();
+	p_ComboFrame->Start();
+	GetScene()->AddGameObject(p_ComboGage);
+	p_ComboGage->Init();
+	p_ComboGage->Start();
+
+	p_ComboFrame->SetActive(false);
+	p_ComboGage->SetActive(false);
 }
 
 void OBJ_ComboDisplay::Update()
 {
 	iLastCombo = iCurrentCombo;
 	iCurrentCombo = OBJ_Score::GetCurrentCombo();
+
 	if (iCurrentCombo > iLastCombo && !(iLastCombo < 10 && iCurrentCombo >= 10) && !(iLastCombo < 100 && iCurrentCombo >= 100) && !bUpNum)
 	{
 		// ƒRƒ“ƒ{‚ª‘±‚¢‚½
@@ -110,6 +148,13 @@ void OBJ_ComboDisplay::Update()
 		mCurrentNumScale = mNumInitScale;
 		mCurrentMyScale = mMyInitScale;
 		fComboCnt = 0.0f;
+		p_ComboFrame->SetActive(true);
+		p_ComboGage->SetActive(true);
+		fComboScale = p_ComboFrame->p_mTransform->mScale.x;
+		mComboColor.x = 0.0f;
+		mComboColor.y = 1.0f;
+		mComboColor.z = 0.0f;
+		mComboColor.w = 1.0f;
 	}
 	if (iCurrentCombo == iLastCombo && iCurrentCombo != 0)
 	{
@@ -138,6 +183,11 @@ void OBJ_ComboDisplay::Update()
 	}
 	else if(iCurrentCombo == 0)
 	{
+		mComboColor.x = 0.0f;
+		mComboColor.y = 1.0f;
+		mComboColor.z = 0.0f;
+		mComboColor.w = 1.0f;
+
 		mColor.x = 1.0f;
 		mColor.y = 1.0f;
 		mColor.z = 1.0f;
@@ -155,12 +205,28 @@ void OBJ_ComboDisplay::Update()
 		Nums[1]->SetNum(0);
 		Nums[2]->SetNum(0);
 		SetScale(0.0f, 0.0f, 0.0f);
+
+		p_ComboFrame->SetActive(false);
+		p_ComboGage->SetActive(false);
 	}
 
-	if (iLastCombo < 10 && iCurrentCombo >= 10 || iLastCombo < 20 && iCurrentCombo >= 20 || iLastCombo < 30 && iCurrentCombo >= 30 || iLastCombo < 40 && iCurrentCombo >= 40 || iLastCombo < 50 && iCurrentCombo >= 50 ||
-		iLastCombo < 60 && iCurrentCombo >= 60 || iLastCombo < 70 && iCurrentCombo >= 70 || iLastCombo < 80 && iCurrentCombo >= 80 || iLastCombo < 90 && iCurrentCombo >= 90 || iLastCombo < 100 && iCurrentCombo >= 100 ||
-		iLastCombo < 110 && iCurrentCombo >= 110 || iLastCombo < 120 && iCurrentCombo >= 120 || iLastCombo < 130 && iCurrentCombo >= 130 || iLastCombo < 140 && iCurrentCombo >= 140 || iLastCombo < 150 && iCurrentCombo >= 150)
-	{;
+	p_GageSp->SetDiffuse(mComboColor);
+
+	if (fComboCnt < fComboResetTime / 4)
+	{
+		
+	}
+	else if (fComboCnt < fComboResetTime / 4 * 2)
+	{
+		mComboColor.x += 1.0f * Time->GetDeltaTime();
+	}
+	else if (fComboCnt < fComboResetTime / 4 * 3)
+	{
+		mComboColor.y -= 1.0f * Time->GetDeltaTime();
+	}
+
+	if (iLastCombo %10 != 0 && iCurrentCombo % 10 == 0)
+	{
 		mColor.x += 0.2f;
 		mColor.y += 0.2f;
 		mColor.z += 0.2f;
@@ -183,7 +249,26 @@ void OBJ_ComboDisplay::Update()
 		// Œ…ã‚°‚Ì”­¶
 		bUpNum = true;
 	}
-
+	else if (iCurrentCombo % 10 == 0)
+	{
+		p_mSprite->SetDiffuse(mColor);
+		for (int i = 0; i < 3; i++)
+		{
+			Nums[i]->GetSpriteCom()->SetDiffuse(mColor);
+		}
+	}
+	else
+	{
+		Color col{};
+		col.x = 1.0f;
+		col.y = 1.0f;
+		col.z = 1.0f;
+		p_mSprite->SetDiffuse(col);
+		for (int i = 0; i < 3; i++)
+		{
+			Nums[i]->GetSpriteCom()->SetDiffuse(col);
+		}
+	}
 	
 	if (iCurrentCombo > 99)
 		{
@@ -286,6 +371,9 @@ void OBJ_ComboDisplay::Update()
 	}
 
 	GameObject::Update();
+
+	fComboScale -= p_ComboFrame->p_mTransform->mScale.x * (Time->GetDeltaTime() / fComboResetTime);
+	p_ComboGage->SetScale(fComboScale, 48.0f * 0.28f, 0.0f);
 }
 
 void OBJ_ComboDisplay::Uninit()

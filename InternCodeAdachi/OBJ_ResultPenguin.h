@@ -10,9 +10,9 @@ private:
     Com_Shader* p_mShader{};
     Com_Sprite* p_mMainSprite{};
 
-   ShaderResourceView* p_mSprites[109];
+   ShaderResourceView* p_mSprites[210];
 
-   float fRate = 0.05f;
+   float fRate = 0.0125f;
    float fCnt = 0.0f;
 
    int Current = 0;

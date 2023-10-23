@@ -48,6 +48,11 @@ public:
 
 	static void CountStart();
 	static float CountStop();
+
+	static void DeltaReset()
+	{
+		s_fDeltaTime = 0.0f;
+	}
 };
 
 #define Time Times::GetInstance()

@@ -12,9 +12,14 @@ private:
     Com_CustomSprite* p_mSprite;
     OBJ_Number* Nums[3];
     ShaderResourceView* p_mSRV{};
+    GameObject* p_ComboFrame{};
+    GameObject* p_ComboGage{};
+    Com_CustomSprite* p_GageSp{};
 
     int iLastCombo = 0;
     int iCurrentCombo = 0;
+
+    float fComboScale;
 
     float fComboResetTime = 0.0f;
 
@@ -45,6 +50,7 @@ private:
     DirectX::SimpleMath::Vector2 mCurrentNumScale = DirectX::SimpleMath::Vector2(0.0f, 0.0f);
 
     DirectX::SimpleMath::Color mColor = DirectX::SimpleMath::Color(1.0f, 1.0f, 1.0f, 1.0f);
+    DirectX::SimpleMath::Color mComboColor = DirectX::SimpleMath::Color(0.0f, 1.0f, 0.0f, 1.0f);
 
     // åÖè„Ç∞ÇÃî≠ê∂
     bool bUpNum = false;
