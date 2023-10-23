@@ -57,7 +57,7 @@ private:
     Com_Audio* p_mSEDecide{};
     Com_Audio* p_mSEClear{};
 
-    float fWaitTime = 5.0f;
+    float fWaitTime = 4.0f;
     float fWaitCnt = 0.0f;
     bool bChangeNum = false;
 
