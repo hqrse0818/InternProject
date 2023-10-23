@@ -158,9 +158,6 @@ void OBJ_Azarashi::Start()
 
 void OBJ_Azarashi::Update()
 {
-	// コンポーネントの更新
-	GameObject::Update();
-
 	if (GameManager::GetGameState() == GameState::Game)
 	{
 		switch (mState)
@@ -335,6 +332,9 @@ void OBJ_Azarashi::Update()
 			break;
 		}
 	}
+	// コンポーネントの更新
+	GameObject::Update();
+
 }
 
 void OBJ_Azarashi::SetTargetPosition(float _inx, float _iny, float _inz, float _tarx, float _tary, float _tarz, float _heightY)

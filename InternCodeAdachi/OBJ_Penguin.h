@@ -73,7 +73,10 @@ private:
     //ジャンプエフェクト
     OBJ_JumpEffect* p_mJumpEf = nullptr;
 
+    // 影
     OBJ_Shadow* myShadow = nullptr;
+    // 範囲表示オブジェクト
+    GameObject* pRangeObj = nullptr;
 
     // SE再生用
     Com_Audio* p_mSEJump = nullptr;

@@ -53,7 +53,7 @@ OBJ_ComboDisplay::OBJ_ComboDisplay()
 	p_GageSp->mType = Com_CustomSprite::CustomType::Left;
 	p_ComboGage->AddComponent(p_GageSp);
 	p_ComboGage->SetPosition(900.0f, 700.0f, 0.0f);
-	p_ComboGage->SetScale(0.0f, 48.0f * 0.28f, 0.0f);
+	p_ComboGage->SetScale(0.0f, 48.0f * 0.25f, 0.0f);
 
 	fComboScale = p_ComboFrame->p_mTransform->mScale.x;
 }
@@ -373,7 +373,7 @@ void OBJ_ComboDisplay::Update()
 	GameObject::Update();
 
 	fComboScale -= p_ComboFrame->p_mTransform->mScale.x * (Time->GetDeltaTime() / fComboResetTime);
-	p_ComboGage->SetScale(fComboScale, 48.0f * 0.28f, 0.0f);
+	p_ComboGage->SetScale(fComboScale, 48.0f * 0.25f, 0.0f);
 }
 
 void OBJ_ComboDisplay::Uninit()

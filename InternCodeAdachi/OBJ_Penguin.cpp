@@ -10,6 +10,8 @@
 #include "OBJ_Azarashi.h"
 #include "GameManager.h"
 
+#define RangeRadius (18)
+
 using namespace DirectX::SimpleMath;
 using namespace std;
 void OBJ_Penguin::CreateFromCSV(const char* _FileName)
@@ -199,12 +201,35 @@ void OBJ_Penguin::Start()
 	myShadow->Start();
 	GetScene()->AddGameObject(myShadow);
 
+	pRangeObj = new GameObject("range");
+	Com_Shader* ranges = new Com_Shader();
+	ranges->p_mVS->Load(VS_SPRITE);
+	ranges->p_mPS->Load(PS_SPRITE);
+	pRangeObj->AddComponent(ranges);
+
+	Com_3DSprite* ransp = new Com_3DSprite();
+	ransp->SetTexture("asset/texture/range.png");
+	ransp->SetUV(1, 1);
+	pRangeObj->AddComponent(ransp);
+
+	pRangeObj->SetPosition(0.0f, 2.4f, 0.0f);
+	ransp->SetSize(RangeRadius * 2, RangeRadius*2);
+
+	pRangeObj->Init();
+	pRangeObj->Start();
+
+	GetScene()->AddGameObject(pRangeObj);
+
 	bInit = false;
 }
 
 void OBJ_Penguin::Update()
 {
 	GameObject::Update();
+
+	pRangeObj->p_mTransform->mPosition.x = p_mTransform->mPosition.x;
+	pRangeObj->p_mTransform->mPosition.z = p_mTransform->mPosition.z;
+	pRangeObj->SetActive(false);
 
 	if (!bInit)
 	{
@@ -283,6 +308,8 @@ void OBJ_Penguin::Update()
 
 			// ジャンプ中の予備動作
 		case PenguinState::BeforeJump:
+			pRangeObj->SetActive(true);
+
 			p_mColliderCom->bEnable = true;
 			p_mFootCom->bEnable = false;
 			p_mMoveCom->Move(mMoveVelocity.x * fAirMoveSpeed, mMoveVelocity.y * fAirMoveSpeed);
@@ -312,6 +339,7 @@ void OBJ_Penguin::Update()
 
 			// ジャンプ
 		case PenguinState::Jump:
+			pRangeObj->SetActive(true);
 			p_mMoveCom->Move(mMoveVelocity.x * fAirMoveSpeed, mMoveVelocity.y * fAirMoveSpeed);
 			// ヒップインパクト
 			if (Controller_Input::GetRightTriggerSimple(0) == KEYSTATE::KEY_DOWN ||
@@ -327,6 +355,7 @@ void OBJ_Penguin::Update()
 
 			// ヒップドロップ予備動作
 		case PenguinState::BeforeHipDrop:
+			pRangeObj->SetActive(true);
 			// アニメーションの最後のキーまで待機
 			if (p_mModel->GetIsRotLastKey())
 			{
@@ -340,6 +369,7 @@ void OBJ_Penguin::Update()
 
 			// ヒップドロップ
 		case PenguinState::HipDrop:
+			pRangeObj->SetActive(true);
 			if (p_mGravityCom->GetOnGround())
 			{
 				p_mJumpCom->Create();
