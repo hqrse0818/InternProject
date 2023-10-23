@@ -160,7 +160,7 @@ void Scene_Title::Init()
 	Shader_buf->p_mPS->Load(PS_SPRITE);
 	p_mExp1->AddComponent(Shader_buf);
 	Sprite_buf = new Com_Sprite();
-	Sprite_buf->SetTexture("asset/texture/tyutorial1.png");
+	Sprite_buf->SetTexture("asset/texture/tyutorial_rule.png");
 	Sprite_buf->SetSeparateNum(1,1);
 	Sprite_buf->SetCurrent(1);
 	p_mExp1->AddComponent(Sprite_buf);
@@ -174,11 +174,11 @@ void Scene_Title::Init()
 	Shader_buf->p_mPS->Load(PS_SPRITE);
 	p_mExp1->AddComponent(Shader_buf);
 	Sprite_buf = new Com_Sprite();
-	Sprite_buf->SetTexture("asset/texture/tyutorial2.png");
+	Sprite_buf->SetTexture("asset/texture/tyutorial_sousa.png");
 	Sprite_buf->SetSeparateNum(1, 1);
 	Sprite_buf->SetCurrent(1);
 	p_mExp2->AddComponent(Sprite_buf);
-	p_mExp2->SetPosition(SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2, 0.0f);
+	p_mExp2->SetPosition(SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2 + 1.0f, 0.0f);
 	p_mExp2->SetScale(1980.0f * 0.6f, 1080.0f * 0.6f, 1.0f);
 	AddGameObject(p_mExp2);
 
@@ -219,8 +219,9 @@ void Scene_Title::Update()
 		{
 			mState = TitleState::WaitInput;
 		}
+		break;
 	case Scene_Title::TitleState::WaitInput:
-		if (Controller_Input::GetButton(0, GAMEPAD_A) == KEYSTATE::KEY_DOWN || Input::GetKeyState(KEYCODE_RETURN) == KEYSTATE::KEY_DOWN)
+		if (Controller_Input::GetButton(0, GAMEPAD_A) == KEYSTATE::KEY_DOWN || Input::GetKeyState(KEYCODE_RETURN) == KEYSTATE::KEY_DOWN || Input::GetKeyState(KEYCODE_SPACE) == KEYSTATE::KEY_DOWN)
 		{
 			p_mSEDecide->Play();
 			if (bisUP)
@@ -236,7 +237,7 @@ void Scene_Title::Update()
 				p_mExp2->SetActive(false);
 			}
 		}
-		else if (Controller_Input::GetButton(0, GAMEPAD_UP) == KEYSTATE::KEY_DOWN || Input::GetKeyState(KEYCODE_UP) == KEYSTATE::KEY_DOWN)
+		else if (Controller_Input::GetButton(0, GAMEPAD_UP) == KEYSTATE::KEY_DOWN || Input::GetKeyState(KEYCODE_UP) == KEYSTATE::KEY_DOWN || Input::GetKeyState(KEYCODE_W) == KEYSTATE::KEY_DOWN)
 		{
 			if (!bisUP)
 			{
@@ -248,7 +249,7 @@ void Scene_Title::Update()
 			p_mStartScale->SetUpdate(true);
 			p_mTutoScale->SetUpdate(false);
 		}
-		else if (Controller_Input::GetButton(0, GAMEPAD_DOWN) == KEYSTATE::KEY_DOWN || Input::GetKeyState(KEYCODE_DOWN) == KEYSTATE::KEY_DOWN)
+		else if (Controller_Input::GetButton(0, GAMEPAD_DOWN) == KEYSTATE::KEY_DOWN || Input::GetKeyState(KEYCODE_DOWN) == KEYSTATE::KEY_DOWN || Input::GetKeyState(KEYCODE_S) == KEYSTATE::KEY_DOWN)
 		{
 			if (bisUP)
 			{
@@ -262,7 +263,7 @@ void Scene_Title::Update()
 		}
 		break;
 	case Scene_Title::TitleState::Tutorial:
-		if (Controller_Input::GetLeftStick(0).x < -0.5f || Controller_Input::GetButton(0, GAMEPAD_LEFT) == KEYSTATE::KEY_DOWN ||
+		if (Controller_Input::GetLeftStick(0).x < -0.5f || Controller_Input::GetButton(0, GAMEPAD_LEFT) == KEYSTATE::KEY_DOWN || Controller_Input::GetButton(0, GAMEPAD_SHOULDER_L) == KEYSTATE::KEY_DOWN ||
 			Input::GetKeyState(KEYCODE_A) == KEYSTATE::KEY_DOWN || Input::GetKeyState(KEYCODE_LEFT) == KEYSTATE::KEY_DOWN)
 		{
 			if (!bisLeft)
@@ -273,7 +274,7 @@ void Scene_Title::Update()
 			p_mExp1->SetActive(true);
 			p_mExp2->SetActive(false);
 		}
-		else if (Controller_Input::GetLeftStick(0).x > 0.5f || Controller_Input::GetButton(0, GAMEPAD_RIGHT) == KEYSTATE::KEY_DOWN ||
+		else if (Controller_Input::GetLeftStick(0).x > 0.5f || Controller_Input::GetButton(0, GAMEPAD_RIGHT) == KEYSTATE::KEY_DOWN || Controller_Input::GetButton(0, GAMEPAD_SHOULDER_R) == KEYSTATE::KEY_DOWN ||
 			Input::GetKeyState(KEYCODE_D) == KEYSTATE::KEY_DOWN || Input::GetKeyState(KEYCODE_RIGHT) == KEYSTATE::KEY_DOWN)
 		{
 			if (bisLeft)
@@ -284,7 +285,7 @@ void Scene_Title::Update()
 			p_mExp1->SetActive(false);
 			p_mExp2->SetActive(true);
 		}
-		else if (Controller_Input::GetButton(0, GAMEPAD_A) == KEYSTATE::KEY_DOWN || Input::GetKeyState(KEYCODE_SPACE) == KEYSTATE::KEY_DOWN)
+		else if (Controller_Input::GetButton(0, GAMEPAD_A) == KEYSTATE::KEY_DOWN || Input::GetKeyState(KEYCODE_SPACE) == KEYSTATE::KEY_DOWN || Controller_Input::GetButton(0, GAMEPAD_B) == KEYSTATE::KEY_DOWN || Input::GetKeyState(KEYCODE_RETURN) == KEYSTATE::KEY_DOWN)
 		{
 			p_mSEDecide->Play();
 			bisLeft = true;

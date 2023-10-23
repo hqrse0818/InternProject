@@ -101,6 +101,7 @@
     <ClCompile Include="Scene\Scene_Clear.cpp" />
     <ClCompile Include="GameObject\OBJ_HalfFade.cpp" />
     <ClCompile Include="GameObject\OBJ_GameOver.cpp" />
+    <ClCompile Include="InternCodeAdachi\OBJ_Sky.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Component\Component.h" />
@@ -208,6 +209,7 @@
     <ClInclude Include="Scene\Scene_Clear.h" />
     <ClInclude Include="GameObject\OBJ_HalfFade.h" />
     <ClInclude Include="GameObject\OBJ_GameOver.h" />
+    <ClInclude Include="InternCodeAdachi\OBJ_Sky.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="ClassDiagram.cd" />
