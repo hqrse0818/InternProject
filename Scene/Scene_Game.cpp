@@ -451,10 +451,8 @@ void Scene_Game::Init()
 	scorep->SetTexture("asset/texture/scoreFont.png");
 	ScoreDis->AddComponent(scorep);
 	ScoreDis->SetScale(220.0f, 220.0f, 1.0f);
-	ScoreDis->SetPosition(850.0f, 50.0f, 0.0f);
+	ScoreDis->SetPosition(820.0f, 50.0f, 0.0f);
 	AddGameObject(ScoreDis);
-
-
 
 	// スコアマネージャー
 	OBJ_Score* ScoreManager = new OBJ_Score("score", "asset/data/csv/ComboSetting.csv");
@@ -463,7 +461,6 @@ void Scene_Game::Init()
 	// コンボ表示オブジェクト
 	ComboObj = new OBJ_ComboDisplay("combo", "asset/data/csv/ComboUI.csv");
 	AddGameObject(ComboObj);
-	
 
 	// ゲームBGM
 	p_mBGM = new Com_Audio();

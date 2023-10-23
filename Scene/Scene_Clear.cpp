@@ -207,6 +207,12 @@ void Scene_Clear::Init()
 	//pen->SetScale(100.0f, 100.0f, 100.0f);
 	//AddGameObject(pen, 7);
 
+	// リザルトぺんぺん
+	p_mPenguin = new OBJ_ResultPenguin("pen");
+	p_mPenguin->SetScale(1280.0f * 0.7f, 720.0f * 0.7f, 1.0f);
+	p_mPenguin->SetPosition(400.0f, SCREEN_HEIGHT / 2, 1.0f);
+	AddGameObject(p_mPenguin);
+
 	// 遷移用オブジェクト
 	p_mTransition = new OBJ_Transition();
 	p_mTransition->SetState(OBJ_Transition::FadeState::InEnd);
@@ -305,6 +311,7 @@ void Scene_Clear::Update()
 		{
 			p_mSEDrum->Stop();
 			p_mSEResult->Play();
+			p_mPenguin->SetUpdate(true);
 			mState = ClearState::WaitInput;
 		}
 	}

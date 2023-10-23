@@ -342,6 +342,7 @@ void OBJ_Penguin::Update()
 		case PenguinState::HipDrop:
 			if (p_mGravityCom->GetOnGround())
 			{
+				p_mJumpCom->Create();
 				p_mModel->SetCurrentKeyFrame(0);
 				mState = PenguinState::AfterHipDrop;
 				p_mSEAttacLand->Play();

@@ -2,6 +2,7 @@
 #include "Scene.h"
 #include "../GameObject/OBJ_Transition.h"
 #include "../InternCode.Kizuki/OBJ_Number.h"
+#include "../InternCodeAdachi/OBJ_ResultPenguin.h"
 
 class Scene_Clear :
     public Scene
@@ -65,6 +66,8 @@ private:
 
     bool bSEEnd = false;
     ClearState mState = ClearState::WaitState;
+
+    OBJ_ResultPenguin* p_mPenguin{};
 public:
 
     void Init();

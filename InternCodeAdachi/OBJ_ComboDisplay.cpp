@@ -110,25 +110,8 @@ void OBJ_ComboDisplay::Update()
 		mCurrentNumScale = mNumInitScale;
 		mCurrentMyScale = mMyInitScale;
 		fComboCnt = 0.0f;
-
-		Color col;
-		col.x = 1.0f;
-		col.y = 1.0f;
-		col.z = 1.0f;
-		col.w = 1.0f;
-
-		p_mSprite->SetDiffuse(col);
-		for (int i = 0; i < 3; i++)
-		{
-			Nums[i]->GetSpriteCom()->SetDiffuse(col);
-		}
 	}
-	else if (iLastCombo < 10 && iCurrentCombo >= 10 || iLastCombo < 100 && iCurrentCombo >= 100)
-	{
-		// 桁上げの発生
-		bUpNum = true;
-	}
-	else if (iCurrentCombo == iLastCombo && iCurrentCombo != 0)
+	if (iCurrentCombo == iLastCombo && iCurrentCombo != 0)
 	{
 		// コンボの変動なし
 		fComboCnt += Time->GetDeltaTime();
@@ -152,20 +135,19 @@ void OBJ_ComboDisplay::Update()
 		{
 			mCurrentMyScale.y = mMyMaxScale.y;
 		}
-		Color col;
-		col.x = 1.0f;
-		col.y = 1.0f;
-		col.z = 1.0f;
-		// 時間経過で透明度を上げる
-		col.w = fComboResetTime - fComboCnt / fComboResetTime;
-		p_mSprite->SetDiffuse(col);
+	}
+	else if(iCurrentCombo == 0)
+	{
+		mColor.x = 1.0f;
+		mColor.y = 1.0f;
+		mColor.z = 1.0f;
+		mColor.w = 1.0f;
+		p_mSprite->SetDiffuse(mColor);
 		for (int i = 0; i < 3; i++)
 		{
-			Nums[i]->GetSpriteCom()->SetDiffuse(col);
+			Nums[i]->GetSpriteCom()->SetDiffuse(mColor);
 		}
-	}
-	else
-	{
+
 		fComboCnt = 0.0f;
 		mCurrentNumScale.x = 0.0f;
 		mCurrentNumScale.y = 0.0f;
@@ -173,6 +155,33 @@ void OBJ_ComboDisplay::Update()
 		Nums[1]->SetNum(0);
 		Nums[2]->SetNum(0);
 		SetScale(0.0f, 0.0f, 0.0f);
+	}
+
+	if (iLastCombo < 10 && iCurrentCombo >= 10 || iLastCombo < 20 && iCurrentCombo >= 20 || iLastCombo < 30 && iCurrentCombo >= 30 || iLastCombo < 40 && iCurrentCombo >= 40 || iLastCombo < 50 && iCurrentCombo >= 50 ||
+		iLastCombo < 60 && iCurrentCombo >= 60 || iLastCombo < 70 && iCurrentCombo >= 70 || iLastCombo < 80 && iCurrentCombo >= 80 || iLastCombo < 90 && iCurrentCombo >= 90 || iLastCombo < 100 && iCurrentCombo >= 100 ||
+		iLastCombo < 110 && iCurrentCombo >= 110 || iLastCombo < 120 && iCurrentCombo >= 120 || iLastCombo < 130 && iCurrentCombo >= 130 || iLastCombo < 140 && iCurrentCombo >= 140 || iLastCombo < 150 && iCurrentCombo >= 150)
+	{;
+		mColor.x += 0.2f;
+		mColor.y += 0.2f;
+		mColor.z += 0.2f;
+		mColor.w = 1.0f;
+
+		if (mColor.y <= 0.0f)
+		{
+			mColor.y = 0.0f;
+		}
+		if (mColor.z <= 0.0f)
+		{
+			mColor.z = 0.0f;
+		}
+		p_mSprite->SetDiffuse(mColor);
+		for (int i = 0; i < 3; i++)
+		{
+			Nums[i]->GetSpriteCom()->SetDiffuse(mColor);
+		}
+
+		// 桁上げの発生
+		bUpNum = true;
 	}
 
 	

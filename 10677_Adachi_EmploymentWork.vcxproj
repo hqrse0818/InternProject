@@ -213,6 +213,7 @@
     <ClCompile Include="GameObject\OBJ_HalfFade.cpp" />
     <ClCompile Include="GameObject\OBJ_GameOver.cpp" />
     <ClCompile Include="InternCodeAdachi\OBJ_Sky.cpp" />
+    <ClCompile Include="InternCodeAdachi\OBJ_ResultPenguin.cpp" />
     <ClCompile Include="Scene\Scene_Clear.cpp" />
     <ClCompile Include="Scene\Scene.cpp" />
     <ClCompile Include="Scene\Scene_Title.cpp" />
@@ -314,6 +315,7 @@
     <ClInclude Include="GameObject\OBJ_HalfFade.h" />
     <ClInclude Include="GameObject\OBJ_GameOver.h" />
     <ClInclude Include="InternCodeAdachi\OBJ_Sky.h" />
+    <ClInclude Include="InternCodeAdachi\OBJ_ResultPenguin.h" />
     <ClInclude Include="Scene\Scene_Clear.h" />
     <ClInclude Include="Scene\GameInclude.h" />
     <ClInclude Include="Scene\Scene.h" />

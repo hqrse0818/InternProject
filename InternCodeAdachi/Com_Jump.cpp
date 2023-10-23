@@ -46,6 +46,25 @@ void Com_Jump::Update()
 	}
 }
 
+void Com_Jump::Create()
+{
+	//衝撃オブジェクトを呼び出す
+	OBJ_Inpact* Inpact = new OBJ_Inpact("Inpact");
+
+	//高さから範囲と威力を設定
+	Inpact->GetColliderCom()->fRadius = fImpactRenge; //範囲
+	Inpact->GetColliderCom()->bMovable = true;
+	Inpact->GetColliderCom()->bIsTrigger = true;
+	// 拡大速度の設定
+	Inpact->SetScaleSpeed(fImpactSpeed);
+
+	Inpact->Init();
+
+	Inpact->p_mTransform->mPosition = p_mObject->p_mTransform->mPosition;
+
+	GameObject::GetScene()->AddGameObject(Inpact);
+}
+
 void Com_Jump::OnCollisionEnter(GameObject* _obj)
 {
 	//コライダーのタイプを取得
@@ -58,21 +77,7 @@ void Com_Jump::OnCollisionEnter(GameObject* _obj)
 			//ドロップフラグがtrue
 			if (bDrop)
 			{
-				//衝撃オブジェクトを呼び出す
-				OBJ_Inpact* Inpact = new OBJ_Inpact("Inpact");
-
-				//高さから範囲と威力を設定
-				Inpact->GetColliderCom()->fRadius = fImpactRenge; //範囲
-				Inpact->GetColliderCom()->bMovable = true;
-				Inpact->GetColliderCom()->bIsTrigger = true;
-				// 拡大速度の設定
-				Inpact->SetScaleSpeed(fImpactSpeed);
-
-				Inpact->Init();
-
-				Inpact->p_mTransform->mPosition = p_mObject->p_mTransform->mPosition;
-
-				GameObject::GetScene()->AddGameObject(Inpact);
+				
 			}
 		}
 	}

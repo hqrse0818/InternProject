@@ -22,7 +22,7 @@ protected:
     float fCurrentz = 1;
     float fCurrentw = 1;
 
-    int iCurrent;
+    int iCurrent = 1;
 
 public:
 

@@ -34,6 +34,8 @@ public:
     void HipDrop();
     void Update();
 
+    void Create();
+
     void OnCollisionEnter(GameObject* _obj);
 
     void SetJumpPower(float _val)

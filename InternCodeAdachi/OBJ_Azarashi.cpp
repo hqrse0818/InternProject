@@ -356,7 +356,6 @@ void OBJ_Azarashi::OnCollisionEnter(GameObject* _obj)
 {
 	GameObject::OnCollisionEnter(_obj);
 
-
 	if (_obj->mColType == Collider::ColliderForm::Box)
 	{
 		Com_BoxCollider* col = _obj->GetComponent<Com_BoxCollider>();
@@ -367,12 +366,35 @@ void OBJ_Azarashi::OnCollisionEnter(GameObject* _obj)
 				mState = AzrashiState::AfterSpawnWait;
 			}
 		}
-		if (col->mColliderTag == ColliderKind::ColTag_Sea)
+		else if (col->mColliderTag == ColliderKind::ColTag_Sea)
 		{
 			// Ž€–Sˆ—
 			mState = AzrashiState::Death;
 			p_mDeadEf->p_mTransform->mPosition = this->p_mTransform->mPosition;
 			p_mDeadEf->Create();
+		}
+		else if (col->mColliderTag == ColliderKind::ColTag_Fall)
+		{
+			if (mState != AzrashiState::Damage &&
+				mState != AzrashiState::Dive &&
+				mState != AzrashiState::DiveTo &&
+				mState != AzrashiState::Death &&
+				mState != AzrashiState::Dive2 &&
+				mState != AzrashiState::DiveTo2)
+			{
+				mState = AzrashiState::Dive2;
+				if (iScore == 0)
+				{
+					iScore = 50;
+				}
+				// d—Í‚ÌXV‚ð’âŽ~
+				p_mShadowObj->SetActive(false);
+				p_mGravityCom->bEnable = false;
+				p_mFootCom->bEnable = false;
+				p_mColliderCom->bEnable = false;
+				p_mModelCom->PlayAnimation("Dive");
+				p_mModelCom->SetCurrentKeyFrame(0);
+			}
 		}
 	}
 	
@@ -479,6 +501,7 @@ void OBJ_Azarashi::OnCollisionStay(GameObject* _obj)
 			if (mState == AzrashiState::DiveTo2 || mState == AzrashiState::Dive2)
 			{
 				p_mSEDeath->Play();
+				p_mShadowObj->SetActive(false);
 				mState = AzrashiState::Death2;
 				p_mColliderCom->bEnable = false;
 			}
@@ -486,6 +509,7 @@ void OBJ_Azarashi::OnCollisionStay(GameObject* _obj)
 			{
 				// Ž€–Sˆ—
 				p_mSEDeath->Play();
+				p_mShadowObj->SetActive(false);
 				mState = AzrashiState::Death;
 				p_mColliderCom->bEnable = false;
 			}
@@ -505,6 +529,7 @@ void OBJ_Azarashi::OnCollisionStay(GameObject* _obj)
 					iScore = 50;
 				}
 				// d—Í‚ÌXV‚ð’âŽ~
+				p_mShadowObj->SetActive(false);
 				p_mGravityCom->bEnable = false;
 				p_mFootCom->bEnable = false;
 				p_mColliderCom->bEnable = false;

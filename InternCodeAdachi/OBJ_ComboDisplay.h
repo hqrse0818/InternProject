@@ -44,6 +44,8 @@ private:
     // Œ»İ‚Ì”š‚ÌƒXƒP[ƒ‹
     DirectX::SimpleMath::Vector2 mCurrentNumScale = DirectX::SimpleMath::Vector2(0.0f, 0.0f);
 
+    DirectX::SimpleMath::Color mColor = DirectX::SimpleMath::Color(1.0f, 1.0f, 1.0f, 1.0f);
+
     // Œ…ã‚°‚Ì”­¶
     bool bUpNum = false;
 
