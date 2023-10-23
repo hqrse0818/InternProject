@@ -360,7 +360,15 @@ void OBJ_AzarashiManager::CreateTeshita()
 		Vector3 target = vec[r]->p_mTransform->mPosition;
 
 		// ƒvƒŒƒCƒ„[‚Ì•ûŒü‚É­‚µ‚¾‚¯Šñ‚¹‚é
-		//Vector3 Direction = Math::GetVector()
+		Vector3 Direction = Math::GetVector(target, p_mTarget->p_mTransform->mPosition);
+		Direction = Math::Normalize(Direction);
+		int t = HighRand::fGetRand(5, 14, 3);
+		Direction *= t;
+		target.x += Direction.x;
+		target.z += Direction.z;
+
+
+
 
 		OBJ_Azarashi* azarashis = new OBJ_Azarashi("Teshita", 1);
 		azarashis->GetColliderCom()->SetCenter(mAzarashiCenter.x, mAzarashiCenter.y, mAzarashiCenter.z);
