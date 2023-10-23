@@ -56,6 +56,7 @@ void Scene_Game::Init()
 	{
 		// アザラシマネージャー
 		OBJ_AzarashiManager* AManager = new OBJ_AzarashiManager("manager", "asset/data/csv/AzarashiManager.csv");
+		AManager->SetTarget(p_mPlayer);
 		AddGameObject(AManager, 0);
 
 		//アザラシの残機
@@ -440,6 +441,21 @@ void Scene_Game::Init()
 	ScoreObj = new OBJ_DisplayScore("dis", "asset/data/csv/ScoreUI.csv");
 	AddGameObject(ScoreObj);
 
+	// スコアフォント
+	ScoreDis = new GameObject();
+	Com_Shader* scores = new Com_Shader();
+	scores->p_mVS->Load(VS_SPRITE);
+	scores->p_mPS->Load(PS_SPRITE);
+	ScoreDis->AddComponent(scores);
+	Com_Sprite* scorep = new Com_Sprite();
+	scorep->SetTexture("asset/texture/scoreFont.png");
+	ScoreDis->AddComponent(scorep);
+	ScoreDis->SetScale(220.0f, 220.0f, 1.0f);
+	ScoreDis->SetPosition(850.0f, 50.0f, 0.0f);
+	AddGameObject(ScoreDis);
+
+
+
 	// スコアマネージャー
 	OBJ_Score* ScoreManager = new OBJ_Score("score", "asset/data/csv/ComboSetting.csv");
 	AddGameObject(ScoreManager);
@@ -655,6 +671,7 @@ void Scene_Game::Update()
 	case GameState::GameFade:
 		if (p_mTransition->GetState() == OBJ_Transition::FadeState::InEnd)
 		{
+			p_mSECount->Play();
 			GameManager::SetGameState(GameState::WaitStart);
 		}
 		break;
@@ -666,26 +683,14 @@ void Scene_Game::Update()
 			GameManager::SetGameState(GameState::Game);
 			p_mBGM->Play(true);
 		}
-		else if (fWaitCnt > 4)
+		else if (fWaitCnt > 3)
 		{
 			fWaitCnt += Time->GetDeltaTime();
 			p_mObjGo->Scaling(800.0f * Time->GetDeltaTime(), 800.0f * Time->GetDeltaTime(), 0.0f);
 			if (fWaitCnt > fWaitTime)
 			{
-				p_mSEGo->Play();
 				p_mObjGo->SetScale(0.0f, 0.0f, 0.0f);
 				p_mObjGo->bDestroy = true;
-			}
-		}
-		else if (fWaitCnt > 3)
-		{
-			fWaitCnt += Time->GetDeltaTime();
-			p_mObjNum->Scaling(300.0f * Time->GetDeltaTime(), 300.0f * Time->GetDeltaTime(), 0.0f);
-			if (fWaitCnt > 4)
-			{
-				p_mSECount->Play();
-				p_mObjNum->SetScale(0.0f, 0.0f, 0.0f);
-				p_mObjNum->bDestroy = true;
 			}
 		}
 		else if (fWaitCnt > 2)
@@ -694,9 +699,9 @@ void Scene_Game::Update()
 			p_mObjNum->Scaling(300.0f * Time->GetDeltaTime(), 300.0f * Time->GetDeltaTime(), 0.0f);
 			if (fWaitCnt > 3)
 			{
-				p_mSECount->Play();
+				p_mSEGo->Play();
 				p_mObjNum->SetScale(0.0f, 0.0f, 0.0f);
-				p_mSpriteNum->SetCurrent(1);
+				p_mObjNum->bDestroy = true;
 			}
 		}
 		else if (fWaitCnt > 1)
@@ -707,12 +712,19 @@ void Scene_Game::Update()
 			{
 				p_mSECount->Play();
 				p_mObjNum->SetScale(0.0f, 0.0f, 0.0f);
-				p_mSpriteNum->SetCurrent(2);
+				p_mSpriteNum->SetCurrent(1);
 			}
 		}
 		else
 		{
 			fWaitCnt += Time->GetDeltaTime();
+			p_mObjNum->Scaling(300.0f * Time->GetDeltaTime(), 300.0f * Time->GetDeltaTime(), 0.0f);
+			if (fWaitCnt > 1)
+			{
+				p_mSECount->Play();
+				p_mObjNum->SetScale(0.0f, 0.0f, 0.0f);
+				p_mSpriteNum->SetCurrent(2);
+			}
 		}
 	}
 		break;
@@ -737,6 +749,7 @@ void Scene_Game::Update()
 		ARemainNum->SetDisplay(false);
 		ComboObj->SetDisplay(false);
 		ScoreObj->SetDisplay(false);
+		ScoreDis->SetActive(false);
 		p_mHalfFade->FadeOut(1.5);
 		// ゲームオーバーオブジェクトを落としてくる
 		p_mOvobj->FallStart();

@@ -8,6 +8,7 @@
 #include "GameManager.h"
 #include "../InternCode.Kizuki/OBJ_AzarashiAttackEffect.h"
 #include "../InternCode.Kizuki/OBJ_AzarashiDeadEffect.h"
+#include "../System/CustomMath.h"
 
 using namespace DirectX::SimpleMath;
 using namespace std;
@@ -357,6 +358,9 @@ void OBJ_AzarashiManager::CreateTeshita()
 	{
 		int r = HighRand::GetRand(0, vec.size() - 1);
 		Vector3 target = vec[r]->p_mTransform->mPosition;
+
+		// ƒvƒŒƒCƒ„[‚Ì•ûŒü‚É­‚µ‚¾‚¯Šñ‚¹‚é
+		//Vector3 Direction = Math::GetVector()
 
 		OBJ_Azarashi* azarashis = new OBJ_Azarashi("Teshita", 1);
 		azarashis->GetColliderCom()->SetCenter(mAzarashiCenter.x, mAzarashiCenter.y, mAzarashiCenter.z);

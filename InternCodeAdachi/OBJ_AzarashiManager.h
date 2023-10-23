@@ -80,6 +80,8 @@ private:
 
     SpawnState mState = SpawnState::Wait;
 
+    GameObject* p_mTarget = nullptr;
+
     int iRow = 0;
     int iLine = 0;
 
@@ -102,6 +104,11 @@ public:
     static int GetSpawnedNum()
     {
         return iSpawnedNum;
+    }
+
+    void SetTarget(GameObject* _tar)
+    {
+        p_mTarget = _tar;
     }
 };
 

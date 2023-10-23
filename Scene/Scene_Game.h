@@ -36,6 +36,9 @@ private:
 
     // スコア
     OBJ_DisplayScore* ScoreObj{};
+    // スコア文字
+    GameObject* ScoreDis{};
+
     // コンボ
     OBJ_ComboDisplay* ComboObj{};
     // アザラシの数
