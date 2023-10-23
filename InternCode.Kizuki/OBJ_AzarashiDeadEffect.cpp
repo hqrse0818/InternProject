@@ -58,27 +58,28 @@ void OBJ_AzarashiDeadEffect::Create()
 		Particle->Init();
 		Particle->SetTexture(p_mTexture->GetSRV());
 		Particle->p_mTransform->mPosition = this->p_mTransform->mPosition;
+		Particle->p_mTransform->mScale = DirectX::SimpleMath::Vector3(9.0, 9.0, 9.0);
 
 		//ŽÎ•û“ŠŽËÝ’è
-		Particle->p_mTousyaBuf->SetGravity(0.1f);
+		Particle->p_mTousyaBuf->SetGravity(-3.0f);
 		//Particle->p_mTousyaBuf->SetInitSpeed(Vector3(0.0f, 0.0f, 0.0f)); //‰‘¬
 		//Particle->p_mTousyaBuf->SetThrowAngle(Vector3(-100.0f, 0.0f, -100.0f)); //“ŠŽËŠp
 
 		Vector3 angle; //Šp“x
-		angle.x = HighRand::fGetRand(-70, -30, 3);
-		angle.y = HighRand::fGetRand(100, 150, 3);
-		angle.z = HighRand::fGetRand(-70, -30, 3);
+		angle.x = 0;
+		angle.y = HighRand::fGetRand(0, 90, 3);
+		angle.z = 0;
 
 		Particle->p_mTousyaBuf->SetThrowAngle(angle);
 
 		Vector3 speed; //”ÍˆÍ
-		speed.x = HighRand::fGetRand(-6, 6, 2);
-		speed.y = HighRand::fGetRand(-100, -1, 3) * 0.0001f;
-		speed.z = HighRand::fGetRand(-6, 6, 2);
+		speed.x = HighRand::fGetRand(-1, 1, 2);
+		speed.y = HighRand::fGetRand(1, 10, 3);
+		speed.z = HighRand::fGetRand(-1, 1, 2);
 
 		Particle->p_mTousyaBuf->SetInitSpeed(speed);
 
-		Particle->SetLifeTime(HighRand::fGetRand(2, 5, 3) * 0.1f);
+		Particle->SetLifeTime(HighRand::fGetRand(10, 12, 3) * 0.1f);
 
 		s_p_mScene->AddGameObject(Particle);
 	}

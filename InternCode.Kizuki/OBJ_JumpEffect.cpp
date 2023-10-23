@@ -10,7 +10,7 @@ using namespace DirectX::SimpleMath;
 OBJ_JumpEffect::OBJ_JumpEffect()
 {
 	mKind = Particle;
-	iCreateNum = 10;
+	iCreateNum = 1;
 
 	p_mTexture = new ShaderResourceView;
 	p_mTexture->Create("asset/texture/jump.png");
@@ -56,6 +56,7 @@ void OBJ_JumpEffect::Create()
 		Particle->p_mTransform->mPosition = Target->p_mTransform->mPosition;
 		Particle->Init();
 		Particle->SetTexture(p_mTexture->GetSRV());
+		Particle->p_mTransform->mScale = DirectX::SimpleMath::Vector3(3.0, 3.0, 3.0);
 
 		//ŽÎ•û“ŠŽËÝ’è
 		Particle->p_mTousyaBuf->SetGravity(0.1f);

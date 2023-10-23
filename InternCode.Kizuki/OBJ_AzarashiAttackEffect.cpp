@@ -51,24 +51,24 @@ void OBJ_AzarashiAttackEffect::Create()
 		Particle->Init();
 		Particle->SetTexture(p_mTexture->GetSRV());
 		Particle->p_mTransform->mPosition = this->p_mTransform->mPosition;
-		Particle->p_mTransform->mScale = DirectX::SimpleMath::Vector3(3.0, 3.0, 3.0);
+		Particle->p_mTransform->mScale = DirectX::SimpleMath::Vector3(5.0, 5.0, 5.0);
 
 		//ŽÎ•û“ŠŽËÝ’è
-		Particle->p_mTousyaBuf->SetGravity(-2.0f);
+		Particle->p_mTousyaBuf->SetGravity(0.0f);
 		//Particle->p_mTousyaBuf->SetInitSpeed(Vector3(0.0f, 0.0f, 0.0f)); //‰‘¬
 		//Particle->p_mTousyaBuf->SetThrowAngle(Vector3(-100.0f, 0.0f, -100.0f)); //“ŠŽËŠp
 
 		Vector3 angle; //Šp“x
-		angle.x = 0;
-		angle.y = 0;
-		angle.z = 0;
+		angle.x = HighRand::fGetRand(-1, 1, 2);
+		angle.y = HighRand::fGetRand(2, 4, 2) * 0.1;
+		angle.z = HighRand::fGetRand(-1, 1, 2);
 
 		Particle->p_mTousyaBuf->SetThrowAngle(angle);
 
 		Vector3 speed; //”ÍˆÍ
-		speed.x = HighRand::fGetRand(-1, 1, 2);
-		speed.y = HighRand::fGetRand(2, 4, 2) * 0.1;
-		speed.z = HighRand::fGetRand(-1, 1, 2);
+		speed.x = 0;
+		speed.y = 0;
+		speed.z = 0;
 
 		Particle->p_mTousyaBuf->SetInitSpeed(speed);
 
