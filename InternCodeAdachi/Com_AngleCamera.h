@@ -7,6 +7,10 @@ private:
     float fCurrentAngle = 0.0f;
     float fDistance = 10.0f;
     float fHeight = 5.0f;
+    bool bFollow = true;
+
+    float fCamUpSpeed = 15.0f;
+    float fMaxHeight =50.0f;
 public:
     float GetAngle()
     {
@@ -28,15 +32,33 @@ public:
 
     void SetHeight(float _val)
     {
-        fHeight = _val;
-        if (fHeight > 45)
+        if (bFollow)
         {
-            fHeight = 45;
+            fHeight = _val;
+            if (fHeight > 45)
+            {
+                fHeight = 45;
+            }
+            else if (fHeight < 5)
+            {
+                fHeight = 5;
+            }
         }
-        else if (fHeight < 5)
-        {
-            fHeight = 5;
-        }
+    }
+
+    void SetCamUpSpeed(float _val)
+    {
+        fCamUpSpeed = _val;
+    }
+
+    void SetMaxHeight(float _val)
+    {
+        fMaxHeight = _val;
+    }
+
+    void SetFollow(bool _val)
+    {
+        bFollow = _val;
     }
 
     void Update();

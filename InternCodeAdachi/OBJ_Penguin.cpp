@@ -204,10 +204,8 @@ void OBJ_Penguin::Start()
 
 void OBJ_Penguin::Update()
 {
-	if (GameManager::GetGameState() != TransToOver && GameManager::GetGameState() != GameState::OverFade && GameManager::GetGameState() != GameState::Over)
-	{
-		GameObject::Update();
-	}
+	GameObject::Update();
+
 	if (!bInit)
 	{
 		p_mModel->PlayAnimation("Idle");
@@ -455,19 +453,23 @@ void OBJ_Penguin::Update()
 
 			// 落下モーション
 		case PenguinState::FallMotion:
+			myShadow->SetActive(false);
 			p_mGravityCom->bEnable = false;
-
+			p_mJumpCom->SetDropFlg(false);
+			p_mJumpCom->SetJumpFlg(false);
 			fWaitFallCnt += Time->GetDeltaTime();
 			if (fWaitFallCnt > fWaitFallTime)
 			{
 				fWaitFallCnt = 0.0f;
 				mState = PenguinState::Fall;
+				p_mCameraCom->SetFollow(false);
 			}
 			break;
 		case PenguinState::Fall:
 			fWaitFallCnt += Time->GetDeltaTime();
 			if (fWaitFallCnt > fWaitFallTime)
 			{
+				p_mSEDeath->Play();
 				mState = PenguinState::Death;
 			}
 			Translate(0.0f, -20.0 * Time->GetDeltaTime(), 0.0f);
@@ -478,7 +480,6 @@ void OBJ_Penguin::Update()
 			p_mJumpCom->SetDropFlg(false);
 			p_mJumpCom->SetJumpFlg(false);
 			p_mJumpCom->bEnable = false;
-			myShadow->SetActive(false);
 			// ゲームマネージャーを変更
 			GameManager::SetGameState(GameState::TransToOver);
 			break;
