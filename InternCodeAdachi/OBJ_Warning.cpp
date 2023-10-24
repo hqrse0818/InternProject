@@ -1,6 +1,8 @@
 #include "OBJ_Warning.h"
 #include "../ComponentHeader.h"
 #include "CSVLoad.h"
+#include "../System/Time.h"
+#include "GameManager.h"
 
 using namespace DirectX::SimpleMath;
 using namespace std;
@@ -12,10 +14,10 @@ OBJ_Warning::OBJ_Warning()
 	pShader->p_mVS->Load(VS_SPRITE);
 	pShader->p_mPS->Load(PS_SPRITE);
 	pBack->AddComponent(pShader);
-	Com_Sprite* pSprite = new Com_Sprite();
-	pSprite->SetTexture("asset/texture/keikoku_haikei.png");
-	pSprite->SetUpdate(true);
-	pBack->AddComponent(pSprite);
+	pBackSp = new Com_Sprite();
+	pBackSp->SetTexture("asset/texture/keikoku_haikei.png");
+	pBackSp->SetUpdate(true);
+	pBack->AddComponent(pBackSp);
 
 	AddChild(pBack);
 
@@ -30,7 +32,7 @@ OBJ_Warning::OBJ_Warning()
 	pFont->AddComponent(pFontSp);
 
 	AddChild(pFont);
-
+	
 	pMark = new GameObject("mark");
 	pShader = new Com_Shader();
 	pShader->p_mVS->Load(VS_SPRITE);
@@ -65,4 +67,79 @@ OBJ_Warning::OBJ_Warning(const char* _name, const char* _FileName)
 	pFont->SetPosition(stof(sv[6]), stof(sv[7]), 0.0f);
 	pMark->SetScale(stof(sv[8]), stof(sv[9]), 0.0f);
 	pMark->SetPosition(stof(sv[10]), stof(sv[11]), 0.0f);
+}
+
+void OBJ_Warning::Update()
+{
+	if (bActive)
+	{
+		switch (mState)
+		{
+		case OBJ_Warning::WarningState::No:
+			mColor.w = 0.5;
+			mBackColor.w = 0.5;
+			pBackSp->SetDiffuse(mBackColor);
+			pFontSp->SetDiffuse(mColor);
+			pMarkSp->SetDiffuse(mColor);
+			break;
+		case OBJ_Warning::WarningState::Start:
+			mColor.w += 2 * Time->GetDeltaTime();
+			mBackColor.w += 2 * Time->GetDeltaTime();
+
+			if (mBackColor.w >= 1.0f)
+			{
+				mColor.w = 1;
+				mBackColor.w = 1;
+				mState = WarningState::Warning;
+			}
+			pBackSp->SetDiffuse(mBackColor);
+			pFontSp->SetDiffuse(mColor);
+			pMarkSp->SetDiffuse(mColor);
+
+			break;
+		case OBJ_Warning::WarningState::Warning:
+			if (bRet)
+			{
+				mColor.w += fAlphaSpeed * Time->GetDeltaTime();
+				if (mColor.w >= 1.0f)
+				{
+					mColor.w = 1;
+					bRet = false;
+				}
+				pFontSp->SetDiffuse(mColor);
+				pMarkSp->SetDiffuse(mColor);
+			}
+			else
+			{
+				mColor.w -= fAlphaSpeed * Time->GetDeltaTime();
+				if (mColor.w <= 0.5f)
+				{
+					mColor.w = 0.5;
+					bRet = true;
+				}
+				pFontSp->SetDiffuse(mColor);
+				pMarkSp->SetDiffuse(mColor);
+			}
+
+			break;
+		case OBJ_Warning::WarningState::End:
+			mColor.w -= 2 * Time->GetDeltaTime();
+			mBackColor.w -= 2 * Time->GetDeltaTime();
+
+			if (mBackColor.w  <= 0.5f)
+			{
+				mColor.w = 0.5;
+				mBackColor.w = 0.5;
+				mState = WarningState::No;
+			}
+			pBackSp->SetDiffuse(mBackColor);
+			pFontSp->SetDiffuse(mColor);
+			pMarkSp->SetDiffuse(mColor);
+			break;
+		default:
+			break;
+		}
+
+		GameObject::Update();
+	}
 }

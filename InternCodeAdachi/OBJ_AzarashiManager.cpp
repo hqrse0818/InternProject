@@ -34,6 +34,7 @@ OBJ_AzarashiManager::OBJ_AzarashiManager(const char* _name, const char* _FileNam
 	string sSpawnRate = ReadDataFromCSV(_FileName, SpawnRateRow);
 	string sMaxSpawnNum = ReadDataFromCSV(_FileName, SpawnNumRow);
 	string sAzarashiState = ReadDataFromCSV(_FileName, AzarashiStateRow);
+	string sAzarashiFeaver = ReadDataFromCSV(_FileName, FeaverRow);
 
 	vector<string> spn = SeparateString(sMaxSpawnNum, ',');
 
@@ -56,6 +57,8 @@ OBJ_AzarashiManager::OBJ_AzarashiManager(const char* _name, const char* _FileNam
 	std::vector<string> gt;
 	// スポーンレート
 	std::vector<string> sr;
+	// フィーバーbool
+	std::vector<string> sb;
 	// アザラシのステータス
 	std::vector<string> as;
 	while (getline(iss, word, ','))
@@ -72,14 +75,17 @@ OBJ_AzarashiManager::OBJ_AzarashiManager(const char* _name, const char* _FileNam
 	{
 		as.emplace_back(word);
 	}
+	sb = SeparateString(sAzarashiFeaver, ',');
+
 	// サイズが一緒じゃなかったらエラー
-	assert(sr.size() == gt.size());
+	assert(sr.size() == gt.size() && sr.size() == sb.size());
 
 	// スポーンレートとスポーンレート変更時間を格納
 	for (unsigned int i = 0; i < SpawnRateNumnum; i++)
 	{
 		vec_SpawnRateGameTimer.emplace_back(stoi(gt[i]));
 		vec_SpawnRate.emplace_back(stof(sr[i]));
+		vec_isFeaver.emplace_back(stoi(sb[i]));
 	}
 	if (as.size() == StateSetNum)
 	{
@@ -130,6 +136,9 @@ OBJ_AzarashiManager::OBJ_AzarashiManager(const char* _name, const char* _FileNam
 	gt.clear();
 	sr.clear();
 	as.clear();
+
+	pWar = new OBJ_Warning("war", "asset/data/csv/warning.csv");
+
 
 	s_iSpawnedNum = 0;
 }
@@ -278,6 +287,24 @@ void OBJ_AzarashiManager::Update()
 	{
 		// ゲームタイムを進める
 		fGameCnt += Time->GetDeltaTime();
+
+		// フィーバー状態のチェック
+		if (vec_isFeaver[iCurrentIndex] == 1 && !bFeaver)
+		{
+			bFeaver = true;
+			pWar->StartFade();
+		}
+		if (vec_isFeaver[iCurrentIndex] == 1)
+		{
+
+		}
+		else if(bFeaver && vec_isFeaver[iCurrentIndex] == 0)
+		{
+			bFeaver = false;
+			pWar->EndFade();
+		}
+		
+
 		// 現在のゲームタイムが次のスポーン切り替えのタイム以上ならインデックスを進める
 		if (iCurrentIndex < vec_SpawnRateGameTimer.size() - 1)
 		{
@@ -488,4 +515,6 @@ void OBJ_AzarashiManager::Start()
 
 	OBJ_Azarashi::SetAttackEfect(p_mAttackEf);
 	OBJ_Azarashi::SetDeadEffect(p_mDeadEf);
+
+	GetScene()->AddGameObject(pWar);
 }

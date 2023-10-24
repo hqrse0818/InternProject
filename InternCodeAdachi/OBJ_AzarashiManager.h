@@ -1,6 +1,7 @@
 #pragma once
 #include "../GameObject/GameObject.h"
 #include "OBJ_Azarashi.h"
+#include "OBJ_Warning.h"
 
 #include <vector>
 #define RateNumRow (1)
@@ -8,6 +9,7 @@
 #define SpawnRateRow (5)
 #define SpawnNumRow (7)
 #define AzarashiStateRow (9)
+#define FeaverRow (11)
 #define StateSetNum (24)
 
 enum class SpawnState {
@@ -19,6 +21,9 @@ class OBJ_AzarashiManager :
     public GameObject
 {
 private:
+    // 警告表示用オブジェクト
+    OBJ_Warning* pWar{};
+
     // スポーンレート用カウンター
     float fSpawnCnt = 0.0f;
     // ゲームの進行時間によって出現頻度を変えるためのカウント
@@ -29,6 +34,10 @@ private:
     std::vector<unsigned int> vec_SpawnRateGameTimer;
     // ゲーム時間ごとのスポーンレート
     std::vector<float> vec_SpawnRate;
+    // フィーバーかどうか
+    std::vector<int>vec_isFeaver;
+
+    bool bFeaver = false;
 
     static int s_iMaxSpawn;
     static int s_iSpawnedNum;
