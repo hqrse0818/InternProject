@@ -10,8 +10,10 @@ class Scene_Clear :
 public:
     enum class ClearState
     {
-        // 各スコア待ち
-        WaitState, 
+        // 氷ボーナス
+        WaitIce, 
+        // 最大コンボ待ち
+        WaitCombo,
         // トータルスコア待ち
         WaitTotal, 
         // 入力待ち
@@ -74,7 +76,7 @@ private:
     bool bThisOne = true;
 
     int cnt = 0;
-    ClearState mState = ClearState::WaitState;
+    ClearState mState = ClearState::WaitIce;
 
     OBJ_ResultPenguin* p_mPenguin{};
 public:

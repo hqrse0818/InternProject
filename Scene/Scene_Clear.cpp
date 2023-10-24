@@ -307,7 +307,7 @@ void Scene_Clear::Start()
 	isc = isc / fDrumDuration;
 
 	iMaxCombo = OBJ_Score::GetMaxCombo();
-	ico = iMaxCombo / (fDrumDuration / 2);
+	ico = 100;
 
 	iBreakAzarashiNum = OBJ_Score::GetBreakNum();
 	
@@ -359,7 +359,7 @@ void Scene_Clear::Start()
 	}
 
 	// テスト用入力待ち
-	mState = ClearState::WaitState;
+	mState = ClearState::WaitIce;
 }
 
 void Scene_Clear::Update()
@@ -376,24 +376,18 @@ void Scene_Clear::Update()
 	{
 		switch (mState)
 		{
-		case Scene_Clear::ClearState::WaitState:
+		case Scene_Clear::ClearState::WaitIce:
 		{
 			currentice += static_cast<int>(iic * Time->GetDeltaTime());
-			currentcom += static_cast<int>(ico * Time->GetDeltaTime());
 
 			if (currentice >= iIceScore)
 			{
 				currentice = iIceScore;
 			}
-			if (currentcom >= iMaxCombo)
-			{
-				currentcom = iMaxCombo;
-			}
 
 			if (Controller_Input::GetButton(0, GAMEPAD_A) == KEYSTATE::KEY_DOWN || Input::GetKeyState(KEYCODE_RETURN) == KEYSTATE::KEY_DOWN || Input::GetKeyState(KEYCODE_SPACE) == KEYSTATE::KEY_DOWN)
 			{
 				currentice = iIceScore;
-				currentcom = iMaxCombo;
 			}
 
 			int val = 100000;
@@ -408,9 +402,32 @@ void Scene_Clear::Update()
 				val *= 0.1f;
 				waru *= 0.1f;
 			}
-			val = 1000;
-			waru = 100;			
 			
+
+			if (currentice == iIceScore)
+			{
+				
+				mState = ClearState::WaitCombo;
+			}
+		}
+			break;
+		case Scene_Clear::ClearState::WaitCombo:
+		{
+			currentcom += static_cast<int>(ico * Time->GetDeltaTime());
+
+			if (currentcom >= iMaxCombo)
+			{
+				currentcom = iMaxCombo;
+			}
+
+			if (Controller_Input::GetButton(0, GAMEPAD_A) == KEYSTATE::KEY_DOWN || Input::GetKeyState(KEYCODE_RETURN) == KEYSTATE::KEY_DOWN || Input::GetKeyState(KEYCODE_SPACE) == KEYSTATE::KEY_DOWN)
+			{
+				currentcom = iMaxCombo;
+			}
+
+			int val = 1000;
+			int waru = 100;
+
 			for (int i = 2; i >= 0; i--)
 			{
 				int num = currentcom % val;
@@ -419,13 +436,14 @@ void Scene_Clear::Update()
 				waru *= 0.1f;
 			}
 
-			if (currentcom == iMaxCombo && currentice == iIceScore)
+			if (currentcom == iMaxCombo)
 			{
 				p_mSEDrum->Play();
 				mState = ClearState::WaitTotal;
 			}
+
 		}
-			break;
+		break;
 		case Scene_Clear::ClearState::WaitTotal:
 		{
 			fDrumCnt += Time->GetDeltaTime();
