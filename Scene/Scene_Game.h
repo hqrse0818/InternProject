@@ -36,15 +36,12 @@ private:
 
     // スコア
     OBJ_DisplayScore* ScoreObj{};
-    // スコア文字
-    GameObject* ScoreDis{};
+   
 
     // コンボ
     OBJ_ComboDisplay* ComboObj{};
     // アザラシの数
     OBJ_AzarashiRemain* ARemainNum{};
-    // アザラシの表示
-    GameObject* ARemain{};
 
     //BGM
     Com_Audio* p_mBGM{};

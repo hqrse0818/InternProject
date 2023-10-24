@@ -59,23 +59,7 @@ void Scene_Game::Init()
 		AManager->SetTarget(p_mPlayer);
 		AddGameObject(AManager, 0);
 
-		//アザラシの残機
-		ARemain = new GameObject("ARemainOBJ");
-
-		Com_CustomSprite* Sprite_buf = new Com_CustomSprite;
-		Sprite_buf->mType = Com_CustomSprite::CustomType::LeftTop; //CustomSpriteでポジション設定
-		Sprite_buf->SetTexture("asset/texture/nokori.png");
-
-		Com_Shader* Shader_buf = new Com_Shader();
-		Shader_buf->p_mVS->Load(VS_SPRITE);
-		Shader_buf->p_mPS->Load(PS_SPRITE);
-
-		ARemain->AddComponent(Shader_buf);
-		ARemain->AddComponent(Sprite_buf);
-
-		ARemain->p_mTransform->mScale.x = 100.0f;
-		ARemain->p_mTransform->mScale.y = 100.0f;
-		AddGameObject(ARemain);
+		
 
 		//アザラシの残機（数字）
 		ARemainNum = new OBJ_AzarashiRemain("Zanki", "asset/data/csv/AzarashiZankiUI.csv");
@@ -441,19 +425,6 @@ void Scene_Game::Init()
 	ScoreObj = new OBJ_DisplayScore("dis", "asset/data/csv/ScoreUI.csv");
 	AddGameObject(ScoreObj);
 
-	// スコアフォント
-	ScoreDis = new GameObject();
-	Com_Shader* scores = new Com_Shader();
-	scores->p_mVS->Load(VS_SPRITE);
-	scores->p_mPS->Load(PS_SPRITE);
-	ScoreDis->AddComponent(scores);
-	Com_Sprite* scorep = new Com_Sprite();
-	scorep->SetTexture("asset/texture/scoreFont.png");
-	ScoreDis->AddComponent(scorep);
-	ScoreDis->SetScale(220.0f, 220.0f, 1.0f);
-	ScoreDis->SetPosition(820.0f, 50.0f, 0.0f);
-	AddGameObject(ScoreDis);
-
 	// スコアマネージャー
 	OBJ_Score* ScoreManager = new OBJ_Score("score", "asset/data/csv/ComboSetting.csv");
 	AddGameObject(ScoreManager);
@@ -742,11 +713,9 @@ void Scene_Game::Update()
 
 	case GameState::TransToOver:
 		// UIを非表示
-		ARemain->SetActive(false);
 		ARemainNum->SetDisplay(false);
 		ComboObj->SetDisplay(false);
 		ScoreObj->SetDisplay(false);
-		ScoreDis->SetActive(false);
 		p_mHalfFade->FadeOut(1.5);
 		// ゲームオーバーオブジェクトを落としてくる
 		p_mOvobj->FallStart();
