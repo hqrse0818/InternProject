@@ -54,11 +54,11 @@ void OBJ_JumpEffect::Create()
 	{
 		OBJ_Particle* Particle = new OBJ_Particle("no");
 		Particle->p_mTransform->mPosition.x = Target->p_mTransform->mPosition.x;
-		Particle->p_mTransform->mPosition.y = Target->p_mTransform->mPosition.y + 2.0f;
+		Particle->p_mTransform->mPosition.y = Target->p_mTransform->mPosition.y + 5.0f;
 		Particle->p_mTransform->mPosition.z = Target->p_mTransform->mPosition.z;
 		Particle->Init();
 		Particle->SetTexture(p_mTexture->GetSRV());
-		Particle->p_mTransform->mScale = DirectX::SimpleMath::Vector3(9.0, 9.0, 9.0);
+		Particle->p_mTransform->mScale = DirectX::SimpleMath::Vector3(4.0, 4.0, 4.0);
 		Particle->GetBil()->SetUVCut(6, 1);
 		Particle->GetBil()->SetCurrent(HighRand::GetRand(1, 36));
 
