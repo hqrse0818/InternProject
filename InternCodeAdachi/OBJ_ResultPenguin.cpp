@@ -52,8 +52,6 @@ OBJ_ResultPenguin::OBJ_ResultPenguin()
 		bool b = p_mSprites[i]->Create(fPath);
 	}
 
-	Time->DeltaReset();
-
 	p_mMainSprite->SetTexture(p_mSprites[Current]);
 }
 

@@ -208,12 +208,12 @@ void Scene_Clear::Init()
 	//AddGameObject(pen, 7);
 
 	string ss = ReadDataFromCSV("asset/data/csv/ClearSetting.csv", 1);
-	vector<string> sv = SeparateString(ss, ',');
+	vector<string> sp = SeparateString(ss, ',');
 
 	// リザルトぺんぺん
 	p_mPenguin = new OBJ_ResultPenguin("pen");
-	p_mPenguin->SetPosition(stof(sv[0]), stof(sv[1]), 1.0f);
-	p_mPenguin->SetScale(stof(sv[2]), stof(sv[3]), 1.0f);
+	p_mPenguin->SetPosition(stof(sp[0]), stof(sp[1]), 1.0f);
+	p_mPenguin->SetScale(stof(sp[2]), stof(sp[3]), 1.0f);
 	AddGameObject(p_mPenguin);
 
 	// 遷移用オブジェクト
@@ -274,111 +274,123 @@ void Scene_Clear::Start()
 
 void Scene_Clear::Update()
 {
-	switch (mState)
+	if (bThisOne)
 	{
-	case Scene_Clear::ClearState::WaitState:
-		
-		break;
-	case Scene_Clear::ClearState::WaitTotal:
-	{
-		fDrumCnt += Time->GetDeltaTime();
-		if (fDrumCnt > fDrumDuration)
+		cnt++;
+		if (cnt > 2)
 		{
-			fDrumCnt = 0.0f;
-			bSEEnd = true;
-		}
-
-		currentsco += static_cast<int>(isc * Time->GetDeltaTime());
-		if (currentsco >= iTotalScore)
-		{
-			currentsco = iTotalScore;
-			bSEEnd = true;
-		}
-		if (Controller_Input::GetButton(0, GAMEPAD_A) == KEYSTATE::KEY_DOWN || Input::GetKeyState(KEYCODE_RETURN) == KEYSTATE::KEY_DOWN || Input::GetKeyState(KEYCODE_SPACE) == KEYSTATE::KEY_DOWN)
-		{
-			currentsco = iTotalScore;
-		}
-		int val = 1000000;
-		int waru = 100000;
-		for (int i = 5; i >= 0; i--)
-		{
-			int num = currentsco % val;
-			p_mScores[i]->SetNum(num / waru);
-			val *= 0.1f;
-			waru *= 0.1f;
-		}
-
-
-
-		if (currentsco == iTotalScore && bSEEnd == true)
-		{
-			p_mSEDrum->Stop();
-			p_mSEResult->Play();
-			p_mPenguin->SetUpdate(true);
-			mState = ClearState::WaitInput;
+			bThisOne = false;
 		}
 	}
-		break;
-	case Scene_Clear::ClearState::WaitInput:
-		if (Controller_Input::GetButton(0, GAMEPAD_A) == KEYSTATE::KEY_DOWN || Input::GetKeyState(KEYCODE_RETURN) == KEYSTATE::KEY_DOWN || Input::GetKeyState(KEYCODE_SPACE) == KEYSTATE::KEY_DOWN)
+	else
+	{
+		switch (mState)
 		{
-			p_mSEDecide->Play();
-			if (bisUP)
-			{
-				mState = ClearState::ToTitle;
-				p_mTransition->FadeOut(1);
-			}
-			else
-			{
-				mState = ClearState::ToGame;
-				p_mTransition->FadeOut(1);
-			}
-		}
-		else if (Controller_Input::GetLeftStick(0).y > 0.5f ||Controller_Input::GetButton(0, GAMEPAD_UP) == KEYSTATE::KEY_DOWN ||
-			Input::GetKeyState(KEYCODE_W) == KEYSTATE::KEY_DOWN || Input::GetKeyState(KEYCODE_UP) == KEYSTATE::KEY_DOWN)
-		{
-			if (!bisUP)
-			{
-				p_mSECursor->Play();
-			}
-			bisUP = true;
-			p_mAllow->SetPosition(950.0f, 545.0f, 0.0f);
-			p_mBanner->SetPosition(1100.0, 545.0f, 0.0f);
-			p_mRetScale->SetUpdate(true);
-			p_mOneScale->SetUpdate(false);
-		}
-		else if (Controller_Input::GetLeftStick(0).y <  -0.5f || Controller_Input::GetButton(0, GAMEPAD_DOWN) == KEYSTATE::KEY_DOWN ||
-			Input::GetKeyState(KEYCODE_S) == KEYSTATE::KEY_DOWN || Input::GetKeyState(KEYCODE_DOWN) == KEYSTATE::KEY_DOWN)
-		{
-			if (bisUP)
-			{
-				p_mSECursor->Play();
-			}
-			bisUP = false;
-			p_mAllow->SetPosition(950.0f, 620.0f, 0.0f);
-			p_mBanner->SetPosition(1100.0, 620.0f, 0.0f);
-			p_mRetScale->SetUpdate(false);
-			p_mOneScale->SetUpdate(true);
-		}
+		case Scene_Clear::ClearState::WaitState:
 
-		break;
-	case Scene_Clear::ClearState::ToTitle:
-		if (p_mTransition->GetState() == OBJ_Transition::FadeState::OutEnd)
+			break;
+		case Scene_Clear::ClearState::WaitTotal:
 		{
-			GameManager::SetGameState(GameState::Title);
-			Manager::SetNextScene<Scene_Title>();
+			fDrumCnt += Time->GetDeltaTime();
+			if (fDrumCnt > fDrumDuration)
+			{
+				fDrumCnt = 0.0f;
+				bSEEnd = true;
+			}
+
+			currentsco += static_cast<int>(isc * Time->GetDeltaTime());
+			if (currentsco >= iTotalScore)
+			{
+				currentsco = iTotalScore;
+				bSEEnd = true;
+			}
+			if (Controller_Input::GetButton(0, GAMEPAD_A) == KEYSTATE::KEY_DOWN || Input::GetKeyState(KEYCODE_RETURN) == KEYSTATE::KEY_DOWN || Input::GetKeyState(KEYCODE_SPACE) == KEYSTATE::KEY_DOWN)
+			{
+				currentsco = iTotalScore;
+			}
+			int val = 1000000;
+			int waru = 100000;
+			for (int i = 5; i >= 0; i--)
+			{
+				int num = currentsco % val;
+				p_mScores[i]->SetNum(num / waru);
+				val *= 0.1f;
+				waru *= 0.1f;
+			}
+
+
+
+			if (currentsco == iTotalScore && bSEEnd == true)
+			{
+				p_mSEDrum->Stop();
+				p_mSEResult->Play();
+				p_mPenguin->SetUpdate(true);
+				mState = ClearState::WaitInput;
+			}
 		}
 		break;
-	case Scene_Clear::ClearState::ToGame:
-		if (p_mTransition->GetState() == OBJ_Transition::FadeState::OutEnd)
-		{
-			GameManager::SetGameState(GameState::GameFade);
-			Manager::SetNextScene<Scene_Game>();
+		case Scene_Clear::ClearState::WaitInput:
+			if (Controller_Input::GetButton(0, GAMEPAD_A) == KEYSTATE::KEY_DOWN || Input::GetKeyState(KEYCODE_RETURN) == KEYSTATE::KEY_DOWN || Input::GetKeyState(KEYCODE_SPACE) == KEYSTATE::KEY_DOWN)
+			{
+				p_mSEDecide->Play();
+				if (bisUP)
+				{
+					mState = ClearState::ToTitle;
+					p_mTransition->FadeOut(1);
+				}
+				else
+				{
+					mState = ClearState::ToGame;
+					p_mTransition->FadeOut(1);
+				}
+			}
+			else if (Controller_Input::GetLeftStick(0).y > 0.5f || Controller_Input::GetButton(0, GAMEPAD_UP) == KEYSTATE::KEY_DOWN ||
+				Input::GetKeyState(KEYCODE_W) == KEYSTATE::KEY_DOWN || Input::GetKeyState(KEYCODE_UP) == KEYSTATE::KEY_DOWN)
+			{
+				if (!bisUP)
+				{
+					p_mSECursor->Play();
+				}
+				bisUP = true;
+				p_mAllow->SetPosition(950.0f, 545.0f, 0.0f);
+				p_mBanner->SetPosition(1100.0, 545.0f, 0.0f);
+				p_mRetScale->SetUpdate(true);
+				p_mOneScale->SetUpdate(false);
+			}
+			else if (Controller_Input::GetLeftStick(0).y < -0.5f || Controller_Input::GetButton(0, GAMEPAD_DOWN) == KEYSTATE::KEY_DOWN ||
+				Input::GetKeyState(KEYCODE_S) == KEYSTATE::KEY_DOWN || Input::GetKeyState(KEYCODE_DOWN) == KEYSTATE::KEY_DOWN)
+			{
+				if (bisUP)
+				{
+					p_mSECursor->Play();
+				}
+				bisUP = false;
+				p_mAllow->SetPosition(950.0f, 620.0f, 0.0f);
+				p_mBanner->SetPosition(1100.0, 620.0f, 0.0f);
+				p_mRetScale->SetUpdate(false);
+				p_mOneScale->SetUpdate(true);
+			}
+
+			break;
+		case Scene_Clear::ClearState::ToTitle:
+			if (p_mTransition->GetState() == OBJ_Transition::FadeState::OutEnd)
+			{
+				GameManager::SetGameState(GameState::Title);
+				Manager::SetNextScene<Scene_Title>();
+			}
+			break;
+		case Scene_Clear::ClearState::ToGame:
+			if (p_mTransition->GetState() == OBJ_Transition::FadeState::OutEnd)
+			{
+				GameManager::SetGameState(GameState::GameFade);
+				Manager::SetNextScene<Scene_Game>();
+			}
+			break;
+		default:
+			break;
 		}
-		break;
-	default:
-		break;
 	}
+	
 }
 
 void Scene_Clear::Uninit()
