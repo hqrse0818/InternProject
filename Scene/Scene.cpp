@@ -430,6 +430,7 @@ bool Scene::CollisionCheck(GameObject* objA, GameObject* objB)
 		{
 			return false;
 		}
+		bo1->Update();
 		AABB Box1 = bo1->GetAABB();
 		// objB‚ªBoxCollider
 		if (objB->mColType == Collider::ColliderForm::Box)
@@ -439,6 +440,7 @@ bool Scene::CollisionCheck(GameObject* objA, GameObject* objB)
 			{
 				return false;
 			}
+			bo2->Update();
 			AABB Box2 =bo2->GetAABB();
 			// Õ“Ë”»’è
 			return Collision::AABB2AABB(Box1, Box2);
@@ -451,6 +453,7 @@ bool Scene::CollisionCheck(GameObject* objA, GameObject* objB)
 			{
 				return false;
 			}
+			sp->Update();
 			Sphere Sphere1 = sp->GetSphere();
 			// Õ“Ë”»’è
 			return CollisionBox2Sphere(Box1, Sphere1);
@@ -486,7 +489,7 @@ bool Scene::CollisionCheck(GameObject* objA, GameObject* objB)
 		{
 			return false;
 		}
-
+		sp1->Update();
 		Sphere sphere1 = sp1->GetSphere();
 		// objB‚ªSphere;
 		if (objB->mColType == Collider::ColliderForm::Sphere)
@@ -497,6 +500,7 @@ bool Scene::CollisionCheck(GameObject* objA, GameObject* objB)
 			{
 				return false;
 			}
+			sp2->Update();
 			Sphere sphere2 = sp2->GetSphere();
 			// Õ“Ë”»’è
 			return Collision::Sphere2Sphere(sphere1, sphere2);
@@ -508,6 +512,7 @@ bool Scene::CollisionCheck(GameObject* objA, GameObject* objB)
 			{
 				return false;
 			}
+			bo->Update();
 			AABB Box1 = bo->GetAABB();
 
 			// Õ“Ë”»’è

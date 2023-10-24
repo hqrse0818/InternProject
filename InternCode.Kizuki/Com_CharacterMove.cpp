@@ -74,6 +74,7 @@ void Com_CharacterMove::Move(float _x, float _z)
 
 	// “®‚­•ûŒü&Œü‚«‚½‚¢•ûŒü
 	Vector3 Velocity = Forward + Right;
+	//Velocity = Math::Normalize(Velocity);
 	p_mObject->p_mTransform->Translate(Velocity);
 
 	if (Velocity.x == 0 && Velocity.z == 0)
@@ -97,6 +98,10 @@ void Com_CharacterMove::Move(float _x, float _z)
 	//Matrix RotationMat = Math::CalcMatrixFromVector(p_mObject->p_mTransform->mForward, Math::Normalize(Velocity));
 	p_mObject->p_mTransform->mRotation.y = angle;
 
+}
+
+void Com_CharacterMove::Move(float _x, float _z, float _blake)
+{
 }
 
 //Controller‚ÍƒNƒ‰ƒX‚Åì‚é
