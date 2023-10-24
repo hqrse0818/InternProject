@@ -188,11 +188,12 @@ void Scene_Title::Init()
 	AddGameObject(p_mExp2);
 
 	pBackFont = new GameObject("modoru");
+	Shader_buf = new Com_Shader();
 	Shader_buf->p_mVS->Load(VS_SPRITE);
 	Shader_buf->p_mPS->Load(PS_SPRITE);
 	pBackFont->AddComponent(Shader_buf);
 	Sprite_buf = new Com_Sprite();
-	Sprite_buf->SetTexture("asset/texture/modoru.png");
+	Sprite_buf->SetTexture("asset/texture/modoru_bottun.png");
 	Sprite_buf->SetSeparateNum(1, 1);
 	Sprite_buf->SetCurrent(1);
 	pBackFont->AddComponent(Sprite_buf);
@@ -201,6 +202,7 @@ void Scene_Title::Init()
 	AddGameObject(pBackFont);
 
 	pBackButton = new GameObject("Button");
+	Shader_buf = new Com_Shader();
 	Shader_buf->p_mVS->Load(VS_SPRITE);
 	Shader_buf->p_mPS->Load(PS_SPRITE);
 	pBackButton->AddComponent(Shader_buf);
