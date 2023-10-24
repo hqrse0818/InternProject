@@ -516,5 +516,5 @@ void OBJ_AzarashiManager::Start()
 	OBJ_Azarashi::SetAttackEfect(p_mAttackEf);
 	OBJ_Azarashi::SetDeadEffect(p_mDeadEf);
 
-	GetScene()->AddGameObject(pWar);
+	GetScene()->AddGameObject(pWar,4);
 }

@@ -26,6 +26,8 @@ private:
 	static float s_fMaxAddVal;
 	// 最終的な氷の数
 	static int s_iLastIceNum;
+	// 氷のスコア
+	static int s_iIceScore;
 
 	static Com_Audio* SEs[10];
 
@@ -72,6 +74,11 @@ public:
 		s_iLastIceNum = _val;
 	}
 
+	static void SetIceScore(int _val)
+	{
+		s_iIceScore = _val;
+	}
+
 	// 残った氷の数を取得
 	static int GetIceNum()
 	{
@@ -91,5 +98,10 @@ public:
 	static int GetScore()
 	{
 		return s_iScore;
+	}
+	// 氷スコア
+	static int GetIceScore()
+	{
+		return s_iIceScore;
 	}
 };

@@ -218,7 +218,7 @@ void OBJ_Penguin::Start()
 	pRangeObj->Init();
 	pRangeObj->Start();
 
-	GetScene()->AddGameObject(pRangeObj);
+	GetScene()->AddGameObject(pRangeObj,3);
 
 	bInit = false;
 }

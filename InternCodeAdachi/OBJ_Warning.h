@@ -20,11 +20,17 @@ private:
     Com_Sprite* pMarkSp{};
     DirectX::SimpleMath::Color mColor = DirectX::SimpleMath::Color(1.0f, 1.0f, 1.0f, 0.5f);
     DirectX::SimpleMath::Color mBackColor = DirectX::SimpleMath::Color(1.0f, 1.0f, 1.0f, 0.5f);
+    DirectX::SimpleMath::Vector3 InitBack = DirectX::SimpleMath::Vector3(1.0f, 1.0f, 1.0f);
+    DirectX::SimpleMath::Vector3 InitFont = DirectX::SimpleMath::Vector3(1.0f, 1.0f, 1.0f);
+    DirectX::SimpleMath::Vector3 InitMark = DirectX::SimpleMath::Vector3(1.0f, 1.0f, 1.0f);
 
     WarningState mState = WarningState::No;
 
     float fAlphaSpeed = 1.0f;
     bool bRet = false;
+
+    float fScaleSpeed = 25.0f;
+    float fScaleMinus = -25.0f;
 
 public:
     OBJ_Warning();

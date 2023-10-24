@@ -391,7 +391,6 @@ void OBJ_Azarashi::OnCollisionEnter(GameObject* _obj)
 					iScore = 50;
 				}
 				// 重力の更新を停止
-				p_mShadowObj->SetActive(false);
 				p_mGravityCom->bEnable = false;
 				p_mFootCom->bEnable = false;
 				p_mColliderCom->bEnable = false;
@@ -532,7 +531,6 @@ void OBJ_Azarashi::OnCollisionStay(GameObject* _obj)
 					iScore = 50;
 				}
 				// 重力の更新を停止
-				p_mShadowObj->SetActive(false);
 				p_mGravityCom->bEnable = false;
 				p_mFootCom->bEnable = false;
 				p_mColliderCom->bEnable = false;

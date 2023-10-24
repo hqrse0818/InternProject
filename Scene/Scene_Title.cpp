@@ -46,7 +46,7 @@ void Scene_Title::Init()
 
 	//ƒ^ƒCƒgƒ‹ƒƒS¶¬
 	OBJ_TitleLogo* TitleLogo = new OBJ_TitleLogo;
-	TitleLogo->p_mTransform->SetPosition(SCREEN_WIDTH / 2, 225.0f, 0.0f);
+	TitleLogo->p_mTransform->SetPosition(SCREEN_WIDTH / 2, 270.0f, 0.0f);
 	TitleLogo->p_mTransform->mScale.x = 1920.0f *0.5f;
 	TitleLogo->p_mTransform->mScale.y = 1080.0f * 0.5f;
 	TitleLogo->bRotate = true;
@@ -337,9 +337,9 @@ void Scene_Title::Update()
 	case Scene_Title::TitleState::ToGame:
 		if (p_mTransition->GetState() == OBJ_Transition::FadeState::OutEnd)
 		{
-			Manager::SetNextScene<Scene_Game>();
+			//Manager::SetNextScene<Scene_Game>();
 			//Manager::SetNextScene<Scene_Test>();
-			//Manager::SetNextScene<Scene_Clear>();
+			Manager::SetNextScene<Scene_Clear>();
 		}
 		break;
 	default:

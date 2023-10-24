@@ -148,7 +148,7 @@ void OBJ_AzarashiRemain::Update()
 					int remain = iceRemain.size();
 					OBJ_Score::SetLastIceNum(remain);
 					iIceScore = iceRemain.size() * 500;
-					OBJ_Score::AddNoComboScore(iIceScore);
+					OBJ_Score::SetIceScore(iIceScore);
 					bIceCalc = true;
 
 					GameManager::SetGameState(GameState::TransToClear);

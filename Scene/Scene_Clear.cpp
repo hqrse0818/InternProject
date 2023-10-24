@@ -53,20 +53,7 @@ void Scene_Clear::Init()
 	obj->SetPosition(SCREEN_WIDTH / 2, 75.0f, 0.0f);
 	AddGameObject(obj);
 
-	// 文字トータルスコア
-	obj = new GameObject("font");
-	shader = new Com_Shader();
-	shader->p_mVS->Load(VS_SPRITE);
-	shader->p_mPS->Load(PS_SPRITE);
-	obj->AddComponent(shader);
-	sprite = new Com_Sprite();
-	sprite->SetTexture("asset/texture/result_mozi.png");
-	sprite->SetSeparateNum(1, 2);
-	sprite->SetCurrent(2);
-	obj->AddComponent(sprite);
-	obj->SetScale(1920.0f * 0.5f * 0.7, 1080.0f / 4 * 0.7, 0.0f);
-	obj->SetPosition(SCREEN_WIDTH / 2 + 400.0f, 250.0f, 0.0f);
-	AddGameObject(obj);
+	
 
 	// 氷
 	GameObject* ice = new GameObject("ice");
@@ -175,7 +162,7 @@ void Scene_Clear::Init()
 
 	// トータルスコア
 	string sState = ReadDataFromCSV("asset/data/csv/TotalScoreUI.csv", 1);
-	vector<string> sv = SeparateString(sState,',');
+	vector<string> sv = SeparateString(sState, ',');
 
 	Vector2 InitPos;
 	InitPos.x = stof(sv[0]);
@@ -191,6 +178,39 @@ void Scene_Clear::Init()
 		p_mScores[i]->SetScale(Scale.x, Scale.y, 1.0f);
 		p_mScores[i]->SetPosition(InitPos.x - (Scale.x * i) - (duration * i), InitPos.y, 1.0f);
 		AddGameObject(p_mScores[i]);
+	}
+
+	InitPos.x = stof(sv[5]);
+	InitPos.y = stof(sv[6]);
+	Scale.x = stof(sv[7]);
+	Scale.y = stof(sv[8]);
+	duration = stof(sv[9]);
+
+	// 氷の数字
+	for (int i = 0; i < 5; i++)
+	{
+		p_mICes[i] = new OBJ_Number();
+		p_mICes[i]->GetSpriteCom()->SetTexture("asset/texture/result_score.png");
+		p_mICes[i]->SetScale(Scale.x, Scale.y, 0.0f);
+		p_mICes[i]->SetPosition(InitPos.x - (Scale.x * i) - (duration * i), InitPos.y, 0.0f);
+		AddGameObject(p_mICes[i]);
+	}
+
+
+	// コンボ数
+	InitPos.x = stof(sv[10]);
+	InitPos.y = stof(sv[11]);
+	Scale.x = stof(sv[12]);
+	Scale.y = stof(sv[13]);
+	duration = stof(sv[14]);
+
+	for (int i = 0; i < 3; i++)
+	{
+		p_mComs[i] = new OBJ_Number();
+		p_mComs[i]->GetSpriteCom()->SetTexture("asset/texture/result_score.png");
+		p_mComs[i]->SetScale(Scale.x, Scale.y, 0.0f);
+		p_mComs[i]->SetPosition(InitPos.x - (Scale.x * i) - (duration * i), InitPos.y, 0.0f);
+		AddGameObject(p_mComs[i]);
 	}
 
 	//// モデル2D表示テスト
@@ -215,6 +235,49 @@ void Scene_Clear::Init()
 	p_mPenguin->SetPosition(stof(sp[0]), stof(sp[1]), 1.0f);
 	p_mPenguin->SetScale(stof(sp[2]), stof(sp[3]), 1.0f);
 	AddGameObject(p_mPenguin);
+
+	// 文字トータルスコア
+	obj = new GameObject("font");
+	shader = new Com_Shader();
+	shader->p_mVS->Load(VS_SPRITE);
+	shader->p_mPS->Load(PS_SPRITE);
+	obj->AddComponent(shader);
+	sprite = new Com_Sprite();
+	sprite->SetTexture("asset/texture/result_mozi.png");
+	sprite->SetSeparateNum(1, 2);
+	sprite->SetCurrent(2);
+	obj->AddComponent(sprite);
+	obj->SetPosition(stof(sp[4]), stof(sp[5]), 0.0f);
+	obj->SetScale(stof(sp[6]), stof(sp[7]), 0.0f);
+	AddGameObject(obj);
+
+	GameObject* pFontIce = new GameObject("icef");
+	shader = new Com_Shader();
+	shader->p_mVS->Load(VS_SPRITE);
+	shader->p_mPS->Load(PS_SPRITE);
+	pFontIce->AddComponent(shader);
+	sprite = new Com_Sprite();
+	sprite->SetTexture("asset//texture/result_submozi.png");
+	sprite->SetSeparateNum(1, 2);
+	sprite->SetCurrent(1);
+	pFontIce->AddComponent(sprite);
+	pFontIce->SetPosition(stof(sp[8]), stof(sp[9]), 0.0f);
+	pFontIce->SetScale(stof(sp[10]), stof(sp[11]), 0.0f);
+	AddGameObject(pFontIce);
+
+	GameObject* pFontCom = new GameObject("comf");
+	shader = new Com_Shader();
+	shader->p_mVS->Load(VS_SPRITE);
+	shader->p_mPS->Load(PS_SPRITE);
+	pFontCom->AddComponent(shader);
+	sprite = new Com_Sprite();
+	sprite->SetTexture("asset//texture/result_submozi.png");
+	sprite->SetSeparateNum(1, 2);
+	sprite->SetCurrent(2);
+	pFontCom->AddComponent(sprite);
+	pFontCom->SetPosition(stof(sp[12]), stof(sp[13]), 0.0f);
+	pFontCom->SetScale(stof(sp[14]), stof(sp[15]), 0.0f);
+	AddGameObject(pFontCom);
 
 	// 遷移用オブジェクト
 	p_mTransition = new OBJ_Transition();
@@ -241,9 +304,14 @@ void Scene_Clear::Start()
 	iTotalScore = OBJ_Score::GetScore();
 	isc = iTotalScore;
 	isc = isc / fDrumDuration;
+
 	iMaxCombo = OBJ_Score::GetMaxCombo();
+	ico = iMaxCombo / (fDrumDuration / 2);
+
 	iBreakAzarashiNum = OBJ_Score::GetBreakNum();
-	iRemainIceNum = OBJ_Score::GetIceNum();
+	
+	iIceScore = OBJ_Score::GetIceScore();
+	iic = iIceScore / (fDrumDuration / 2);
 
 	if (iTotalScore < 100000)
 	{
@@ -266,10 +334,31 @@ void Scene_Clear::Start()
 		p_mScores[1]->SetActive(false);
 	}
 
-	// テスト用入力待ち
-	mState = ClearState::WaitTotal;
+	if (iIceScore < 10000)
+	{
+		p_mICes[4]->SetActive(false);
+	}
+	if (iIceScore < 1000)
+	{
+		p_mICes[3]->SetActive(false);
+	}
+	if (iIceScore < 100)
+	{
+		p_mICes[2]->SetActive(false);
+		p_mICes[1]->SetActive(false);
+	}
 
-	p_mSEDrum->Play();
+	if (iMaxCombo < 100)
+	{
+		p_mComs[2]->SetActive(false);
+	}
+	if (iMaxCombo < 10)
+	{
+		p_mComs[1]->SetActive(false);
+	}
+
+	// テスト用入力待ち
+	mState = ClearState::WaitState;
 }
 
 void Scene_Clear::Update()
@@ -287,7 +376,54 @@ void Scene_Clear::Update()
 		switch (mState)
 		{
 		case Scene_Clear::ClearState::WaitState:
+		{
+			currentice += static_cast<int>(iic * Time->GetDeltaTime());
+			currentcom += static_cast<int>(ico * Time->GetDeltaTime());
 
+			if (currentice >= iIceScore)
+			{
+				currentice = iIceScore;
+			}
+			if (currentcom >= iMaxCombo)
+			{
+				currentcom = iMaxCombo;
+			}
+
+			if (Controller_Input::GetButton(0, GAMEPAD_A) == KEYSTATE::KEY_DOWN || Input::GetKeyState(KEYCODE_RETURN) == KEYSTATE::KEY_DOWN || Input::GetKeyState(KEYCODE_SPACE) == KEYSTATE::KEY_DOWN)
+			{
+				currentice = iIceScore;
+				currentcom = iMaxCombo;
+			}
+
+			int val = 100000;
+			int waru = 10000;
+			for (int i = 4; i >= 0; i--)
+			{
+				int num = currentice % val;
+
+				int s = num / waru;
+
+				p_mICes[i]->SetNum(num / waru);
+				val *= 0.1f;
+				waru *= 0.1f;
+			}
+			val = 1000;
+			waru = 100;			
+			
+			for (int i = 2; i >= 0; i--)
+			{
+				int num = currentcom % val;
+				p_mComs[i]->SetNum(num / waru);
+				val *= 0.1f;
+				waru *= 0.1f;
+			}
+
+			if (currentcom == iMaxCombo && currentice == iIceScore)
+			{
+				p_mSEDrum->Play();
+				mState = ClearState::WaitTotal;
+			}
+		}
 			break;
 		case Scene_Clear::ClearState::WaitTotal:
 		{

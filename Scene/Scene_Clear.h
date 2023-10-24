@@ -28,7 +28,7 @@ private:
     // 最大コンボ数
     int iMaxCombo = 0;
     // 残った氷の数
-    int iRemainIceNum = 0;
+    int iIceScore = 0;
     // 撃破アザラシ数
     int iBreakAzarashiNum = 0;
 
@@ -37,11 +37,16 @@ private:
     int currentbre = 0;
     int currentsco = 0;
 
+    //トータル 毎フレーム加算する値
     int isc = 0;
 
+    // 氷
+    int iic = 0;
+    // コンボ
+    int ico = 0;
+
     OBJ_Number* p_mComs[3];
-    OBJ_Number* p_mIces[2];
-    OBJ_Number* p_mBreaks[3];
+    OBJ_Number* p_mICes[5];
     OBJ_Number* p_mScores[6];
     int scoresnum = 0;
 

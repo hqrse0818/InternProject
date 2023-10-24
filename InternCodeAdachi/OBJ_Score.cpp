@@ -9,8 +9,9 @@ using namespace std;
 int OBJ_Score::s_iScore = 999999;
 int OBJ_Score::s_iCurrentComCount = 0;
 int OBJ_Score::s_iBreakNum = 0;
-int OBJ_Score::s_iMaxCombo = 0;
+int OBJ_Score::s_iMaxCombo = 999;
 int OBJ_Score::s_iLastIceNum = 0;
+int OBJ_Score::s_iIceScore = 99999;
 bool OBJ_Score::s_bNowCombo = false;
 float OBJ_Score::s_fComAddPerCombo = 0.0f;
 float OBJ_Score::s_fComCnt = 0.0f;
@@ -71,6 +72,7 @@ OBJ_Score::OBJ_Score(const char* _name, const char* _FileName)
 	s_fComCnt = 0.0f;
 	s_iLastIceNum = 0;
 	s_bNowCombo = false;
+	s_iIceScore = 0;
 }
 
 void OBJ_Score::CalcScore(int _val)

@@ -67,6 +67,11 @@ OBJ_Warning::OBJ_Warning(const char* _name, const char* _FileName)
 	pFont->SetPosition(stof(sv[6]), stof(sv[7]), 0.0f);
 	pMark->SetScale(stof(sv[8]), stof(sv[9]), 0.0f);
 	pMark->SetPosition(stof(sv[10]), stof(sv[11]), 0.0f);
+
+
+	InitBack = pBack->p_mTransform->mScale;
+	InitFont = pFont->p_mTransform->mScale;
+	InitMark = pMark->p_mTransform->mScale;
 }
 
 void OBJ_Warning::Update()
@@ -76,15 +81,23 @@ void OBJ_Warning::Update()
 		switch (mState)
 		{
 		case OBJ_Warning::WarningState::No:
-			mColor.w = 0.5;
-			mBackColor.w = 0.5;
+			mColor.w = 0.25;
+			mBackColor.w = 0.25;
 			pBackSp->SetDiffuse(mBackColor);
 			pFontSp->SetDiffuse(mColor);
 			pMarkSp->SetDiffuse(mColor);
+
+			pBack->p_mTransform->mScale = InitBack;
+			pFont->p_mTransform->mScale = InitFont;
+			pMark->p_mTransform->mScale = InitMark;
 			break;
 		case OBJ_Warning::WarningState::Start:
 			mColor.w += 2 * Time->GetDeltaTime();
 			mBackColor.w += 2 * Time->GetDeltaTime();
+
+			pBack->Scaling(fScaleSpeed * Time->GetDeltaTime(), fScaleSpeed * Time->GetDeltaTime(), 0.0f);
+			pFont->Scaling(fScaleSpeed * Time->GetDeltaTime(), fScaleSpeed * Time->GetDeltaTime(), 0.0f);
+			pMark->Scaling(fScaleSpeed * Time->GetDeltaTime(), fScaleSpeed * Time->GetDeltaTime(), 0.0f);
 
 			if (mBackColor.w >= 1.0f)
 			{
@@ -125,11 +138,14 @@ void OBJ_Warning::Update()
 		case OBJ_Warning::WarningState::End:
 			mColor.w -= 2 * Time->GetDeltaTime();
 			mBackColor.w -= 2 * Time->GetDeltaTime();
+			pBack->Scaling(fScaleMinus* Time->GetDeltaTime(), fScaleMinus * Time->GetDeltaTime(), 0.0f);
+			pFont->Scaling(fScaleMinus* Time->GetDeltaTime(), fScaleMinus * Time->GetDeltaTime(), 0.0f);
+			pMark->Scaling(fScaleMinus* Time->GetDeltaTime(), fScaleMinus * Time->GetDeltaTime(), 0.0f);
 
-			if (mBackColor.w  <= 0.5f)
+			if (mBackColor.w  <= 0.25f)
 			{
-				mColor.w = 0.5;
-				mBackColor.w = 0.5;
+				mColor.w = 0.25;
+				mBackColor.w = 0.25;
 				mState = WarningState::No;
 			}
 			pBackSp->SetDiffuse(mBackColor);
