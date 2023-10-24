@@ -10,7 +10,7 @@ using namespace DirectX::SimpleMath;
 OBJ_AzarashiDeadEffect::OBJ_AzarashiDeadEffect()
 {
 	mKind = Particle;
-	iCreateNum = 2;
+	iCreateNum = 1;
 
 	p_mTexture = new ShaderResourceView;
 	p_mTexture->Create("asset/texture/azarashi_sibou.png");
@@ -57,31 +57,33 @@ void OBJ_AzarashiDeadEffect::Create()
 		//Particle->p_mTransform->mPosition = Target->p_mTransform->mPosition;
 		Particle->Init();
 		Particle->SetTexture(p_mTexture->GetSRV());
-		Particle->p_mTransform->mPosition = this->p_mTransform->mPosition;
-		Particle->p_mTransform->mScale = DirectX::SimpleMath::Vector3(9.0, 9.0, 9.0);
+		Particle->p_mTransform->mPosition.x = this->p_mTransform->mPosition.x + 2.0f;
+		Particle->p_mTransform->mPosition.y = this->p_mTransform->mPosition.y + 15.0f;
+		Particle->p_mTransform->mPosition.z = this->p_mTransform->mPosition.z + 2.0f;
+		Particle->p_mTransform->mScale = DirectX::SimpleMath::Vector3(4.0, 4.0, 4.0);
 		Particle->GetBil()->SetUVCut(2, 1);
 		Particle->GetBil()->SetCurrent(HighRand::GetRand(1, 100));
 
 		//ŽÎ•û“ŠŽËÝ’è
-		Particle->p_mTousyaBuf->SetGravity(-0.5f);
+		Particle->p_mTousyaBuf->SetGravity(0.0f);
 		//Particle->p_mTousyaBuf->SetInitSpeed(Vector3(0.0f, 0.0f, 0.0f)); //‰‘¬
 		//Particle->p_mTousyaBuf->SetThrowAngle(Vector3(-100.0f, 0.0f, -100.0f)); //“ŠŽËŠp
 
 		Vector3 angle; //Šp“x
 		angle.x = 0;
-		angle.y = HighRand::fGetRand(0, 90, 3);
+		angle.y = 0;
 		angle.z = 0;
 
 		Particle->p_mTousyaBuf->SetThrowAngle(angle);
 
 		Vector3 speed; //”ÍˆÍ
-		speed.x = HighRand::fGetRand(-1, 1, 2);
-		speed.y = HighRand::fGetRand(1, 3, 3) * 0.1;
-		speed.z = HighRand::fGetRand(-1, 1, 2);
+		speed.x = 0;
+		speed.y = 0;
+		speed.z = 0;
 
 		Particle->p_mTousyaBuf->SetInitSpeed(speed);
 
-		Particle->SetLifeTime(HighRand::fGetRand(10, 12, 3) * 0.1f);
+		Particle->SetLifeTime(HighRand::fGetRand(7, 10, 3) * 0.1f);
 
 		s_p_mScene->AddGameObject(Particle);
 	}

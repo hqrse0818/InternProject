@@ -23,6 +23,7 @@ public:
 	void MoveX(float _value);
 
 	void Move(float _x, float _z);
+	void Move(float _x, float _z, float _blake);
 
 	void SetCameraCom(Com_Camera* _com)
 	{

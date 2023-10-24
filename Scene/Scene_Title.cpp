@@ -13,6 +13,7 @@
 #include "Scene_Game.h"
 #include "../InternCodeAdachi/GameManager.h"
 #include "Scene_Clear.h"
+#include "../InternCodeAdachi/CSVLoad.h"
 
 using namespace DirectX::SimpleMath;
 using namespace std;
@@ -96,6 +97,10 @@ void Scene_Title::Init()
 	p_mBanner->SetPosition(SCREEN_WIDTH / 2, 485.0f, 0.0f);
 	AddGameObject(p_mBanner);
 
+	string ss = ReadDataFromCSV("asset/data/csv/TitleSetting.csv", 1);
+
+	vector<string> sv = SeparateString(ss, ',');
+
 	// スタートロゴ
 	p_mStartLogo = new GameObject("start");
 	Shader_buf = new Com_Shader();
@@ -113,8 +118,8 @@ void Scene_Title::Init()
 	p_mStartScale->SetTime(0.6f);
 	p_mStartScale->SetUpdate(true);
 	p_mStartLogo->AddComponent(p_mStartScale);
-	p_mStartLogo->SetScale(1920.0f * 0.175f, 1080.0f * 0.175f, 1.0f);
-	p_mStartLogo->SetPosition(SCREEN_WIDTH / 2, 475.0f, 0.0f);
+	p_mStartLogo->SetPosition(stof(sv[0]), stof(sv[1]), 0.0f);
+	p_mStartLogo->SetScale(stof(sv[2]), stof(sv[3]), 1.0f);
 	AddGameObject(p_mStartLogo);
 
 	// チュートリアルロゴ
@@ -133,8 +138,8 @@ void Scene_Title::Init()
 	p_mTutoScale->SetSpeed(30.0f, -30.0f);
 	p_mTutoScale->SetTime(0.6f);
 	p_mTutolialLogo->AddComponent(p_mTutoScale);
-	p_mTutolialLogo->SetScale(1920.0f * 0.2f, 1080.0f * 0.2f, 1.0f);
-	p_mTutolialLogo->SetPosition(SCREEN_WIDTH / 2, 640.0f, 0.0f);
+	p_mTutolialLogo->SetPosition(stof(sv[4]), stof(sv[5]), 0.0f);
+	p_mTutolialLogo->SetScale(stof(sv[6]), stof(sv[7]), 1.0f);
 	AddGameObject(p_mTutolialLogo);
 
 	// 矢印
