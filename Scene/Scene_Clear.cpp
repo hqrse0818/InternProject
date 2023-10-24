@@ -302,6 +302,7 @@ void Scene_Clear::Start()
 {
 	// スコア関連の取得
 	iTotalScore = OBJ_Score::GetScore();
+	iTotalScore = iTotalScore + OBJ_Score::GetIceScore();
 	isc = iTotalScore;
 	isc = isc / fDrumDuration;
 
