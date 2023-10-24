@@ -157,6 +157,12 @@ void OBJ_AzarashiManager::CreateLeader()
 			break;
 		}
 	}
+
+	// 氷の上に収まるように少しだけオフセットを作る
+	float x = HighRand::fGetRand(-5, 5, 3);
+	float z = HighRand::fGetRand(-5, 5, 3);
+	target.x += x;
+	target.z += z;
 	
 	
 
@@ -398,6 +404,11 @@ void OBJ_AzarashiManager::CreateTeshita()
 		target.x += Direction.x;
 		target.z += Direction.z;*/
 
+		// 氷の上に収まるように少しだけオフセットを作る
+		float x = HighRand::fGetRand(-5, 5, 3);
+		float z = HighRand::fGetRand(-5, 5, 3);
+		target.x += x;
+		target.z += z;
 
 
 
@@ -407,8 +418,6 @@ void OBJ_AzarashiManager::CreateTeshita()
 		azarashis->GetFootCom()->SetFootHeight(fFootHeight);
 		azarashis->SetAzrashiStatus(fAfterWait, fAttackDuration, fMoveSpeed, fVelocity, fBlake, fLength, fDamageDistance);
 
-		// リーダーと同じ位置を目標地点にする
-		Vector3 TeshitaTarget = mLeaderPos;
 
 		//// ランダムでオフセット設定
 
