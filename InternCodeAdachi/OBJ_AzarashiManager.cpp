@@ -13,8 +13,9 @@
 using namespace DirectX::SimpleMath;
 using namespace std;
 
-int OBJ_AzarashiManager::iMaxSpawn = 0;
-int OBJ_AzarashiManager::iSpawnedNum = 0;
+int OBJ_AzarashiManager::s_iMaxSpawn = 0;
+int OBJ_AzarashiManager::s_iSpawnedNum = 0;
+int OBJ_AzarashiManager::s_iRemain = 0;
 
 OBJ_AzarashiManager::OBJ_AzarashiManager()
 {
@@ -37,7 +38,8 @@ OBJ_AzarashiManager::OBJ_AzarashiManager(const char* _name, const char* _FileNam
 	vector<string> spn = SeparateString(sMaxSpawnNum, ',');
 
 	// 出現最大数を格納
-	iMaxSpawn = stoi(spn[0]);
+	s_iMaxSpawn = stoi(spn[0]);
+	s_iRemain = s_iMaxSpawn;
 
 	// 文字列を(,)で分割
 	istringstream num(sSpawnRateNum);
@@ -122,12 +124,14 @@ OBJ_AzarashiManager::OBJ_AzarashiManager(const char* _name, const char* _FileNam
 		OBJ_Azarashi::SetScoreDistance(stof(as[20]), stof(as[21]));
 
 		fLeaderSpawnedTime = stof(as[22]);
+
+		//iRandTestNum = stoi(as[23]);
 	}
 	gt.clear();
 	sr.clear();
 	as.clear();
 
-	iSpawnedNum = 0;
+	s_iSpawnedNum = 0;
 }
 
 void OBJ_AzarashiManager::CreateLeader()
@@ -139,6 +143,11 @@ void OBJ_AzarashiManager::CreateLeader()
 		return;
 	float f = Time->CountStop();
 	DEBUG_LOG("リーダー : " << f);
+
+	// リーダーのポジションを決定
+	Vector3 target;
+	int r = HighRand::GetRand(0, vec.size() - 1);
+	target = vec[r]->p_mTransform->mPosition;
 
 	// リーダーを作成
 	OBJ_Azarashi* LAzarashi = new OBJ_Azarashi("Leader", 2);
@@ -189,10 +198,7 @@ void OBJ_AzarashiManager::CreateLeader()
 	}
 	break;
 	}
-	// リーダーのポジションを決定
-	Vector3 target;
-	int r = HighRand::GetRand(0, vec.size() - 1);
-	target = vec[r]->p_mTransform->mPosition;
+	
 
 	mInit = init;
 
@@ -234,8 +240,8 @@ void OBJ_AzarashiManager::CreateLeader()
 	LAzarashi->Update();
 	LAzarashi->GetSpawnAudio()->Play();
 
-	iSpawnedNum++;
-	if (iSpawnedNum >= iMaxSpawn)
+	s_iSpawnedNum++;
+	if (s_iSpawnedNum >= s_iMaxSpawn)
 	{
 		mState = SpawnState::End;
 	}
@@ -308,9 +314,9 @@ void OBJ_AzarashiManager::CreateTeshita()
 		return;
 
 	int spawnnum = HighRand::GetRand(iSpawnMin, iSpawnMax);
-	if (iMaxSpawn - iSpawnedNum < spawnnum)
+	if (s_iMaxSpawn - s_iSpawnedNum < spawnnum)
 	{
-		spawnnum = iMaxSpawn - iSpawnedNum;
+		spawnnum = s_iMaxSpawn - s_iSpawnedNum;
 	}
 
 	//// スポーンエリアを大まかに指定
@@ -422,9 +428,9 @@ void OBJ_AzarashiManager::CreateTeshita()
 		azarashis->GetSpawnAudio()->Play();
 	}
 
-	iSpawnedNum += spawnnum;
+	s_iSpawnedNum += spawnnum;
 
-	if (iSpawnedNum >= iMaxSpawn)
+	if (s_iSpawnedNum >= s_iMaxSpawn)
 	{
 		mState = SpawnState::End;
 	}

@@ -110,6 +110,9 @@ void OBJ_Ice::Update()
 {
 	GameObject::Update();
 
+	bAzarashiOn = false;
+	bAzarashiBookingOn = false;
+
 	switch (iHP)
 	{
 	case 10:
@@ -150,6 +153,16 @@ void OBJ_Ice::Update()
 	
 
 	p_mShaderCom->p_mPS->WriteBuffer(0, &myColor);
+}
+
+void OBJ_Ice::OnCollisionEnter(GameObject* _obj)
+{
+	GameObject::OnCollisionEnter(_obj);
+}
+
+void OBJ_Ice::OnCollisionStay(GameObject* _obj)
+{
+	GameObject::OnCollisionStay(_obj);
 }
 
 //アザラシの待機時間によってHPが減るようにする

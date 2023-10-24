@@ -5,6 +5,7 @@
 #include "../Component/Com_BoxCollider.h"
 #include "OBJ_Ice.h"
 #include "../GameObject/OBJ_Shadow.h"
+#include "OBJ_AzarashiManager.h"
 #include "../Scene/Scene.h"
 #include <iostream>
 #include "OBJ_Score.h"
@@ -308,6 +309,7 @@ void OBJ_Azarashi::Update()
 			fDeadCnt += Time->GetDeltaTime();
 			if (fDeadCnt > fDeadTime)
 			{
+				OBJ_AzarashiManager::CalcRemain();
 				s_iOnIceNum--;
 				OBJ_Score::CalcScore(iScore);
 				p_mShadowObj->bDestroy = true;
@@ -321,6 +323,7 @@ void OBJ_Azarashi::Update()
 			fDeadCnt += Time->GetDeltaTime();
 			if (fDeadCnt > fDeadTime)
 			{
+				OBJ_AzarashiManager::CalcRemain();
 				s_iOnIceNum--;
 				OBJ_Score::AddNoComboScore(50);
 				p_mShadowObj->bDestroy = true;

@@ -30,8 +30,10 @@ private:
     // ゲーム時間ごとのスポーンレート
     std::vector<float> vec_SpawnRate;
 
-    static int iMaxSpawn;
-    static int iSpawnedNum;
+    static int s_iMaxSpawn;
+    static int s_iSpawnedNum;
+    static int s_iRemain;
+
     // コライダー中心
     DirectX::SimpleMath::Vector3 mAzarashiCenter = DirectX::SimpleMath::Vector3(0.0f, 0.0f, 0.0f);
     // コライダー半径
@@ -73,6 +75,8 @@ private:
     float fLeaderSpawnedTime = 0.2f;
     float fLeaderCnt = 0;
 
+    int iRandTestNum = 0;
+
     DirectX::SimpleMath::Vector3 mLeaderPos = DirectX::SimpleMath::Vector3(0.0f, 0.0f, 0.0f);
     OBJ_Azarashi* p_mCurrentLeader = nullptr;
 
@@ -98,17 +102,27 @@ public:
 
     static int GetMaxSpawn()
     {
-        return iMaxSpawn;
+        return s_iMaxSpawn;
     }
 
     static int GetSpawnedNum()
     {
-        return iSpawnedNum;
+        return s_iSpawnedNum;
     }
 
     void SetTarget(GameObject* _tar)
     {
         p_mTarget = _tar;
+    }
+
+    static void CalcRemain()
+    {
+        s_iRemain--;
+    }
+
+    static int GetRemain()
+    {
+        return s_iRemain;
     }
 };
 

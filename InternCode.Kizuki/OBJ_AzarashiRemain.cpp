@@ -72,7 +72,7 @@ void OBJ_AzarashiRemain::Update()
 {
 	if (bActive)
 	{
-		iRemainNum = OBJ_AzarashiManager::GetMaxSpawn() - OBJ_AzarashiManager::GetSpawnedNum(); //残りのアザラシを計算
+		iRemainNum = OBJ_AzarashiManager::GetRemain();
 
 		int remain = iRemainNum;
 

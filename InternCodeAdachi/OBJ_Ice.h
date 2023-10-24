@@ -29,6 +29,9 @@ private:
 
     void CreateFromCSV(const char* _FileName);
 
+    bool bAzarashiOn = false;
+    bool bAzarashiBookingOn = false;
+
 public:
     int myLine = 0;
     int myRow = 0;
@@ -42,6 +45,8 @@ public:
 
     void Init();
     void Update();
+    void OnCollisionEnter(GameObject* _obj);
+    void OnCollisionStay(GameObject* _obj);
 
     void HpCalc(); //ë´èÍÇÃHPåvéZ
 
