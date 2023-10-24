@@ -65,6 +65,10 @@ private:
     bool bisUP = true;
 
     bool bSEEnd = false;
+
+    bool bThisOne = true;
+
+    int cnt = 0;
     ClearState mState = ClearState::WaitState;
 
     OBJ_ResultPenguin* p_mPenguin{};

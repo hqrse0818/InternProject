@@ -170,7 +170,8 @@ void Scene_Title::Init()
 	Sprite_buf->SetCurrent(1);
 	p_mExp1->AddComponent(Sprite_buf);
 	p_mExp1->SetPosition(SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2, 0.0f);
-	p_mExp1->SetScale(1980.0f * 0.6f, 1080.0f * 0.6f, 1.0f);
+	//p_mExp1->SetScale(1980.0f * 0.7f, 1080.0f * 0.7f, 1.0f);
+	p_mExp1->SetScale(1280, 720, 1.0f);
 	AddGameObject(p_mExp1);
 	// à–¾2
 	p_mExp2 = new GameObject("exp1");
@@ -184,7 +185,8 @@ void Scene_Title::Init()
 	Sprite_buf->SetCurrent(1);
 	p_mExp2->AddComponent(Sprite_buf);
 	p_mExp2->SetPosition(SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2 + 1.0f, 0.0f);
-	p_mExp2->SetScale(1980.0f * 0.6f, 1080.0f * 0.6f, 1.0f);
+	//p_mExp2->SetScale(1980.0f * 0.7f, 1080.0f * 0.7f, 1.0f);
+	p_mExp2->SetScale(1280, 720, 1.0f);
 	AddGameObject(p_mExp2);
 
 	pBackFont = new GameObject("modoru");
