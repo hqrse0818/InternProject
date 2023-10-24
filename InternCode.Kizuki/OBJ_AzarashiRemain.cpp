@@ -7,7 +7,7 @@
 #include "../InternCodeAdachi/OBJ_Score.h"
 #include "../InternCodeAdachi/GameManager.h"
 
-#define LoadRow (1)
+
 
 using namespace DirectX::SimpleMath;
 using namespace std;
@@ -31,10 +31,46 @@ void OBJ_AzarashiRemain::CreateFromCSV(const char* _FileName)
 	Nums[0]->SetPosition(stof(sv[3]), stof(sv[4]), stof(sv[5]));
 	Nums[1]->SetPosition(stof(sv[6]), stof(sv[7]), stof(sv[8]));
 	Nums[2]->SetPosition(stof(sv[9]), stof(sv[10]), stof(sv[11]));
+	pIce->SetScale(stof(sv[12]), stof(sv[13]), 0.0f);
+	pIce->SetPosition(stof(sv[14]), stof(sv[15]), 0.0f);
+	pRemain->SetScale(stof(sv[16]), stof(sv[17]), 0.0f);
+	pRemain->SetPosition(stof(sv[18]), stof(sv[19]), 0.0f);
+	pCount->SetScale(stof(sv[20]), stof(sv[21]), 0.0f);
+	pCount->SetPosition(stof(sv[22]), stof(sv[23]), 0.0f);
 }
 
 OBJ_AzarashiRemain::OBJ_AzarashiRemain()
 {
+	// 氷
+	pIce = new GameObject("koori");
+	Com_Shader* pShader = new Com_Shader();
+	pShader->p_mVS->Load(VS_SPRITE);
+	pShader->p_mPS->Load(PS_SPRITE);
+	pIce->AddComponent(pShader);
+	Com_Sprite* pSprite = new Com_Sprite();
+	pSprite->SetTexture("asset/texture/koori.png");
+	pIce->AddComponent(pSprite);
+
+	// 匹
+	pCount = new GameObject("hiki");
+	pShader = new Com_Shader();
+	pShader->p_mVS->Load(VS_SPRITE);
+	pShader->p_mPS->Load(PS_SPRITE);
+	pCount->AddComponent(pShader);
+	pSprite = new Com_Sprite();
+	pSprite->SetTexture("asset/texture/hiki.png");
+	pCount->AddComponent(pSprite);
+
+	//アザラシの残機
+	pRemain = new GameObject("ARemainOBJ");
+	pShader = new Com_Shader();
+	pShader->p_mVS->Load(VS_SPRITE);
+	pShader->p_mPS->Load(PS_SPRITE);
+	pRemain->AddComponent(pShader);
+	pSprite = new Com_Sprite();
+	pSprite->SetTexture("asset/texture/nokori.png");
+	pRemain->AddComponent(pSprite);
+
 	Nums[0] = new OBJ_Number();
 	Nums[1] = new OBJ_Number();
 	Nums[2] = new OBJ_Number();
@@ -55,6 +91,17 @@ OBJ_AzarashiRemain::OBJ_AzarashiRemain(const char* _ARemain, const char* _FileNa
 
 void OBJ_AzarashiRemain::Start()
 {
+	pIce->Init();
+	pIce->Start();
+	pRemain->Init();
+	pRemain->Start();
+	pCount->Init();
+	pCount->Start();
+
+	GetScene()->AddGameObject(pIce);
+	GetScene()->AddGameObject(pRemain);
+	GetScene()->AddGameObject(pCount);
+
 	GetScene()->AddGameObject(Nums[0]);
 	GetScene()->AddGameObject(Nums[1]);
 	GetScene()->AddGameObject(Nums[2]);
@@ -72,7 +119,7 @@ void OBJ_AzarashiRemain::Update()
 {
 	if (bActive)
 	{
-		iRemainNum = OBJ_AzarashiManager::GetMaxSpawn() - OBJ_AzarashiManager::GetSpawnedNum(); //残りのアザラシを計算
+		iRemainNum = OBJ_AzarashiManager::GetRemain();
 
 		int remain = iRemainNum;
 

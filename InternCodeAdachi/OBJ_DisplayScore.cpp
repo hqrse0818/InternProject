@@ -20,6 +20,17 @@ OBJ_DisplayScore::OBJ_DisplayScore()
 		Nums[i]->SetNum(0);
 	}
 	// 右上に作成
+	// スコアフォント
+	pScoreFont = new GameObject();
+	Com_Shader* scores = new Com_Shader();
+	scores->p_mVS->Load(VS_SPRITE);
+	scores->p_mPS->Load(PS_SPRITE);
+	pScoreFont->AddComponent(scores);
+	Com_Sprite* scorep = new Com_Sprite();
+	scorep->SetTexture("asset/texture/scoreFont.png");
+	pScoreFont->AddComponent(scorep);
+	pScoreFont->SetScale(220.0f, 220.0f, 1.0f);
+	pScoreFont->SetPosition(820.0f, 50.0f, 0.0f);
 }
 
 OBJ_DisplayScore::OBJ_DisplayScore(const char* _name)
@@ -44,6 +55,8 @@ OBJ_DisplayScore::OBJ_DisplayScore(const char* _name, const char* _FileName)
 	Scale.x = stof(sv[2]);
 	Scale.y = stof(sv[3]);
 	float duration = stof(sv[4]);
+	pScoreFont->SetPosition(stof(sv[5]), stof(sv[6]), 0.0f);
+	pScoreFont->SetScale(stof(sv[7]), stof(sv[8]), 0.0f);
 
 	for (int i = 0; i < 6; i++)
 	{
@@ -68,6 +81,10 @@ void OBJ_DisplayScore::Init()
 
 void OBJ_DisplayScore::Start()
 {
+	pScoreFont->Init();
+	pScoreFont->Start();
+	GetScene()->AddGameObject(pScoreFont);
+
 	for (int i = 0; i < 6; i++)
 	{
 		GetScene()->AddGameObject(Nums[i]);

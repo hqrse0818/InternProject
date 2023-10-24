@@ -13,8 +13,9 @@
 using namespace DirectX::SimpleMath;
 using namespace std;
 
-int OBJ_AzarashiManager::iMaxSpawn = 0;
-int OBJ_AzarashiManager::iSpawnedNum = 0;
+int OBJ_AzarashiManager::s_iMaxSpawn = 0;
+int OBJ_AzarashiManager::s_iSpawnedNum = 0;
+int OBJ_AzarashiManager::s_iRemain = 0;
 
 OBJ_AzarashiManager::OBJ_AzarashiManager()
 {
@@ -37,7 +38,8 @@ OBJ_AzarashiManager::OBJ_AzarashiManager(const char* _name, const char* _FileNam
 	vector<string> spn = SeparateString(sMaxSpawnNum, ',');
 
 	// 出現最大数を格納
-	iMaxSpawn = stoi(spn[0]);
+	s_iMaxSpawn = stoi(spn[0]);
+	s_iRemain = s_iMaxSpawn;
 
 	// 文字列を(,)で分割
 	istringstream num(sSpawnRateNum);
@@ -122,12 +124,14 @@ OBJ_AzarashiManager::OBJ_AzarashiManager(const char* _name, const char* _FileNam
 		OBJ_Azarashi::SetScoreDistance(stof(as[20]), stof(as[21]));
 
 		fLeaderSpawnedTime = stof(as[22]);
+
+		iRandTestNum = stoi(as[23]);
 	}
 	gt.clear();
 	sr.clear();
 	as.clear();
 
-	iSpawnedNum = 0;
+	s_iSpawnedNum = 0;
 }
 
 void OBJ_AzarashiManager::CreateLeader()
@@ -139,6 +143,28 @@ void OBJ_AzarashiManager::CreateLeader()
 		return;
 	float f = Time->CountStop();
 	DEBUG_LOG("リーダー : " << f);
+
+	// リーダーのポジションを決定
+	Vector3 target;
+	int r = 0;
+	for (int i = 0; i < iRandTestNum; i++)
+	{
+		r = HighRand::GetRand(0, vec.size() - 1);
+		if (!vec[r]->GetBooking() && !vec[r]->GetAzarashiOn())
+		{
+			target = vec[r]->p_mTransform->mPosition;
+			vec[r]->SetAzarashiBooking(true);
+			break;
+		}
+	}
+
+	// 氷の上に収まるように少しだけオフセットを作る
+	float x = HighRand::fGetRand(-4, 4, 3);
+	float z = HighRand::fGetRand(-4, 4, 3);
+	target.x += x;
+	target.z += z;
+	
+	
 
 	// リーダーを作成
 	OBJ_Azarashi* LAzarashi = new OBJ_Azarashi("Leader", 2);
@@ -189,10 +215,7 @@ void OBJ_AzarashiManager::CreateLeader()
 	}
 	break;
 	}
-	// リーダーのポジションを決定
-	Vector3 target;
-	int r = HighRand::GetRand(0, vec.size() - 1);
-	target = vec[r]->p_mTransform->mPosition;
+	
 
 	mInit = init;
 
@@ -203,29 +226,31 @@ void OBJ_AzarashiManager::CreateLeader()
 	// 氷は左下から右上に向かって生成される
 
 	// 行が端の場合
-	if (vec[r]->myLine == 0 || vec[r]->myLine == OBJ_Ice::s_iMaxNumIndex)
-	{
-		if (vec[r]->myLine == 0)
-		{
-			iLine = 1;
-		}
-		else
-		{
-			iLine = 2;
-		}
-	}
-	// 列が端の場合
-	if (vec[r]->myRow == 0 || vec[r]->myRow == OBJ_Ice::s_iMaxNumIndex)
-	{
-		if (vec[r]->myRow == 0)
-		{
-			iRow = 1;
-		}
-		else
-		{
-			iRow = 2;
-		}
-	}
+	//if (vec[r]->myLine == 0 || vec[r]->myLine == OBJ_Ice::s_iMaxNumIndex)
+	//{
+	//	if (vec[r]->myLine == 0)
+	//	{
+	//		iLine = 1;
+	//	}
+	//	else
+	//	{
+	//		iLine = 2;
+	//	}
+	//}
+	//// 列が端の場合
+	//if (vec[r]->myRow == 0 || vec[r]->myRow == OBJ_Ice::s_iMaxNumIndex)
+	//{
+	//	if (vec[r]->myRow == 0)
+	//	{
+	//		iRow = 1;
+	//	}
+	//	else
+	//	{
+	//		iRow = 2;
+	//	}
+	//}
+
+
 	GetScene()->AddGameObject(LAzarashi);
 	LAzarashi->Init();
 	// スタート位置とターゲット位置の設定
@@ -234,8 +259,8 @@ void OBJ_AzarashiManager::CreateLeader()
 	LAzarashi->Update();
 	LAzarashi->GetSpawnAudio()->Play();
 
-	iSpawnedNum++;
-	if (iSpawnedNum >= iMaxSpawn)
+	s_iSpawnedNum++;
+	if (s_iSpawnedNum >= s_iMaxSpawn)
 	{
 		mState = SpawnState::End;
 	}
@@ -308,9 +333,9 @@ void OBJ_AzarashiManager::CreateTeshita()
 		return;
 
 	int spawnnum = HighRand::GetRand(iSpawnMin, iSpawnMax);
-	if (iMaxSpawn - iSpawnedNum < spawnnum)
+	if (s_iMaxSpawn - s_iSpawnedNum < spawnnum)
 	{
-		spawnnum = iMaxSpawn - iSpawnedNum;
+		spawnnum = s_iMaxSpawn - s_iSpawnedNum;
 	}
 
 	//// スポーンエリアを大まかに指定
@@ -356,17 +381,34 @@ void OBJ_AzarashiManager::CreateTeshita()
 
 	for (int i = 0; i < spawnnum; i++)
 	{
-		int r = HighRand::GetRand(0, vec.size() - 1);
-		Vector3 target = vec[r]->p_mTransform->mPosition;
+		Vector3 target;
+		int r = 0;
+		for (int i = 0; i < iRandTestNum; i++)
+		{
+			r = HighRand::GetRand(0, vec.size() - 1);
+
+			// 氷の上にアザラシが乗っているかチェック
+			if (!vec[r]->GetBooking() && !vec[r]->GetAzarashiOn())
+			{
+				target = vec[r]->p_mTransform->mPosition;
+				vec[r]->SetAzarashiBooking(true);
+				break;
+			}
+		}
 
 		// プレイヤーの方向に少しだけ寄せる
-		Vector3 Direction = Math::GetVector(target, p_mTarget->p_mTransform->mPosition);
+		/*Vector3 Direction = Math::GetVector(target, p_mTarget->p_mTransform->mPosition);
 		Direction = Math::Normalize(Direction);
 		int t = HighRand::fGetRand(5, 14, 3);
 		Direction *= t;
 		target.x += Direction.x;
-		target.z += Direction.z;
+		target.z += Direction.z;*/
 
+		// 氷の上に収まるように少しだけオフセットを作る
+		float x = HighRand::fGetRand(-4, 4, 3);
+		float z = HighRand::fGetRand(-4, 4, 3);
+		target.x += x;
+		target.z += z;
 
 
 
@@ -376,8 +418,6 @@ void OBJ_AzarashiManager::CreateTeshita()
 		azarashis->GetFootCom()->SetFootHeight(fFootHeight);
 		azarashis->SetAzrashiStatus(fAfterWait, fAttackDuration, fMoveSpeed, fVelocity, fBlake, fLength, fDamageDistance);
 
-		// リーダーと同じ位置を目標地点にする
-		Vector3 TeshitaTarget = mLeaderPos;
 
 		//// ランダムでオフセット設定
 
@@ -422,9 +462,9 @@ void OBJ_AzarashiManager::CreateTeshita()
 		azarashis->GetSpawnAudio()->Play();
 	}
 
-	iSpawnedNum += spawnnum;
+	s_iSpawnedNum += spawnnum;
 
-	if (iSpawnedNum >= iMaxSpawn)
+	if (s_iSpawnedNum >= s_iMaxSpawn)
 	{
 		mState = SpawnState::End;
 	}

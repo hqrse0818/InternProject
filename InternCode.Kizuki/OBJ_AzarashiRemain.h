@@ -3,10 +3,15 @@
 #include "OBJ_Number.h"
 #include "../InternCodeAdachi/OBJ_AzarashiManager.h"
 
+#define LoadRow (1)
+
 //アザラシの残機
 class OBJ_AzarashiRemain :public OBJ_Number
 {
 private:
+	GameObject* pIce{};
+	GameObject* pCount{};
+	GameObject* pRemain{};
 	OBJ_Number* Nums[3]{};
 	int iRemainNum = 0;
 	bool bIceCalc = false;
@@ -34,6 +39,9 @@ public:
 
 	void SetDisplay(bool _val)
 	{
+		pIce->SetActive(_val);
+		pCount->SetActive(_val);
+		pRemain->SetActive(_val);
 		Nums[0]->SetActive(_val);
 		Nums[1]->SetActive(_val);
 		Nums[2]->SetActive(_val);

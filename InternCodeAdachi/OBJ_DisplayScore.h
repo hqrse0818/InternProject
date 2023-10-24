@@ -6,6 +6,7 @@ class OBJ_DisplayScore :
 private:
     OBJ_Number* Nums[6];
     ShaderResourceView* p_mSRV{};
+    GameObject* pScoreFont{};
 public:
     OBJ_DisplayScore();
     OBJ_DisplayScore(const char* _name);
@@ -18,6 +19,8 @@ public:
 
     void SetDisplay(bool _val)
     {
+        pScoreFont->SetActive(_val);
+
         for (int i = 0; i < 6; i++)
         {
             Nums[i]->SetActive(_val);
