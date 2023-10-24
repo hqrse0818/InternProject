@@ -13,6 +13,7 @@ public:
     Com_EffectBillboard* p_mBil{};
     Com_Shader* p_mShadeer{};
     float fLifetime;
+    float fDuration = 0.5f;
     float fCount = 0.0f;
 public:
     OBJ_Particle();
@@ -31,6 +32,11 @@ public:
     void SetLifeTime(float _val)
     {
         fLifetime = _val;
+    }
+
+    void SetAnimDuration(float _val)
+    {
+        fDuration = _val;
     }
 };
 
