@@ -234,6 +234,8 @@ void OBJ_Azarashi::Update()
 				p_mModelCom->PlayAnimation("Attack");
 				p_mModelCom->SetCurrentKeyFrame(0);
 				mState = AzrashiState::Attack;
+				p_mAttackEf->p_mTransform->mPosition = this->p_mTransform->mPosition;
+				p_mAttackEf->Create();
 			}
 			break;
 		case AzrashiState::Attack:

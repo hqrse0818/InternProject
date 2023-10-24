@@ -10,7 +10,7 @@ using namespace DirectX::SimpleMath;
 OBJ_HipEffect::OBJ_HipEffect()
 {
 	mKind = Particle;
-	iCreateNum = 30;
+	iCreateNum = 50;
 
 	p_mTexture = new ShaderResourceView;
 	p_mTexture->Create("asset/texture/hip.png");
@@ -59,7 +59,7 @@ void OBJ_HipEffect::Create()
 		Particle->p_mTransform->mPosition.z = Target->p_mTransform->mPosition.z;
 		Particle->Init();
 		Particle->SetTexture(p_mTexture->GetSRV());
-		Particle->p_mTransform->mScale = DirectX::SimpleMath::Vector3(2.0, 2.0, 2.0);
+		Particle->p_mTransform->mScale = DirectX::SimpleMath::Vector3(1.5, 1.5, 1.5);
 		Particle->GetBil()->SetUVCut(4, 1);
 		Particle->GetBil()->SetCurrent(100);
 

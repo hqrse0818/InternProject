@@ -62,7 +62,7 @@ void OBJ_JumpEffect::Create()
 		Particle->p_mTransform->mScale = DirectX::SimpleMath::Vector3(4.0, 4.0, 4.0);
 		Particle->GetBil()->SetUVCut(6, 1);
 		Particle->GetBil()->SetCurrent(1);
-		Particle->SetAnimDuration(0.5f / 7);
+		Particle->SetAnimDuration(0.4f / 7);
 
 		//ŽÎ•û“ŠŽËÝ’è
 		Particle->p_mTousyaBuf->SetGravity(0.0f);
@@ -83,7 +83,7 @@ void OBJ_JumpEffect::Create()
 
 		Particle->p_mTousyaBuf->SetInitSpeed(speed);
 
-		Particle->SetLifeTime(0.5f);
+		Particle->SetLifeTime(0.4f);
 
 		s_p_mScene->AddGameObject(Particle);
 	}
