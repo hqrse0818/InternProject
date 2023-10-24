@@ -159,8 +159,8 @@ void OBJ_AzarashiManager::CreateLeader()
 	}
 
 	// 氷の上に収まるように少しだけオフセットを作る
-	float x = HighRand::fGetRand(-5, 5, 3);
-	float z = HighRand::fGetRand(-5, 5, 3);
+	float x = HighRand::fGetRand(-4, 4, 3);
+	float z = HighRand::fGetRand(-4, 4, 3);
 	target.x += x;
 	target.z += z;
 	
@@ -405,8 +405,8 @@ void OBJ_AzarashiManager::CreateTeshita()
 		target.z += Direction.z;*/
 
 		// 氷の上に収まるように少しだけオフセットを作る
-		float x = HighRand::fGetRand(-5, 5, 3);
-		float z = HighRand::fGetRand(-5, 5, 3);
+		float x = HighRand::fGetRand(-4, 4, 3);
+		float z = HighRand::fGetRand(-4, 4, 3);
 		target.x += x;
 		target.z += z;
 

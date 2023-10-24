@@ -315,8 +315,8 @@ void OBJ_Penguin::Update()
 			p_mMoveCom->Move(mMoveVelocity.x * fAirMoveSpeed, mMoveVelocity.y * fAirMoveSpeed);
 
 			// ヒップインパクトに派生できるように
-			if (Controller_Input::GetRightTriggerSimple(0) == KEYSTATE::KEY_WHILE_DOWN ||
-				Input::GetKeyState(KEYCODE_MOUSE_LEFT) == KEYSTATE::KEY_WHILE_DOWN)
+			if (Controller_Input::GetRightTriggerSimple(0) == KEYSTATE::KEY_DOWN ||
+				Input::GetKeyState(KEYCODE_MOUSE_LEFT) == KEYSTATE::KEY_DOWN)
 			{
 				// ヒップインパクトの予約
 				p_mModel->PlayAnimation("HipDrop");
