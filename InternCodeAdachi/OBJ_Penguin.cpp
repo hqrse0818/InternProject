@@ -390,7 +390,6 @@ void OBJ_Penguin::Update()
 				p_mModel->SetCurrentKeyFrame(0);
 				p_mModel->PlayAnimation("Walk");
 				mState = PenguinState::Walk;
-				p_mHipEf->Create();
 			}
 			break;
 	case PenguinState::Damage:
