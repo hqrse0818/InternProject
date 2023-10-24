@@ -465,11 +465,6 @@ void Scene_Game::Init()
 	p_mObjGo->SetPosition(SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2, 0.0f);
 	AddGameObject(p_mObjGo);
 
-	// 警告テスト
-	OBJ_Warning* pWar = new OBJ_Warning("wr", "asset/data/csv/warning.csv");
-	pWar->SetPosition(200.0f, 100.0f, 0.0f);
-	AddGameObject(pWar, 7);
-
 	// ゲームオーバー遷移用
 	p_mHalfFade = new OBJ_HalfFade("half");
 	p_mHalfFade->SetState(OBJ_Transition::FadeState::InEnd);
