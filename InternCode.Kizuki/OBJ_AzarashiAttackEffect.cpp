@@ -55,7 +55,7 @@ void OBJ_AzarashiAttackEffect::Create()
 		Particle->p_mTransform->mPosition.z = this->p_mTransform->mPosition.z + HighRand::fGetRand(-3, 3, 2);
 		Particle->p_mTransform->mScale = DirectX::SimpleMath::Vector3(4.0, 4.0, 4.0);
 		Particle->GetBil()->SetUVCut(3, 1);
-		Particle->GetBil()->SetCurrent(HighRand::GetRand(1, 100));
+		Particle->GetBil()->SetCurrent(HighRand::GetRand(1, 10));
 
 		//ŽÎ•û“ŠŽËÝ’è
 		Particle->p_mTousyaBuf->SetGravity(0.0f);

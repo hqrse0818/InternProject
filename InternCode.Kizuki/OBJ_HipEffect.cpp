@@ -10,7 +10,7 @@ using namespace DirectX::SimpleMath;
 OBJ_HipEffect::OBJ_HipEffect()
 {
 	mKind = Particle;
-	iCreateNum = 20;
+	iCreateNum = 30;
 
 	p_mTexture = new ShaderResourceView;
 	p_mTexture->Create("asset/texture/hip.png");
@@ -54,9 +54,9 @@ void OBJ_HipEffect::Create()
 	for (int i = 0; i < iCreateNum; i++)
 	{
 		OBJ_Particle* Particle = new OBJ_Particle("no");
-		Particle->p_mTransform->mPosition.x = Target->p_mTransform->mPosition.x + HighRand::fGetRand(-6, 6, 2);
+		Particle->p_mTransform->mPosition.x = Target->p_mTransform->mPosition.x;
 		Particle->p_mTransform->mPosition.y = Target->p_mTransform->mPosition.y + 1.0f;
-		Particle->p_mTransform->mPosition.z = Target->p_mTransform->mPosition.z + HighRand::fGetRand(-6, 6, 2);
+		Particle->p_mTransform->mPosition.z = Target->p_mTransform->mPosition.z;
 		Particle->Init();
 		Particle->SetTexture(p_mTexture->GetSRV());
 		Particle->p_mTransform->mScale = DirectX::SimpleMath::Vector3(2.0, 2.0, 2.0);
@@ -76,13 +76,13 @@ void OBJ_HipEffect::Create()
 		Particle->p_mTousyaBuf->SetThrowAngle(angle);
 
 		Vector3 speed; //”ÍˆÍ
-		speed.x = 0;
+		speed.x = HighRand::fGetRand(-3, 3, 2);
 		speed.y = HighRand::fGetRand(1, 3, 2) * 0.01;
-		speed.z = 0;
+		speed.z = HighRand::fGetRand(-3, 3, 2);
 
 		Particle->p_mTousyaBuf->SetInitSpeed(speed);
 
-		Particle->SetLifeTime(0.3f);
+		Particle->SetLifeTime(0.6f);
 
 		s_p_mScene->AddGameObject(Particle);
 	}
