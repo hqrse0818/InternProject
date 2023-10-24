@@ -59,9 +59,11 @@ void OBJ_AzarashiDeadEffect::Create()
 		Particle->SetTexture(p_mTexture->GetSRV());
 		Particle->p_mTransform->mPosition = this->p_mTransform->mPosition;
 		Particle->p_mTransform->mScale = DirectX::SimpleMath::Vector3(9.0, 9.0, 9.0);
+		Particle->GetBil()->SetUVCut(2, 1);
+		Particle->GetBil()->SetCurrent(HighRand::GetRand(1, 100));
 
 		//ŽÎ•û“ŠŽËÝ’è
-		Particle->p_mTousyaBuf->SetGravity(-3.0f);
+		Particle->p_mTousyaBuf->SetGravity(-0.5f);
 		//Particle->p_mTousyaBuf->SetInitSpeed(Vector3(0.0f, 0.0f, 0.0f)); //‰‘¬
 		//Particle->p_mTousyaBuf->SetThrowAngle(Vector3(-100.0f, 0.0f, -100.0f)); //“ŠŽËŠp
 
@@ -74,7 +76,7 @@ void OBJ_AzarashiDeadEffect::Create()
 
 		Vector3 speed; //”ÍˆÍ
 		speed.x = HighRand::fGetRand(-1, 1, 2);
-		speed.y = HighRand::fGetRand(1, 10, 3);
+		speed.y = HighRand::fGetRand(1, 3, 3) * 0.1;
 		speed.z = HighRand::fGetRand(-1, 1, 2);
 
 		Particle->p_mTousyaBuf->SetInitSpeed(speed);

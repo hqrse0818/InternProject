@@ -8,7 +8,7 @@
 OBJ_AzarashiAttackEffect::OBJ_AzarashiAttackEffect()
 {
 	mKind = Particle;
-	iCreateNum = 3;
+	iCreateNum = 2;
 
 	p_mTexture = new ShaderResourceView;
 	p_mTexture->Create("asset/texture/azarashi_kougeki.png");
@@ -50,8 +50,12 @@ void OBJ_AzarashiAttackEffect::Create()
 		//Particle->p_mTransform->mPosition = Target->p_mTransform->mPosition;
 		Particle->Init();
 		Particle->SetTexture(p_mTexture->GetSRV());
-		Particle->p_mTransform->mPosition = this->p_mTransform->mPosition;
-		Particle->p_mTransform->mScale = DirectX::SimpleMath::Vector3(5.0, 5.0, 5.0);
+		Particle->p_mTransform->mPosition.x = this->p_mTransform->mPosition.x + HighRand::fGetRand(-3, 3, 2);
+		Particle->p_mTransform->mPosition.y = this->p_mTransform->mPosition.y;
+		Particle->p_mTransform->mPosition.z = this->p_mTransform->mPosition.z + HighRand::fGetRand(-3, 3, 2);
+		Particle->p_mTransform->mScale = DirectX::SimpleMath::Vector3(4.0, 4.0, 4.0);
+		Particle->GetBil()->SetUVCut(3, 1);
+		Particle->GetBil()->SetCurrent(HighRand::GetRand(1, 100));
 
 		//ŽÎ•û“ŠŽËÝ’è
 		Particle->p_mTousyaBuf->SetGravity(0.0f);
@@ -60,19 +64,19 @@ void OBJ_AzarashiAttackEffect::Create()
 
 		Vector3 angle; //Šp“x
 		angle.x = HighRand::fGetRand(-1, 1, 2);
-		angle.y = HighRand::fGetRand(2, 4, 2) * 0.1;
+		angle.y = 0;
 		angle.z = HighRand::fGetRand(-1, 1, 2);
 
 		Particle->p_mTousyaBuf->SetThrowAngle(angle);
 
 		Vector3 speed; //”ÍˆÍ
 		speed.x = 0;
-		speed.y = 0;
+		speed.y = HighRand::fGetRand(2, 4, 2) * 0.1;
 		speed.z = 0;
 
 		Particle->p_mTousyaBuf->SetInitSpeed(speed);
 
-		Particle->SetLifeTime(HighRand::fGetRand(2, 5, 3) * 0.1f);
+		Particle->SetLifeTime(0.4);
 
 		s_p_mScene->AddGameObject(Particle);
 	}

@@ -57,6 +57,8 @@ void OBJ_JumpEffect::Create()
 		Particle->Init();
 		Particle->SetTexture(p_mTexture->GetSRV());
 		Particle->p_mTransform->mScale = DirectX::SimpleMath::Vector3(3.0, 3.0, 3.0);
+		Particle->GetBil()->SetUVCut(6, 1);
+		Particle->GetBil()->SetCurrent(HighRand::GetRand(1, 100));
 
 		//ŽÎ•û“ŠŽËÝ’è
 		Particle->p_mTousyaBuf->SetGravity(0.1f);

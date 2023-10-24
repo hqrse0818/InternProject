@@ -57,6 +57,8 @@ void OBJ_HipEffect::Create()
 		Particle->p_mTransform->mPosition = Target->p_mTransform->mPosition;
 		Particle->Init();
 		Particle->SetTexture(p_mTexture->GetSRV());
+		Particle->GetBil()->SetUVCut(4, 1);
+		Particle->GetBil()->SetCurrent(HighRand::GetRand(1, 100));
 
 		//ŽÎ•û“ŠŽËÝ’è
 		Particle->p_mTousyaBuf->SetGravity(0.1f);
