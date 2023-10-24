@@ -78,5 +78,20 @@ public:
     {
         fShakePower = _val;
     }
+
+    bool GetAzarashiOn()
+    {
+        return bAzarashiOn;
+    }
+
+    bool GetBooking()
+    {
+        return bAzarashiBookingOn;
+    }
+
+    void SetAzarashiBooking(bool _val)
+    {
+        bAzarashiBookingOn = _val;
+    }
 };
 

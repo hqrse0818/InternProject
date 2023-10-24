@@ -158,11 +158,30 @@ void OBJ_Ice::Update()
 void OBJ_Ice::OnCollisionEnter(GameObject* _obj)
 {
 	GameObject::OnCollisionEnter(_obj);
+
+	if (_obj->mColType == Collider::ColliderForm::Sphere)
+	{
+		Com_SphereCollider* col = _obj->GetComponent<Com_SphereCollider>();
+
+		if (col->mColliderTag == ColliderKind::ColTag_Azarashi)
+		{
+			bAzarashiOn = true;
+		}
+	}
 }
 
 void OBJ_Ice::OnCollisionStay(GameObject* _obj)
 {
 	GameObject::OnCollisionStay(_obj);
+	if (_obj->mColType == Collider::ColliderForm::Sphere)
+	{
+		Com_SphereCollider* col = _obj->GetComponent<Com_SphereCollider>();
+
+		if (col->mColliderTag == ColliderKind::ColTag_Azarashi)
+		{
+			bAzarashiOn = true;
+		}
+	}
 }
 
 //アザラシの待機時間によってHPが減るようにする

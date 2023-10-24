@@ -125,7 +125,7 @@ OBJ_AzarashiManager::OBJ_AzarashiManager(const char* _name, const char* _FileNam
 
 		fLeaderSpawnedTime = stof(as[22]);
 
-		//iRandTestNum = stoi(as[23]);
+		iRandTestNum = stoi(as[23]);
 	}
 	gt.clear();
 	sr.clear();
@@ -146,8 +146,19 @@ void OBJ_AzarashiManager::CreateLeader()
 
 	// リーダーのポジションを決定
 	Vector3 target;
-	int r = HighRand::GetRand(0, vec.size() - 1);
-	target = vec[r]->p_mTransform->mPosition;
+	int r = 0;
+	for (int i = 0; i < iRandTestNum; i++)
+	{
+		r = HighRand::GetRand(0, vec.size() - 1);
+		if (!vec[r]->GetBooking() && !vec[r]->GetAzarashiOn())
+		{
+			target = vec[r]->p_mTransform->mPosition;
+			vec[r]->SetAzarashiBooking(true);
+			break;
+		}
+	}
+	
+	
 
 	// リーダーを作成
 	OBJ_Azarashi* LAzarashi = new OBJ_Azarashi("Leader", 2);
@@ -209,29 +220,31 @@ void OBJ_AzarashiManager::CreateLeader()
 	// 氷は左下から右上に向かって生成される
 
 	// 行が端の場合
-	if (vec[r]->myLine == 0 || vec[r]->myLine == OBJ_Ice::s_iMaxNumIndex)
-	{
-		if (vec[r]->myLine == 0)
-		{
-			iLine = 1;
-		}
-		else
-		{
-			iLine = 2;
-		}
-	}
-	// 列が端の場合
-	if (vec[r]->myRow == 0 || vec[r]->myRow == OBJ_Ice::s_iMaxNumIndex)
-	{
-		if (vec[r]->myRow == 0)
-		{
-			iRow = 1;
-		}
-		else
-		{
-			iRow = 2;
-		}
-	}
+	//if (vec[r]->myLine == 0 || vec[r]->myLine == OBJ_Ice::s_iMaxNumIndex)
+	//{
+	//	if (vec[r]->myLine == 0)
+	//	{
+	//		iLine = 1;
+	//	}
+	//	else
+	//	{
+	//		iLine = 2;
+	//	}
+	//}
+	//// 列が端の場合
+	//if (vec[r]->myRow == 0 || vec[r]->myRow == OBJ_Ice::s_iMaxNumIndex)
+	//{
+	//	if (vec[r]->myRow == 0)
+	//	{
+	//		iRow = 1;
+	//	}
+	//	else
+	//	{
+	//		iRow = 2;
+	//	}
+	//}
+
+
 	GetScene()->AddGameObject(LAzarashi);
 	LAzarashi->Init();
 	// スタート位置とターゲット位置の設定
@@ -362,16 +375,28 @@ void OBJ_AzarashiManager::CreateTeshita()
 
 	for (int i = 0; i < spawnnum; i++)
 	{
-		int r = HighRand::GetRand(0, vec.size() - 1);
-		Vector3 target = vec[r]->p_mTransform->mPosition;
+		Vector3 target;
+		int r = 0;
+		for (int i = 0; i < iRandTestNum; i++)
+		{
+			r = HighRand::GetRand(0, vec.size() - 1);
+
+			// 氷の上にアザラシが乗っているかチェック
+			if (!vec[r]->GetBooking() && !vec[r]->GetAzarashiOn())
+			{
+				target = vec[r]->p_mTransform->mPosition;
+				vec[r]->SetAzarashiBooking(true);
+				break;
+			}
+		}
 
 		// プレイヤーの方向に少しだけ寄せる
-		Vector3 Direction = Math::GetVector(target, p_mTarget->p_mTransform->mPosition);
+		/*Vector3 Direction = Math::GetVector(target, p_mTarget->p_mTransform->mPosition);
 		Direction = Math::Normalize(Direction);
 		int t = HighRand::fGetRand(5, 14, 3);
 		Direction *= t;
 		target.x += Direction.x;
-		target.z += Direction.z;
+		target.z += Direction.z;*/
 
 
 

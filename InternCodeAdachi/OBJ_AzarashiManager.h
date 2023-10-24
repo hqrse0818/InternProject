@@ -8,7 +8,7 @@
 #define SpawnRateRow (5)
 #define SpawnNumRow (7)
 #define AzarashiStateRow (9)
-#define StateSetNum (23)
+#define StateSetNum (24)
 
 enum class SpawnState {
     Wait, SpawnLeader,WaitTeshita,SpawnTeshita,End,Calc
