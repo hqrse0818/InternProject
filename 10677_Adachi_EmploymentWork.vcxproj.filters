@@ -103,6 +103,7 @@
     <ClCompile Include="GameObject\OBJ_GameOver.cpp" />
     <ClCompile Include="InternCodeAdachi\OBJ_Sky.cpp" />
     <ClCompile Include="InternCodeAdachi\OBJ_ResultPenguin.cpp" />
+    <ClCompile Include="InternCodeAdachi\OBJ_Warning.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Component\Component.h" />
@@ -212,6 +213,7 @@
     <ClInclude Include="GameObject\OBJ_GameOver.h" />
     <ClInclude Include="InternCodeAdachi\OBJ_Sky.h" />
     <ClInclude Include="InternCodeAdachi\OBJ_ResultPenguin.h" />
+    <ClInclude Include="InternCodeAdachi\OBJ_Warning.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="ClassDiagram.cd" />
