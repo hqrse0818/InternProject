@@ -6,7 +6,7 @@
 
 using namespace std;
 
-int OBJ_Score::s_iScore = 0;
+int OBJ_Score::s_iScore = 999999;
 int OBJ_Score::s_iCurrentComCount = 0;
 int OBJ_Score::s_iBreakNum = 0;
 int OBJ_Score::s_iMaxCombo = 0;

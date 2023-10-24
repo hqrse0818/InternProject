@@ -207,10 +207,13 @@ void Scene_Clear::Init()
 	//pen->SetScale(100.0f, 100.0f, 100.0f);
 	//AddGameObject(pen, 7);
 
+	string ss = ReadDataFromCSV("asset/data/csv/ClearSetting.csv", 1);
+	vector<string> sv = SeparateString(ss, ',');
+
 	// リザルトぺんぺん
 	p_mPenguin = new OBJ_ResultPenguin("pen");
-	p_mPenguin->SetScale(1280.0f * 0.7f, 720.0f * 0.7f, 1.0f);
-	p_mPenguin->SetPosition(400.0f, SCREEN_HEIGHT / 2, 1.0f);
+	p_mPenguin->SetPosition(stof(sv[0]), stof(sv[1]), 1.0f);
+	p_mPenguin->SetScale(stof(sv[2]), stof(sv[3]), 1.0f);
 	AddGameObject(p_mPenguin);
 
 	// 遷移用オブジェクト
