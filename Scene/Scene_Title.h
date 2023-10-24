@@ -30,6 +30,9 @@ private:
     GameObject* p_mExp1{};
     GameObject* p_mExp2{};
 
+    GameObject* pBackFont{};
+    GameObject* pBackButton{};
+
     Com_Audio* p_mAudio{};
     Com_Audio* p_mSECursor{};
     Com_Audio* p_mSEDecide{};
