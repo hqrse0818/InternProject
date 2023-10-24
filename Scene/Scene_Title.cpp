@@ -187,6 +187,31 @@ void Scene_Title::Init()
 	p_mExp2->SetScale(1980.0f * 0.6f, 1080.0f * 0.6f, 1.0f);
 	AddGameObject(p_mExp2);
 
+	pBackFont = new GameObject("modoru");
+	Shader_buf->p_mVS->Load(VS_SPRITE);
+	Shader_buf->p_mPS->Load(PS_SPRITE);
+	pBackFont->AddComponent(Shader_buf);
+	Sprite_buf = new Com_Sprite();
+	Sprite_buf->SetTexture("asset/texture/modoru.png");
+	Sprite_buf->SetSeparateNum(1, 1);
+	Sprite_buf->SetCurrent(1);
+	pBackFont->AddComponent(Sprite_buf);
+	pBackFont->SetPosition(stof(sv[8]), stof(sv[9]), 0.0f);
+	pBackFont->SetScale(stof(sv[10]), stof(sv[11]), 0.0f);
+	AddGameObject(pBackFont);
+
+	pBackButton = new GameObject("Button");
+	Shader_buf->p_mVS->Load(VS_SPRITE);
+	Shader_buf->p_mPS->Load(PS_SPRITE);
+	pBackButton->AddComponent(Shader_buf);
+	Sprite_buf = new Com_Sprite();
+	Sprite_buf->SetTexture("asset/texture/modoru.png");
+	Sprite_buf->SetSeparateNum(1, 1);
+	Sprite_buf->SetCurrent(1);
+	pBackButton->AddComponent(Sprite_buf);
+	pBackButton->SetPosition(stof(sv[12]), stof(sv[13]), 0.0f);
+	pBackButton->SetScale(stof(sv[14]), stof(sv[15]), 0.0f);
+	AddGameObject(pBackButton);
 
 	// ‰¹
 	p_mAudio = new Com_Audio();
@@ -208,6 +233,8 @@ void Scene_Title::Start()
 {
 	p_mExp1->SetActive(false);
 	p_mExp2->SetActive(false);
+	pBackFont->SetActive(false);
+	pBackButton->SetActive(false);
 
 	p_mAudio->Play(true);
 	GameManager::SetGameState(GameState::Title);
@@ -240,6 +267,8 @@ void Scene_Title::Update()
 				bisLeft = true;
 				p_mExp1->SetActive(true);
 				p_mExp2->SetActive(false);
+				pBackFont->SetActive(true);
+				pBackButton->SetActive(true);
 			}
 		}
 		else if (Controller_Input::GetButton(0, GAMEPAD_UP) == KEYSTATE::KEY_DOWN || Input::GetKeyState(KEYCODE_UP) == KEYSTATE::KEY_DOWN || Input::GetKeyState(KEYCODE_W) == KEYSTATE::KEY_DOWN)
@@ -296,6 +325,8 @@ void Scene_Title::Update()
 			bisLeft = true;
 			p_mExp1->SetActive(false);
 			p_mExp2->SetActive(false);
+			pBackFont->SetActive(false);
+			pBackButton->SetActive(false);
 			mState = TitleState::WaitInput;
 		}
 		break;
