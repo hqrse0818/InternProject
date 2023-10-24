@@ -449,6 +449,7 @@ void OBJ_Penguin::Update()
 				p_mGravityCom->SetOnGround(false);
 				//
 				p_mSEJump->Play();
+				p_mJumpEf->Create(); //ジャンプエフェクト
 			}
 			break;
 

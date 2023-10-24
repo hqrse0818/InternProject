@@ -53,33 +53,35 @@ void OBJ_JumpEffect::Create()
 {
 	{
 		OBJ_Particle* Particle = new OBJ_Particle("no");
-		Particle->p_mTransform->mPosition = Target->p_mTransform->mPosition;
+		Particle->p_mTransform->mPosition.x = Target->p_mTransform->mPosition.x;
+		Particle->p_mTransform->mPosition.y = Target->p_mTransform->mPosition.y + 2.0f;
+		Particle->p_mTransform->mPosition.z = Target->p_mTransform->mPosition.z;
 		Particle->Init();
 		Particle->SetTexture(p_mTexture->GetSRV());
-		Particle->p_mTransform->mScale = DirectX::SimpleMath::Vector3(3.0, 3.0, 3.0);
+		Particle->p_mTransform->mScale = DirectX::SimpleMath::Vector3(9.0, 9.0, 9.0);
 		Particle->GetBil()->SetUVCut(6, 1);
-		Particle->GetBil()->SetCurrent(HighRand::GetRand(1, 100));
+		Particle->GetBil()->SetCurrent(HighRand::GetRand(1, 36));
 
 		//ŽÎ•û“ŠŽËÝ’è
-		Particle->p_mTousyaBuf->SetGravity(0.1f);
+		Particle->p_mTousyaBuf->SetGravity(0.0f);
 		//Particle->p_mTousyaBuf->SetInitSpeed(Vector3(0.0f, 0.0f, 0.0f)); //‰‘¬
 		//Particle->p_mTousyaBuf->SetThrowAngle(Vector3(-100.0f, 0.0f, -100.0f)); //“ŠŽËŠp
 
 		Vector3 angle; //Šp“x
-		angle.x = HighRand::fGetRand(-70, -30, 3);
+		angle.x = 0;
 		angle.y = 0;
-		angle.z = HighRand::fGetRand(-70, -30, 3);
+		angle.z = 0;
 
 		Particle->p_mTousyaBuf->SetThrowAngle(angle);
 
 		Vector3 speed; //”ÍˆÍ
-		speed.x = HighRand::fGetRand(-6, 6, 2);
-		speed.y = HighRand::fGetRand(-100, -1, 3) * 0.0001f;
-		speed.z = HighRand::fGetRand(-6, 6, 2);
+		speed.x = 0;
+		speed.y = 0;
+		speed.z = 0;
 
 		Particle->p_mTousyaBuf->SetInitSpeed(speed);
 
-		Particle->SetLifeTime(HighRand::fGetRand(2, 5, 3) * 0.1f);
+		Particle->SetLifeTime(0.4f);
 
 		s_p_mScene->AddGameObject(Particle);
 	}
