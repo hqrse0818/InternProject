@@ -372,13 +372,14 @@ void OBJ_Penguin::Update()
 			pRangeObj->SetActive(true);
 			if (p_mGravityCom->GetOnGround())
 			{
+				p_mHipEf->Create();
 				p_mJumpCom->Create();
 				p_mModel->SetCurrentKeyFrame(0);
 				mState = PenguinState::AfterHipDrop;
 				p_mSEAttacLand->Play();
 				//p_mModel->SetModelData("AttackPenguin");
 				p_mModel->PlayAnimation("AfterHipDrop");
-				p_mHipEf->Create();
+				
 			}
 			break;
 

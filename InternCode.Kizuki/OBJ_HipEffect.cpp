@@ -83,8 +83,10 @@ void OBJ_HipEffect::Create()
 
 		Particle->p_mTousyaBuf->SetInitSpeed(speed);
 
-		Particle->SetLifeTime(0.45f);
+		Particle->SetLifeTime(0.48f);
 
 		s_p_mScene->AddGameObject(Particle);
+		Particle->Update();
+		Particle->Update();
 	}
 }
