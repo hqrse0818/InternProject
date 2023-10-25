@@ -62,6 +62,7 @@ void OBJ_HipEffect::Create()
 		Particle->p_mTransform->mScale = DirectX::SimpleMath::Vector3(1.5, 1.5, 1.5);
 		Particle->GetBil()->SetUVCut(4, 1);
 		Particle->GetBil()->SetCurrent(100);
+		Particle->SetAnimDuration(0.45f / 4);
 
 		//ŽÎ•û“ŠŽËÝ’è
 		Particle->p_mTousyaBuf->SetGravity(-1.0f);
@@ -76,13 +77,13 @@ void OBJ_HipEffect::Create()
 		Particle->p_mTousyaBuf->SetThrowAngle(angle);
 
 		Vector3 speed; //”ÍˆÍ
-		speed.x = HighRand::fGetRand(-3, 3, 2);
+		speed.x = HighRand::fGetRand(-4.5, 4.5, 2);
 		speed.y = HighRand::fGetRand(1, 3, 2) * 0.01;
-		speed.z = HighRand::fGetRand(-3, 3, 2);
+		speed.z = HighRand::fGetRand(-4.5, 4.5, 2);
 
 		Particle->p_mTousyaBuf->SetInitSpeed(speed);
 
-		Particle->SetLifeTime(0.6f);
+		Particle->SetLifeTime(0.45f);
 
 		s_p_mScene->AddGameObject(Particle);
 	}
