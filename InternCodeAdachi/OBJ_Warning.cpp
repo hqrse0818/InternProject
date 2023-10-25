@@ -46,7 +46,7 @@ OBJ_Warning::OBJ_Warning()
 	AddChild(pMark);
 
 	p_SEWarning = new Com_Audio();
-	p_SEWarning->Load("asset/audio/SE/SE ÇªÇÃëº/ÉQÅ[ÉÄÉNÉäÉA.wav");
+	p_SEWarning->Load("asset/audio/SE/SE ÇªÇÃëº/åxçê.wav");
 	AddComponent(p_SEWarning);
 }
 
