@@ -393,12 +393,18 @@ void OBJ_Azarashi::OnCollisionEnter(GameObject* _obj)
 					iScore = 50;
 				}
 				// 重力の更新を停止
+				p_mShadowObj->SetActive(false);
 				p_mGravityCom->bEnable = false;
 				p_mFootCom->bEnable = false;
 				p_mColliderCom->bEnable = false;
 				p_mModelCom->PlayAnimation("Dive");
 				p_mModelCom->SetCurrentKeyFrame(0);
 			}
+		}
+
+		if (col->mColliderTag == ColliderKind::ColTag_Fall)
+		{
+			p_mShadowObj->SetActive(false);
 		}
 	}
 	
@@ -518,7 +524,7 @@ void OBJ_Azarashi::OnCollisionStay(GameObject* _obj)
 				p_mColliderCom->bEnable = false;
 			}
 		}
-		if (col->mColliderTag == ColliderKind::ColTag_Fall)
+		else if (col->mColliderTag == ColliderKind::ColTag_Fall)
 		{
 			if (mState != AzrashiState::Damage &&
 				mState != AzrashiState::Dive &&
@@ -533,12 +539,18 @@ void OBJ_Azarashi::OnCollisionStay(GameObject* _obj)
 					iScore = 50;
 				}
 				// 重力の更新を停止
+				p_mShadowObj->SetActive(false);
 				p_mGravityCom->bEnable = false;
 				p_mFootCom->bEnable = false;
 				p_mColliderCom->bEnable = false;
 				p_mModelCom->PlayAnimation("Dive");
 				p_mModelCom->SetCurrentKeyFrame(0);
 			}
+		}
+
+		if (col->mColliderTag == ColliderKind::ColTag_Fall)
+		{
+			p_mShadowObj->SetActive(false);
 		}
 	}
 }
