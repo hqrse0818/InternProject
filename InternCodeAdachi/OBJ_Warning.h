@@ -1,6 +1,7 @@
 #pragma once
 #include "../GameObject/GameObject.h"
 #include "../Component/Com_Sprite.h"
+#include "../Component/Com_Audio.h"
 
 class OBJ_Warning :
     public GameObject
@@ -32,6 +33,8 @@ private:
     float fScaleSpeed = 25.0f;
     float fScaleMinus = -25.0f;
 
+    Com_Audio* p_SEWarning{};
+
 public:
     OBJ_Warning();
     OBJ_Warning(const char* _name);
@@ -42,6 +45,7 @@ public:
     void StartFade()
     {
         mState = WarningState::Start;
+        p_SEWarning->Play();
     }
     void EndFade()
     {

@@ -268,6 +268,7 @@ void Scene_Title::Update()
 			else
 			{
 				mState = TitleState::Tutorial;
+				mPage = TutorialPage::Page1;
 				bisLeft = true;
 				p_mExp1->SetActive(true);
 				p_mExp2->SetActive(false);
@@ -301,34 +302,60 @@ void Scene_Title::Update()
 		}
 		break;
 	case Scene_Title::TitleState::Tutorial:
-		if (Controller_Input::GetLeftStick(0).x < -0.5f || Controller_Input::GetButton(0, GAMEPAD_LEFT) == KEYSTATE::KEY_DOWN || Controller_Input::GetButton(0, GAMEPAD_SHOULDER_L) == KEYSTATE::KEY_DOWN ||
-			Input::GetKeyState(KEYCODE_A) == KEYSTATE::KEY_DOWN || Input::GetKeyState(KEYCODE_LEFT) == KEYSTATE::KEY_DOWN)
+		// “ü—Í‚Åƒy[ƒWØ‚è‘Ö‚¦
+		switch (mPage)
 		{
-			if (!bisLeft)
+		case Scene_Title::TutorialPage::None:
+			break;
+		case Scene_Title::TutorialPage::Page1:
+			if (Controller_Input::GetLeftStick(0).x > 0.5f || Controller_Input::GetButton(0, GAMEPAD_RIGHT) == KEYSTATE::KEY_DOWN || Controller_Input::GetButton(0, GAMEPAD_SHOULDER_R) == KEYSTATE::KEY_DOWN ||
+				Input::GetKeyState(KEYCODE_D) == KEYSTATE::KEY_DOWN || Input::GetKeyState(KEYCODE_RIGHT) == KEYSTATE::KEY_DOWN)
 			{
 				p_mSECursor->Play();
+				p_mExp1->SetActive(false);
+				p_mExp2->SetActive(true);
+				mPage = TutorialPage::Page2;
 			}
-			bisLeft = true;
-			p_mExp1->SetActive(true);
-			p_mExp2->SetActive(false);
-		}
-		else if (Controller_Input::GetLeftStick(0).x > 0.5f || Controller_Input::GetButton(0, GAMEPAD_RIGHT) == KEYSTATE::KEY_DOWN || Controller_Input::GetButton(0, GAMEPAD_SHOULDER_R) == KEYSTATE::KEY_DOWN ||
-			Input::GetKeyState(KEYCODE_D) == KEYSTATE::KEY_DOWN || Input::GetKeyState(KEYCODE_RIGHT) == KEYSTATE::KEY_DOWN)
-		{
-			if (bisLeft)
+			/*else if (Controller_Input::GetLeftStick(0).x < -0.5f || Controller_Input::GetButton(0, GAMEPAD_LEFT) == KEYSTATE::KEY_DOWN || Controller_Input::GetButton(0, GAMEPAD_SHOULDER_L) == KEYSTATE::KEY_DOWN ||
+				Input::GetKeyState(KEYCODE_A) == KEYSTATE::KEY_DOWN || Input::GetKeyState(KEYCODE_LEFT) == KEYSTATE::KEY_DOWN)
 			{
 				p_mSECursor->Play();
+				p_mExp1->SetActive(true);
+				p_mExp2->SetActive(false);
+				mPage = TutorialPage::Page3;
+			}*/
+			break;
+		case Scene_Title::TutorialPage::Page2:
+			if (Controller_Input::GetLeftStick(0).x < -0.5f || Controller_Input::GetButton(0, GAMEPAD_LEFT) == KEYSTATE::KEY_DOWN || Controller_Input::GetButton(0, GAMEPAD_SHOULDER_L) == KEYSTATE::KEY_DOWN ||
+				Input::GetKeyState(KEYCODE_A) == KEYSTATE::KEY_DOWN || Input::GetKeyState(KEYCODE_LEFT) == KEYSTATE::KEY_DOWN)
+			{
+				p_mSECursor->Play();
+				p_mExp1->SetActive(true);
+				p_mExp2->SetActive(false);
+				mPage = TutorialPage::Page1;
 			}
-			bisLeft = false;
-			p_mExp1->SetActive(false);
-			p_mExp2->SetActive(true);
+			/*else if (Controller_Input::GetLeftStick(0).x > 0.5f || Controller_Input::GetButton(0, GAMEPAD_RIGHT) == KEYSTATE::KEY_DOWN || Controller_Input::GetButton(0, GAMEPAD_SHOULDER_R) == KEYSTATE::KEY_DOWN ||
+				Input::GetKeyState(KEYCODE_D) == KEYSTATE::KEY_DOWN || Input::GetKeyState(KEYCODE_RIGHT) == KEYSTATE::KEY_DOWN)
+			{
+				p_mSECursor->Play();
+				p_mExp1->SetActive(false);
+				p_mExp2->SetActive(true);
+				mPage = TutorialPage::Page3;
+			}*/
+			break;
+		case Scene_Title::TutorialPage::Page3:
+			break;
+		default:
+			break;
 		}
-		else if (Controller_Input::GetButton(0, GAMEPAD_A) == KEYSTATE::KEY_DOWN || Input::GetKeyState(KEYCODE_SPACE) == KEYSTATE::KEY_DOWN || Controller_Input::GetButton(0, GAMEPAD_B) == KEYSTATE::KEY_DOWN || Input::GetKeyState(KEYCODE_RETURN) == KEYSTATE::KEY_DOWN)
+		
+		if (Controller_Input::GetButton(0, GAMEPAD_A) == KEYSTATE::KEY_DOWN || Input::GetKeyState(KEYCODE_SPACE) == KEYSTATE::KEY_DOWN || Controller_Input::GetButton(0, GAMEPAD_B) == KEYSTATE::KEY_DOWN || Input::GetKeyState(KEYCODE_RETURN) == KEYSTATE::KEY_DOWN)
 		{
 			p_mSEDecide->Play();
 			bisLeft = true;
 			p_mExp1->SetActive(false);
 			p_mExp2->SetActive(false);
+			mPage = TutorialPage::None;
 			pBackFont->SetActive(false);
 			pBackButton->SetActive(false);
 			mState = TitleState::WaitInput;

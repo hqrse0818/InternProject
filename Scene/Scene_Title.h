@@ -12,6 +12,11 @@ private:
         WaitFade, WaitInput, Tutorial,ToGame,
     };
 
+    enum class TutorialPage
+    {
+        None, Page1, Page2, Page3
+    };
+
 private:
     OBJ_Transition* p_mTransition{};
     bool bLoadScene = false;
@@ -19,6 +24,7 @@ private:
     
 
     TitleState mState = TitleState::WaitFade;
+    TutorialPage mPage = TutorialPage::None;
 
 
     GameObject* p_mStartLogo{};

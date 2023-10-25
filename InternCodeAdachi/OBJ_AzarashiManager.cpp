@@ -350,6 +350,10 @@ void OBJ_AzarashiManager::Update()
 			break;
 		}
 	}
+	else if (GameManager::GetGameState() == GameState::TransToOver || GameManager::GetGameState() == GameState::OverFade)
+	{
+		pWar->SetActive(false);
+	}
 }
 
 void OBJ_AzarashiManager::CreateTeshita()

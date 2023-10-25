@@ -44,6 +44,10 @@ OBJ_Warning::OBJ_Warning()
 	pMark->AddComponent(pMarkSp);
 
 	AddChild(pMark);
+
+	p_SEWarning = new Com_Audio();
+	p_SEWarning->Load("asset/audio/SE/SE ‚»‚Ì‘¼/ƒQ[ƒ€ƒNƒŠƒA.wav");
+	AddComponent(p_SEWarning);
 }
 
 OBJ_Warning::OBJ_Warning(const char* _name)
