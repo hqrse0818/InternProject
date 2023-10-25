@@ -82,7 +82,7 @@ void OBJ_Score::CalcScore(int _val)
 		// コンボの経過時間リセット
 		s_fComCnt = 0.0f;
 		// コンボ数を加算
-		s_iCurrentComCount++;
+		s_iCurrentComCount+=4;
 		if (s_iCurrentComCount > s_iMaxCombo)
 		{
 			s_iMaxCombo = s_iCurrentComCount;

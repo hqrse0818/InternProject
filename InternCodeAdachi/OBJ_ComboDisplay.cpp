@@ -284,10 +284,10 @@ void OBJ_ComboDisplay::Update()
 			Nums[1]->SetPosition(mMainPos.x, mMainPos.y, 0.0f);
 			Nums[1]->SetScale(mCurrentNumScale.x, mCurrentNumScale.y, 0.0f);
 			// 1‚ÌˆÊ
-			Nums[2]->SetPosition(mMainPos.x + mCurrentNumScale.x + fNumDuration + fScaleDuration, mMainPos.y, 0.0f);
+			Nums[2]->SetPosition(mMainPos.x + mCurrentNumScale.x + fScaleDuration, mMainPos.y, 0.0f);
 			Nums[2]->SetScale(mCurrentNumScale.x, mCurrentNumScale.y, 0.0f);
 			// 100‚ÌˆÊ
-			Nums[0]->SetPosition(mMainPos.x - mCurrentNumScale.x - fNumDuration - fScaleDuration, mMainPos.y, 0.0f);
+			Nums[0]->SetPosition(mMainPos.x - mCurrentNumScale.x - fScaleDuration, mMainPos.y, 0.0f);
 			Nums[0]->SetScale(mCurrentNumScale.x, mCurrentNumScale.y, 0.0f);
 
 			SetScale(mCurrentMyScale.x, mCurrentMyScale.y, 0.0f);
@@ -301,10 +301,10 @@ void OBJ_ComboDisplay::Update()
 			com = com % 10;
 			Nums[2]->SetNum(com);
 			// 10‚ÌˆÊ‚ð’†S‚É‚µ‚Ä”z’u‚µ‚Ä‚¢‚­
-			Nums[1]->SetPosition(mMainPos.x - mCurrentNumScale.x - fNumDuration - fScaleDuration, mMainPos.y, 0.0f);
+			Nums[1]->SetPosition(mMainPos.x - mCurrentNumScale.x - fNumDuration, mMainPos.y, 0.0f);
 			Nums[1]->SetScale(mCurrentNumScale.x, mCurrentNumScale.y, 0.0f);
 			// 1‚ÌˆÊ
-			Nums[2]->SetPosition(mMainPos.x + mCurrentNumScale.x + fNumDuration + fScaleDuration, mMainPos.y, 0.0f);
+			Nums[2]->SetPosition(mMainPos.x + mCurrentNumScale.x + fNumDuration, mMainPos.y, 0.0f);
 			Nums[2]->SetScale(mCurrentNumScale.x, mCurrentNumScale.y, 0.0f);
 			// 100‚ÌˆÊ
 			Nums[0]->SetPosition(0.0f, 0.0f, 0.0f);
