@@ -534,7 +534,7 @@ void Scene_Game::Init()
 	p_mRetScale->SetUpdate(false);
 	p_mReturn->AddComponent(p_mRetScale);
 	p_mReturn->SetScale(1920.0f * 0.15f, 1080.0f * 0.15f, 1.0f);
-	p_mReturn->SetPosition(SCREEN_WIDTH/2, 530.0f, 1.0f);
+	p_mReturn->SetPosition(SCREEN_WIDTH / 2, 600.0f, 1.0f);
 	AddGameObject(p_mReturn);
 
 	// ‚à‚¤ˆê“x—V‚Ô
@@ -555,7 +555,7 @@ void Scene_Game::Init()
 	p_mOneScale->SetUpdate(false);
 	p_mOnemore->AddComponent(p_mOneScale);
 	p_mOnemore->SetScale(1920.0f * 0.15f, 1080.0f * 0.15f, 1.0f);
-	p_mOnemore->SetPosition(SCREEN_WIDTH/2, 635.0f, 1.0f);
+	p_mOnemore->SetPosition(SCREEN_WIDTH / 2, 550.0f, 1.0f);
 	AddGameObject(p_mOnemore);
 
 	// –îˆó
@@ -754,12 +754,12 @@ void Scene_Game::Update()
 			if (bisUP)
 			{
 				p_mTransition->FadeOut(1.5);
-				mState = OverState::ToTitle;
+				mState = OverState::ToGame;
 			}
 			else
 			{
 				p_mTransition->FadeOut(1.5);
-				mState = OverState::ToGame;
+				mState = OverState::ToTitle;
 			}
 		}
 		else if (Controller_Input::GetLeftStick(0).y > 0.5f || Controller_Input::GetButton(0, GAMEPAD_UP) == KEYSTATE::KEY_DOWN ||
@@ -772,8 +772,8 @@ void Scene_Game::Update()
 			bisUP = true;
 			p_mAllow->SetPosition(SCREEN_WIDTH / 2 - 150.0f, 545.0f, 0.0f);
 			p_mBanner->SetPosition(SCREEN_WIDTH / 2, 545.0f, 0.0f);
-			p_mRetScale->SetUpdate(true);
-			p_mOneScale->SetUpdate(false);
+			p_mRetScale->SetUpdate(false);
+			p_mOneScale->SetUpdate(true);
 		}
 		else if (Controller_Input::GetLeftStick(0).y < -0.5f || Controller_Input::GetButton(0, GAMEPAD_DOWN) == KEYSTATE::KEY_DOWN ||
 			Input::GetKeyState(KEYCODE_S) == KEYSTATE::KEY_DOWN || Input::GetKeyState(KEYCODE_DOWN) == KEYSTATE::KEY_DOWN)
@@ -785,8 +785,8 @@ void Scene_Game::Update()
 			bisUP = false;
 			p_mAllow->SetPosition(SCREEN_WIDTH / 2 - 150.0f, 620.0f, 0.0f);
 			p_mBanner->SetPosition(SCREEN_WIDTH / 2, 620.0f, 0.0f);
-			p_mRetScale->SetUpdate(false);
-			p_mOneScale->SetUpdate(true);
+			p_mRetScale->SetUpdate(true);
+			p_mOneScale->SetUpdate(false);
 		}
 		break;
 	case Scene_Game::OverState::ToGame:

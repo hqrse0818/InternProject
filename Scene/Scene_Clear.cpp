@@ -67,7 +67,7 @@ void Scene_Clear::Init()
 	sprite->SetCurrent(1);
 	ice->AddComponent(sprite);
 	ice->SetScale(1920.0f * 0.175f, 1080.0f * 0.175f, 1.0f);
-	ice->SetPosition(1100.0f, 540.0f, 0.0f);
+	ice->SetPosition(1000.0f, 540.0f, 0.0f);
 	AddGameObject(ice);
 
 	ice = new GameObject("ice");
@@ -81,7 +81,7 @@ void Scene_Clear::Init()
 	sprite->SetCurrent(3);
 	ice->AddComponent(sprite);
 	ice->SetScale(1920.0f * 0.175f, 1080.0f * 0.175f, 1.0f);
-	ice->SetPosition(1100.0f, 650.0f, 0.0f);
+	ice->SetPosition(1000.0f, 650.0f, 0.0f);
 	AddGameObject(ice);
 
 	// バナー
@@ -97,7 +97,7 @@ void Scene_Clear::Init()
 	sprite->SetUpdate(true);
 	p_mBanner->AddComponent(sprite);
 	p_mBanner->SetScale(420.0f, 420.0f, 0.0f);
-	p_mBanner->SetPosition(1100.0, 545.0f, 0.0f);
+	p_mBanner->SetPosition(1000.0, 545.0f, 0.0f);
 	AddGameObject(p_mBanner);
 
 	// タイトルに戻る
@@ -118,7 +118,7 @@ void Scene_Clear::Init()
 	p_mRetScale->SetUpdate(false);
 	p_mReturn->AddComponent(p_mRetScale);
 	p_mReturn->SetScale(1920.0f * 0.15f, 1080.0f * 0.15f, 1.0f);
-	p_mReturn->SetPosition(1100.0f, 530.0f, 1.0f);
+	p_mReturn->SetPosition(1000.0f, 600.0f, 1.0f);
 	AddGameObject(p_mReturn);
 
 	// もう一度遊ぶ
@@ -139,7 +139,7 @@ void Scene_Clear::Init()
 	p_mOneScale->SetUpdate(false);
 	p_mOnemore->AddComponent(p_mOneScale);
 	p_mOnemore->SetScale(1920.0f * 0.15f, 1080.0f * 0.15f, 1.0f);
-	p_mOnemore->SetPosition(1100.0f, 635.0f, 1.0f);
+	p_mOnemore->SetPosition(1000.0f, 550.0f, 1.0f);
 	AddGameObject(p_mOnemore);
 
 	// 矢印
@@ -155,7 +155,7 @@ void Scene_Clear::Init()
 	sprite->SetUpdate(true);
 	p_mAllow->AddComponent(sprite);
 	p_mAllow->SetScale(80.0f, 80.0f, 1.0f);
-	p_mAllow->SetPosition(950.0f, 545.0f, 0.0f);
+	p_mAllow->SetPosition(850.0f, 545.0f, 0.0f);
 	AddGameObject(p_mAllow);
 
 	
@@ -480,6 +480,7 @@ void Scene_Clear::Update()
 				p_mSEDrum->Stop();
 				p_mSEResult->Play();
 				p_mPenguin->SetUpdate(true);
+				p_mOneScale->SetUpdate(true);
 				mState = ClearState::WaitInput;
 			}
 		}
@@ -490,12 +491,12 @@ void Scene_Clear::Update()
 				p_mSEDecide->Play();
 				if (bisUP)
 				{
-					mState = ClearState::ToTitle;
+					mState = ClearState::ToGame;
 					p_mTransition->FadeOut(1);
 				}
 				else
-				{
-					mState = ClearState::ToGame;
+				{	
+					mState = ClearState::ToTitle;
 					p_mTransition->FadeOut(1);
 				}
 			}
@@ -507,10 +508,10 @@ void Scene_Clear::Update()
 					p_mSECursor->Play();
 				}
 				bisUP = true;
-				p_mAllow->SetPosition(950.0f, 545.0f, 0.0f);
-				p_mBanner->SetPosition(1100.0, 545.0f, 0.0f);
-				p_mRetScale->SetUpdate(true);
-				p_mOneScale->SetUpdate(false);
+				p_mAllow->SetPosition(850.0f, 545.0f, 0.0f);
+				p_mBanner->SetPosition(1000.0, 545.0f, 0.0f);
+				p_mRetScale->SetUpdate(false);
+				p_mOneScale->SetUpdate(true);
 			}
 			else if (Controller_Input::GetLeftStick(0).y < -0.5f || Controller_Input::GetButton(0, GAMEPAD_DOWN) == KEYSTATE::KEY_DOWN ||
 				Input::GetKeyState(KEYCODE_S) == KEYSTATE::KEY_DOWN || Input::GetKeyState(KEYCODE_DOWN) == KEYSTATE::KEY_DOWN)
@@ -520,10 +521,10 @@ void Scene_Clear::Update()
 					p_mSECursor->Play();
 				}
 				bisUP = false;
-				p_mAllow->SetPosition(950.0f, 620.0f, 0.0f);
-				p_mBanner->SetPosition(1100.0, 620.0f, 0.0f);
-				p_mRetScale->SetUpdate(false);
-				p_mOneScale->SetUpdate(true);
+				p_mAllow->SetPosition(850.0f, 620.0f, 0.0f);
+				p_mBanner->SetPosition(1000.0, 620.0f, 0.0f);
+				p_mRetScale->SetUpdate(true);
+				p_mOneScale->SetUpdate(false);
 			}
 
 			break;

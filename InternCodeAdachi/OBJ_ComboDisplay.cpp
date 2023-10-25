@@ -232,14 +232,13 @@ void OBJ_ComboDisplay::Update()
 		mColor.z += 0.2f;
 		mColor.w = 1.0f;
 
-		if (mColor.y <= 0.0f)
+		if (mColor.x >= 2.0f)
 		{
-			mColor.y = 0.0f;
+			mColor.x = 2.0f;
+			mColor.y = 2.0f;
+			mColor.z = 2.0f;
 		}
-		if (mColor.z <= 0.0f)
-		{
-			mColor.z = 0.0f;
-		}
+
 		p_mSprite->SetDiffuse(mColor);
 		for (int i = 0; i < 3; i++)
 		{
