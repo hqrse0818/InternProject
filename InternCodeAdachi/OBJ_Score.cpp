@@ -6,12 +6,12 @@
 
 using namespace std;
 
-int OBJ_Score::s_iScore = 99999;
+int OBJ_Score::s_iScore = 0;
 int OBJ_Score::s_iCurrentComCount = 0;
 int OBJ_Score::s_iBreakNum = 0;
-int OBJ_Score::s_iMaxCombo = 999;
+int OBJ_Score::s_iMaxCombo = 0;
 int OBJ_Score::s_iLastIceNum = 0;
-int OBJ_Score::s_iIceScore = 999;
+int OBJ_Score::s_iIceScore = 0;
 bool OBJ_Score::s_bNowCombo = false;
 float OBJ_Score::s_fComAddPerCombo = 0.0f;
 float OBJ_Score::s_fComCnt = 0.0f;
