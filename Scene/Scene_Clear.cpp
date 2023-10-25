@@ -300,6 +300,14 @@ void Scene_Clear::Init()
 	p_mPoint = new Com_Audio();
 	p_mPoint->Load("asset\\audio\\SE\\SE ‚»‚Ì‘¼\\ƒ|ƒCƒ“ƒg.wav");
 	p_mPoint->SetVolume(0.125f);
+
+	p_mVoice = new Com_Audio();
+	p_mVoice->Load("asset\\audio\\SE\\SE ‚»‚Ì‘¼\\patipati.wav");
+	p_mVoice->SetVolume(0.15f);
+
+	p_mVoice2 = new Com_Audio();
+	p_mVoice2->Load("asset\\audio\\SE\\SE ‚»‚Ì‘¼\\patipati.wav");
+	p_mVoice2->SetVolume(0.15f);
 }
 
 void Scene_Clear::Start()
@@ -484,6 +492,7 @@ void Scene_Clear::Update()
 			{
 				p_mSEDrum->Stop();
 				p_mSEResult->Play();
+				p_mVoice->Play();
 				p_mPenguin->SetUpdate(true);
 				p_mOneScale->SetUpdate(true);
 				mState = ClearState::WaitInput;
@@ -491,16 +500,31 @@ void Scene_Clear::Update()
 		}
 		break;
 		case Scene_Clear::ClearState::WaitInput:
+			
+			if (!bVoice)
+			{
+				fVoiceCnt += Time->GetDeltaTime();
+				if (fVoiceCnt >= fVoiceDuration)
+				{
+					bVoice = true;
+					p_mVoice2->Play();
+				}
+			}
+
 			if (Controller_Input::GetButton(0, GAMEPAD_A) == KEYSTATE::KEY_DOWN || Input::GetKeyState(KEYCODE_RETURN) == KEYSTATE::KEY_DOWN || Input::GetKeyState(KEYCODE_SPACE) == KEYSTATE::KEY_DOWN)
 			{
 				p_mSEDecide->Play();
 				if (bisUP)
 				{
+					p_mVoice->Stop();
+					p_mVoice2->Stop();
 					mState = ClearState::ToGame;
 					p_mTransition->FadeOut(1);
 				}
 				else
 				{	
+					p_mVoice->Stop();
+					p_mVoice2->Stop();
 					mState = ClearState::ToTitle;
 					p_mTransition->FadeOut(1);
 				}
@@ -556,6 +580,14 @@ void Scene_Clear::Update()
 
 void Scene_Clear::Uninit()
 {
+	p_mVoice2->Stop();
+	p_mVoice2->Uninit();
+	delete p_mVoice2;
+
+	p_mVoice->Stop();
+	p_mVoice->Uninit();
+	delete p_mVoice;
+
 	p_mPoint->Stop();
 	p_mPoint->Uninit();
 	delete p_mPoint;

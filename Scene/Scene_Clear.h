@@ -62,6 +62,12 @@ private:
     Com_Audio* p_mSECursor{};
     Com_Audio* p_mSEDecide{};
     Com_Audio* p_mPoint{};
+    Com_Audio* p_mVoice{};
+    Com_Audio* p_mVoice2{};
+
+    float fVoiceDuration = 2.0f;
+    float fVoiceCnt = 0.0f;
+    bool bVoice = false;
 
     GameObject* p_mOnemore{};
     Com_Scaling* p_mOneScale{};
