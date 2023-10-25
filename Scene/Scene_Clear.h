@@ -61,6 +61,7 @@ private:
     Com_Audio* p_mSEResult{};
     Com_Audio* p_mSECursor{};
     Com_Audio* p_mSEDecide{};
+    Com_Audio* p_mPoint{};
 
     GameObject* p_mOnemore{};
     Com_Scaling* p_mOneScale{};

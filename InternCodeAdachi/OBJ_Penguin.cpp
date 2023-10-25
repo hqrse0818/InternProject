@@ -553,6 +553,8 @@ void OBJ_Penguin::OnCollisionEnter(GameObject* _obj)
 			{
 				if (mState == PenguinState::Jump)
 				{
+					p_mJumpCom->SetJumpFlg(false);
+					p_mGravityCom->SetOnGround(true);
 					p_mSELand->Play();
 				}
 				mState = PenguinState::Walk;
@@ -615,7 +617,17 @@ void OBJ_Penguin::OnCollisionStay(GameObject* _obj)
 		Com_BoxCollider* col = _obj->GetComponent<Com_BoxCollider>();
 		if (col->mColliderTag == ColliderKind::ColTag_Ice)
 		{
-
+			if (mState != PenguinState::HipDrop && mState != PenguinState::AfterHipDrop && mState != PenguinState::BeforeHipDrop &&
+				mState != PenguinState::BeforeJump && mState != PenguinState::Damage)
+			{
+				if (mState == PenguinState::Jump)
+				{
+					p_mJumpCom->SetJumpFlg(false);
+					p_mGravityCom->SetOnGround(true);
+					p_mSELand->Play();
+				}
+				mState = PenguinState::Walk;
+			}
 		}
 
 		if (col->mColliderTag == ColliderKind::ColTag_Fall && mState != PenguinState::FallMotion && mState != PenguinState::Fall)

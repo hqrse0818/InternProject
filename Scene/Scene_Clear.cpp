@@ -296,6 +296,10 @@ void Scene_Clear::Init()
 
 	p_mSEResult = new Com_Audio();
 	p_mSEResult->Load("asset\\audio\\SE\\SE その他\\リザルト発表.wav");
+
+	p_mPoint = new Com_Audio();
+	p_mPoint->Load("asset\\audio\\SE\\SE その他\\ポイント.wav");
+	p_mPoint->SetVolume(0.125f);
 }
 
 void Scene_Clear::Start()
@@ -370,6 +374,7 @@ void Scene_Clear::Update()
 		if (cnt > 2)
 		{
 			bThisOne = false;
+			p_mPoint->Play(true);
 		}
 	}
 	else
@@ -406,7 +411,6 @@ void Scene_Clear::Update()
 
 			if (currentice == iIceScore)
 			{
-				
 				mState = ClearState::WaitCombo;
 			}
 		}
@@ -438,6 +442,7 @@ void Scene_Clear::Update()
 
 			if (currentcom == iMaxCombo)
 			{
+				p_mPoint->Stop();
 				p_mSEDrum->Play();
 				mState = ClearState::WaitTotal;
 			}
@@ -551,6 +556,9 @@ void Scene_Clear::Update()
 
 void Scene_Clear::Uninit()
 {
+	p_mPoint->Stop();
+	p_mPoint->Uninit();
+	delete p_mPoint;
 
 	p_mSEDrum->Stop();
 	p_mSEDrum->Uninit();
